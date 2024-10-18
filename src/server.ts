@@ -1,6 +1,9 @@
 // We want to gracefully shutdown our server
 import stoppable from "stoppable";
 
+// Get our logger instance
+import logger from "./logger";
+
 // Get our express app instance
 import app from "./app";
 
@@ -11,10 +14,10 @@ const port = parseInt(process.env.PORT || "8080", 10);
 const server = stoppable(
   app.listen(port, () => {
     // Log environment variables for debugging
-    console.error(process.env);
+    logger.debug(process.env);
 
     // Log a message that the server has started, and which port it's using.
-    console.log(`Server started on port ${port}`);
+    logger.info(`Server started on port ${port}`);
   }),
 );
 

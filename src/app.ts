@@ -1,10 +1,20 @@
 import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import helmet from "helmet";
+import pinoHTTP from "pino-http";
 import { version } from "../package.json";
+import logger from "./logger";
+
+const pino = pinoHTTP({
+  // Use our default logger instance, which is already configured
+  logger,
+});
 
 // Create an express app instance we can use to attach middleware and HTTP routes
 const app = express();
+
+// Use pino logging middleware
+app.use(pino);
 
 // Use helmetjs security middleware
 app.use(helmet());
@@ -52,7 +62,7 @@ app.use((err: CustomError, req: Request, res: Response, next: NextFunction) => {
 
   // If this is a server error, log something so we can see what's going on.
   if (status > 499) {
-    console.error({ err }, `Error processing request`);
+    logger.error({ err }, `Error processing request`);
   }
 
   res.status(status).json({
