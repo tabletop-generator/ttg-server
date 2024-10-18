@@ -1,1 +1,1 @@
-# ttg-server
+# server
