@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["tseslint"],
+  "cSpell.words": ["codepaths", "helmetjs", "pino", "tsbuildinfo", "tseslint"],
   "editor.codeActionsOnSave": {
     "source.fixAll": "always",
     "source.organizeImports": "always"
