@@ -31,5 +31,5 @@ jobs:
       - name: Run Prettier
         run: npx prettier --check .
 
-      - name: Run next lint
+      - name: Run ESLint
         run: npm run lint
