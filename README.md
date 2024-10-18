@@ -24,12 +24,12 @@
 
 These scripts are located in `package.json` and can be run using `npm run <script>`.
 
-- `build`: Runs `tsc` to compile the TypeScript files in `src/` and output them to `dist/`.
-- `start`: Runs `node dist/index.js` to start the server.
 - `dev`: Runs `cross-env LOG_LEVEL=debug nodemon --exec ts-node src/index.ts` to run a development server which reloads on changes to the source code.
-- `debug`: Not intended for manual use. Used to configure the debugger in VSCode in `.vscode/launch.json`.
-- `format`: Runs `prettier --write .` to format all files in the project directory.
+- `build`: Runs `tsc` to compile the files in `src/` and output them to `dist/`.
+- `start`: Runs `node dist/index.js` to start the server.
+- `prettier`: Runs `prettier --write .` to format all files in the project directory.
 - `lint`: Runs `eslint .` to lint all files in the project directory.
+- `debug`: Not intended for manual use. Used to configure the debugger in VSCode in `.vscode/launch.json`.
 - `prepare`: Not intended for manual use. Used to run the pre-commit hook which formats and lints code before every commit.
 
 ### Documentation
