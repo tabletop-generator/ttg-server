@@ -29,7 +29,6 @@ These scripts are located in `package.json` and can be run using `npm run <scrip
 - `start`: Runs `node dist/index.js` to start the server.
 - `prettier`: Runs `prettier --write .` to format all files in the project directory.
 - `lint`: Runs `eslint .` to lint all files in the project directory.
-- `debug`: Not intended for manual use. Used to configure the debugger in VSCode in `.vscode/launch.json`.
 - `prepare`: Not intended for manual use. Used to run the pre-commit hook which formats and lints code before every commit.
 
 ### Documentation
