@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "test": "jest --runInBand --",
-    "test:watch": "jest --watch --runInBand --",
     "dev": "cross-env LOG_LEVEL=debug nodemon --exec ts-node src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
+    "test": "jest --runInBand --",
+    "test:watch": "jest --watch --runInBand --",
     "prettier": "prettier --write .",
     "lint": "eslint .",
     "prepare": "husky"
