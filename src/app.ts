@@ -2,11 +2,11 @@ import compression from "compression";
 import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import helmet from "helmet";
-import pinoHTTP from "pino-http";
+import { pinoHttp } from "pino-http";
 import { version } from "../package.json";
 import logger from "./logger";
 
-const pino = pinoHTTP({
+const pino = pinoHttp({
   // Use our default logger instance, which is already configured
   logger,
 });
