@@ -2,8 +2,12 @@ const compression = require("compression");
 const cors = require("cors");
 const express = require("express");
 const helmet = require("helmet");
+const passport = require("passport");
 const { pinoHttp } = require("pino-http");
+
+const auth = require("./auth");
 const logger = require("./logger");
+const { createErrorResponse } = require("./response");
 
 const pino = pinoHttp({
   // Use our default logger instance, which is already configured
@@ -25,18 +29,16 @@ app.use(cors());
 // Use gzip/deflate compression middleware
 app.use(compression());
 
+// Set up our passport authentication middleware
+passport.use(auth.strategy());
+app.use(passport.initialize());
+
 // Define our routes
 app.use("/", require("./routes"));
 
 // Add 404 middleware to handle any requests for resources that can't be found
 app.use((req, res) => {
-  res.status(404).json({
-    status: "error",
-    error: {
-      message: "not found",
-      code: 404,
-    },
-  });
+  res.status(404).json(createErrorResponse(404, "not found"));
 });
 
 // Add error-handling middleware to deal with anything else
