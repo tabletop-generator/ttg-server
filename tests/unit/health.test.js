@@ -22,7 +22,7 @@ describe("/ health check", () => {
     expect(res.body.status).toStrictEqual("ok");
   });
 
-  test("should return correct version, githubUrl, and author in response", async () => {
+  test("should return correct version, and githubUrl in response", async () => {
     const res = await request(app).get("/");
     expect(res.body.githubUrl.startsWith("https://github.com/")).toBe(true);
     expect(res.body.version).toStrictEqual(version);
