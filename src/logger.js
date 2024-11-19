@@ -1,17 +1,7 @@
-import pino from "pino";
-
-interface LoggerOptions {
-  level: string;
-  transport?: {
-    target: string;
-    options: {
-      colorize: boolean;
-    };
-  };
-}
+const pino = require("pino");
 
 // Use `info` as our standard log level if not specified
-const options: LoggerOptions = { level: process.env.LOG_LEVEL || "info" };
+const options = { level: process.env.LOG_LEVEL || "info" };
 
 // If we're doing `debug` logging, make the logs easier to read
 if (options.level === "debug") {
@@ -26,4 +16,4 @@ if (options.level === "debug") {
 
 // Create and export a Pino Logger instance:
 // https://getpino.io/#/docs/api?id=logger
-export default pino(options);
+module.exports = pino(options);

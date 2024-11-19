@@ -1,11 +1,9 @@
 import pluginJs from "@eslint/js";
 import globals from "globals";
-import tseslint from "typescript-eslint";
 
 export default [
-  { files: ["**/*.{js,mjs,cjs,ts}"] },
-  { ignores: ["coverage/", "dist/"] },
+  { files: ["**/*.{js,mjs,cjs}"] },
+  { ignores: ["coverage/"] },
   { languageOptions: { globals: { ...globals.node, ...globals.jest } } },
   pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
 ];

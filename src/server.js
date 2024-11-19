@@ -1,11 +1,11 @@
 // We want to gracefully shutdown our server
-import stoppable from "stoppable";
+const stoppable = require("stoppable");
 
 // Get our logger instance
-import logger from "./logger";
+const logger = require("./logger");
 
 // Get our express app instance
-import app from "./app";
+const app = require("./app");
 
 // Get the desired port from the process' environment. Default to `8080`
 const port = parseInt(process.env.PORT || "8080", 10);
@@ -22,4 +22,4 @@ const server = stoppable(
 );
 
 // Export our server instance so other parts of our code can access it if necessary.
-export default server;
+module.exports = server;

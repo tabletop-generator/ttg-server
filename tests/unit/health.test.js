@@ -1,10 +1,10 @@
-import request from "supertest";
+const request = require("supertest");
 
 // Get our Express app object (we don't need the server part)
-import app from "../../src/app";
+const app = require("../../src/app");
 
-// Get the version and author from our package.json
-import { version } from "../../package.json";
+// Get the version and author = require(our package.json
+const { version } = require("../../package.json");
 
 describe("/ health check", () => {
   test("should return HTTP 200 response", async () => {
