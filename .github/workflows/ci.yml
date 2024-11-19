@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [lts/iron, lts/*]
+        node-version: [lts/iron]
 
     steps:
       - name: Check out code
@@ -51,7 +51,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [lts/iron, lts/*]
+        node-version: [lts/iron]
 
     steps:
       - name: Check out code
