@@ -1,6 +1,6 @@
-import request from "supertest";
+const request = require("supertest");
 
-import app from "../../src/app";
+const app = require("../../src/app");
 
 describe("404 handler", () => {
   test("nonexistent routes return HTTP 404 response", () =>
