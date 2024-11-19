@@ -67,14 +67,17 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
    npm run dev
    ```
 
+   - If introducing new code, add tests for your changes.
+
 4. **Test your changes**
 
    Run the following checks to ensure everything works as expected:
 
    ```bash
    npm run lint
-   npm run build
-   npm start:static
+   npm run test
+   npm run start
+   npm run test:integration # Server must be running, so run "npm run start" first
    ```
 
 5. **Review your changes**
