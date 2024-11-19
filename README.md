@@ -25,8 +25,7 @@
 These scripts are located in `package.json` and can be run using `npm run <script>`.
 
 - `dev`: Runs `cross-env LOG_LEVEL=debug nodemon --exec ts-node src/index.ts` to run a development server which reloads on changes to the source code.
-- `build`: Runs `tsc` to compile the files in `src/` and output them to `dist/`.
-- `start`: Runs `node dist/index.js` to start the server.
+- `start`: Runs `node src/index.js` to start the server.
 - `test`: Runs `jest --runInBand --` to run tests. Pass globs for test files you want to run as arguments, e.g. `npm run test app`
 - `test:watch`: Runs `jest --watch --runInBand --` to run tests and watch for changes to related files. Pass globs for test files you want to run as arguments, e.g. `npm run test:watch app`
 - `prettier`: Runs `prettier --write .` to format all files in the project directory.
@@ -118,7 +117,7 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
 
 ### Documentation
 
-- **Language:** [TypeScript](https://www.typescriptlang.org/docs/)
+- **Language:** [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 - **Server:** [Express](https://expressjs.com/en/4x/api.html)
   - **Logging:** [Pino](https://getpino.io/#/docs/api), [pino-pretty](https://github.com/pinojs/pino-pretty)
   - **Security:** [Helmet](https://helmetjs.github.io/), [Express/CORS](https://github.com/expressjs/cors#readme)

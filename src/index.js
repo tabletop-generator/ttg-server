@@ -1,9 +1,9 @@
 // Read environment variables from an .env file (if present)
 // NOTE: we only need to do this once, here in our app's main entry point.
-import "dotenv/config";
+require("dotenv/config");
 
 // We want to log any crash cases so we can debug later from logs.
-import logger from "./logger";
+const logger = require("./logger");
 
 // If we're going to crash because of an uncaught exception, log it first.
 // https://nodejs.org/api/process.html#event-uncaughtexception
@@ -20,4 +20,4 @@ process.on("unhandledRejection", (reason, promise) => {
 });
 
 // Start our server
-import "./server";
+require("./server");

@@ -1,10 +1,10 @@
-import compression from "compression";
-import cors from "cors";
-import express, { NextFunction, Request, Response } from "express";
-import helmet from "helmet";
-import { pinoHttp } from "pino-http";
-import { version } from "../package.json";
-import logger from "./logger";
+const compression = require("compression");
+const cors = require("cors");
+const express = require("express");
+const helmet = require("helmet");
+const { pinoHttp } = require("pino-http");
+const { version } = require("../package.json");
+const logger = require("./logger");
 
 const pino = pinoHttp({
   // Use our default logger instance, which is already configured
@@ -52,13 +52,9 @@ app.use((req, res) => {
   });
 });
 
-interface CustomError extends Error {
-  status?: number;
-}
-
 // Add error-handling middleware to deal with anything else
-/* eslint-disable @typescript-eslint/no-unused-vars */
-app.use((err: CustomError, req: Request, res: Response, next: NextFunction) => {
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
   // We may already have an error response we can use, but if not,
   // use a generic `500` server error and message.
   const status = err.status ?? 500;
@@ -79,4 +75,4 @@ app.use((err: CustomError, req: Request, res: Response, next: NextFunction) => {
 });
 
 // Export our `app` so we can access it in server.js
-export default app;
+module.exports = app;
