@@ -8,12 +8,12 @@ on:
 
 jobs:
   lint:
-    name: Check formatting & Lint
+    name: Prettier Check & ESLint
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [lts/*]
+        node-version: [lts/iron, lts/*]
 
     steps:
       - name: Check out code
@@ -34,13 +34,24 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
-  test:
+  # Lint our Dockerfile using Hadolint
+  dockerfile-lint:
+    name: Dockerfile Lint
+    runs-on: ubuntu-latest
+    steps:
+      # https://github.com/marketplace/actions/hadolint-action
+      - uses: actions/checkout@v4
+      - uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+
+  unit-tests:
     name: Run unit tests
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [lts/*]
+        node-version: [lts/iron, lts/*]
 
     steps:
       - name: Check out code
@@ -54,3 +65,36 @@ jobs:
 
       - name: Install dependencies and run tests
         run: npm install-ci-test
+
+  docker-hub:
+    name: Build and Push to Docker Hub
+    # Don't bother running this job unless the other three all pass
+    needs: [lint, dockerfile-lint, unit-tests]
+    runs-on: ubuntu-latest
+    steps:
+      # Set up buildx for optimal Docker Builds, see:
+      # https://github.com/docker/setup-buildx-action
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Login to Docker Hub using GitHub secrets, see:
+      # https://github.com/docker/login-action
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Build and Push an Image to Docker Hub
+      - name: Build and push
+        env:
+          # Define an Environment Variable with our Docker Hub Repo
+          DOCKERHUB_REPO: usrana/ttg-server
+          # Define an Environment Variable with the current git commit's sha
+          # Use the `github` context to get this, see:
+          # https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
+          SHA_TAG: sha-${{ github.sha }}
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: ${{ env.DOCKERHUB_REPO }}:${{ env.SHA_TAG }}, ${{ env.DOCKERHUB_REPO }}:latest, ${{ env.DOCKERHUB_REPO }}:main
