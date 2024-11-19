@@ -26,8 +26,9 @@ These scripts are located in `package.json` and can be run using `npm run <scrip
 
 - `dev`: Runs `cross-env LOG_LEVEL=debug nodemon --exec ts-node src/index.ts` to run a development server which reloads on changes to the source code.
 - `start`: Runs `node src/index.js` to start the server.
-- `test`: Runs `jest --runInBand --` to run tests. Pass globs for test files you want to run as arguments, e.g. `npm run test app`
-- `test:watch`: Runs `jest --watch --runInBand --` to run tests and watch for changes to related files. Pass globs for test files you want to run as arguments, e.g. `npm run test:watch app`
+- `test`: Runs `jest --runInBand --` to run tests. Pass globs for test files you want to run as arguments, e.g. `npm run test app` to test `app*.test.js`
+- `test:watch`: Runs `jest --watch --runInBand --` to run tests and watch for changes to related files. Pass globs for test files you want to run as arguments, e.g. `npm run test:watch app` to test `app*.test.js`
+- `test:coverage`: Runs `jest --runInBand --coverage` to run tests and generate a code coverage report.
 - `prettier`: Runs `prettier --write .` to format all files in the project directory.
 - `lint`: Runs `eslint .` to lint all files in the project directory.
 - `prepare`: Not intended for manual use. Used to run the pre-commit hook which formats and lints code before every commit.
