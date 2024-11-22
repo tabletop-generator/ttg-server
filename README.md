@@ -1,5 +1,7 @@
 # ttg-server
 
+[![CI](https://github.com/tabletop-generator/server/actions/workflows/ci.yml/badge.svg)](https://github.com/tabletop-generator/server/actions/workflows/ci.yml)
+
 ## Development
 
 ### Prerequisites
