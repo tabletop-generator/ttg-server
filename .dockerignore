@@ -5,6 +5,7 @@
 coverage/
 node_modules/
 tests/
+!tests/.htpasswd
 .env*
 .gitignore
 .lintstagedrc.js
