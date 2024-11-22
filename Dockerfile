@@ -36,6 +36,9 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
+# Copy our HTPASSWD file from the build context
+COPY --chown=node:node ./tests/.htpasswd ./tests/.htpasswd
+
 # Install curl to run a health check on the API
 # Don't need to update/upgrade when using --no-cache
 # hadolint ignore=DL3018
