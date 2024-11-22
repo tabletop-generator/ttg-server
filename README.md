@@ -4,6 +4,7 @@
 
 ### Prerequisites
 
+- [NVM](https://github.com/nvm-sh/nvm)
 - [Node.js v20.x 'Iron' (LTS)](https://nodejs.org/en)
 - [Git](https://git-scm.com/)
 - [Visual Studio Code](https://code.visualstudio.com/)
@@ -11,6 +12,8 @@
 ### Setup
 
 - `git clone <url>`: Clone the project to your workspace
+
+- `nvm install`: Install and use the correct version of node for the project
 
 - `npm i`: Install required packages using npm
 
