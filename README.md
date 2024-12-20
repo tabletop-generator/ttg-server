@@ -149,19 +149,30 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
 ## Documentation
 
 - **Language:** [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- **Containerization:** [Docker](https://docs.docker.com/reference/)
 - **Server:** [Express](https://expressjs.com/en/4x/api.html)
   - **Logging:** [Pino](https://getpino.io/#/docs/api), [pino-pretty](https://github.com/pinojs/pino-pretty)
   - **Security:** [Helmet](https://helmetjs.github.io/), [Express/CORS](https://github.com/expressjs/cors#readme)
   - **Graceful Shutdown:** [Stoppable](https://github.com/hunterloftis/stoppable#readme)
+- **Authorization:**
+  - [Passport.js](https://www.passportjs.org/)
+  - **Production:**
+    - TBD
+  - **Development/Testing:**
+    - [http-auth](https://www.npmjs.com/package/http-auth)
+    - [http-auth-passport](https://www.npmjs.com/package/http-auth-passport)
+- **Testing:**
+  - **Unit Testing:**
+    - [Jest](https://jestjs.io/)
+    - [Supertest](https://github.com/ladjs/supertest#readme)
+  - **Integration Testing:**
+    - [Hurl](https://hurl.dev/)
+    - [Docker Compose](https://docs.docker.com/compose/)
 - **Runtime:** [Node.js](https://nodejs.org/docs/latest-v20.x/api/)
 - **Runners:** [nodemon](https://github.com/remy/nodemon#readme)
 - **Package Manager:** [npm](https://docs.npmjs.com/)
 - **Version Control System:** [Git](https://git-scm.com/doc), [GitHub](https://docs.github.com/)
 - **CI/CD:** [GitHub Actions](https://docs.github.com/en/actions)
-- **Testing:**
-  - **Unit Testing:** [Jest](https://jestjs.io/)
-    - **HTTP Testing Library:** [Supertest](https://github.com/ladjs/supertest#readme)
-  - **Integration Testing:** [Hurl](https://hurl.dev/)
 - **Linting:** [ESLint](https://eslint.org/docs/v9.x/)
 - **Formatting:** [Prettier](https://prettier.io/docs/en/)
 - **Git Hooks:** [Husky](https://typicode.github.io/husky/)
