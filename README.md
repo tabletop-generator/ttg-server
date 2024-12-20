@@ -2,16 +2,15 @@
 
 [![CI](https://github.com/tabletop-generator/server/actions/workflows/ci.yml/badge.svg)](https://github.com/tabletop-generator/server/actions/workflows/ci.yml)
 
-## Development
-
-### Prerequisites
+## Prerequisites
 
 - [NVM](https://github.com/nvm-sh/nvm)
 - [Node.js v20.x 'Iron' (LTS)](https://nodejs.org/en)
 - [Git](https://git-scm.com/)
+- [Docker](https://www.docker.com/)
 - [Visual Studio Code](https://code.visualstudio.com/)
 
-### Setup
+## Setup
 
 - `git clone <url>`: Clone the project to your workspace
 
@@ -25,21 +24,43 @@
   - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
   - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
-### Scripts
+## Running
+
+### Single Docker Container
+
+This will run the server as a Docker container and store data in the **server's** memory.
+
+`docker build -t ttg-server .`
+
+`docker container run [--rm] [--init] [-it] [-d] -p [8080]:8080 --env-file [.env] ttg-server`
+
+### Run On Host Machine
+
+See [Scripts > Running](#running-1) below.
+
+## Scripts
 
 These scripts are located in `package.json` and can be run using `npm run <script>`.
 
-- `dev`: Runs `cross-env LOG_LEVEL=debug nodemon --exec ts-node src/index.ts` to run a development server which reloads on changes to the source code.
-- `start`: Runs `node src/index.js` to start the server.
-- `test`: Runs `jest --runInBand --` to run unit tests. Pass globs for test files you want to run as arguments, e.g. `npm run test app` to test `app*.test.js`
-- `test:watch`: Runs `jest --watch --runInBand --` to run unit tests and watch for changes to related files. Pass globs for test files you want to run as arguments, e.g. `npm run test:watch app` to test `app*.test.js`
-- `test:coverage`: Runs `jest --runInBand --coverage` to run unit tests and generate a code coverage report.
-- `test:integration`: Runs `hurl --test --glob \"tests/integration/**/*.hurl\"` to run integration tests. Server must be running on `localhost:8080`.
-- `prettier`: Runs `prettier --write .` to format all files in the project directory.
-- `lint`: Runs `eslint .` to lint all files in the project directory.
-- `prepare`: Not intended for manual use. Used to run the pre-commit hook which formats and lints code before every commit.
+### Running
 
-### Workflow
+- `start`: Starts the server.
+- `dev`: Runs a development server which reloads on changes to the source code.
+- `debug`: Used to attach the VSCode Debugger. Not intended for manual use.
+
+### Testing
+
+- `test`: Runs all unit tests. Pass globs for test files you want to run as arguments.
+- `test:watch`: Run unit tests and watch for changes to related files.
+- `test:coverage`: Runs all unit tests and generates a code coverage report, found in `coverage/lcov-report/index.html`.
+- `test:integration`: Runs all integration tests. The server must be running on `http://localhost:8080` with HTTP Basic Auth.
+
+### Linting & Formatting
+
+- `lint`: Runs [ESLint](https://eslint.org/) on `.js` files in `src/` and `tests/`.
+- `prettier`: Runs [Prettier](https://prettier.io/) on all files in the project directory.
+
+## Workflow
 
 Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-github/github-flow) for contributions:
 
@@ -125,7 +146,7 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
    Fixes #[issue number]
    ```
 
-### Documentation
+## Documentation
 
 - **Language:** [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 - **Server:** [Express](https://expressjs.com/en/4x/api.html)
