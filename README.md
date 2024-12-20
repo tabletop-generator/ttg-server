@@ -57,7 +57,7 @@ These scripts are located in `package.json` and can be run using `npm run <scrip
 
 ### Linting & Formatting
 
-- `lint`: Runs [ESLint](https://eslint.org/) on `.js` files in `src/` and `tests/`.
+- `lint`: Runs [ESLint](https://eslint.org/) on all files in the project directory.
 - `prettier`: Runs [Prettier](https://prettier.io/) on all files in the project directory.
 
 ## Workflow
