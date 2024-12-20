@@ -175,4 +175,6 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
 - **CI/CD:** [GitHub Actions](https://docs.github.com/en/actions)
 - **Linting:** [ESLint](https://eslint.org/docs/v9.x/)
 - **Formatting:** [Prettier](https://prettier.io/docs/en/)
-- **Git Hooks:** [Husky](https://typicode.github.io/husky/)
+- **Git Hooks:**
+  - [Husky](https://typicode.github.io/husky/)
+  - [lint-staged](https://github.com/lint-staged/lint-staged)
