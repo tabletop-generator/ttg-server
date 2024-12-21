@@ -82,13 +82,15 @@ jobs:
         env:
           # Define an Environment Variable with our Docker Hub Repo
           DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_USERNAME }}/ttg-server
+          # Define one for our GCHR Repo
+          GHCR_REPO: ghcr.io/${{ github.repository_owner }}/ttg-server
           # Define an Environment Variable with the current git commit's sha
           # Use the `github` context to get this, see:
           # https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
           SHA_TAG: sha-${{ github.sha }}
         uses: docker/build-push-action@v6
         with:
-          tags: ${{ env.DOCKERHUB_REPO }}:latest,${{ env.DOCKERHUB_REPO }}:${{ env.SHA_TAG }},${{ env.DOCKERHUB_REPO }}:main
+          tags: ${{ env.DOCKERHUB_REPO }}:latest,${{ env.DOCKERHUB_REPO }}:${{ env.SHA_TAG }},${{ env.DOCKERHUB_REPO }}:main,${{ env.GHCR_REPO }}:latest,${{ env.GHCR_REPO }}:${{ env.SHA_TAG }},${{ env.GHCR_REPO }}:main
           outputs: type=docker,dest=/tmp/image.tar
 
       - name: Upload artifact
@@ -166,7 +168,7 @@ jobs:
 
       - name: Push to GitHub Container Registry
         env:
-          GHCR_REPO: ghcr.io/${{ github.actor }}/ttg-server
+          GHCR_REPO: ghcr.io/${{ github.repository_owner }}/ttg-server
           SHA_TAG: sha-${{ github.sha }}
         run: |
           docker push ${{ env.GHCR_REPO }}:latest
