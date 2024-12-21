@@ -5,6 +5,8 @@
 FROM node:20.18.0-alpine3.20@sha256:c13b26e7e602ef2f1074aef304ce6e9b7dd284c419b35d89fcf3cc8e44a8def9 \
   AS dependencies
 
+LABEL org.opencontainers.image.source=https://github.com/tabletop-generator/server
+  
 # Tell node & npm to perform production environment optimizations
 ENV NODE_ENV=production
 
