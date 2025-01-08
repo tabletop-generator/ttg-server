@@ -1,0 +1,12 @@
+name: Task
+description: A specific piece of work
+type: "task"
+projects: ["tabletop-generator/1"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe the task
+    validations:
+      required: true
