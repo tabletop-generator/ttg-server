@@ -10,13 +10,16 @@ const { createSuccessResponse } = require("../response");
 // Our authentication middleware
 const auth = require("../auth");
 
+// Our rate limiter
+const limiter = require("../limiter");
+
 // Create a router that we can use to mount our API
 const router = express.Router();
 
 /**
  * Expose all of our API routes on /v1/* to include an API version.
  */
-router.use(`/v1`, auth.authenticate(), require("./api"));
+router.use(`/v1`, limiter, auth.authenticate(), require("./api"));
 
 /**
  * Define a simple health check route. If the server is running
