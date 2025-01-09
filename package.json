@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "cross-env LOG_LEVEL=debug nodemon --exec ts-node src/index.ts",
+    "dev": "cross-env LOG_LEVEL=debug nodemon ./src/index.js --watch src",
+    "debug": "cross-env LOG_LEVEL=debug nodemon --inspect=0.0.0.0:9229 ./src/index.js --watch src",
     "start": "node src/index.js",
     "test": "jest --runInBand --",
     "test:watch": "jest --watch --runInBand --",
