@@ -154,6 +154,7 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
   - **Logging:** [Pino](https://getpino.io/#/docs/api), [pino-pretty](https://github.com/pinojs/pino-pretty)
   - **Security:** [Helmet](https://helmetjs.github.io/), [Express/CORS](https://github.com/expressjs/cors#readme)
   - **Graceful Shutdown:** [Stoppable](https://github.com/hunterloftis/stoppable#readme)
+  - **Rate Limiting:** [express-rate-limit](https://express-rate-limit.mintlify.app/)
 - **Authorization:**
   - [Passport.js](https://www.passportjs.org/)
   - **Production:**
