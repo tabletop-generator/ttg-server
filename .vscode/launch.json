@@ -1,17 +1,16 @@
-// .vscode/launch.json
-
 {
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387{
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
   "configurations": [
+    // Start the app and attach the debugger
     {
-      "type": "node",
+      "name": "Debug via npm run debug",
       "request": "launch",
-      "name": "Launch Program",
-      "runtimeArgs": ["-r", "ts-node/register"],
-      "args": ["${workspaceFolder}/src/index.ts"],
-      "env": {
-        "LOG_LEVEL": "debug"
-      },
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run-script", "debug"],
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node",
       "outputCapture": "std"
     }
   ]
