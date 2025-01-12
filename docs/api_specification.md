@@ -103,17 +103,17 @@ Generates an asset for the current user (i.e. authenticated user). The client po
 
 A successful response returns an HTTP 201. It includes a Location header with a full URL to use in order to access the newly created asset.
 
-### GET /assets?type=""&desc=""&prompt=""&name=""
+### `GET /assets?type=""&desc=""&prompt=""&name=""`
 
 Gets assets created by all users, filtered through query parameters for the asset's type, name, description, and the original prompt.
 
-### GET /assets/:userId?type=""&desc=""&prompt=""&name=""
+### `GET /assets/:userId?type=""&desc=""&prompt=""&name=""`
 
 Gets all assets created by a user by their id, filtered through query parameters for the asset's type, name, description, and the original prompt. If a user has no assets, an empty array is returned instead of an error. If the `userId` is not the current user, return only public assets.
 
 If the id does not represent a known user, returns an HTTP 404 with an appropriate error message.
 
-### GET /assets/:userId/:assetId
+### `GET /assets/:userId/:assetId`
 
 Gets a user's asset with the given `userId` and `assetId`. If the `userId` is not the current user, return only public assets.
 
@@ -121,13 +121,13 @@ If the asset is not public, returns an HTTP 404.
 
 If the ids do not represent a known user and asset, returns an HTTP 404 with an appropriate error message.
 
-### PATCH /assets/:assetId
+### `PATCH /assets/:assetId`
 
 Updates an asset for the current user by it's id. Can update the asset's name, description, and privacy.
 
 If the id does not represent a known asset, returns an HTTP 404 with an appropriate error message.
 
-### DELETE /assets/:assetId
+### `DELETE /assets/:assetId`
 
 Deletes an asset for the current user by it's id.
 
@@ -174,17 +174,17 @@ class Collection {
 }
 ```
 
-### POST /collections
+### `POST /collections`
 
 Creates a collection for the current user (i.e. authenticated user). The client posts the collection parameters in the request body. A Collection object is created to store collection data.
 
-### GET /collections/:userId
+### `GET /collections/:userId`
 
 Get the user's collections without the list of assets. If the `userId` is not the current user, return only public collections.
 
 If the id does not represent a known user, returns an HTTP 404 with an appropriate error message.
 
-### GET /collections/:userId/:collectionId
+### `GET /collections/:userId/:collectionId`
 
 Get a collection by id with the list of assets.
 
@@ -192,13 +192,13 @@ If the collection is not public, returns an HTTP 404.
 
 If the ids do not represent a known user and collection, returns an HTTP 404 with an appropriate error message.
 
-### DELETE /collections/:collectionId
+### `DELETE /collections/:collectionId`
 
 Allows the authenticated user to delete one of their existing collections with the given id.
 
 If the id does not represent a known collection, returns an HTTP 404 with an appropriate error message.
 
-### PATCH /collections/:collectionId
+### `PATCH /collections/:collectionId`
 
 Allows the authenticated user to update (i.e., replace) their existing collection with the specified id - add/remove assets, update name/description/privacy
 
@@ -233,13 +233,13 @@ class User {
 }
 ```
 
-### GET /users/:userId
+### `GET /users/:userId`
 
 Get the user's info by id.
 
 If the id does not represent a known user, returns an HTTP 404 with an appropriate error message.
 
-### PATCH /users
+### `PATCH /users`
 
 Update the current user's info.
 
@@ -278,25 +278,25 @@ class Comment {
 }
 ```
 
-### POST /comments/:assetId
+### POST `/comments/:assetId`
 
 Create a comment on an asset.
 
 If the id does not represent a known asset, returns an HTTP 404 with an appropriate error message.
 
-### GET /comments/:assetId
+### GET `/comments/:assetId`
 
 Get comments for an asset by id.
 
 If the id does not represent a known asset, returns an HTTP 404 with an appropriate error message.
 
-### PATCH /comments/:assetId/:commentId
+### PATCH `/comments/:assetId/:commentId`
 
 Update a comment for an asset by id.
 
 If the ids do not represent a known asset and comment, returns an HTTP 404 with an appropriate error message.
 
-### DELETE /comments/:assetId/:commentId
+### DELETE `/comments/:assetId/:commentId`
 
 Delete a comment for an asset by id.
 
