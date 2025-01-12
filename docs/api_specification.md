@@ -176,11 +176,15 @@ Generates an asset for the current user (i.e. authenticated user). The client po
 
 A successful response returns an HTTP 201. It includes a Location header with a full URL to use in order to access the newly created asset.
 
-#### 4.2.2 `GET /assets?type=""&desc=""&prompt=""&name=""`
+#### 4.2.2 `GET /assets
+
+Query Parameters: `name`, `desc`, `type`, `prompt`
 
 Gets assets created by all users, filtered through query parameters for the asset's type, name, description, and the original prompt.
 
-#### 4.2.3 `GET /assets/:userId?type=""&desc=""&prompt=""&name=""`
+#### 4.2.3 `GET /assets/:userId
+
+Query Parameters: `name`, `desc`, `type`, `prompt`
 
 Gets all assets created by a user by their id, filtered through query parameters for the asset's type, name, description, and the original prompt. If a user has no assets, an empty array is returned instead of an error. If the `userId` is not the current user, return only public assets.
 
