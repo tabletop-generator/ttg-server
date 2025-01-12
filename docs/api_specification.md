@@ -1,8 +1,8 @@
-# TTG Server Specification
+# Tabletop Generator Server Specification
 
 ## 1. API Version
 
-This is the first version of the TTG API, and all URL endpoints discussed below begin with the current version: `/v1/*`. Defining such a version gives flexibility to change the API at a later date, while still supporting older versions in parallel.
+This is the first version of the Tabletop Generator API, and all URL endpoints discussed below begin with the current version: `/v1/*`. Defining such a version gives flexibility to change the API at a later date, while still supporting older versions in parallel.
 
 ## 2. Authentication
 
