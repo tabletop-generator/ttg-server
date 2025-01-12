@@ -355,25 +355,25 @@ class Comment {
 }
 ```
 
-#### 4.5.1 POST `/comments/:assetId`
+#### 4.5.1 `POST /comments/:assetId`
 
 Create a comment on an asset.
 
 If the id does not represent a known asset, returns an HTTP 404 with an appropriate error message.
 
-#### 4.5.2 GET `/comments/:assetId`
+#### 4.5.2 `GET /comments/:assetId`
 
 Get comments for an asset by id.
 
 If the id does not represent a known asset, returns an HTTP 404 with an appropriate error message.
 
-#### 4.5.3 PATCH `/comments/:assetId/:commentId`
+#### 4.5.3 `PATCH /comments/:assetId/:commentId`
 
 Update a comment for an asset by id.
 
 If the ids do not represent a known asset and comment, returns an HTTP 404 with an appropriate error message.
 
-#### 4.5.4 DELETE `/comments/:assetId/:commentId`
+#### 4.5.4 `DELETE /comments/:assetId/:commentId`
 
 Delete a comment for an asset by id.
 
