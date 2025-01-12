@@ -170,23 +170,23 @@ class MapAsset extends Asset {
 }
 ```
 
-#### `POST /assets`
+#### 4.2.1 `POST /assets`
 
 Generates an asset for the current user (i.e. authenticated user). The client posts the asset parameters in the request body. An Asset object is created to hold asset data - including asset id, user id, name, visibility, creation date, last updated date, type, number of likes, and the generated description (image URL is generated based on user and asset id so doesn't need to be stored). The asset parameters are then used to fill in prompts and send an API call to the image and text generation APIs. The generated image and other asset data are stored.
 
 A successful response returns an HTTP 201. It includes a Location header with a full URL to use in order to access the newly created asset.
 
-#### `GET /assets?type=""&desc=""&prompt=""&name=""`
+#### 4.2.2 `GET /assets?type=""&desc=""&prompt=""&name=""`
 
 Gets assets created by all users, filtered through query parameters for the asset's type, name, description, and the original prompt.
 
-#### `GET /assets/:userId?type=""&desc=""&prompt=""&name=""`
+#### 4.2.3 `GET /assets/:userId?type=""&desc=""&prompt=""&name=""`
 
 Gets all assets created by a user by their id, filtered through query parameters for the asset's type, name, description, and the original prompt. If a user has no assets, an empty array is returned instead of an error. If the `userId` is not the current user, return only public assets.
 
 If the id does not represent a known user, returns an HTTP 404 with an appropriate error message.
 
-#### `GET /assets/:userId/:assetId`
+#### 4.2.4 `GET /assets/:userId/:assetId`
 
 Gets a user's asset with the given `userId` and `assetId`. If the `userId` is not the current user, return only public assets.
 
@@ -194,13 +194,13 @@ If the asset is not public, returns an HTTP 404.
 
 If the ids do not represent a known user and asset, returns an HTTP 404 with an appropriate error message.
 
-#### `PATCH /assets/:assetId`
+#### 4.2.5 `PATCH /assets/:assetId`
 
 Updates an asset for the current user by it's id. Can update the asset's name, description, and privacy.
 
 If the id does not represent a known asset, returns an HTTP 404 with an appropriate error message.
 
-#### `DELETE /assets/:assetId`
+#### 4.2.6 `DELETE /assets/:assetId`
 
 Deletes an asset for the current user by it's id.
 
@@ -247,17 +247,17 @@ class Collection {
 }
 ```
 
-#### `POST /collections`
+#### 4.3.1 `POST /collections`
 
 Creates a collection for the current user (i.e. authenticated user). The client posts the collection parameters in the request body. A Collection object is created to store collection data.
 
-#### `GET /collections/:userId`
+#### 4.3.2 `GET /collections/:userId`
 
 Get the user's collections without the list of assets. If the `userId` is not the current user, return only public collections.
 
 If the id does not represent a known user, returns an HTTP 404 with an appropriate error message.
 
-#### `GET /collections/:userId/:collectionId`
+#### 4.3.3 `GET /collections/:userId/:collectionId`
 
 Get a collection by id with the list of assets.
 
@@ -265,13 +265,13 @@ If the collection is not public, returns an HTTP 404.
 
 If the ids do not represent a known user and collection, returns an HTTP 404 with an appropriate error message.
 
-#### `DELETE /collections/:collectionId`
+#### 4.3.4 `DELETE /collections/:collectionId`
 
 Allows the authenticated user to delete one of their existing collections with the given id.
 
 If the id does not represent a known collection, returns an HTTP 404 with an appropriate error message.
 
-#### `PATCH /collections/:collectionId`
+#### 4.3.5 `PATCH /collections/:collectionId`
 
 Allows the authenticated user to update (i.e., replace) their existing collection with the specified id - add/remove assets, update name/description/privacy
 
@@ -306,13 +306,13 @@ class User {
 }
 ```
 
-#### `GET /users/:userId`
+#### 4.4.1 `GET /users/:userId`
 
 Get the user's info by id.
 
 If the id does not represent a known user, returns an HTTP 404 with an appropriate error message.
 
-#### `PATCH /users`
+#### 4.4.2 `PATCH /users`
 
 Update the current user's info.
 
@@ -351,25 +351,25 @@ class Comment {
 }
 ```
 
-#### POST `/comments/:assetId`
+#### 4.5.1 POST `/comments/:assetId`
 
 Create a comment on an asset.
 
 If the id does not represent a known asset, returns an HTTP 404 with an appropriate error message.
 
-#### GET `/comments/:assetId`
+#### 4.5.2 GET `/comments/:assetId`
 
 Get comments for an asset by id.
 
 If the id does not represent a known asset, returns an HTTP 404 with an appropriate error message.
 
-#### PATCH `/comments/:assetId/:commentId`
+#### 4.5.3 PATCH `/comments/:assetId/:commentId`
 
 Update a comment for an asset by id.
 
 If the ids do not represent a known asset and comment, returns an HTTP 404 with an appropriate error message.
 
-#### DELETE `/comments/:assetId/:commentId`
+#### 4.5.4 DELETE `/comments/:assetId/:commentId`
 
 Delete a comment for an asset by id.
 
