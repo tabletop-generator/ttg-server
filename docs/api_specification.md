@@ -283,13 +283,13 @@ If the collection does not belong to the current user and is not public, returns
 
 If the id does not represent a known collection, returns an HTTP 404 with an appropriate error message.
 
-#### 4.3.5 `PATCH /collections/:collectionId`
+#### 4.3.4 `PATCH /collections/:collectionId`
 
 Updates a collection for the current user by it's id. Can add/remove assets, and update name/description/visibility.
 
 If the id does not represent a known collection, returns an HTTP 404 with an appropriate error message.
 
-#### 4.3.4 `DELETE /collections/:collectionId`
+#### 4.3.5 `DELETE /collections/:collectionId`
 
 Allows the authenticated user to delete one of their existing collections with the given id.
 
