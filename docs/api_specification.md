@@ -96,117 +96,117 @@ An asset's metadata is an object that describes the asset. For example, a charac
 }
 ```
 
-```js
-class Asset {
-  constructor(
-    id = randomUUID(),
-    ownerId,
-    created = new Date().toISOString(),
-    updated = new Date().toISOString(),
-    name,
-    description,
-    visibility,
-    likes,
-    prompt,
-  ) {
-    this.id = id;
-    this.ownerId = ownerId;
-    this.created = created;
-    this.updated = updated;
-    this.name = name;
-    this.description = description;
-    this.visibility = visibility;
-    this.likes = likes;
-    this.prompt = prompt;
-  }
-}
-
-class CharacterAsset extends Asset {
-  constructor(
-    id = randomUUID(),
-    ownerId,
-    created = new Date().toISOString(),
-    updated = new Date().toISOString(),
-    name,
-    description,
-    prompt,
-    visibility,
-    likes,
-    gender,
-    age,
-    build,
-    alignment,
-    pose,
-  ) {
-    super(
-      id,
-      ownerId,
-      created,
-      updated,
-      name,
-      description,
-      prompt,
-      visibility,
-      likes,
-    );
-    this.gender = gender;
-    this.age = age;
-    this.build = build;
-    this.alignment = alignment;
-    this.pose = pose;
-  }
-}
-
-class LocationAsset extends Asset {
-  // TBD
-}
-
-class QuestAsset extends Asset {
-  // TBD
-}
-
-class MapAsset extends Asset {
-  // TBD
-}
-```
-
 #### 4.2.1 `POST /assets`
 
 Generates an asset for the current user (i.e. authenticated user). The client posts the asset parameters in the request body. An Asset object is created to hold asset data - including asset id, user id, name, visibility, creation date, last updated date, type, number of likes, and the generated description (image URL is generated based on user and asset id so doesn't need to be stored). The asset parameters are then used to fill in prompts and send an API call to the image and text generation APIs. The generated image and other asset data are stored.
 
-A successful response returns an HTTP 201. It includes a Location header with a full URL to use in order to access the newly created asset.
+A successful response returns an HTTP `201`. It includes a `Location` header with a full URL to use in order to access the newly created asset, for example: Location: https://ttg-api.com/v1/assets/30a84843-0cd4-4975-95ba-b96112aea189. See https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.30.
+
+```json
+{
+  "status": "ok",
+  "asset": {
+    "id": "30a84843-0cd4-4975-95ba-b96112aea189",
+    "ownerId": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
+    "created": "2021-11-02T15:09:50.403Z",
+    "updated": "2021-11-02T15:09:50.403Z",
+    "name": "Gilbert",
+    "description": "Dwarf guy",
+    "visibility": "unlisted",
+    "likes": 0,
+    "prompt": "A dwarf guy",
+    "gender": "Male",
+    "age": "Middle-aged",
+    "build": "Muscular",
+    "alignment": "True Neutral",
+    "pose": "Standing"
+  }
+}
+```
 
 #### 4.2.2 `GET /assets`
 
-Query Parameters: `name`, `desc`, `type`, `prompt`
+Query Parameters: `name`, `desc`, `type`, `prompt`, `expand`, `userId`
 
-Gets assets created by all users, filtered through query parameters for the asset's type, name, description, and the original prompt.
+Gets a list of all public assets filtered by the asset's type, name, description, the creator's user id, and the original prompt. If no assets are found, an empty array is returned instead of an error.
 
-#### 4.2.3 `GET /assets/:userId`
+```json
+{
+  "status": "ok",
+  "assets": [
+    "b9e7a264-630f-436d-a785-27f30233faea",
+    "dad25b07-8cd6-498b-9aaf-46d358ea97fe"
+  ]
+}
+```
 
-Query Parameters: `name`, `desc`, `type`, `prompt`
+If `expand` is `true`, returns the full asset objects instead of just the IDs:
 
-Gets all assets created by a user by their id, filtered through query parameters for the asset's type, name, description, and the original prompt. If a user has no assets, an empty array is returned instead of an error. If the `userId` is not the current user, return only public assets.
+```json
+{
+  "status": "ok",
+  "assets": [
+    {
+      "id": "30a84843-0cd4-4975-95ba-b96112aea189",
+      "ownerId": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
+      "created": "2021-11-02T15:09:50.403Z",
+      "updated": "2021-11-02T15:09:50.403Z",
+      "name": "Gilbert",
+      "description": "Dwarf guy",
+      "visibility": "unlisted",
+      "likes": 0,
+      "prompt": "A dwarf guy",
+      "gender": "Male",
+      "age": "Middle-aged",
+      "build": "Muscular",
+      "alignment": "True Neutral",
+      "pose": "Standing"
+    },
+    {
+      "id": "40a84843-0cd4-4975-95ba-b96112aea189",
+      "ownerId": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
+      "created": "2021-11-02T15:09:50.403Z",
+      "updated": "2021-11-02T15:09:50.403Z",
+      "name": "John",
+      "description": "Knight",
+      "visibility": "public",
+      "likes": 0,
+      "prompt": "A knight guy",
+      "gender": "Male",
+      "age": "Middle-aged",
+      "build": "Muscular",
+      "alignment": "Neutral Good",
+      "pose": "Standing"
+    }
+  ]
+}
+```
 
-If the id does not represent a known user, returns an HTTP 404 with an appropriate error message.
+If `userId` is the current user, also returns private and unlisted assets.
 
-#### 4.2.4 `GET /assets/:userId/:assetId`
+If `userId` is supplied and does not represent a known user, returns an HTTP 404 with an appropriate error message.
 
-Gets a user's asset with the given `userId` and `assetId`. If the `userId` is not the current user, return only public assets.
+#### 4.2.3 `GET /assets/:assetId`
 
-If the asset is not public, returns an HTTP 404.
+Gets an asset by the given `assetId`.
 
-If the ids do not represent a known user and asset, returns an HTTP 404 with an appropriate error message.
-
-#### 4.2.5 `PATCH /assets/:assetId`
-
-Updates an asset for the current user by it's id. Can update the asset's name, description, and privacy.
+If the asset does not belong to the current user and is not public, returns an HTTP 403.
 
 If the id does not represent a known asset, returns an HTTP 404 with an appropriate error message.
 
-#### 4.2.6 `DELETE /assets/:assetId`
+#### 4.2.4 `PATCH /assets/:assetId`
+
+Updates an asset for the current user by it's id. Can update the asset's name, description, and visibility.
+
+If the asset does not belong to the current user, returns an HTTP 403.
+
+If the id does not represent a known asset, returns an HTTP 404 with an appropriate error message.
+
+#### 4.2.5 `DELETE /assets/:assetId`
 
 Deletes an asset for the current user by it's id.
+
+If the asset does not belong to the current user, returns an HTTP 403.
 
 If the id does not represent a known asset, returns an HTTP 404 with an appropriate error message.
 
@@ -229,55 +229,69 @@ A collection's data is stored in an object in the following format:
 }
 ```
 
-```js
-class Collection {
-  constructor(
-    id = randomUUID(),
-    ownerId,
-    created = new Date().toISOString(),
-    updated = new Date().toISOString(),
-    name,
-    visibility,
-    assets = [],
-  ) {
-    this.id = id;
-    this.ownerId = ownerId;
-    this.created = created;
-    this.updated = updated;
-    this.name = name;
-    this.visibility = visibility;
-    this.assets = assets;
-  }
-}
-```
-
 #### 4.3.1 `POST /collections`
 
 Creates a collection for the current user (i.e. authenticated user). The client posts the collection parameters in the request body. A Collection object is created to store collection data.
 
-#### 4.3.2 `GET /collections/:userId`
+#### 4.3.2 `GET /collections`
 
-Get the user's collections without the list of assets. If the `userId` is not the current user, return only public collections.
+Query Parameters: `name`, `userId`, `expand`
 
-If the id does not represent a known user, returns an HTTP 404 with an appropriate error message.
+Gets a list of all public collections from all users, filtered by name and the creator's user id.
 
-#### 4.3.3 `GET /collections/:userId/:collectionId`
+```json
+{
+  "status": "ok",
+  "collections": [
+    "b9e7a264-630f-436d-a785-27f30233faea",
+    "dad25b07-8cd6-498b-9aaf-46d358ea97fe"
+  ]
+}
+```
 
-Get a collection by id with the list of assets.
+If `expand` is `true`, returns the full collection objects instead of just the IDs:
 
-If the collection is not public, returns an HTTP 404.
+```json
+{
+  "status": "ok",
+  "collections": [
+    {
+      "id": "30a84843-0cd4-4975-95ba-b96112aea189",
+      "ownerId": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
+      "created": "2021-11-02T15:09:50.403Z",
+      "updated": "2021-11-02T15:09:50.403Z",
+      "name": "My Collection",
+      "visibility": "public",
+      "assets": [
+        "30a84843-0cd4-4975-95ba-b96112aea189",
+        "40a84843-0cd4-4975-95ba-b96112aea189"
+      ]
+    }
+  ]
+}
+```
 
-If the ids do not represent a known user and collection, returns an HTTP 404 with an appropriate error message.
+If `userId` is the current user, also returns private and unlisted collections.
 
-#### 4.3.4 `DELETE /collections/:collectionId`
+If `userId` is supplied and does not represent a known user, returns an HTTP 404 with an appropriate error message.
 
-Allows the authenticated user to delete one of their existing collections with the given id.
+#### 4.3.3 `GET /collections/:collectionId`
+
+Get a collection by the given `collectionId`.
+
+If the collection does not belong to the current user and is not public, returns an HTTP 403.
 
 If the id does not represent a known collection, returns an HTTP 404 with an appropriate error message.
 
 #### 4.3.5 `PATCH /collections/:collectionId`
 
-Allows the authenticated user to update (i.e., replace) their existing collection with the specified id - add/remove assets, update name/description/privacy
+Updates a collection for the current user by it's id. Can add/remove assets, and update name/description/visibility.
+
+If the id does not represent a known collection, returns an HTTP 404 with an appropriate error message.
+
+#### 4.3.4 `DELETE /collections/:collectionId`
+
+Allows the authenticated user to delete one of their existing collections with the given id.
 
 If the id does not represent a known collection, returns an HTTP 404 with an appropriate error message.
 
@@ -294,22 +308,6 @@ A user's data is stored in an object in the following format:
 }
 ```
 
-```js
-class User {
-  constructor(
-    id = randomUUID(),
-    joined = new Date().toISOString(),
-    displayName,
-    bio,
-  ) {
-    this.id = id;
-    this.joined = joined;
-    this.displayName = displayName;
-    this.bio = bio;
-  }
-}
-```
-
 #### 4.4.1 `GET /users/:userId`
 
 Get the user's info by id.
@@ -318,7 +316,7 @@ If the id does not represent a known user, returns an HTTP 404 with an appropria
 
 #### 4.4.2 `PATCH /users`
 
-Update the current user's info.
+Update the current user's info. displayName and bio can be updated.
 
 ### 4.5 Comments
 
@@ -335,26 +333,6 @@ A comment's data is stored in an object in the following format:
 }
 ```
 
-```js
-class Comment {
-  constructor(
-    id = randomUUID(),
-    assetId,
-    userId,
-    created = new Date().toISOString(),
-    updated = new Date().toISOString(),
-    body,
-  ) {
-    this.id = id;
-    this.assetId = assetId;
-    this.userId = userId;
-    this.created = created;
-    this.updated = updated;
-    this.body = body;
-  }
-}
-```
-
 #### 4.5.1 `POST /comments/:assetId`
 
 Create a comment on an asset.
@@ -367,16 +345,16 @@ Get comments for an asset by id.
 
 If the id does not represent a known asset, returns an HTTP 404 with an appropriate error message.
 
-#### 4.5.3 `PATCH /comments/:assetId/:commentId`
+#### 4.5.3 `PATCH /comments/:commentId`
 
 Update a comment for an asset by id.
 
-If the ids do not represent a known asset and comment, returns an HTTP 404 with an appropriate error message.
+If the id does not represent a known comment, returns an HTTP 404 with an appropriate error message.
 
-#### 4.5.4 `DELETE /comments/:assetId/:commentId`
+#### 4.5.4 `DELETE /comments/:commentId`
 
-Delete a comment for an asset by id.
+Delete a comment for an asset by id. Both the asset owner and the commenting user can delete a comment.
 
-If the ids do not represent a known asset and comment, returns an HTTP 404 with an appropriate error message.
+If the id does not represent a known comment, returns an HTTP 404 with an appropriate error message.
 
 If neither the comment nor the asset belong to the current user, returns an HTTP 403 with an appropriate error message.
