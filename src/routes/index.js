@@ -32,7 +32,7 @@ router.get("/", (req, res) => {
   // Send a 200 'OK' response with info about our repo
   return res.status(200).json(
     createSuccessResponse({
-      githubUrl: "https://github.com/tabletop-generator/server",
+      githubUrl: "https://github.com/tabletop-generator/ttg-server",
       version,
       hostname: hostname(),
     }),

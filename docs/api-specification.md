@@ -67,7 +67,7 @@ An unauthenticated `/` route is available for checking the health of the service
 ```json
 {
   "status": "ok",
-  "githubUrl": "https://github.com/tabletop-generator/server",
+  "githubUrl": "https://github.com/tabletop-generator/ttg-server",
   "version": "version from package.json",
   "hostname": "the host computer's domain name"
 }
