@@ -26,13 +26,29 @@
 
 ## Running
 
+### Docker Compose (Recommended)
+
+This will run the server with a Docker Compose stack including Postgres, pgAdmin, and MinIO. It will persist data in Docker volumes even after the services are stopped.
+
+```
+docker compose up [-d]
+```
+
+To remove the services, use the following command:
+
+```
+docker compose down
+```
+
 ### Single Docker Container
 
 This will run the server as a Docker container and store data in the **server's** memory.
 
-`docker build -t ttg-server .`
+```
+docker build -t ttg-server .
 
-`docker container run [--rm] [--init] [-it] [-d] -p [8080]:8080 --env-file [.env] ttg-server`
+docker container run [--rm] [--init] [-it] [-d] -p [8080]:8080 --env-file [.env] ttg-server
+```
 
 ### Run On Host Machine
 
@@ -102,8 +118,8 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
    ```bash
    npm run lint
    npm run test
-   npm run start
-   npm run test:integration # Server must be running, so run "npm run start" first
+   docker compose up -d
+   npm run test:integration # Server must be running, so run "docker compose up" first
    ```
 
 5. **Review your changes**
