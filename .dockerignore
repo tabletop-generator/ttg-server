@@ -3,6 +3,8 @@
 .husky/
 .vscode/
 coverage/
+docker/
+docs/
 node_modules/
 tests/
 !tests/.htpasswd
@@ -10,5 +12,6 @@ tests/
 .gitignore
 .lintstagedrc.js
 .prettierrc
+docker-compose.yml
 eslint.config.mjs
 jest.config.mjs
