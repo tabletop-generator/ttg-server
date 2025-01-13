@@ -171,20 +171,16 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
   - **Security:** [Helmet](https://helmetjs.github.io/), [Express/CORS](https://github.com/expressjs/cors#readme)
   - **Graceful Shutdown:** [Stoppable](https://github.com/hunterloftis/stoppable#readme)
   - **Rate Limiting:** [express-rate-limit](https://express-rate-limit.mintlify.app/)
+- **Storage:**
+  - **Production:** TBD
+  - **Local:** [Postgres](https://www.postgresql.org/), [MinIO](https://min.io/)
 - **Authorization:**
   - [Passport.js](https://www.passportjs.org/)
-  - **Production:**
-    - TBD
-  - **Development/Testing:**
-    - [http-auth](https://www.npmjs.com/package/http-auth)
-    - [http-auth-passport](https://www.npmjs.com/package/http-auth-passport)
+  - **Production:** TBD
+  - **Local:** [http-auth](https://www.npmjs.com/package/http-auth), [http-auth-passport](https://www.npmjs.com/package/http-auth-passport)
 - **Testing:**
-  - **Unit Testing:**
-    - [Jest](https://jestjs.io/)
-    - [Supertest](https://github.com/ladjs/supertest#readme)
-  - **Integration Testing:**
-    - [Hurl](https://hurl.dev/)
-    - [Docker Compose](https://docs.docker.com/compose/)
+  - **Unit Testing:** [Jest](https://jestjs.io/), [Supertest](https://github.com/ladjs/supertest#readme)
+  - **Integration Testing:** [Hurl](https://hurl.dev/), [Docker Compose](https://docs.docker.com/compose/)
 - **Runtime:** [Node.js](https://nodejs.org/docs/latest-v20.x/api/)
 - **Runners:** [nodemon](https://github.com/remy/nodemon#readme)
 - **Package Manager:** [npm](https://docs.npmjs.com/)
