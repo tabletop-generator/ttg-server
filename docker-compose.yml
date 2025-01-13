@@ -16,22 +16,23 @@ services:
     image: postgres:17.2-alpine3.21
     ports:
       - 5432:5432
-    env_file:
-      - .env.docker-compose
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./docker/postgres/initdb:/docker-entrypoint-initdb.d
+    env_file:
+      - .env.docker-compose
+    init: true
 
   pgadmin:
     container_name: ttg-pgadmin
     image: dpage/pgadmin4:8.14
     ports:
       - 5050:80
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
     env_file:
       - .env.docker-compose
     init: true
-    volumes:
-      - pgadmin_data:/var/lib/pgadmin
 
   minio:
     container_name: ttg-minio
@@ -42,11 +43,11 @@ services:
       - "9000:9000"
       # The minio web console endpoint
       - "9001:9001"
+    volumes:
+      - minio_data:/data
     env_file:
       - .env.docker-compose
     init: true
-    volumes:
-      - minio_data:/data
 
 volumes:
   pgadmin_data:
