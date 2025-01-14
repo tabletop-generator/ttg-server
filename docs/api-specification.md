@@ -98,7 +98,7 @@ An asset's metadata is an object that describes the asset. For example, a charac
 
 #### 4.2.1 `POST /assets`
 
-Generates an asset for the current user (i.e. authenticated user). The client posts the asset parameters in the request body. An Asset object is created to hold asset data - including asset id, user id, name, visibility, creation date, last updated date, type, number of likes, and the generated description (image URL is generated based on user and asset id so doesn't need to be stored). The asset parameters are then used to fill in prompts and send an API call to the image and text generation APIs. The generated image and other asset data are stored.
+Generates an asset for the current user (i.e. authenticated user). The client posts the asset parameters in the request body. An Asset object is created to hold asset data - including asset id, user id, name, visibility, creation date, last updated date, type, number of likes, and the generated description. The asset parameters are then used to fill in prompts and send an API call to the image and text generation APIs. The generated image and other asset data are stored. A presigned URL for the image is created and stored along with it's expiration timestamp.
 
 A successful response returns an HTTP `201`. It includes a `Location` header with a full URL to use in order to access the newly created asset, for example: Location: https://ttg-api.com/v1/assets/30a84843-0cd4-4975-95ba-b96112aea189. See https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.30.
 
@@ -119,7 +119,9 @@ A successful response returns an HTTP `201`. It includes a `Location` header wit
     "age": "Middle-aged",
     "build": "Muscular",
     "alignment": "True Neutral",
-    "pose": "Standing"
+    "pose": "Standing",
+    "imageUrl": "https://bucket-name.s3.amazonaws.com/object-key?AWSAccessKeyId=AKIA...&Expires=...&Signature=...",
+    "imageUrlExpiry": "2025-01-13T15:30:00Z"
   }
 }
 ```
@@ -128,7 +130,11 @@ A successful response returns an HTTP `201`. It includes a `Location` header wit
 
 Query Parameters: `name`, `desc`, `type`, `prompt`, `expand`, `userId`
 
-Gets a list of all public assets filtered by the asset's type, name, description, the creator's user id, and the original prompt. If no assets are found, an empty array is returned instead of an error.
+Gets a list of all public assets filtered by the asset's type, name, description, the creator's user id, and the original prompt.
+
+If the image's presigned URL is expired, get a new URL, save it to the db, and return it in the response. Else, return existing presigned URL.
+
+If no assets are found, an empty array is returned instead of an error.
 
 ```json
 {
@@ -160,7 +166,9 @@ If `expand` is `true`, returns the full asset objects instead of just the IDs:
       "age": "Middle-aged",
       "build": "Muscular",
       "alignment": "True Neutral",
-      "pose": "Standing"
+      "pose": "Standing",
+      "imageUrl": "https://bucket-name.s3.amazonaws.com/object-key?AWSAccessKeyId=AKIA...&Expires=...&Signature=...",
+      "imageUrlExpiry": "2025-01-13T15:30:00Z"
     },
     {
       "id": "40a84843-0cd4-4975-95ba-b96112aea189",
@@ -176,7 +184,9 @@ If `expand` is `true`, returns the full asset objects instead of just the IDs:
       "age": "Middle-aged",
       "build": "Muscular",
       "alignment": "Neutral Good",
-      "pose": "Standing"
+      "pose": "Standing",
+      "imageUrl": "https://bucket-name.s3.amazonaws.com/object-key?AWSAccessKeyId=AKIA...&Expires=...&Signature=...",
+      "imageUrlExpiry": "2025-01-13T15:30:00Z"
     }
   ]
 }
@@ -189,6 +199,8 @@ If `userId` is supplied and does not represent a known user, returns an HTTP 404
 #### 4.2.3 `GET /assets/:assetId`
 
 Gets an asset by the given `assetId`.
+
+If image presigned URL is expired, get a new URL, save it to the db, and return it in the response. Else, return existing presigned URL.
 
 If the asset does not belong to the current user and is not public, returns an HTTP 403.
 
@@ -304,7 +316,11 @@ A user's data is stored in an object in the following format:
   "id": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
   "joined": "2021-11-02T15:09:50.403Z",
   "displayName": "dkowalski02",
-  "bio": "hello"
+  "bio": "hello",
+  "featuredCollections": [
+    "30a84843-0cd4-4975-95ba-b96112aea189",
+    "40a84843-0cd4-4975-95ba-b96112aea189"
+  ]
 }
 ```
 
@@ -316,7 +332,7 @@ If the id does not represent a known user, returns an HTTP 404 with an appropria
 
 #### 4.4.2 `PATCH /users`
 
-Update the current user's info. displayName and bio can be updated.
+Update the current user's info. displayName, bio, and featuredCollections can be updated.
 
 ### 4.5 Comments
 
