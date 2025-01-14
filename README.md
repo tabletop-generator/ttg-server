@@ -26,13 +26,29 @@
 
 ## Running
 
+### Docker Compose (Recommended)
+
+This will run the server with a Docker Compose stack including Postgres, pgAdmin, and MinIO. It will persist data in Docker volumes even after the services are stopped.
+
+```
+docker compose up [-d]
+```
+
+To remove the services, use the following command:
+
+```
+docker compose down
+```
+
 ### Single Docker Container
 
 This will run the server as a Docker container and store data in the **server's** memory.
 
-`docker build -t ttg-server .`
+```
+docker build -t ttg-server .
 
-`docker container run [--rm] [--init] [-it] [-d] -p [8080]:8080 --env-file [.env] ttg-server`
+docker container run [--rm] [--init] [-it] [-d] -p [8080]:8080 --env-file [.env] ttg-server
+```
 
 ### Run On Host Machine
 
@@ -102,8 +118,8 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
    ```bash
    npm run lint
    npm run test
-   npm run start
-   npm run test:integration # Server must be running, so run "npm run start" first
+   docker compose up -d
+   npm run test:integration # Server must be running, so run "docker compose up" first
    ```
 
 5. **Review your changes**
@@ -155,20 +171,16 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
   - **Security:** [Helmet](https://helmetjs.github.io/), [Express/CORS](https://github.com/expressjs/cors#readme)
   - **Graceful Shutdown:** [Stoppable](https://github.com/hunterloftis/stoppable#readme)
   - **Rate Limiting:** [express-rate-limit](https://express-rate-limit.mintlify.app/)
+- **Storage:**
+  - **Production:** TBD
+  - **Local:** [Postgres](https://www.postgresql.org/), [MinIO](https://min.io/)
 - **Authorization:**
   - [Passport.js](https://www.passportjs.org/)
-  - **Production:**
-    - TBD
-  - **Development/Testing:**
-    - [http-auth](https://www.npmjs.com/package/http-auth)
-    - [http-auth-passport](https://www.npmjs.com/package/http-auth-passport)
+  - **Production:** TBD
+  - **Local:** [http-auth](https://www.npmjs.com/package/http-auth), [http-auth-passport](https://www.npmjs.com/package/http-auth-passport)
 - **Testing:**
-  - **Unit Testing:**
-    - [Jest](https://jestjs.io/)
-    - [Supertest](https://github.com/ladjs/supertest#readme)
-  - **Integration Testing:**
-    - [Hurl](https://hurl.dev/)
-    - [Docker Compose](https://docs.docker.com/compose/)
+  - **Unit Testing:** [Jest](https://jestjs.io/), [Supertest](https://github.com/ladjs/supertest#readme)
+  - **Integration Testing:** [Hurl](https://hurl.dev/), [Docker Compose](https://docs.docker.com/compose/)
 - **Runtime:** [Node.js](https://nodejs.org/docs/latest-v20.x/api/)
 - **Runners:** [nodemon](https://github.com/remy/nodemon#readme)
 - **Package Manager:** [npm](https://docs.npmjs.com/)
