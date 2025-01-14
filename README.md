@@ -1,6 +1,6 @@
 # ttg-server
 
-[![CI](https://github.com/tabletop-generator/server/actions/workflows/ci.yml/badge.svg)](https://github.com/tabletop-generator/server/actions/workflows/ci.yml)
+[![CI](https://github.com/tabletop-generator/ttg-server/actions/workflows/ci.yml/badge.svg)](https://github.com/tabletop-generator/ttg-server/actions/workflows/ci.yml)
 
 ## Prerequisites
 
@@ -83,7 +83,7 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
    git switch -c <issue-number> main
    ```
 
-   - If no issue exists for the change you are making, please [create one](https://github.com/tabletop-generator/server/issues/new/choose).
+   - If no issue exists for the change you are making, please [create one](https://github.com/tabletop-generator/ttg-server/issues/new/choose).
 
 3. **Make your changes**
 
@@ -140,7 +140,7 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
 
 9. **Create a pull request**
 
-   [Create a pull request](https://github.com/tabletop-generator/server/compare) on GitHub. Fill in the template and link it to the issue using:
+   [Create a pull request](https://github.com/tabletop-generator/ttg-server/compare) on GitHub. Fill in the template and link it to the issue using:
 
    ```txt
    Fixes #[issue number]
