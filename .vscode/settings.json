@@ -3,8 +3,11 @@
     "codepaths",
     "colour",
     "dkowalski",
+    "dpage",
     "helmetjs",
+    "initdb",
     "LOGLEVEL",
+    "pgadmin",
     "pino",
     "tsbuildinfo",
     "tseslint"
