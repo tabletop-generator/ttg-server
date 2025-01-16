@@ -176,7 +176,7 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
   - **Local:** [Postgres](https://www.postgresql.org/), [MinIO](https://min.io/)
 - **Authorization:**
   - [Passport.js](https://www.passportjs.org/)
-  - **Production:** TBD
+  - **Production:** [Amazon Cognito](https://aws.amazon.com/cognito/), [aws-jwt-verify](https://github.com/awslabs/aws-jwt-verify#readme), [passport-http-bearer](https://www.passportjs.org/packages/passport-http-bearer/)
   - **Local:** [http-auth](https://www.npmjs.com/package/http-auth), [http-auth-passport](https://www.npmjs.com/package/http-auth-passport)
 - **Testing:**
   - **Unit Testing:** [Jest](https://jestjs.io/), [Supertest](https://github.com/ladjs/supertest#readme)
