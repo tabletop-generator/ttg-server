@@ -324,7 +324,11 @@ A user's data is stored in an object in the following format:
 }
 ```
 
-#### 4.4.1 `GET /users/:userId`
+#### 4.4.1 `POST /users`
+
+Check if the current user exists. If not, create a record for the user.
+
+#### 4.4.2 `GET /users/:userId`
 
 Get the user's info by id.
 
