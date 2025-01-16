@@ -1,8 +1,8 @@
+const express = require("express");
+
 /**
  * The entry-point for /comments endpoints
  */
-
-const express = require("express");
 
 const router = express.Router();
 
