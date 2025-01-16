@@ -349,17 +349,21 @@ A comment's data is stored in an object in the following format:
 }
 ```
 
-#### 4.5.1 `POST /comments/:assetId`
+#### 4.5.1 `POST /comments`
 
 Create a comment on an asset.
 
+If the asset id does not represent a known asset, returns an HTTP 400 with an appropriate error message.
+
+#### 4.5.2 `GET /comments`
+
+Query Parameters: `assetId` (required)
+
+Get comments for an asset.
+
 If the id does not represent a known asset, returns an HTTP 404 with an appropriate error message.
 
-#### 4.5.2 `GET /comments/:assetId`
-
-Get comments for an asset by id.
-
-If the id does not represent a known asset, returns an HTTP 404 with an appropriate error message.
+If the asset id is not supplied, returns an HTTP 400 with an appropriate error message.
 
 #### 4.5.3 `PATCH /comments/:commentId`
 
