@@ -3,7 +3,7 @@
 ## User
 
 ```txt
-USER [PK userId, hashedEmail, displayName, joinDate, profileBio, profilePicture]
+USER [PK userId, hashedEmail, displayName, joinDate, profileBio, profilePictureUrl, profilePictureUrlExpiry]
 ```
 
 ## Asset
