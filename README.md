@@ -31,7 +31,7 @@
 
 ## Running
 
-### Docker Compose (Recommended)
+### Docker Compose
 
 This will run the server with a Docker Compose stack including Postgres, pgAdmin, and MinIO. It will persist data in Docker volumes even after the services are stopped.
 
