@@ -89,7 +89,7 @@ jobs:
         run: npm install
 
       - name: Build Containers
-        run: docker compose up -d
+        run: docker compose -f docker-compose.ci.yml up -d
 
       - name: Wait for Services to be Healthy
         run: |
