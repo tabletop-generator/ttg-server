@@ -1,0 +1,126 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Asset {
+  assetId         Int               @id @default(autoincrement())
+  userId          Int?
+  name            String            @db.VarChar(100)
+  visibility      visibility_type
+  createdDate     DateTime          @default(now()) @db.Timestamp(6)
+  updatedDate     DateTime          @default(now()) @db.Timestamp(6)
+  isFeatured      Boolean?          @default(false)
+  likes           Int?              @default(0)
+  type            asset_type
+  imageUrl        String?
+  imageUrlExpiry  DateTime?         @db.Timestamp(6)
+  user            User?             @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: NoAction)
+  characterAsset  CharacterAsset?
+  collectionAsset CollectionAsset[]
+  comment         Comment[]
+  locationAsset   LocationAsset?
+  mapAsset        MapAsset?
+  questAsset      QuestAsset?
+}
+
+model CharacterAsset {
+  assetId     Int     @id
+  appearance  String?
+  class       String? @db.VarChar(50)
+  personality String?
+  equipment   String?
+  asset       Asset   @relation(fields: [assetId], references: [assetId], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model Collection {
+  collectionId    Int               @id @default(autoincrement())
+  userId          Int?
+  name            String            @db.VarChar(100)
+  description     String?
+  createdDate     DateTime          @default(now()) @db.Timestamp(6)
+  updatedDate     DateTime          @default(now()) @db.Timestamp(6)
+  visibility      visibility_type
+  user            User?             @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: NoAction)
+  collectionAsset CollectionAsset[]
+}
+
+model CollectionAsset {
+  collectionId Int
+  assetId      Int
+  asset        Asset      @relation(fields: [assetId], references: [assetId], onDelete: Cascade, onUpdate: NoAction)
+  collection   Collection @relation(fields: [collectionId], references: [collectionId], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([collectionId, assetId])
+}
+
+model Comment {
+  commentId   Int      @id @default(autoincrement())
+  assetId     Int?
+  userId      Int?
+  createdDate DateTime @default(now()) @db.Timestamp(6)
+  updatedDate DateTime @default(now()) @db.Timestamp(6)
+  body        String
+  asset       Asset?   @relation(fields: [assetId], references: [assetId], onDelete: Cascade, onUpdate: NoAction)
+  user        User?    @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model LocationAsset {
+  assetId          Int     @id
+  description      String?
+  type             String? @db.VarChar(50)
+  theme            String? @db.VarChar(50)
+  mood             String? @db.VarChar(50)
+  timeOfDay        String? @db.VarChar(50)
+  pointsOfInterest String?
+  lore             String?
+  asset            Asset   @relation(fields: [assetId], references: [assetId], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model MapAsset {
+  assetId    Int     @id
+  dimensions String? @db.VarChar(50)
+  lore       String?
+  scale      String? @db.VarChar(50)
+  biome      String? @db.VarChar(50)
+  asset      Asset   @relation(fields: [assetId], references: [assetId], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model QuestAsset {
+  assetId         Int     @id
+  description     String?
+  objective       String?
+  reward          String?
+  difficultyLevel String? @db.VarChar(50)
+  asset           Asset   @relation(fields: [assetId], references: [assetId], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model User {
+  userId                  Int          @id @default(autoincrement())
+  hashedEmail             String       @unique
+  displayName             String       @db.VarChar(100)
+  joinDate                DateTime     @default(now()) @db.Timestamp(6)
+  profileBio              String?
+  profilePictureUrl       String?
+  profilePictureUrlExpiry DateTime?    @db.Timestamp(6)
+  asset                   Asset[]
+  collection              Collection[]
+  comment                 Comment[]
+}
+
+enum asset_type {
+  character
+  quest
+  map
+  location
+}
+
+enum visibility_type {
+  public
+  private
+  unlisted
+}

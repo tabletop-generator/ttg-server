@@ -18,11 +18,14 @@
 
 - `npm i`: Install required packages using npm
 
+- `npx prisma generate`: Generate the Prisma ORM Client
+
 - Enable these VSCode extensions in the project workspace:
 
   - [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker)
   - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
   - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+  - [Prisma](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma)
 
 ## Running
 
