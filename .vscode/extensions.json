@@ -2,6 +2,9 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "streetsidesoftware.code-spell-checker"
+    "streetsidesoftware.code-spell-checker",
+    "prisma.prisma",
+    "jacobpfeifer.pfeifer-hurl",
+    "christian-kohler.npm-intellisense"
   ]
 }

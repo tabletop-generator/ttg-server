@@ -9,7 +9,7 @@ USER [PK userId, hashedEmail, displayName, joinDate, profileBio, profilePictureU
 ## Asset
 
 ```txt
-ASSET [PK assetId, FK userId, name, visibility, createdDate, updatedDate, likes, type, imageUrl, imageUrlExpiry]
+ASSET [PK assetId, FK userId, name, visibility, createdDate, updatedDate, isFeatured, likes, type, imageUrl, imageUrlExpiry]
 
 CHARACTER_ASSET [PK FK assetId, appearance, class, personality, equipment]
 LOCATION_ASSET [PK FK assetId, description, type, theme, mood, timeOfDay, pointsOfInterest, lore]
@@ -28,5 +28,4 @@ COMMENT [PK commentId, FK assetId, FK userId, createdDate, updatedDate, body]
 ```txt
 COLLECTION [PK collectionId, FK userId, name, description, createdDate, updatedDate, visibility]
 COLLECTION_ASSET [PK FK collectionId, PK FK assetId]
-USER_FEATURED_COLLECTIONS [PK FK collectionId, PK FK userId]
 ```
