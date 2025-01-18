@@ -31,7 +31,8 @@ services:
   pgadmin:
     container_name: ttg-pgadmin
     image: dpage/pgadmin4:8.14
-    depends_on: postgres
+    depends_on:
+      - postgres
     ports:
       - 5050:80
     volumes:
