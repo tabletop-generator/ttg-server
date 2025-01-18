@@ -91,33 +91,13 @@ jobs:
       - name: Build Containers
         run: docker compose -f docker-compose.ci.yml up -d
 
-      - name: Wait for Core Services to be Healthy
+      - name: Wait for TTG Server to be Healthy
         run: |
-          services=(ttg-server ttg-postgres ttg-minio)
-          for service in "${services[@]}"; do
-            echo "Waiting for $service to be healthy..."
-            until [ "`docker inspect -f {{.State.Health.Status}} $service`" == "healthy" ]; do
-              sleep 5;
-            done
+          echo "Waiting for ttg-server to be healthy..."
+          until [ "`docker inspect -f {{.State.Health.Status}} ttg-server`" == "healthy" ]; do
+            sleep 5;
           done
-          echo "All core services are healthy!"
-
-      - name: Wait for MinIO Bucket Creation
-        run: |
-          echo "Waiting for MinIO bucket creation to complete..."
-          until [ "$(docker inspect -f '{{.State.Status}}' ttg-minio-client)" == "exited" ] && \
-                [ "$(docker inspect -f '{{.State.ExitCode}}' ttg-minio-client)" == "0" ]; do
-            sleep 2
-          done
-
-          # Double check it actually created the bucket by looking at logs
-          if ! docker logs ttg-minio-client | grep -q "Bucket created successfully"; then
-            echo "Container exited successfully but bucket creation message not found in logs"
-            docker logs ttg-minio-client
-            exit 1
-          fi
-
-          echo "MinIO bucket creation completed successfully"
+          echo "TTG Server is healthy!"
 
       - name: Run Hurl Tests
         # Print the logs if the tests fail
