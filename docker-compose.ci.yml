@@ -1,0 +1,53 @@
+services:
+  ttg-server:
+    container_name: ttg-server
+    build: .
+    depends_on:
+      - postgres
+      - minio
+    ports:
+      - 8080:8080
+    env_file:
+      - .env.docker-compose
+    init: true
+
+  postgres:
+    container_name: ttg-postgres
+    image: postgres:17.2-alpine3.21
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/initdb:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    env_file:
+      - .env.docker-compose
+    init: true
+
+  minio:
+    container_name: ttg-minio
+    image: minio/minio
+    command: server --console-address ":9001" /data
+    ports:
+      # The minio API endpoint
+      - "9000:9000"
+      # The minio web console endpoint
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    env_file:
+      - .env.docker-compose
+    init: true
+
+volumes:
+  postgres_data:
+  minio_data:
