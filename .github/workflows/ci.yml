@@ -104,11 +104,14 @@ jobs:
 
       - name: Wait for MinIO Bucket Creation
         run: |
-          echo "Waiting for MinIO bucket to be created..."
-          until docker exec ttg-minio-client mc ls local/ttg > /dev/null 2>&1; do
-            sleep 5
-          done
-          echo "MinIO bucket is ready!"
+          echo "Checking mc container status..."
+          docker ps -a | grep ttg-minio-client
+
+          echo "Checking mc container logs..."
+          docker logs ttg-minio-client
+
+          echo "Attempting bucket check..."
+          docker exec ttg-minio-client mc ls local/ttg || echo "Failed to list bucket"
 
       - name: Run Hurl Tests
         # Print the logs if the tests fail
