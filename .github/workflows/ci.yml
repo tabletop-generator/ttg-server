@@ -91,7 +91,19 @@ jobs:
       - name: Build Containers
         run: docker compose up -d
 
-        # Print the logs if the tests fail
+      - name: Wait for Services to be Healthy
+        run: |
+          services=(ttg-server ttg-postgres ttg-minio)
+          for service in "${services[@]}"; do
+            echo "Waiting for $service to be healthy..."
+            until [ "`docker inspect -f {{.State.Health.Status}} $service`" == "healthy" ]; do
+              sleep 5;
+            done
+          done
+          echo "All services are healthy!"
+
+          # Print the logs if the tests fail
+
       - name: Run Hurl Tests
         run: npm run test:integration || (docker compose logs; exit 1)
 
