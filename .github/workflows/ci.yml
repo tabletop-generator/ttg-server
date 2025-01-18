@@ -35,7 +35,7 @@ jobs:
         run: npm run lint
 
   unit-tests:
-    name: Run unit tests
+    name: Unit Tests
     runs-on: ubuntu-latest
 
     strategy:
@@ -91,24 +91,20 @@ jobs:
       - name: Build Containers
         run: docker compose -f docker-compose.ci.yml up -d
 
-      - name: Wait for Services to be Healthy
+      - name: Wait for TTG Server to be Healthy
         run: |
-          services=(ttg-server ttg-postgres ttg-minio)
-          for service in "${services[@]}"; do
-            echo "Waiting for $service to be healthy..."
-            until [ "`docker inspect -f {{.State.Health.Status}} $service`" == "healthy" ]; do
-              sleep 5;
-            done
+          echo "Waiting for ttg-server to be healthy..."
+          until [ "`docker inspect -f {{.State.Health.Status}} ttg-server`" == "healthy" ]; do
+            sleep 5;
           done
-          echo "All services are healthy!"
-
-          # Print the logs if the tests fail
+          echo "TTG Server is healthy!"
 
       - name: Run Hurl Tests
+        # Print the logs if the tests fail
         run: npm run test:integration || (docker compose logs; exit 1)
 
   docker-build:
-    name: Build Docker image
+    name: Build Docker Image
     # Don't bother running this job unless the other four all pass
     needs: [lint, dockerfile-lint, unit-tests, integration-tests]
     runs-on: ubuntu-latest
@@ -139,7 +135,7 @@ jobs:
           path: /tmp/image.tar
 
   ghcr:
-    name: Push image to GitHub Container Registry
+    name: Push Docker Image to GitHub Container Registry
     needs: [docker-build]
     # Push only on commits to main i.e. don't push on pull requests
     if: github.ref == 'refs/heads/main'

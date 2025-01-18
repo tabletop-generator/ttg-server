@@ -3,8 +3,12 @@ services:
     container_name: ttg-server
     build: .
     depends_on:
-      - postgres
-      - minio
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+      mc:
+        condition: service_completed_successfully
     ports:
       - 8080:8080
     env_file:
@@ -47,6 +51,23 @@ services:
     env_file:
       - .env.docker-compose
     init: true
+
+  mc:
+    container_name: ttg-minio-client
+    image: minio/mc
+    depends_on:
+      minio:
+        condition: service_healthy
+      # Create bucket if missing
+    entrypoint: >
+      /bin/sh -c "
+      until (mc alias set local http://ttg-minio:9000 $$MINIO_ROOT_USER $$MINIO_ROOT_PASSWORD && mc mb --region us-east-2 --ignore-existing local/ttg); do
+        echo 'Waiting for MinIO to be ready...';
+        sleep 5;
+      done;
+      "
+    env_file:
+      - .env.docker-compose
 
 volumes:
   postgres_data:
