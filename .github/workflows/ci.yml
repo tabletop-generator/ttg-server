@@ -104,14 +104,20 @@ jobs:
 
       - name: Wait for MinIO Bucket Creation
         run: |
-          echo "Checking mc container status..."
-          docker ps -a | grep ttg-minio-client
+          echo "Waiting for MinIO bucket creation to complete..."
+          until [ "$(docker inspect -f '{{.State.Status}}' ttg-minio-client)" == "exited" ] && \
+                [ "$(docker inspect -f '{{.State.ExitCode}}' ttg-minio-client)" == "0" ]; do
+            sleep 2
+          done
 
-          echo "Checking mc container logs..."
-          docker logs ttg-minio-client
+          # Double check it actually created the bucket by looking at logs
+          if ! docker logs ttg-minio-client | grep -q "Bucket created successfully"; then
+            echo "Container exited successfully but bucket creation message not found in logs"
+            docker logs ttg-minio-client
+            exit 1
+          fi
 
-          echo "Attempting bucket check..."
-          docker exec ttg-minio-client mc ls local/ttg || echo "Failed to list bucket"
+          echo "MinIO bucket creation completed successfully"
 
       - name: Run Hurl Tests
         # Print the logs if the tests fail
