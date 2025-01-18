@@ -24,6 +24,8 @@
 
   - [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker)
   - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+  - [Hurl](https://marketplace.visualstudio.com/items?itemName=JacobPfeifer.pfeifer-hurl)
+  - [npm Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense)
   - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
   - [Prisma](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma)
 

@@ -3,6 +3,8 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "streetsidesoftware.code-spell-checker",
-    "prisma.prisma"
+    "prisma.prisma",
+    "jacobpfeifer.pfeifer-hurl",
+    "christian-kohler.npm-intellisense"
   ]
 }
