@@ -35,7 +35,7 @@ jobs:
         run: npm run lint
 
   unit-tests:
-    name: Run unit tests
+    name: Unit Tests
     runs-on: ubuntu-latest
 
     strategy:
@@ -115,7 +115,7 @@ jobs:
         run: npm run test:integration || (docker compose logs; exit 1)
 
   docker-build:
-    name: Build Docker image
+    name: Build Docker Image
     # Don't bother running this job unless the other four all pass
     needs: [lint, dockerfile-lint, unit-tests, integration-tests]
     runs-on: ubuntu-latest
@@ -146,7 +146,7 @@ jobs:
           path: /tmp/image.tar
 
   ghcr:
-    name: Push image to GitHub Container Registry
+    name: Push Docker Image to GitHub Container Registry
     needs: [docker-build]
     # Push only on commits to main i.e. don't push on pull requests
     if: github.ref == 'refs/heads/main'
