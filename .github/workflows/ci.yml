@@ -91,7 +91,7 @@ jobs:
       - name: Build Containers
         run: docker compose -f docker-compose.ci.yml up -d
 
-      - name: Wait for Services to be Healthy
+      - name: Wait for Core Services to be Healthy
         run: |
           services=(ttg-server ttg-postgres ttg-minio)
           for service in "${services[@]}"; do
@@ -100,11 +100,18 @@ jobs:
               sleep 5;
             done
           done
-          echo "All services are healthy!"
+          echo "All core services are healthy!"
 
-          # Print the logs if the tests fail
+      - name: Wait for MinIO Bucket Creation
+        run: |
+          echo "Waiting for MinIO bucket to be created..."
+          until docker exec ttg-minio-client mc ls local/ttg > /dev/null 2>&1; do
+            sleep 5
+          done
+          echo "MinIO bucket is ready!"
 
       - name: Run Hurl Tests
+        # Print the logs if the tests fail
         run: npm run test:integration || (docker compose logs; exit 1)
 
   docker-build:
