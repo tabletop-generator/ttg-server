@@ -101,11 +101,14 @@ jobs:
             until [ "`docker inspect -f {{.State.Health.Status}} $service`" == "healthy" ]; do
               if [ $elapsed -ge $timeout ]; then
                 echo "Timeout reached for service $service"
+                echo "Printing Docker Compose logs..."
+                docker-compose logs
                 exit 1
               fi
               sleep 5
               elapsed=$((elapsed + 5))
             done
+            echo "$service is healthy!"
           done
           echo "All services are healthy!"
 
