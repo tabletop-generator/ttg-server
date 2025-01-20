@@ -54,7 +54,7 @@ module.exports = async (req, res, next) => {
       ];
     }
 
-    // Get assets from database with type-specific data
+    // Get assets from database
     const assets = await prisma.asset.findMany({
       where,
       include: {
@@ -77,27 +77,22 @@ module.exports = async (req, res, next) => {
       );
     }
 
-    // Return full asset objects
+    // Return expanded asset objects
     return res.status(200).json(
       createSuccessResponse({
-        assets: assets.map((asset) => {
-          // Get the specific asset type data
-          const typeData = asset[`${asset.type}Asset`];
-
-          return {
-            id: asset.assetId,
-            ownerId: asset.userId,
-            created: asset.createdDate,
-            updated: asset.updatedDate,
-            name: asset.name,
-            visibility: asset.visibility,
-            likes: asset.likes,
-            type: asset.type,
-            imageUrl: asset.imageUrl,
-            imageUrlExpiry: asset.imageUrlExpiry,
-            ...typeData,
-          };
-        }),
+        assets: assets.map((asset) => ({
+          id: asset.assetId,
+          ownerId: asset.userId,
+          created: asset.createdDate,
+          updated: asset.updatedDate,
+          name: asset.name,
+          visibility: asset.visibility,
+          likes: asset.likes,
+          type: asset.type,
+          imageUrl: asset.imageUrl,
+          imageUrlExpiry: asset.imageUrlExpiry,
+          ...asset[`${asset.type}Asset`],
+        })),
       }),
     );
   } catch (err) {
