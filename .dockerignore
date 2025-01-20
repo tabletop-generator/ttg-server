@@ -11,7 +11,9 @@ tests/
 .env*
 .gitignore
 .lintstagedrc.js
+.nvmrc
 .prettierrc
+docker-compose.ci.yml
 docker-compose.yml
 eslint.config.mjs
 jest.config.mjs
