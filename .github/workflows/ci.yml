@@ -8,7 +8,7 @@ on:
 
 jobs:
   lint:
-    name: Prettier Check & ESLint
+    name: Prettier & ESLint
     runs-on: ubuntu-latest
 
     strategy:
