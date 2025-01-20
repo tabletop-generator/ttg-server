@@ -35,12 +35,10 @@ services:
   minio:
     container_name: ttg-minio
     image: minio/minio
-    command: server --console-address ":9001" /data
+    command: server /data
     ports:
       # The minio API endpoint
       - "9000:9000"
-      # The minio web console endpoint
-      - "9001:9001"
     volumes:
       - minio_data:/data
     healthcheck:
