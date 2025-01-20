@@ -85,9 +85,12 @@ CREATE TABLE "Collection" (
     "visibility" enum_visibility NOT NULL
 );
 
--- Create Collection Asset bridge table
+-- Create Asset To Collection many-to-many table
 CREATE TABLE "_AssetToCollection" (
-    "collection_id" INT NOT NULL REFERENCES "Collection"("id") ON DELETE CASCADE,
-    "asset_id" INT NOT NULL REFERENCES "Asset"("id") ON DELETE CASCADE,
-    PRIMARY KEY ("collection_id", "asset_id")
+    "A" INT NOT NULL REFERENCES "Asset"("id") ON DELETE CASCADE,
+    "B" INT NOT NULL REFERENCES "Collection"("id") ON DELETE CASCADE
 );
+
+-- Create indices for Prisma implicit many-to-many relation
+CREATE UNIQUE INDEX "_AssetToCollection_AB_unique" ON "_AssetToCollection"("A" int4_ops,"B" int4_ops);
+CREATE INDEX "_AssetToCollection_B_index" ON "_AssetToCollection"("B" int4_ops);
