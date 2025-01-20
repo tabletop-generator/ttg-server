@@ -8,7 +8,7 @@ on:
 
 jobs:
   lint:
-    name: Prettier Check & ESLint
+    name: Prettier & ESLint
     runs-on: ubuntu-latest
 
     strategy:
@@ -84,11 +84,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
 
-      - name: Install node dependencies
+      - name: Install Node.js dependencies
         # NOTE: we need to install dev dependencies too vs. production only for hurl
         run: npm install
 
-      - name: Build Containers
+      - name: Start Docker Compose services
         run: docker compose -f docker-compose.ci.yml up -d
 
       - name: Wait for services to be healthy
@@ -101,11 +101,14 @@ jobs:
             until [ "`docker inspect -f {{.State.Health.Status}} $service`" == "healthy" ]; do
               if [ $elapsed -ge $timeout ]; then
                 echo "Timeout reached for service $service"
+                echo "Printing Docker Compose logs..."
+                docker-compose logs
                 exit 1
               fi
               sleep 5
               elapsed=$((elapsed + 5))
             done
+            echo "$service is healthy!"
           done
           echo "All services are healthy!"
 
@@ -114,7 +117,7 @@ jobs:
         run: npm run test:integration || (docker compose logs; exit 1)
 
   docker-build:
-    name: Build Docker Image
+    name: Docker Build
     # Don't bother running this job unless the other four all pass
     needs: [lint, dockerfile-lint, unit-tests, integration-tests]
     runs-on: ubuntu-latest
@@ -145,7 +148,7 @@ jobs:
           path: /tmp/image.tar
 
   ghcr:
-    name: Push Docker Image to GitHub Container Registry
+    name: Push Docker image to GitHub Container Registry
     needs: [docker-build]
     # Push only on commits to main i.e. don't push on pull requests
     if: github.ref == 'refs/heads/main'
