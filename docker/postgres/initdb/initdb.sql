@@ -1,96 +1,93 @@
--- Create enums for asset type and visibility
-CREATE TYPE asset_type AS ENUM ('character', 'quest', 'map', 'location');
-CREATE TYPE visibility_type AS ENUM ('public', 'private', 'unlisted');
+-- Create enums
+CREATE TYPE enum_asset_type AS ENUM ('character', 'quest', 'map', 'location');
+CREATE TYPE enum_visibility AS ENUM ('public', 'private', 'unlisted');
+CREATE TYPE enum_character_race AS ENUM ('human', 'elf', 'drow', 'half_elf', 'half_orc', 'halfling', 'dwarf', 'gnome', 'tiefling', 'githyanki', 'dragonborn');
+CREATE TYPE enum_character_class AS ENUM ('barbarian', 'bard', 'cleric', 'druid', 'fighter', 'monk', 'paladin', 'ranger', 'rogue', 'sorcerer', 'warlock', 'wizard');
+CREATE TYPE enum_character_gender AS ENUM ('male', 'female', 'non_binary', 'genderfluid', 'agender');
+CREATE TYPE enum_character_alignment AS ENUM ('lawful_good', 'neutral_good', 'chaotic_good', 'lawful_neutral', 'true_neutral', 'chaotic_neutral', 'lawful_evil', 'neutral_evil', 'chaotic_evil');
 
 -- Create User table
 CREATE TABLE "User" (
-    "userId" SERIAL PRIMARY KEY,
-    "hashedEmail" TEXT NOT NULL UNIQUE,
-    "displayName" VARCHAR(100) NOT NULL,
-    "joinDate" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "profileBio" TEXT,
-    "profilePictureUrl" TEXT,
-    "profilePictureUrlExpiry" TIMESTAMP
+    "id" SERIAL PRIMARY KEY,
+    "hashed_email" TEXT NOT NULL UNIQUE,
+    "display_name" VARCHAR(100) NOT NULL,
+    "join_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "profile_bio" TEXT,
+    "profile_picture_url" TEXT,
+    "profile_picture_url_expiry" TIMESTAMP
 );
 
 -- Create Asset table
 CREATE TABLE "Asset" (
-    "assetId" SERIAL PRIMARY KEY,
-    "userId" INT REFERENCES "User"("userId") ON DELETE CASCADE,
+    "id" SERIAL PRIMARY KEY,
+    "creator_id" INT NOT NULL REFERENCES "User"("id") ON DELETE CASCADE,
     "name" VARCHAR(100) NOT NULL,
-    "visibility" visibility_type NOT NULL,
-    "createdDate" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedDate" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "isFeatured" BOOLEAN DEFAULT FALSE,
-    "likes" INT DEFAULT 0,
-    "type" asset_type NOT NULL,
-    "imageUrl" TEXT,
-    "imageUrlExpiry" TIMESTAMP
+    "description" TEXT,
+    "visibility" enum_visibility NOT NULL,
+    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "is_featured" BOOLEAN NOT NULL DEFAULT FALSE,
+    "likes" INT NOT NULL DEFAULT 0,
+    "type" enum_asset_type NOT NULL,
+    "image_url" TEXT,
+    "image_url_expiry" TIMESTAMP
 );
 
--- Create Character Asset table
-CREATE TABLE "CharacterAsset" (
-    "assetId" INT PRIMARY KEY REFERENCES "Asset"("assetId") ON DELETE CASCADE,
+-- Create Character table
+CREATE TABLE "Character" (
+    "asset_id" INT PRIMARY KEY REFERENCES "Asset"("id") ON DELETE CASCADE,
+    "race" enum_character_race NOT NULL,
+    "class" enum_character_class NOT NULL,
+    "gender" enum_character_gender NOT NULL,
+    "alignment" enum_character_alignment NOT NULL,
     "appearance" TEXT,
-    "class" VARCHAR(50),
     "personality" TEXT,
-    "equipment" TEXT
+    "background" TEXT,
+    "abilities" TEXT,
+    "equipment" TEXT,
+    "motivation" TEXT,
+    "pose" TEXT
 );
 
--- Create Location Asset table
-CREATE TABLE "LocationAsset" (
-    "assetId" INT PRIMARY KEY REFERENCES "Asset"("assetId") ON DELETE CASCADE,
-    "description" TEXT,
-    "type" VARCHAR(50),
-    "theme" VARCHAR(50),
-    "mood" VARCHAR(50),
-    "timeOfDay" VARCHAR(50),
-    "pointsOfInterest" TEXT,
-    "lore" TEXT
-);
+-- -- Create Location table
+-- CREATE TABLE "Location" (
+--     "asset_id" INT PRIMARY KEY REFERENCES "Asset"("id") ON DELETE CASCADE
+-- );
 
--- Create Quest Asset table
-CREATE TABLE "QuestAsset" (
-    "assetId" INT PRIMARY KEY REFERENCES "Asset"("assetId") ON DELETE CASCADE,
-    "description" TEXT,
-    "objective" TEXT,
-    "reward" TEXT,
-    "difficultyLevel" VARCHAR(50)
-);
+-- -- Create Quest table
+-- CREATE TABLE "Quest" (
+--     "asset_id" INT PRIMARY KEY REFERENCES "Asset"("id") ON DELETE CASCADE
+-- );
 
--- Create Map Asset table
-CREATE TABLE "MapAsset" (
-    "assetId" INT PRIMARY KEY REFERENCES "Asset"("assetId") ON DELETE CASCADE,
-    "dimensions" VARCHAR(50),
-    "lore" TEXT,
-    "scale" VARCHAR(50),
-    "biome" VARCHAR(50)
-);
+-- -- Create Map table
+-- CREATE TABLE "Map" (
+--     "asset_id" INT PRIMARY KEY REFERENCES "Asset"("id") ON DELETE CASCADE
+-- );
 
 -- Create Comment table
 CREATE TABLE "Comment" (
-    "commentId" SERIAL PRIMARY KEY,
-    "assetId" INT REFERENCES "Asset"("assetId") ON DELETE CASCADE,
-    "userId" INT REFERENCES "User"("userId") ON DELETE CASCADE,
-    "createdDate" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedDate" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "id" SERIAL PRIMARY KEY,
+    "asset_id" INT NOT NULL REFERENCES "Asset"("id") ON DELETE CASCADE,
+    "author_id" INT NOT NULL REFERENCES "User"("id") ON DELETE CASCADE,
+    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "body" TEXT NOT NULL
 );
 
 -- Create Collection table
 CREATE TABLE "Collection" (
-    "collectionId" SERIAL PRIMARY KEY,
-    "userId" INT REFERENCES "User"("userId") ON DELETE CASCADE,
+    "id" SERIAL PRIMARY KEY,
+    "creator_id" INT NOT NULL REFERENCES "User"("id") ON DELETE CASCADE,
     "name" VARCHAR(100) NOT NULL,
     "description" TEXT,
-    "createdDate" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedDate" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "visibility" visibility_type NOT NULL
+    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "visibility" enum_visibility NOT NULL
 );
 
--- Create Collection Asset table
-CREATE TABLE "CollectionAsset" (
-    "collectionId" INT REFERENCES "Collection"("collectionId") ON DELETE CASCADE,
-    "assetId" INT REFERENCES "Asset"("assetId") ON DELETE CASCADE,
-    PRIMARY KEY ("collectionId", "assetId")
+-- Create Collection Asset bridge table
+CREATE TABLE "_AssetToCollection" (
+    "collection_id" INT NOT NULL REFERENCES "Collection"("id") ON DELETE CASCADE,
+    "asset_id" INT NOT NULL REFERENCES "Asset"("id") ON DELETE CASCADE,
+    PRIMARY KEY ("collection_id", "asset_id")
 );
