@@ -91,15 +91,25 @@ jobs:
       - name: Build Containers
         run: docker compose -f docker-compose.ci.yml up -d
 
-      - name: Wait for TTG Server to be Healthy
+      - name: Wait for services to be healthy
         run: |
-          echo "Waiting for ttg-server to be healthy..."
-          until [ "`docker inspect -f {{.State.Health.Status}} ttg-server`" == "healthy" ]; do
-            sleep 5;
+          services=(ttg-postgres ttg-minio ttg-server)
+          timeout=300 # Timeout in seconds (5 minutes)
+          for service in "${services[@]}"; do
+            echo "Waiting for $service to be healthy..."
+            elapsed=0
+            until [ "`docker inspect -f {{.State.Health.Status}} $service`" == "healthy" ]; do
+              if [ $elapsed -ge $timeout ]; then
+                echo "Timeout reached for service $service"
+                exit 1
+              fi
+              sleep 5
+              elapsed=$((elapsed + 5))
+            done
           done
-          echo "TTG Server is healthy!"
+          echo "All services are healthy!"
 
-      - name: Run Hurl Tests
+      - name: Run Hurl tests
         # Print the logs if the tests fail
         run: npm run test:integration || (docker compose logs; exit 1)
 
