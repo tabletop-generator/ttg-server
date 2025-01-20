@@ -24,9 +24,8 @@ COPY prisma/schema.prisma ./
 
 # Install node production dependencies defined in package-lock.json
 # Since we set NODE_ENV=production, we don't need to use --production
-RUN npm ci --ignore-scripts
-
-RUN npx prisma generate
+RUN npm ci --ignore-scripts && \
+    npx prisma generate
 
 #######################################
 # Final Stage
