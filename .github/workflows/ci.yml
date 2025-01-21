@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [lts/jod]
+        node-version: [22.13]
 
     steps:
       - name: Check out code
@@ -40,7 +40,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [lts/jod]
+        node-version: [22.13]
 
     steps:
       - name: Check out code
@@ -72,7 +72,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [lts/jod]
+        node-version: [22.13]
 
     steps:
       - name: Check out code
