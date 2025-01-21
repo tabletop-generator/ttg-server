@@ -5,7 +5,7 @@
 ## Prerequisites
 
 - [NVM](https://github.com/nvm-sh/nvm)
-- [Node.js v20.x 'Iron' (LTS)](https://nodejs.org/en)
+- [Node.js v22.x 'Jod' (LTS)](https://nodejs.org/en)
 - [Git](https://git-scm.com/)
 - [Docker](https://www.docker.com/)
 - [Visual Studio Code](https://code.visualstudio.com/)
@@ -186,7 +186,7 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
 - **Testing:**
   - **Unit Testing:** [Jest](https://jestjs.io/), [Supertest](https://github.com/ladjs/supertest#readme)
   - **Integration Testing:** [Hurl](https://hurl.dev/), [Docker Compose](https://docs.docker.com/compose/)
-- **Runtime:** [Node.js](https://nodejs.org/docs/latest-v20.x/api/)
+- **Runtime:** [Node.js](https://nodejs.org/docs/latest-v22.x/api/)
 - **Runners:** [nodemon](https://github.com/remy/nodemon#readme)
 - **Package Manager:** [npm](https://docs.npmjs.com/)
 - **Version Control System:** [Git](https://git-scm.com/doc), [GitHub](https://docs.github.com/)
