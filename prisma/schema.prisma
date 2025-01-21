@@ -8,74 +8,74 @@ datasource db {
 }
 
 model Asset {
-  id               Int             @id @default(autoincrement())
-  creator_id       Int
-  name             String          @db.VarChar(100)
-  description      String?
-  visibility       enum_visibility
-  created_at       DateTime        @default(now()) @db.Timestamp(6)
-  updated_at       DateTime        @default(now()) @db.Timestamp(6)
-  is_featured      Boolean         @default(false)
-  likes            Int             @default(0)
-  type             enum_asset_type
-  image_url        String?
-  image_url_expiry DateTime?       @db.Timestamp(6)
-  creator          User            @relation(fields: [creator_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  character        Character?
-  comments         Comment[]
-  collections      Collection[]
+  id             Int             @id @default(autoincrement())
+  uuid           String          @unique @db.Uuid
+  creatorId      Int             @map("creator_id")
+  createdAt      DateTime        @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt      DateTime        @default(now()) @map("updated_at") @db.Timestamp(6)
+  isFeatured     Boolean         @default(false) @map("is_featured")
+  likes          Int             @default(0)
+  type           enum_asset_type
+  visibility     enum_visibility
+  name           String
+  description    String?
+  imageUrl       String?         @map("image_url")
+  imageUrlExpiry DateTime?       @map("image_url_expiry") @db.Timestamp(6)
+  user           User            @relation(fields: [creatorId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  character      Character?
+  comments       Comment[]
+  collections    Collection[]
 }
 
 model Character {
-  asset_id    Int                      @id
+  assetId     Int                      @id @map("asset_id")
   race        enum_character_race
   class       enum_character_class
   gender      enum_character_gender
   alignment   enum_character_alignment
-  appearance  String?
-  personality String?
-  background  String?
   abilities   String?
+  appearance  String?
+  background  String?
   equipment   String?
   motivation  String?
-  pose        String?
-  asset       Asset                    @relation(fields: [asset_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  personality String?
+  asset       Asset                    @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model Collection {
   id          Int             @id @default(autoincrement())
-  creator_id  Int
-  name        String          @db.VarChar(100)
-  description String?
-  created_at  DateTime        @default(now()) @db.Timestamp(6)
-  updated_at  DateTime        @default(now()) @db.Timestamp(6)
+  creatorId   Int             @map("creator_id")
+  createdAt   DateTime        @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt   DateTime        @default(now()) @map("updated_at") @db.Timestamp(6)
   visibility  enum_visibility
-  creator     User            @relation(fields: [creator_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  name        String
+  description String?
+  user        User            @relation(fields: [creatorId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   assets      Asset[]
 }
 
 model Comment {
-  id         Int      @id @default(autoincrement())
-  asset_id   Int
-  author_id  Int
-  created_at DateTime @default(now()) @db.Timestamp(6)
-  updated_at DateTime @default(now()) @db.Timestamp(6)
-  body       String
-  asset      Asset    @relation(fields: [asset_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  author     User     @relation(fields: [author_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  id        Int      @id @default(autoincrement())
+  assetId   Int      @map("asset_id")
+  authorId  Int      @map("author_id")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
+  body      String
+  asset     Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  user      User     @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model User {
-  id                         Int          @id @default(autoincrement())
-  hashed_email               String       @unique
-  display_name               String       @db.VarChar(100)
-  join_date                  DateTime     @default(now()) @db.Timestamp(6)
-  profile_bio                String?
-  profile_picture_url        String?
-  profile_picture_url_expiry DateTime?    @db.Timestamp(6)
-  assets                     Asset[]
-  collections                Collection[]
-  comments                   Comment[]
+  id                      Int          @id @default(autoincrement())
+  hashedEmail             String       @unique @map("hashed_email")
+  joinDate                DateTime     @default(now()) @map("join_date") @db.Timestamp(6)
+  displayName             String?      @map("display_name")
+  profileBio              String?      @map("profile_bio")
+  profilePictureUrl       String?      @map("profile_picture_url")
+  profilePictureUrlExpiry DateTime?    @map("profile_picture_url_expiry") @db.Timestamp(6)
+  assets                  Asset[]
+  collections             Collection[]
+  comments                Comment[]
 }
 
 enum enum_asset_type {

@@ -80,19 +80,22 @@ An asset's metadata is an object that describes the asset. For example, a charac
 ```json
 {
   "id": "30a84843-0cd4-4975-95ba-b96112aea189",
-  "ownerId": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
-  "created": "2021-11-02T15:09:50.403Z",
-  "updated": "2021-11-02T15:09:50.403Z",
-  "name": "Gilbert",
-  "description": "Dwarf guy",
+  "creator_id": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
+  "created_at": "2021-11-02T15:09:50.403Z",
+  "updated_at": "2021-11-02T15:09:50.403Z",
   "visibility": "unlisted",
+  "is_featured": true,
   "likes": 0,
-  "prompt": "A dwarf guy",
-  "gender": "Male",
-  "age": "Middle-aged",
-  "build": "Muscular",
-  "alignment": "True Neutral",
-  "pose": "Standing"
+  "name": "Gilbert",
+  "description": "Just some guy",
+  "image_url": "https://...",
+  "image_url_expiry": "2021-18-02T15:09:50.403Z",
+  "character": {
+    "race": "human",
+    "class": "fighter",
+    "gender": "male",
+    "alignment": "true_neutral"
+  }
 }
 ```
 
@@ -107,21 +110,22 @@ A successful response returns an HTTP `201`. It includes a `Location` header wit
   "status": "ok",
   "asset": {
     "id": "30a84843-0cd4-4975-95ba-b96112aea189",
-    "ownerId": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
-    "created": "2021-11-02T15:09:50.403Z",
-    "updated": "2021-11-02T15:09:50.403Z",
-    "name": "Gilbert",
-    "description": "Dwarf guy",
+    "creator_id": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
+    "created_at": "2021-11-02T15:09:50.403Z",
+    "updated_at": "2021-11-02T15:09:50.403Z",
     "visibility": "unlisted",
+    "is_featured": true,
     "likes": 0,
-    "prompt": "A dwarf guy",
-    "gender": "Male",
-    "age": "Middle-aged",
-    "build": "Muscular",
-    "alignment": "True Neutral",
-    "pose": "Standing",
-    "imageUrl": "https://bucket-name.s3.amazonaws.com/object-key?AWSAccessKeyId=AKIA...&Expires=...&Signature=...",
-    "imageUrlExpiry": "2025-01-13T15:30:00Z"
+    "name": "Gilbert",
+    "description": "Just some guy",
+    "image_url": "https://...",
+    "image_url_expiry": "2021-18-02T15:09:50.403Z",
+    "character": {
+      "race": "human",
+      "class": "fighter",
+      "gender": "male",
+      "alignment": "true_neutral"
+    }
   }
 }
 ```
