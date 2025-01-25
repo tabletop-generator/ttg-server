@@ -1,6 +1,5 @@
+
 POST http://localhost:8080/v1/assets
-[BasicAuth]
-user1@email.com:password1
 {
   "type": "character",
   "visibility": "public",
@@ -19,20 +18,4 @@ user1@email.com:password1
   }
 }
 
-HTTP/1.1 201
-[Captures]
-uuid: jsonpath "$.uuid"
-[Asserts]
-header "Location" matches "^http:\/\/localhost:8080\/v1\/assets\/[A-Za-z0-9_-]+$"
-jsonpath "$.id" isInteger
-jsonpath "$.uuid" matches "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
-jsonpath "$.creatorId" isInteger
-jsonpath "$.createdAt" isIsoDate
-jsonpath "$.updatedAt" isIsoDate
-jsonpath "$.isFeatured" isBoolean
-jsonpath "$.likes" isInteger
-jsonpath "$.type" matches "^character$|^location$|^quest$|^map$"
-jsonpath "$.name" isString
-jsonpath "$.description" isString
-jsonpath "$.imageUrl" matches "^http:\/\/localhost:9000\/ttg\/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a\/{{uuid}}"
-jsonpath "$.imageUrlExpiry" isIsoDate
+HTTP/1.1 401
