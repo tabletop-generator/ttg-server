@@ -75,58 +75,51 @@ An unauthenticated `/` route is available for checking the health of the service
 
 ### 4.2 Assets
 
-An asset's metadata is an object that describes the asset. For example, a character asset is described in the following format:
+#### 4.2.1 `POST /assets`
+
+Generates an asset for the current user (i.e. authenticated user). The asset parameters are used to fill in prompts and send an API call to the image and text generation APIs. The generated image and other asset data are stored. A presigned URL for the image is created and stored along with it's expiration timestamp.
+
+A successful response returns an HTTP `201`. It includes a `Location` header with a full URL to use in order to access the newly created asset, for example: Location: https://ttg-api.com/v1/assets/30a84843-0cd4-4975-95ba-b96112aea189. See https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.30.
+
+##### Request
 
 ```json
 {
-  "id": "30a84843-0cd4-4975-95ba-b96112aea189",
-  "creator_id": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
-  "created_at": "2021-11-02T15:09:50.403Z",
-  "updated_at": "2021-11-02T15:09:50.403Z",
-  "visibility": "unlisted",
-  "is_featured": true,
-  "likes": 0,
-  "name": "Gilbert",
-  "description": "Just some guy",
-  "image_url": "https://...",
-  "image_url_expiry": "2021-18-02T15:09:50.403Z",
-  "character": {
-    "race": "human",
-    "class": "fighter",
+  "type": "character",
+  "visibility": "public",
+  "data": {
+    "name": "Thalor Duskbane",
+    "race": "tiefling",
+    "class": "warlock",
     "gender": "male",
-    "alignment": "true_neutral"
+    "alignment": "neutral_evil",
+    "appearance": "Ash-gray skin, glowing red eyes, long black horns that curl back, dressed in a dark crimson cloak with intricate silver embroidery.",
+    "personality": "Manipulative, cunning, and deeply ambitious. Thalor is charismatic but hides a volatile temper.",
+    "background": "Born to a cursed bloodline, Thalor made a pact with an ancient fiend to escape his family's downfall. He now roams the world seeking forbidden knowledge and power.",
+    "abilities": "Eldritch blast, dark pact magic, charisma-based deception, summoning minor fiends.",
+    "equipment": "A jagged obsidian staff that pulses with a faint red glow, a spell tome bound in cracked leather, and a vial of fiendish ichor.",
+    "motivation": "To ascend to ultimate power and break free from his fiendish master's control."
   }
 }
 ```
 
-#### 4.2.1 `POST /assets`
-
-Generates an asset for the current user (i.e. authenticated user). The client posts the asset parameters in the request body. An Asset object is created to hold asset data - including asset id, user id, name, visibility, creation date, last updated date, type, number of likes, and the generated description. The asset parameters are then used to fill in prompts and send an API call to the image and text generation APIs. The generated image and other asset data are stored. A presigned URL for the image is created and stored along with it's expiration timestamp.
-
-A successful response returns an HTTP `201`. It includes a `Location` header with a full URL to use in order to access the newly created asset, for example: Location: https://ttg-api.com/v1/assets/30a84843-0cd4-4975-95ba-b96112aea189. See https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.30.
+##### Response
 
 ```json
 {
-  "status": "ok",
-  "asset": {
-    "id": "30a84843-0cd4-4975-95ba-b96112aea189",
-    "creator_id": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
-    "created_at": "2021-11-02T15:09:50.403Z",
-    "updated_at": "2021-11-02T15:09:50.403Z",
-    "visibility": "unlisted",
-    "is_featured": true,
-    "likes": 0,
-    "name": "Gilbert",
-    "description": "Just some guy",
-    "image_url": "https://...",
-    "image_url_expiry": "2021-18-02T15:09:50.403Z",
-    "character": {
-      "race": "human",
-      "class": "fighter",
-      "gender": "male",
-      "alignment": "true_neutral"
-    }
-  }
+  "id": 12,
+  "uuid": "a4237e17-3d05-442a-b114-c86a466a0a45",
+  "creatorId": 1,
+  "createdAt": "2025-01-25T23:08:51.886Z",
+  "updatedAt": "2025-01-25T23:08:51.886Z",
+  "isFeatured": false,
+  "likes": 0,
+  "type": "character",
+  "visibility": "public",
+  "name": "Thalor Duskbane",
+  "description": "Thalor Duskbane is a walking paradox: a creature of infernal beauty and chilling ambition. His ash-gray skin, a testament to his tiefling heritage, is set off by the piercing red glow of his eyes, burning with a hunger for power...",
+  "imageUrl": "http://localhost:9000/ttg/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a/a4237e17-3d05-442a-b114-c86a466a0a45?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=minio-username%2F20250125%2Fna-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250125T230851Z&X-Amz-Expires=900&X-Amz-Signature=246347ff33061e0038a9bff6e135ff01395d6282bf230f27a074f33b556a8b8b&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject",
+  "imageUrlExpiry": "2025-02-01T23:08:51.878Z"
 }
 ```
 
