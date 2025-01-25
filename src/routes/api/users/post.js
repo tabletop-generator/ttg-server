@@ -1,16 +1,39 @@
 const logger = require("../../../logger");
+const prisma = require("../../../prisma");
 const { createSuccessResponse } = require("../../../response");
 
 /**
- * Create the current user if they don't already exist
+ * Initialize a user record if it doesn't exist
  */
-
-// eslint-disable-next-line no-unused-vars
 module.exports = async (req, res, next) => {
-  logger.debug(
-    { user: req.user, body: req.body },
-    `received request: POST /v1/users`,
-  );
+  try {
+    logger.debug({ user: req.user }, "received request: POST /v1/users");
 
-  return res.status(418).json(createSuccessResponse());
+    // Check if user already exists
+    const existingUser = await prisma.user.findUnique({
+      where: {
+        hashed_email: req.user,
+      },
+    });
+
+    // If user doesn't exist, create them
+    if (!existingUser) {
+      await prisma.user.create({
+        data: {
+          hashed_email: req.user,
+          display_name: `user_${req.user.slice(0, 8)}`, // Default display name using first 8 chars of hash
+          profile_bio: "", // Empty bio by default
+        },
+      });
+      logger.info({ userId: req.user }, "Created new user record");
+    } else {
+      logger.debug({ userId: req.user }, "User record already exists");
+    }
+
+    // Return success response
+    return res.status(201).json(createSuccessResponse());
+  } catch (err) {
+    logger.error({ err }, "Error initializing user");
+    next(err);
+  }
 };
