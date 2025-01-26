@@ -55,17 +55,13 @@ You can also use Prisma Studio by running `npx prisma studio`.
 
 You can also use the Visual Studio Code debugger instead of `npm run dev`:
 
-1. Click Select and Start Debug Configuration in the status bar:
+1. Click Run and Debug:
 
-![Select and Start Debug Configuration](./img/vscode-debug-guide-01.png)
+![Run and Debug](./img/vscode-debug-guide-01.png)
 
-2. Click "Node.js":
+2. Click "Launch via NPM":
 
-![alt text](./img/vscode-debug-guide-02.png)
-
-3. Select `npm run debug`:
-
-![alt text](./img/vscode-debug-guide-03.png)
+![Launch via NPM](./img/vscode-debug-guide-02.png)
 
 ### Using MinIO and the MinIO Console in Docker Compose
 
