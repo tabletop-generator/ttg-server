@@ -58,4 +58,8 @@ module.exports = new S3Client({
   endpoint: getS3Endpoint(),
   // We always want to use path style key names
   forcePathStyle: true,
+  // Client version 3.729.0 introduced a modification to the default checksum behavior from the client that is currently incompatible with R2 APIs.
+  // To mitigate, users can use 3.726.1 or add the following to their S3Client config:
+  requestChecksumCalculation: "WHEN_REQUIRED",
+  responseChecksumValidation: "WHEN_REQUIRED",
 });
