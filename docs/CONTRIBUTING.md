@@ -40,7 +40,7 @@ The recommended setup for development is running the server on the host machine 
 
 ```bash
 # Create a .env file with development presets
-cp .env .env.example
+cp .env.example .env
 
 # Start MinIO, create the default bucket, and start Postgres and pgAdmin
 docker compose up mc pgadmin # -d to detach i.e. run in background
