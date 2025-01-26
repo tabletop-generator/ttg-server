@@ -10,8 +10,8 @@ CREATE TYPE enum_character_alignment AS ENUM ('lawful_good', 'neutral_good', 'ch
 CREATE TABLE "User" (
     "id" SERIAL PRIMARY KEY,
     "hashed_email" TEXT NOT NULL UNIQUE,
-    "display_name" VARCHAR(100) NOT NULL,
     "join_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "display_name" TEXT,
     "profile_bio" TEXT,
     "profile_picture_url" TEXT,
     "profile_picture_url_expiry" TIMESTAMP
@@ -20,15 +20,16 @@ CREATE TABLE "User" (
 -- Create Asset table
 CREATE TABLE "Asset" (
     "id" SERIAL PRIMARY KEY,
+    "uuid" UUID NOT NULL UNIQUE,
     "creator_id" INT NOT NULL REFERENCES "User"("id") ON DELETE CASCADE,
-    "name" VARCHAR(100) NOT NULL,
-    "description" TEXT,
-    "visibility" enum_visibility NOT NULL,
     "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "is_featured" BOOLEAN NOT NULL DEFAULT FALSE,
     "likes" INT NOT NULL DEFAULT 0,
     "type" enum_asset_type NOT NULL,
+    "visibility" enum_visibility NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT,
     "image_url" TEXT,
     "image_url_expiry" TIMESTAMP
 );
@@ -40,13 +41,12 @@ CREATE TABLE "Character" (
     "class" enum_character_class NOT NULL,
     "gender" enum_character_gender NOT NULL,
     "alignment" enum_character_alignment NOT NULL,
-    "appearance" TEXT,
-    "personality" TEXT,
-    "background" TEXT,
     "abilities" TEXT,
+    "appearance" TEXT,
+    "background" TEXT,
     "equipment" TEXT,
     "motivation" TEXT,
-    "pose" TEXT
+    "personality" TEXT
 );
 
 -- -- Create Location table
@@ -78,11 +78,11 @@ CREATE TABLE "Comment" (
 CREATE TABLE "Collection" (
     "id" SERIAL PRIMARY KEY,
     "creator_id" INT NOT NULL REFERENCES "User"("id") ON DELETE CASCADE,
-    "name" VARCHAR(100) NOT NULL,
-    "description" TEXT,
     "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "visibility" enum_visibility NOT NULL
+    "visibility" enum_visibility NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT
 );
 
 -- Create Asset To Collection many-to-many table
@@ -94,3 +94,7 @@ CREATE TABLE "_AssetToCollection" (
 -- Create indices for Prisma implicit many-to-many relation
 CREATE UNIQUE INDEX "_AssetToCollection_AB_unique" ON "_AssetToCollection"("A" int4_ops,"B" int4_ops);
 CREATE INDEX "_AssetToCollection_B_index" ON "_AssetToCollection"("B" int4_ops);
+
+-- Insert testing users
+INSERT INTO "User" (hashed_email) VALUES ('11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a');
+INSERT INTO "User" (hashed_email) VALUES ('b0194b2e11548b547ddaff0e105b22347f94b625a7b964d7db72e1658c461a7f');
