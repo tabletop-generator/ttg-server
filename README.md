@@ -4,4 +4,4 @@
 
 ## Contributing
 
-See [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md)
+See [CONTRIBUTING.md](docs/CONTRIBUTING.md)

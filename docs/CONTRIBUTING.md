@@ -55,13 +55,13 @@ You can also use Prisma Studio by running `npx prisma studio`.
 
 You can also use the Visual Studio Code debugger instead of `npm run dev`:
 
-![Select and Start Debug Configuration](image.png)
+![Select and Start Debug Configuration](./img/vscode-debug-guide-01.png)
 
-![alt text](image-1.png)
+![alt text](./img/vscode-debug-guide-02.png)
 
 Select `npm run debug`:
 
-![alt text](image-2.png)
+![alt text](./img/vscode-debug-guide-03.png)
 
 ### Using MinIO and the MinIO Console in Docker Compose
 
@@ -73,29 +73,29 @@ You can use the Docker Compose Postgres service as the Postgres database for dev
 
 1. Click on "Add New Server":
 
-![Add New Server button in pgAdmin](image-3.png)
+![Add New Server button in pgAdmin](./img/pgadmin-guide-01.png)
 
 2. Enter a name:
 
-![Entering the server name in pgAdmin](image-5.png)
+![Entering the server name in pgAdmin](./img/pgadmin-guide-02.png)
 
 3. Click on Connection and enter the hostname/address `postgres` and the password `mypassword`. Then click the Save button:
 
-![Entering the hostname and password in pgAdmin](image-7.png)
+![Entering the hostname and password in pgAdmin](./img/pgadmin-guide-03.png)
 
 4. You should see the postgres server and tables in the Object Explorer on the left:
 
-![Postgres server appearing in the pgAdmin Object Explorer](image-8.png)
+![Postgres server appearing in the pgAdmin Object Explorer](./img/pgadmin-guide-04.png)
 
 5. You can then view/edit data or perform other operations on the tables:
 
-![pgAdmin table context menu](image-9.png)
+![pgAdmin table context menu](./img/pgadmin-guide-05.png)
 
 ### Using Prisma Studio
 
 While the Postgres database service is running, you can use Prisma Studio with `npx prisma studio` to perform database operations as an alternative to pgAdmin:
 
-![Prisma Studio screenshot](image-10.png)
+![Prisma Studio screenshot](./img/prisma-studio.png)
 
 ### Updating the Database Initialization Script
 
