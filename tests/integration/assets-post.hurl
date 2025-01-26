@@ -23,7 +23,7 @@ HTTP/1.1 201
 [Captures]
 uuid: jsonpath "$.uuid"
 [Asserts]
-header "Location" matches "^http:\/\/localhost:8080\/v1\/assets\/[A-Za-z0-9_-]+$"
+header "Location" matches "^(http|https):\/\/localhost:8080\/v1\/assets\/[A-Za-z0-9_-]+$"
 jsonpath "$.id" isInteger
 jsonpath "$.uuid" matches "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
 jsonpath "$.creatorId" isInteger
