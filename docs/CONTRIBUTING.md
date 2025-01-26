@@ -159,8 +159,6 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
    git pull --prune
    ```
 
-````
-
 - The `--prune` option removes any references to branches that no longer exist on the remote.
 
 2. **Create a new branch**
@@ -263,4 +261,3 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
 - **Git Hooks:**
   - [Husky](https://typicode.github.io/husky/)
   - [lint-staged](https://github.com/lint-staged/lint-staged)
-````
