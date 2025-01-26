@@ -49,8 +49,6 @@ docker compose up mc pgadmin # -d to detach i.e. run in background
 npm run dev
 ```
 
-You can also use Prisma Studio by running `npx prisma studio`.
-
 ### Using the Visual Studio Code Debugger
 
 You can also use the Visual Studio Code debugger instead of `npm run dev`:
