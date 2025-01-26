@@ -70,8 +70,8 @@ jobs:
     name: Integration Tests
     runs-on: ubuntu-latest
     env:
-      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY} }
-      GROQ_MODEL: ${{ secrets.GROQ_MODEL} }
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      GROQ_MODEL: ${{ secrets.GROQ_MODEL }}
       CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
       CF_TOKEN: ${{ secrets.CF_TOKEN }}
       CF_AIG_TOKEN: ${{ secrets.CF_AIG_TOKEN }}
