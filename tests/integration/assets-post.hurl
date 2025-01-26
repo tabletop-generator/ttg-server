@@ -34,5 +34,5 @@ jsonpath "$.likes" isInteger
 jsonpath "$.type" matches "^character$|^location$|^quest$|^map$"
 jsonpath "$.name" isString
 jsonpath "$.description" isString
-jsonpath "$.imageUrl" matches "^http:\/\/localhost:9000\/ttg\/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a\/{{uuid}}"
+jsonpath "$.imageUrl" matches "^http:\/\/(localhost|minio):9000\/ttg\/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a\/{{uuid}}"
 jsonpath "$.imageUrlExpiry" isIsoDate
