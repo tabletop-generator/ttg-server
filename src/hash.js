@@ -13,7 +13,7 @@
  * Use .slice(0, 8) if you want reduce the size.
  */
 
-const crypto = require("crypto");
+const crypto = require("node:crypto");
 
 /**
  * @param {string} email user's email address

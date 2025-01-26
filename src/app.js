@@ -33,6 +33,9 @@ app.use(compression());
 passport.use(auth.strategy());
 app.use(passport.initialize());
 
+// Use JSON body parser
+app.use(express.json());
+
 // Define our routes
 app.use("/", require("./routes"));
 
