@@ -69,6 +69,14 @@ jobs:
   integration-tests:
     name: Integration Tests
     runs-on: ubuntu-latest
+    env:
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY} }
+      GROQ_MODEL: ${{ secrets.GROQ_MODEL} }
+      CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+      CF_TOKEN: ${{ secrets.CF_TOKEN }}
+      CF_AIG_TOKEN: ${{ secrets.CF_AIG_TOKEN }}
+      CF_AIG_NAME: ${{ secrets.CF_AIG_NAME }}
+      CF_TEXT_TO_IMAGE_MODEL: ${{ secrets.CF_TEXT_TO_IMAGE_MODEL }}
 
     strategy:
       matrix:
