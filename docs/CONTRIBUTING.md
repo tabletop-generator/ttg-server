@@ -66,25 +66,21 @@ For testing with Bearer Token authentication, you will need to get a Bearer Toke
 
 You will need to add the email you used to sign in to the local development database. You need a SHA256 hashed value of the email. You can get this in two ways:
 
-##### Using the Node.js REPL
+- **Using the Node.js REPL:** Run the following commands.
 
-Run the following commands:
+        ```bash
+        node
+        # Welcome to Node.js v22.13.0.
+        # Type ".help" for more information.
+        
+        const crypto = require("node:crypto");
+        # undefined
+        
+        crypto.createHash("sha256").update("user1@email.com").digest("hex");
+        # '11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a'
+        ```
 
-```bash
-node
-# Welcome to Node.js v22.13.0.
-# Type ".help" for more information.
-
-const crypto = require("node:crypto");
-# undefined
-
-crypto.createHash("sha256").update("user1@email.com").digest("hex");
-# '11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a'
-```
-
-##### From Debug Logs
-
-Run the server with the environment variable `LOG_LEVEL=debug` and send a request to an auth-protected endpoint. You should see a log message saying "Authenticated user" with the hashed email beside it.
+- **From Debug Logs:** Run the server with the environment variable `LOG_LEVEL=debug` and send a request to an auth-protected endpoint. You should see a log message saying "Authenticated user" with the hashed email beside it.
 
 Once you have your hashed email, you will need to add this to your local Docker Compose Postgres database. You can do this using Prisma Studio. See [With Prisma Studio](#with-prisma-studio).
 
