@@ -68,7 +68,7 @@ You will need to add the email you used to sign in to the local development data
 
 ##### Using the Node.js REPL
 
-Run the following commands
+Run the following commands:
 
 ```bash
 node
