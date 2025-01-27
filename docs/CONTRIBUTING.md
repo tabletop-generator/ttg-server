@@ -49,6 +49,15 @@ docker compose up mc pgadmin # -d to detach i.e. run in background
 npm run dev
 ```
 
+### Credentials
+
+For development and integration testing, we use HTTP Basic Auth. We have two default users:
+
+```txt
+user1@email.com:password1
+user2@email.com:password2
+```
+
 ### Using the Visual Studio Code Debugger
 
 You can also use the Visual Studio Code debugger instead of `npm run dev`:
@@ -65,9 +74,13 @@ You can also use the Visual Studio Code debugger instead of `npm run dev`:
 
 You can use the Docker Compose MinIO service as the S3 endpoint for object storage in development. The MinIO console will let you interact with MinIO using a GUI and can be accessed at `localhost:9001` when the MinIO Docker service is running. The default MinIO credentials are `minio-username` and `minio-password`.
 
-### Using Postgres and pgAdmin in Docker Compose
+### Using Postgres in Docker Compose
 
-You can use the Docker Compose Postgres service as the Postgres database for development. pgAdmin will let you interact with the Postgres service using a GUI and can be accessed at `localhost:5050` when the pgAdmin Docker service is running. The default pgAdmin credentials are `postgres@email.com` and `mypassword`. You can connect to the Postgres service by:
+You can use the Docker Compose Postgres service as the Postgres database for development. There are two ways to interact with it using a GUI:
+
+#### With pgAdmin
+
+pgAdmin will let you interact with the Postgres service using a GUI and can be accessed at `localhost:5050` when the pgAdmin Docker service is running. The default pgAdmin credentials are `postgres@email.com` and `mypassword`. You can connect to the Postgres service by:
 
 1. Click on "Add New Server":
 
@@ -89,15 +102,17 @@ You can use the Docker Compose Postgres service as the Postgres database for dev
 
 ![pgAdmin table context menu](./img/pgadmin-guide-05.png)
 
-### Using Prisma Studio
+#### With Prisma Studio
 
 While the Postgres database service is running, you can use Prisma Studio with `npx prisma studio` to perform database operations as an alternative to pgAdmin:
 
 ![Prisma Studio screenshot](./img/prisma-studio.png)
 
-### Updating the Database Initialization Script
+### Re-initializing the Database
 
-If you or someone else has made a change to the database initialization script (`docker/postgres/initdb/initdb.sql`), you should reset the database, update the Prisma schema, and re-generate your Prisma client. Remove the Postgres and pgAdmin containers, remove their Docker volumes and restart the services. The database will be re-initialized from the new initialization script. Then re-generate the Prisma client.
+If the database initialization script (`docker/postgres/initdb/initdb.sql`) on the `main` branch has changed since you initialized your local Postgres database (the last time you ran `docker compose up`), you need to re-initialize your local database and re-generate your Prisma client.
+
+Remove the Postgres and pgAdmin containers, remove their Docker volumes, and restart the services. The database will be re-initialized from the new initialization script. Next, re-generate the Prisma client.
 
 ```bash
 # Remove the Postgres services
