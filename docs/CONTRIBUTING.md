@@ -49,6 +49,15 @@ docker compose up mc pgadmin # -d to detach i.e. run in background
 npm run dev
 ```
 
+### Credentials
+
+For development and integration testing, we use HTTP Basic Auth. We have two default users:
+
+```txt
+user1@email.com:password1
+user2@email.com:password2
+```
+
 ### Using the Visual Studio Code Debugger
 
 You can also use the Visual Studio Code debugger instead of `npm run dev`:
