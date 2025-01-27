@@ -49,7 +49,9 @@ docker compose up mc pgadmin # -d to detach i.e. run in background
 npm run dev
 ```
 
-### Credentials
+### Authorization
+
+#### HTTP Basic Auth Default Credentials
 
 For development and integration testing, we use HTTP Basic Auth. We have two default users:
 
@@ -57,6 +59,26 @@ For development and integration testing, we use HTTP Basic Auth. We have two def
 user1@email.com:password1
 user2@email.com:password2
 ```
+
+#### Bearer Token Authentication
+
+For testing with Bearer Token authentication, you will need to get a Bearer Token from the configured Amazon Cognito user pool. You can do this using [ttg-client](https://github.com/tabletop-generator/ttg-client) by signing in and checking your browser's Session Storage for `id_token`. Once you have the token, you can make authenticated requests by putting the token in the Authorization header: `Authorization: Bearer [token]`.
+
+You will need to add the email you used to sign in to the local development database. You need a SHA256 hashed value of the email. You can get this by running the server with the environment variable `LOG_LEVEL=debug` and sending a request to an auth-protected endpoint. You should see a log message saying "Authenticated user" with the hashed email beside it. Alternatively, run the following commands:
+
+```bash
+node
+Welcome to Node.js v22.13.0.
+Type ".help" for more information.
+
+> const crypto = require("node:crypto");
+undefined
+
+> crypto.createHash("sha256").update("user1@email.com").digest("hex");
+'11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a'
+```
+
+You will then need to add this to your local Docker Compose Postgres database. You can do this using Prisma Studio. See [With Prisma Studio](#with-prisma-studio).
 
 ### Using the Visual Studio Code Debugger
 
