@@ -64,7 +64,9 @@ user2@email.com:password2
 
 For testing with Bearer Token authentication, you will need to get a Bearer Token from the configured Amazon Cognito user pool. You can do this using [ttg-client](https://github.com/tabletop-generator/ttg-client) by signing in and checking your browser's Session Storage for `id_token`. Once you have the token, you can make authenticated requests by putting the token in the Authorization header: `Authorization: Bearer [token]`.
 
-You will need to add the email you used to sign in to the local development database. You need a SHA256 hashed value of the email. You can get this by running the server with the environment variable `LOG_LEVEL=debug` and sending a request to an auth-protected endpoint. You should see a log message saying "Authenticated user" with the hashed email beside it. Alternatively, run the following commands:
+You will need to add the email you used to sign in to the local development database. You need a SHA256 hashed value of the email. You can get this in two ways:
+
+1. Run the following commands:
 
 ```bash
 node
@@ -77,6 +79,8 @@ undefined
 > crypto.createHash("sha256").update("user1@email.com").digest("hex");
 '11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a'
 ```
+
+2. Run the server with the environment variable `LOG_LEVEL=debug` and send a request to an auth-protected endpoint. You should see a log message saying "Authenticated user" with the hashed email beside it.
 
 You will then need to add this to your local Docker Compose Postgres database. You can do this using Prisma Studio. See [With Prisma Studio](#with-prisma-studio).
 
@@ -154,7 +158,7 @@ npx prisma generate
 
 If you update the database initialization script (`docker/postgres/initdb/initdb.sql`), you need to follow almost the same steps as [Re-initializing the Database](#re-initializing-the-database), but you also need to update the Prisma schema before re-generating your client:
 
-```
+```bash
 # Remove the Postgres services
 docker compose rm postgres pgadmin
 
