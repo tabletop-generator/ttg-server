@@ -78,9 +78,15 @@ You can use the Docker Compose MinIO service as the S3 endpoint for object stora
 
 You can use the Docker Compose Postgres service as the Postgres database for development. There are two ways to interact with it using a GUI:
 
+#### With Prisma Studio
+
+While the Postgres database Docker Compose service is running, you can use Prisma Studio with `npx prisma studio` to view and edit data in the database.
+
+![Prisma Studio screenshot](./img/prisma-studio.png)
+
 #### With pgAdmin
 
-pgAdmin will let you interact with the Postgres service using a GUI and can be accessed at `localhost:5050` when the pgAdmin Docker service is running. The default pgAdmin credentials are `postgres@email.com` and `mypassword`. You can connect to the Postgres service by:
+While the Postgres and pgAdmin Docker Compose services are running, you can access pgAdmin at `localhost:5050` to interact with the Postgres service using a GUI. The default pgAdmin credentials are `postgres@email.com` and `mypassword`. Once in pgAdmin, you can connect to the Postgres service:
 
 1. Click on "Add New Server":
 
@@ -101,12 +107,6 @@ pgAdmin will let you interact with the Postgres service using a GUI and can be a
 5. You can then view/edit data or perform other operations on the tables:
 
 ![pgAdmin table context menu](./img/pgadmin-guide-05.png)
-
-#### With Prisma Studio
-
-While the Postgres database service is running, you can use Prisma Studio with `npx prisma studio` to perform database operations as an alternative to pgAdmin:
-
-![Prisma Studio screenshot](./img/prisma-studio.png)
 
 ### Re-initializing the Database
 
