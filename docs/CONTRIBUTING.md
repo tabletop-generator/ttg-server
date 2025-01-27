@@ -86,7 +86,7 @@ crypto.createHash("sha256").update("user1@email.com").digest("hex");
 
 Run the server with the environment variable `LOG_LEVEL=debug` and send a request to an auth-protected endpoint. You should see a log message saying "Authenticated user" with the hashed email beside it.
 
-You will then need to add this to your local Docker Compose Postgres database. You can do this using Prisma Studio. See [With Prisma Studio](#with-prisma-studio).
+Once you have your hashed email, you will need to add this to your local Docker Compose Postgres database. You can do this using Prisma Studio. See [With Prisma Studio](#with-prisma-studio).
 
 ### Using the Visual Studio Code Debugger
 
