@@ -108,9 +108,11 @@ While the Postgres database service is running, you can use Prisma Studio with `
 
 ![Prisma Studio screenshot](./img/prisma-studio.png)
 
-### Updating the Database Initialization Script
+### Re-initializing the Database
 
-If you or someone else has made a change to the database initialization script (`docker/postgres/initdb/initdb.sql`), you should reset the database, update the Prisma schema, and re-generate your Prisma client. Remove the Postgres and pgAdmin containers, remove their Docker volumes and restart the services. The database will be re-initialized from the new initialization script. Then re-generate the Prisma client.
+If the database initialization script (`docker/postgres/initdb/initdb.sql`) on the `main` branch has changed since you initialized your local Postgres database (the last time you ran `docker compose up`), you need to re-initialize your local database and re-generate your Prisma client.
+
+Remove the Postgres and pgAdmin containers, remove their Docker volumes, and restart the services. The database will be re-initialized from the new initialization script. Next, re-generate the Prisma client.
 
 ```bash
 # Remove the Postgres services
