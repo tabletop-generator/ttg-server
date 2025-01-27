@@ -124,6 +124,24 @@ docker volume rm ttg-server_postgres_data ttg-server_pgadmin_data
 # Restart the Postgres services and re-initialize the database
 docker compose up pgadmin
 
+# Update your Prisma client with the new schema
+npx prisma generate
+```
+
+### Updating the Database Initialization Script
+
+If you update the database initialization script (`docker/postgres/initdb/initdb.sql`), you need to follow almost the same steps as [Re-initializing the Database](#re-initializing-the-database), but you also need to update the Prisma schema before re-generating your client:
+
+```
+# Remove the Postgres services
+docker compose rm postgres pgadmin
+
+# Remove persistent storage for the Postgres services
+docker volume rm ttg-server_postgres_data ttg-server_pgadmin_data
+
+# Restart the Postgres services and re-initialize the database
+docker compose up pgadmin
+
 # Inspect the database and update the Prisma schema
 npx prisma db pull
 
