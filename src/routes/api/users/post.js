@@ -22,17 +22,20 @@ module.exports = async (req, res, next) => {
     return next(err);
   }
 
-    // Create URL for Location header for GET /users/:id
-    const locationURL = new URL(
-      `/v1/users/${req.user}`,
-      process.env?.API_URL || `https://${req.headers?.host}`,
-    );
-    
+  // Create URL for Location header for GET /users/:id
+  const locationURL = new URL(
+    `/v1/users/${req.user}`,
+    process.env?.API_URL || `https://${req.headers?.host}`,
+  );
+
   if (existingUser) {
     logger.debug({ userId: req.user }, "User record already exists");
-    return res.status(200).set("Location", locationURL).json(createSuccessResponse({user: existingUser}));
+    return res
+      .status(200)
+      .set("Location", locationURL)
+      .json(createSuccessResponse({ user: existingUser }));
   }
-  
+
   // User record doesn't exist, create one
   let newUser;
   try {
@@ -49,5 +52,8 @@ module.exports = async (req, res, next) => {
     return next(err);
   }
 
-  return res.status(201).set("Location", locationURL).json(createSuccessResponse({user: newUser}));
+  return res
+    .status(201)
+    .set("Location", locationURL)
+    .json(createSuccessResponse({ user: newUser }));
 };
