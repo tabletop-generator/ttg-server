@@ -1,6 +1,9 @@
 const logger = require("../../../logger");
 const prisma = require("../../../model/data/prismaClient");
-const { createSuccessResponse } = require("../../../response");
+const {
+  createSuccessResponse,
+  createErrorResponse,
+} = require("../../../response");
 
 /**
  * Initialize a user record if it doesn't exist
@@ -8,6 +11,10 @@ const { createSuccessResponse } = require("../../../response");
 
 module.exports = async (req, res, next) => {
   logger.debug({ user: req.user }, "received request: POST /v1/users");
+
+  if (!req.user) {
+    return res.status(401).json(createErrorResponse(401, "not found"));
+  }
 
   // Check if user already exists
   let existingUser;
