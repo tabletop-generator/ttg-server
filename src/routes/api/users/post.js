@@ -1,39 +1,46 @@
 const logger = require("../../../logger");
-const prisma = require("../../../prisma");
+const prisma = require("../../../model/data/prismaClient");
 const { createSuccessResponse } = require("../../../response");
 
 /**
  * Initialize a user record if it doesn't exist
  */
-module.exports = async (req, res, next) => {
-  try {
-    logger.debug({ user: req.user }, "received request: POST /v1/users");
 
-    // Check if user already exists
-    const existingUser = await prisma.user.findUnique({
+module.exports = async (req, res, next) => {
+  logger.debug({ user: req.user }, "received request: POST /v1/users");
+
+  // Check if user already exists
+  let existingUser;
+  try {
+    existingUser = await prisma.user.findUnique({
       where: {
-        hashed_email: req.user,
+        hashedEmail: req.user,
       },
     });
+  } catch (err) {
+    logger.error({ err }, "Error checking for existing user");
+    return next(err);
+  }
 
-    // If user doesn't exist, create them
-    if (!existingUser) {
+  // If user doesn't exist, create them
+  if (!existingUser) {
+    try {
       await prisma.user.create({
         data: {
-          hashed_email: req.user,
-          display_name: `user_${req.user.slice(0, 8)}`, // Default display name using first 8 chars of hash
-          profile_bio: "", // Empty bio by default
+          hashedEmail: req.user,
+          displayName: `user_${req.user.slice(0, 8)}`, // Default display name using first 8 chars of hash
+          profileBio: "", // Empty bio by default
         },
       });
       logger.info({ userId: req.user }, "Created new user record");
-    } else {
-      logger.debug({ userId: req.user }, "User record already exists");
+    } catch (err) {
+      logger.error({ err }, "Error creating new user");
+      return next(err);
     }
-
-    // Return success response
-    return res.status(201).json(createSuccessResponse());
-  } catch (err) {
-    logger.error({ err }, "Error initializing user");
-    next(err);
+  } else {
+    logger.debug({ userId: req.user }, "User record already exists");
   }
+
+  // Return success response
+  return res.status(201).json(createSuccessResponse());
 };
