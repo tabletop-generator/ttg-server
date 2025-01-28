@@ -22,7 +22,6 @@ module.exports = async (req, res, next) => {
     return next(err);
   }
 
-  // If user doesn't exist, create them
     // Create URL for Location header for GET /users/:id
     const locationURL = new URL(
       `/v1/users/${req.user}`,
