@@ -185,8 +185,6 @@ npx prisma generate
 For integration testing we use `docker-compose.integration.yml`. This Compose file doesn't persist data in volumes. You will need to add your environment variables to `.env.docker-compose`.
 
 ```bash
-cp .env.docker-compose.example .env.docker-compose
-
 docker compose -f docker-compose.integration.yml up --build
 
 npm run test:integration
