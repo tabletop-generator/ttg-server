@@ -53,7 +53,7 @@ npm run dev
 
 #### HTTP Basic Auth Default Credentials
 
-For development and integration testing, we use HTTP Basic Auth. We have two default users:
+For development and integration testing, we use HTTP Basic Auth. We have two default users that exist in the database:
 
 ```txt
 user1@email.com:password1
@@ -182,7 +182,7 @@ npx prisma generate
 > [!NOTE]
 > During integration testing, the server will run in Docker Compose, meaning signed URLs will have the S3 endpoint's Docker internal hostname (`http://minio:9000`). This must be accounted for in integration tests.
 
-For integration testing we use `docker-compose.integration.yml`. This Compose file doesn't persist data in volumes. You will need to add your environment variables to `.env.docker-compose`.
+For integration testing, use `docker-compose.integration.yml`. This Compose file doesn't persist data in volumes.
 
 ```bash
 docker compose -f docker-compose.integration.yml up --build
