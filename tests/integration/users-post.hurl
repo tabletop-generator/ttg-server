@@ -5,7 +5,14 @@ newuser@email.com:newpassword
 
 HTTP/1.1 201
 [Asserts]
+header "Location" matches "^(http|https):\/\/localhost:8080\/v1\/users\/[A-Za-z0-9_-]+$"
 jsonpath "$.status" == "ok"
+jsonpath "$.user.id" isInteger
+jsonpath "$.user.hashedEmail" matches /^[0-9a-fA-F]+$/
+jsonpath "$.user.displayName" isString
+jsonpath "$.user.profileBio" isString
+jsonpath "$.user.profilePictureUrl" exists # These are nullable so this is all we can assert
+jsonpath "$.user.profilePictureUrlExpiry" exists
 
 # Test creating the same user again (idempotent)
 POST http://localhost:8080/v1/users
@@ -14,7 +21,14 @@ newuser@email.com:newpassword
 
 HTTP/1.1 200
 [Asserts]
+header "Location" matches "^(http|https):\/\/localhost:8080\/v1\/users\/[A-Za-z0-9_-]+$"
 jsonpath "$.status" == "ok"
+jsonpath "$.user.id" isInteger
+jsonpath "$.user.hashedEmail" matches /^[0-9a-fA-F]+$/
+jsonpath "$.user.displayName" isString
+jsonpath "$.user.profileBio" isString
+jsonpath "$.user.profilePictureUrl" exists # These are nullable so this is all we can assert
+jsonpath "$.user.profilePictureUrlExpiry" exists
 
 # Test without authentication
 POST http://localhost:8080/v1/users
