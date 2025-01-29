@@ -187,7 +187,7 @@ For integration testing we use `docker-compose.integration.yml`. This Compose fi
 ```bash
 cp .env.docker-compose.example .env.docker-compose
 
-docker compose -f docker-compose.integration.yml up
+docker compose -f docker-compose.integration.yml up --build
 
 npm run test:integration
 ```
