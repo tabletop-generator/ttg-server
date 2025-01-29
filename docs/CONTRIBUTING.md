@@ -177,9 +177,20 @@ npx prisma generate
 
 ## Testing
 
-### Integration Tests in CI
+### Integration Testing
 
-During CI, the server runs in Docker Compose, meaning signed URLs will have the S3 endpoint's Docker internal hostname (`http://minio:9000`). This must be accounted for in integration tests.
+> [!NOTE]
+> During integration testing, the server will run in Docker Compose, meaning signed URLs will have the S3 endpoint's Docker internal hostname (`http://minio:9000`). This must be accounted for in integration tests.
+
+For integration testing we use `docker-compose.integration.yml`. This Compose file doesn't persist data in volumes. You will need to add your environment variables to `.env.docker-compose`.
+
+```bash
+cp .env.docker-compose.example .env.docker-compose
+
+docker compose -f docker-compose.integration.yml up
+
+npm run test:integration
+```
 
 ## Scripts
 
