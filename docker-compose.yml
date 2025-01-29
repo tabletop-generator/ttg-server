@@ -1,3 +1,4 @@
+name: ttg-server
 services:
   ttg-server:
     container_name: ttg-server
