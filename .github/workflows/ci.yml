@@ -97,7 +97,7 @@ jobs:
         run: npm install
 
       - name: Start Docker Compose services
-        run: docker compose -f docker-compose.ci.yml up -d
+        run: docker compose -f docker-compose.integration.yml up -d
 
       - name: Wait for services to be healthy
         run: |
