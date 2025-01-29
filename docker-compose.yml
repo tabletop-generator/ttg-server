@@ -84,7 +84,7 @@ services:
       # Create bucket if missing
     entrypoint: >
       /bin/sh -c "
-      until (mc alias set local http://ttg-minio:9000 $$MINIO_ROOT_USER $$MINIO_ROOT_PASSWORD && mc mb --region us-east-2 --ignore-existing local/ttg); do
+      until (mc alias set local http://minio:9000 $$MINIO_ROOT_USER $$MINIO_ROOT_PASSWORD && mc mb --region us-east-2 --ignore-existing local/ttg); do
         echo 'Waiting for MinIO to be ready...';
         sleep 5;
       done;

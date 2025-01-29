@@ -101,7 +101,7 @@ jobs:
 
       - name: Wait for services to be healthy
         run: |
-          services=(ttg-postgres ttg-minio ttg-server)
+          services=(postgres minio server)
           timeout=300 # Timeout in seconds (5 minutes)
           for service in "${services[@]}"; do
             echo "Waiting for $service to be healthy..."

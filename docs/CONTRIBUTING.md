@@ -145,7 +145,7 @@ Remove the Postgres and pgAdmin containers, remove their Docker volumes, and res
 docker compose rm postgres pgadmin
 
 # Remove persistent storage for the Postgres services
-docker volume rm ttg-server_postgres_data ttg-server_pgadmin_data
+docker volume rm ttg_postgres_data ttg_pgadmin_data
 
 # Restart the Postgres services and re-initialize the database
 docker compose up pgadmin
@@ -163,7 +163,7 @@ If you update the database initialization script (`docker/postgres/initdb/initdb
 docker compose rm postgres pgadmin
 
 # Remove persistent storage for the Postgres services
-docker volume rm ttg-server_postgres_data ttg-server_pgadmin_data
+docker volume rm ttg_postgres_data ttg_pgadmin_data
 
 # Restart the Postgres services and re-initialize the database
 docker compose up pgadmin
