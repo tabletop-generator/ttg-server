@@ -188,6 +188,8 @@ For integration testing, use `docker-compose.integration.yml`. This Compose file
 docker compose -f docker-compose.integration.yml up --build
 
 npm run test:integration
+
+docker compose -f docker-compose.integration.yml down
 ```
 
 ## Scripts
