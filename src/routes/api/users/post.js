@@ -29,7 +29,10 @@ module.exports = async (req, res, next) => {
   );
 
   if (existingUser) {
-    logger.debug({ userId: req.user }, "User record already exists");
+    logger.debug(
+      { userId: req.user, existingUser },
+      "User record already exists",
+    );
     return res
       .status(200)
       .set("Location", locationURL)
@@ -46,7 +49,7 @@ module.exports = async (req, res, next) => {
         profileBio: "", // Empty bio by default
       },
     });
-    logger.info({ userId: req.user }, "Created new user record");
+    logger.info({ userId: req.user, newUser }, "Created new user record");
   } catch (err) {
     logger.error({ err }, "Error creating new user");
     return next(err);
