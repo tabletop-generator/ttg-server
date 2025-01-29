@@ -29,7 +29,6 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - postgres_data:/var/lib/postgresql/data
       - ./docker/postgres/initdb:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
@@ -47,8 +46,6 @@ services:
     ports:
       # The minio API endpoint
       - "9000:9000"
-    volumes:
-      - minio_data:/data
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
       interval: 10s
@@ -74,7 +71,3 @@ services:
       "
     env_file:
       - .env.docker-compose
-
-volumes:
-  postgres_data:
-  minio_data:
