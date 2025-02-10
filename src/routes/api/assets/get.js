@@ -1,5 +1,5 @@
 const logger = require("../../../logger");
-const prisma = require("../../../prisma");
+const prisma = require("../../../model/data/prismaClient");
 const { createSuccessResponse } = require("../../../response");
 
 /**
@@ -11,6 +11,7 @@ const { createSuccessResponse } = require("../../../response");
  * - visibility: visibility_type (public, private, unlisted)
  * - expand: boolean
  */
+
 module.exports = async (req, res, next) => {
   try {
     logger.debug(
