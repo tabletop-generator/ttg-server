@@ -1,5 +1,5 @@
 const logger = require("../../../logger");
-const prisma = require("../../../prisma");
+const prisma = require("../../../model/data/prismaClient");
 const {
   createSuccessResponse,
   createErrorResponse,
