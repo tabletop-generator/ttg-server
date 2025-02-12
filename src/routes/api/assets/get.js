@@ -36,7 +36,7 @@ module.exports = async (req, res, next) => {
     }
 
     if (userId) {
-      where.userId = parseInt(userId);
+      where.creatorId = parseInt(userId);
     }
 
     if (visibility) {
@@ -49,7 +49,7 @@ module.exports = async (req, res, next) => {
       where.OR = [
         { visibility: "public" },
         {
-          userId: req.user?.userId,
+          creatorId: req.user?.id,
           visibility: { in: ["private", "unlisted"] },
         },
       ];
@@ -59,13 +59,13 @@ module.exports = async (req, res, next) => {
     const assets = await prisma.asset.findMany({
       where,
       include: {
-        characterAsset: true,
-        locationAsset: true,
-        questAsset: true,
-        mapAsset: true,
+        character: true,
+        user: true,
+        comments: true,
+        collections: true,
       },
       orderBy: {
-        updatedDate: "desc",
+        updatedAt: "desc",
       },
     });
 
@@ -73,7 +73,7 @@ module.exports = async (req, res, next) => {
     if (expand !== "true") {
       return res.status(200).json(
         createSuccessResponse({
-          assets: assets.map((asset) => asset.assetId),
+          assets: assets.map((asset) => asset.id),
         }),
       );
     }
@@ -82,17 +82,20 @@ module.exports = async (req, res, next) => {
     return res.status(200).json(
       createSuccessResponse({
         assets: assets.map((asset) => ({
-          id: asset.assetId,
-          ownerId: asset.userId,
-          created: asset.createdDate,
-          updated: asset.updatedDate,
-          name: asset.name,
-          visibility: asset.visibility,
+          id: asset.id,
+          uuid: asset.uuid,
+          creatorId: asset.creatorId,
+          created: asset.createdAt,
+          updated: asset.updatedAt,
+          isFeatured: asset.isFeatured,
           likes: asset.likes,
           type: asset.type,
+          visibility: asset.visibility,
+          name: asset.name,
+          description: asset.description,
           imageUrl: asset.imageUrl,
           imageUrlExpiry: asset.imageUrlExpiry,
-          ...asset[`${asset.type}Asset`],
+          character: asset.character,
         })),
       }),
     );
@@ -100,81 +103,4 @@ module.exports = async (req, res, next) => {
     logger.error({ err }, "Error getting assets");
     next(err);
   }
-  const { name, type, userId, visibility, expand } = req.query;
-
-  // Build where clause based on query parameters
-  const where = {};
-
-  if (name) {
-    where.name = {
-      contains: name,
-      mode: "insensitive",
-    };
-  }
-
-  if (type) {
-    where.type = type;
-  }
-
-  if (userId) {
-    where.userId = parseInt(userId);
-  }
-
-  if (visibility) {
-    where.visibility = visibility;
-  }
-
-  // If not querying for a specific user, only show public assets
-  // Unless the request is from the asset owner
-  if (!userId) {
-    where.OR = [
-      { visibility: "public" },
-      {
-        userId: req.user?.userId,
-        visibility: { in: ["private", "unlisted"] },
-      },
-    ];
-  }
-
-  // Get assets from database
-  const assets = await prisma.asset.findMany({
-    where,
-    include: {
-      characterAsset: true,
-      locationAsset: true,
-      questAsset: true,
-      mapAsset: true,
-    },
-    orderBy: {
-      updatedDate: "desc",
-    },
-  });
-
-  // If expand is not true, return just the IDs
-  if (expand !== "true") {
-    return res.status(200).json(
-      createSuccessResponse({
-        assets: assets.map((asset) => asset.assetId),
-      }),
-    );
-  }
-
-  // Return expanded asset objects
-  return res.status(200).json(
-    createSuccessResponse({
-      assets: assets.map((asset) => ({
-        id: asset.assetId,
-        ownerId: asset.userId,
-        created: asset.createdDate,
-        updated: asset.updatedDate,
-        name: asset.name,
-        visibility: asset.visibility,
-        likes: asset.likes,
-        type: asset.type,
-        imageUrl: asset.imageUrl,
-        imageUrlExpiry: asset.imageUrlExpiry,
-        ...asset[`${asset.type}Asset`],
-      })),
-    }),
-  );
 };
