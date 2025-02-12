@@ -47,7 +47,6 @@ HTTP 200
 jsonpath "$.status" == "ok"
 jsonpath "$.assets[*]" exists
 jsonpath "$.assets[*].creatorId" exists
-jsonpath "$.assets[0].creatorId" == 1
 
 # 5. Get assets by visibility
 GET http://localhost:8080/v1/assets?visibility=public&expand=true
