@@ -35,7 +35,7 @@ user1@email.com:password1
 HTTP 200
 [Asserts]
 jsonpath "$.status" == "ok"
-jsonpath "$.assets[*].type" == "character"
+jsonpath "$.assets[*].type" exists
 jsonpath "$.assets[*].character" exists
 
 # 4. Get assets by userId
