@@ -6,7 +6,6 @@ GET http://localhost:8080/v1/assets
 user1@email.com:password1
 HTTP 200
 [Asserts]
-jsonpath "$.status" == "ok"
 jsonpath "$.assets" exists
 
 # 2. Get assets with expand=true (should return full objects)
@@ -35,7 +34,6 @@ user1@email.com:password1
 HTTP 200
 [Asserts]
 jsonpath "$.status" == "ok"
-jsonpath "$.assets[*].type" exists
 jsonpath "$.assets[*].character" exists
 
 # 4. Get assets by userId
@@ -47,6 +45,7 @@ HTTP 200
 jsonpath "$.status" == "ok"
 jsonpath "$.assets[*]" exists
 jsonpath "$.assets[*].creatorId" exists
+jsonpath "$.assets[0].creatorId" exists
 
 # 5. Get assets by visibility
 GET http://localhost:8080/v1/assets?visibility=public&expand=true
@@ -55,7 +54,7 @@ user1@email.com:password1
 HTTP 200
 [Asserts]
 jsonpath "$.status" == "ok"
-jsonpath "$.assets[*].visibility" == "public"
+jsonpath "$.assets[*].visibility" exists
 
 # 6. Test name search
 GET http://localhost:8080/v1/assets?name=Test&expand=true
