@@ -1,6 +1,9 @@
 const logger = require("../../../logger");
 const prisma = require("../../../model/data/prismaClient");
-const { createSuccessResponse } = require("../../../response");
+const {
+  createSuccessResponse,
+  createErrorResponse,
+} = require("../../../response");
 
 /**
  * Get a list of assets filtered by the query
@@ -32,15 +35,20 @@ module.exports = async (req, res, next) => {
     }
 
     if (type) {
-      where.type = type;
+      where.type = type.toLowerCase();
     }
 
     if (userId) {
       where.creatorId = parseInt(userId);
+      if (isNaN(where.creatorId)) {
+        return res
+          .status(400)
+          .json(createErrorResponse(400, "Invalid user ID format"));
+      }
     }
 
     if (visibility) {
-      where.visibility = visibility;
+      where.visibility = visibility.toLowerCase();
     }
 
     // If not querying for a specific user, only show public assets
@@ -69,6 +77,15 @@ module.exports = async (req, res, next) => {
       },
     });
 
+    // If no assets found, return empty array
+    if (!assets.length) {
+      return res.status(200).json(
+        createSuccessResponse({
+          assets: [],
+        }),
+      );
+    }
+
     // If expand is not true, return just the IDs
     if (expand !== "true") {
       return res.status(200).json(
@@ -95,7 +112,7 @@ module.exports = async (req, res, next) => {
           description: asset.description,
           imageUrl: asset.imageUrl,
           imageUrlExpiry: asset.imageUrlExpiry,
-          character: asset.character,
+          character: asset.type === "character" ? asset.character : undefined,
         })),
       }),
     );
