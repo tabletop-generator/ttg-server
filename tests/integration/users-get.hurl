@@ -1,5 +1,5 @@
 # Get User by ID (Valid)
-GET http://localhost:8080/v1/users/1
+GET http://localhost:8080/v1/users/user1@email.com
 Accept: application/json
 [BasicAuth]
 user1@email.com:password1
@@ -13,7 +13,7 @@ jsonpath "$.joinDate" exists
 
 
 # Get User with Non-Existing ID
-GET http://localhost:8080/v1/users/999999
+GET http://localhost:8080/v1/users/notauser@email.com
 Accept: application/json
 [BasicAuth]
 user1@email.com:password1
@@ -23,7 +23,7 @@ HTTP/1.1 404
 jsonpath "$.error.message" == "User not found"
 
 
-# Get User with Invalid ID (Not a Number)
+# Get User with Invalid ID
 GET http://localhost:8080/v1/users/abc
 Accept: application/json
 [BasicAuth]
@@ -31,7 +31,7 @@ user1@email.com:password1
 
 HTTP/1.1 400
 [Asserts]
-jsonpath "$.error.message" == "Invalid user ID"
+jsonpath "$.error.message" == "Invalid email format"
 
 
 # Get User Without Authorization

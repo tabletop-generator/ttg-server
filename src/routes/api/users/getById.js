@@ -1,4 +1,6 @@
 const logger = require("../../../logger");
+const hash = require("../../../hash");
+const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); // simple regex should do for what we're doing.
 const {
   createSuccessResponse,
   createErrorResponse,
@@ -10,20 +12,23 @@ const prisma = new PrismaClient();
  * Get a user by their id
  */
 module.exports = async (req, res) => {
-  const userId = parseInt(req.params.userId, 10);
-
-  if (isNaN(userId)) {
-    return res.status(400).json(createErrorResponse(400, "Invalid user ID"));
-  }
-
   logger.debug(
     { user: req.user, id: req.params.id },
     `received request: GET /v1/users/:userId`,
   );
 
+  const email = req.params.userId;
+  if (!isValidEmail(email)) {
+    return res
+      .status(400)
+      .json(createErrorResponse(400, "Invalid email format"));
+  }
+
+  const userId = hash(email).toString();
+
   try {
     const user = await prisma.user.findUnique({
-      where: { id: userId },
+      where: { hashedEmail: userId }, //searching prisma for the userId (hashed email)
       select: {
         id: true,
         hashedEmail: true,
