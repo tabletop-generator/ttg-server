@@ -296,16 +296,15 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
   - **Security:** [Helmet](https://helmetjs.github.io/), [Express/CORS](https://github.com/expressjs/cors#readme)
   - **Graceful Shutdown:** [Stoppable](https://github.com/hunterloftis/stoppable#readme)
   - **Rate Limiting:** [express-rate-limit](https://express-rate-limit.mintlify.app/)
-- **Storage:**
-  - **Production:** TBD
-  - **Local:** [Postgres](https://www.postgresql.org/), [MinIO](https://min.io/)
-- **Authorization:**
-  - [Passport.js](https://www.passportjs.org/)
-  - **Production:** [Amazon Cognito](https://aws.amazon.com/cognito/), [aws-jwt-verify](https://github.com/awslabs/aws-jwt-verify#readme), [passport-http-bearer](https://www.passportjs.org/packages/passport-http-bearer/)
+- **Storage:** [Prisma](https://www.prisma.io/docs), [AWS SDK for JavaScript S3 Client](https://www.npmjs.com/package/@aws-sdk/client-s3)
+- **Authorization:** [Passport.js](https://www.passportjs.org/)
+  - **Production:** [aws-jwt-verify](https://github.com/awslabs/aws-jwt-verify#readme), [passport-http-bearer](https://www.passportjs.org/packages/passport-http-bearer/)
   - **Local:** [http-auth](https://www.npmjs.com/package/http-auth), [http-auth-passport](https://www.npmjs.com/package/http-auth-passport)
 - **Testing:**
   - **Unit Testing:** [Jest](https://jestjs.io/), [Supertest](https://github.com/ladjs/supertest#readme)
-  - **Integration Testing:** [Hurl](https://hurl.dev/), [Docker Compose](https://docs.docker.com/compose/)
+  - **Integration Testing:** [Hurl](https://hurl.dev/)
+- **Containerization:** [Docker](https://docs.docker.com/reference/)
+- **Local Backing Services:** [Docker Compose](https://docs.docker.com/compose/), [Postgres Docker Image](https://hub.docker.com/_/postgres), [MinIO Docker Image](https://hub.docker.com/r/minio/minio)
 - **Runtime:** [Node.js](https://nodejs.org/docs/latest-v22.x/api/)
 - **Runners:** [nodemon](https://github.com/remy/nodemon#readme)
 - **Package Manager:** [npm](https://docs.npmjs.com/)
