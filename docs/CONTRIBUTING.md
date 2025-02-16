@@ -90,11 +90,11 @@ You can also use the Visual Studio Code debugger instead of `npm run dev`:
 
 1. Click Run and Debug:
 
-![Run and Debug](./img/vscode-debug-guide-01.png)
+   ![Run and Debug](./img/vscode-debug-guide-01.png)
 
 2. Click "Launch via NPM":
 
-![Launch via NPM](./img/vscode-debug-guide-02.png)
+   ![Launch via NPM](./img/vscode-debug-guide-02.png)
 
 ### Using MinIO and the MinIO Console in Docker Compose
 
@@ -116,23 +116,23 @@ While the Postgres and pgAdmin Docker Compose services are running, you can acce
 
 1. Click on "Add New Server":
 
-![Add New Server button in pgAdmin](./img/pgadmin-guide-01.png)
+   ![Add New Server button in pgAdmin](./img/pgadmin-guide-01.png)
 
 2. Enter a name:
 
-![Entering the server name in pgAdmin](./img/pgadmin-guide-02.png)
+   ![Entering the server name in pgAdmin](./img/pgadmin-guide-02.png)
 
 3. Click on Connection and enter the hostname/address `postgres` and the password `mypassword`. Then click the Save button:
 
-![Entering the hostname and password in pgAdmin](./img/pgadmin-guide-03.png)
+   ![Entering the hostname and password in pgAdmin](./img/pgadmin-guide-03.png)
 
 4. You should see the postgres server and tables in the Object Explorer on the left:
 
-![Postgres server appearing in the pgAdmin Object Explorer](./img/pgadmin-guide-04.png)
+   ![Postgres server appearing in the pgAdmin Object Explorer](./img/pgadmin-guide-04.png)
 
 5. You can then view/edit data or perform other operations on the tables:
 
-![pgAdmin table context menu](./img/pgadmin-guide-05.png)
+   ![pgAdmin table context menu](./img/pgadmin-guide-05.png)
 
 ### Re-initializing the Database
 
