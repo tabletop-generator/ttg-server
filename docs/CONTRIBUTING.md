@@ -196,13 +196,13 @@ docker compose -f docker-compose.integration.yml down
 
 These scripts are located in `package.json` and can be run using `npm run <script>`.
 
-### Running
+### Run Scripts
 
 - `start`: Starts the server.
 - `dev`: Runs a development server which reloads on changes to the source code.
 - `debug`: Used to attach the VSCode Debugger. Not intended for manual use.
 
-### Testing
+### Test Scripts
 
 - `test`: Runs all unit tests. Pass globs for test files you want to run as arguments.
 - `test:watch`: Run unit tests and watch for changes to related files.
