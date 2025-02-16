@@ -1,5 +1,5 @@
 const logger = require("../../../logger");
-const prisma = require("../../../prisma");
+const prisma = require("../../../model/data/prismaClient");
 const {
   createSuccessResponse,
   createErrorResponse,
@@ -10,7 +10,19 @@ const {
  */
 module.exports = async (req, res, next) => {
   try {
-    const assetId = Number(req.params.id);
+    const assetId = Number(req.params.assetId);
+
+    // Add debug logging
+    logger.debug(
+      {
+        params: req.params,
+        assetId: assetId,
+        isNaN: isNaN(assetId),
+        user: req.user,
+        body: req.body,
+      },
+      "PATCH request details",
+    );
 
     // Validate assetId is a number
     if (isNaN(assetId)) {
@@ -22,11 +34,27 @@ module.exports = async (req, res, next) => {
       "received request: PATCH /v1/assets/:assetId",
     );
 
-    // Find the asset
+    // Find the asset and its creator
     const asset = await prisma.asset.findUnique({
       where: { id: assetId },
-      select: { creator_id: true },
+      include: {
+        user: {
+          select: {
+            hashedEmail: true,
+          },
+        },
+      },
     });
+
+    // Add more debug logging
+    logger.debug(
+      {
+        assetFound: !!asset,
+        assetDetails: asset,
+        requestUser: req.user,
+      },
+      "Asset lookup results",
+    );
 
     // Check if asset exists
     if (!asset) {
@@ -34,7 +62,7 @@ module.exports = async (req, res, next) => {
     }
 
     // Check if user owns the asset
-    if (asset.creator_id !== req.user) {
+    if (asset.user.hashedEmail !== req.user) {
       return res.status(403).json(createErrorResponse(403, "forbidden"));
     }
 
@@ -45,7 +73,7 @@ module.exports = async (req, res, next) => {
         name: req.body.name,
         description: req.body.description,
         visibility: req.body.visibility,
-        updated_at: new Date(),
+        updatedAt: new Date(),
       },
     });
 
