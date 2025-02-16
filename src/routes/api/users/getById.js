@@ -1,6 +1,6 @@
 const logger = require("../../../logger");
 const hash = require("../../../hash");
-const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); // simple regex should do for what we're doing.
+const validator = require("validator");
 const {
   createSuccessResponse,
   createErrorResponse,
@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
   );
 
   const email = req.params.userId;
-  if (!isValidEmail(email)) {
+  if (!validator.isEmail(email)) {
     return res
       .status(400)
       .json(createErrorResponse(400, "Invalid email format"));
