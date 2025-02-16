@@ -220,85 +220,68 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
 
 1. **Update your local main branch**
 
-   Switch to your main branch and pull the latest changes from the remote repository:
-
    ```bash
    git switch main
    git pull --prune
    ```
 
-- The `--prune` option removes any references to branches that no longer exist on the remote.
+   Switch to your main branch and pull the latest changes from the remote repository. The `--prune` option removes any references to branches that no longer exist on the remote.
 
-2. **Create a new branch**
-
-   Name your branch following the convention `issue-number` (e.g., `issue-1`):
+2. **Create a new branch from main**
 
    ```bash
    git switch -c <issue-number> main
    ```
 
-   - If no issue exists for the change you are making, please [create one](https://github.com/tabletop-generator/ttg-server/issues/new/choose).
+   Name your branch following the convention `issue-number` (e.g., `issue-1`). If no issue exists for the change you are making, you should [create one](https://github.com/tabletop-generator/ttg-server/issues/new), unless the change is really quick or small.
 
-3. **Make your changes**
+3. **Make your changes, commit, and push**
 
-   Start the development server:
+   You should commit your changes as you're making them. Commit often - smaller commits are generally better. Ideally, each commit contains an isolated, complete change. This makes it easy to revert your changes if you decide to take a different approach. Avoid cosmetic changes to unrelated files in the same commit. If introducing new code, add tests for your changes.
 
-   ```bash
-   npm run dev
-   ```
-
-   - If introducing new code, add tests for your changes.
-
-4. **Test your changes**
-
-   Run the following checks to ensure everything works as expected:
-
-   ```bash
-   npm run lint
-   npm run test
-   docker compose up -d
-   npm run test:integration # Server must be running, so run "docker compose up" first
-   ```
-
-5. **Review your changes**
-
-   Check which files have been changed:
+   i. **Review your changes:** Check which files have been changed.
 
    ```bash
    git status
    ```
 
-6. **Stage your changes**
-
-   Add the relevant files to staging:
+   ii. **Stage your changes:** Add the relevant files to the index.
 
    ```bash
    git add <files>
    ```
 
-7. **Commit your changes**
-
-   Write a meaningful commit message:
+   iii. **Commit your changes:** Give each commit a descriptive message to help you and future contributors understand what changes the commit contains.
 
    ```bash
    git commit -m "<commit message>"
    ```
 
-8. **Push your branch**
-
-   Push your changes and set the upstream branch:
+   iv. **Push your branch:** Push your changes and set the upstream branch.
 
    ```bash
    git push -u origin <your-branch-name>
    ```
 
-9. **Create a pull request**
+   After you do this for the first time for your branch, your branch now exists on the remote repository, and commits can be pushed with `git push`.
 
-   [Create a pull request](https://github.com/tabletop-generator/ttg-server/compare) on GitHub. Fill in the template and link it to the issue using:
+   v. **Create a draft pull request:** [Create a draft pull request](https://github.com/tabletop-generator/ttg-server/compare) on GitHub to let others know you're working on the issue and to request feedback on your work as you're working on it. Link your pull request to the issue using [closing keywords](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword):
 
    ```txt
    Fixes #[issue number]
    ```
+
+   vi. Continue making changes, committing them, and pushing them until your changes are ready for review.
+
+4. **Mark your pull request ready for review**
+
+   Once your changes are ready for review, in the merge box, click Ready for review.
+
+   ![ready-for-review-button](https://docs.github.com/assets/cb-62675/mw-1440/images/help/pull_requests/ready-for-review-button.webp)
+
+5. **For maintainers: remember to squash and merge**
+
+   Squash and merge pull requests to keep a clean commit history on the main branch.
 
 ## Documentation
 
