@@ -283,10 +283,14 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
 
    Squash and merge pull requests to keep a clean commit history on the main branch.
 
+## Resources
+
+- [Using Pull Requests](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/about-pull-requests)
+- [GitHub Docs](https://docs.github.com/)
+
 ## Documentation
 
 - **Language:** [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-- **Containerization:** [Docker](https://docs.docker.com/reference/)
 - **Server:** [Express](https://expressjs.com/en/4x/api.html)
   - **Logging:** [Pino](https://getpino.io/#/docs/api), [pino-pretty](https://github.com/pinojs/pino-pretty)
   - **Security:** [Helmet](https://helmetjs.github.io/), [Express/CORS](https://github.com/expressjs/cors#readme)
