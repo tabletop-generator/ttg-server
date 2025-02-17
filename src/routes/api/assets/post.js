@@ -1,6 +1,7 @@
 const asset = require("../../../model/asset");
 const logger = require("../../../logger");
 const generate = require("../../../generator");
+const { createSuccessResponse } = require("../../../response");
 
 /**
  * Generate and save an asset
@@ -48,7 +49,6 @@ module.exports = async (req, res, next) => {
     return next(error);
   }
 
-  // Return asset metadata
   const locationURL = new URL(
     `/v1/assets/${newAsset.uuid}`,
     process.env?.API_URL || `https://${req.headers?.host}`,
@@ -59,5 +59,9 @@ module.exports = async (req, res, next) => {
     `constructed URL for Location header for new asset`,
   );
 
-  return res.status(201).set("Location", locationURL).json(newAsset);
+  // Return asset metadata
+  return res
+    .status(201)
+    .set("Location", locationURL)
+    .json(createSuccessResponse({ asset: newAsset }));
 };
