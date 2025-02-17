@@ -97,7 +97,7 @@ jobs:
         run: npm install
 
       - name: Start Docker Compose services
-        run: docker compose -f docker-compose.integration.yml up -d
+        run: docker compose -f compose.integration.yaml up -d
 
       - name: Wait for services to be healthy
         run: |
@@ -110,7 +110,7 @@ jobs:
               if [ $elapsed -ge $timeout ]; then
                 echo "Timeout reached for service $service"
                 echo "Printing Docker Compose logs..."
-                docker compose -f docker-compose.integration.yml logs
+                docker compose -f compose.integration.yaml logs
                 exit 1
               fi
               sleep 5
@@ -122,7 +122,7 @@ jobs:
 
       - name: Run Hurl tests
         # Print the logs if the tests fail
-        run: npm run test:integration || (docker compose -f docker-compose.integration.yml logs; exit 1)
+        run: npm run test:integration || (docker compose -f compose.integration.yaml logs; exit 1)
 
   docker-build:
     name: Docker Build

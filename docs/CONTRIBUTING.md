@@ -182,14 +182,14 @@ npx prisma generate
 > [!NOTE]
 > During integration testing, the server will run in Docker Compose, meaning signed URLs will have the S3 endpoint's Docker internal hostname (`http://minio:9000`). This must be accounted for in integration tests.
 
-For integration testing, use `docker-compose.integration.yml`. This Compose file doesn't persist data in volumes.
+For integration testing, use `compose.integration.yaml`. This Compose file doesn't persist data in volumes.
 
 ```bash
-docker compose -f docker-compose.integration.yml up --build
+docker compose -f compose.integration.yaml up --build
 
 npm run test:integration
 
-docker compose -f docker-compose.integration.yml down
+docker compose -f compose.integration.yaml down
 ```
 
 ## Scripts
