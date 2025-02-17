@@ -125,8 +125,12 @@ async function getAsset(assetUuid) {
     },
   });
 
-  // If image url is expired, create and save new url before returning
-  if (asset.imageUrlExpiry.getTime() <= new Date().getTime()) {
+  // If image url is expired or about to expire soon, create and save new url before returning
+  // Define a buffer time in milliseconds
+  const BUFFER_WINDOW = 2 * 60 * 1000;
+  const currentTime = new Date().getTime();
+
+  if (asset.imageUrlExpiry.getTime() <= currentTime + BUFFER_WINDOW) {
     const key = `${asset.creatorId}/${asset.id}`;
     const { url, urlExpiry } = await createPresignedUrl(key);
 
