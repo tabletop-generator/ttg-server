@@ -13,15 +13,15 @@ module.exports = async (req, res, next) => {
   );
 
   const userId = req.params.userId;
+
   if (!validator.isHash(userId, "sha256")) {
     return next({ status: 400, message: "Invalid hash" });
   }
 
   let user;
-
   try {
     user = await prisma.user.findUnique({
-      where: { hashedEmail: userId }, //searching prisma for the userId (hashed email)
+      where: { hashedEmail: userId },
       include: {
         assets: true,
         collections: true,
@@ -41,5 +41,5 @@ module.exports = async (req, res, next) => {
   }
 
   logger.debug({ user }, `found user`);
-  return res.status(200).json(createSuccessResponse(user));
+  return res.status(200).json(createSuccessResponse({user: user}));
 };

@@ -6,10 +6,14 @@ user1@email.com:password1
 
 HTTP/1.1 200
 [Asserts]
-jsonpath "$.id" == 1
-jsonpath "$.displayName" exists
-jsonpath "$.hashedEmail" exists
-jsonpath "$.joinDate" exists
+
+jsonpath "$.status" == "ok"
+jsonpath "$.user.id" isInteger
+jsonpath "$.user.hashedEmail" == "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a"
+jsonpath "$.user.displayName" isString
+jsonpath "$.user.profileBio" isString
+jsonpath "$.user.profilePictureUrl" exists # These are nullable so this is all we can assert
+jsonpath "$.user.profilePictureUrlExpiry" exists
 
 
 # Get User with Non-Existing ID
@@ -34,7 +38,7 @@ jsonpath "$.error.message" == "Invalid hash"
 
 
 # Get User Without Authorization
-GET http://localhost:8080/v1/users/1
+GET http://localhost:8080/v1/users/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a
 Accept: application/json
 
 HTTP/1.1 401
