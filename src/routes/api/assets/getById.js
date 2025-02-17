@@ -44,21 +44,7 @@ module.exports = async (req, res, next) => {
 
     // Return the asset with character data if it exists
     return res.status(200).json(
-      createSuccessResponse({
-        asset: {
-          id: asset.id,
-          creatorId: asset.creatorId,
-          createdAt: asset.createdAt,
-          updatedAt: asset.updatedAt,
-          name: asset.name,
-          visibility: asset.visibility,
-          likes: asset.likes,
-          type: asset.type,
-          imageUrl: asset.imageUrl,
-          imageUrlExpiry: asset.imageUrlExpiry,
-          character: asset.character, // Include the entire character object
-        },
-      }),
+      createSuccessResponse({ asset: asset }),
     );
   } catch (err) {
     logger.error({ err }, "Error getting asset by ID");
