@@ -4,13 +4,13 @@ const { uploadDataToS3, createPresignedUrl } = require("./data/aws");
 const prisma = require("./data/prismaClient");
 
 const baseSchema = z.object({
+  name: z.string(),
   type: z.enum(["character", "location", "quest", "map"]),
   visibility: z.enum(["public", "private", "unlisted"]),
 });
 
 const characterSchema = z
   .object({
-    name: z.string(),
     race: z.enum([
       "human",
       "elf",
@@ -79,7 +79,7 @@ async function saveAsset(
   metadata,
   mimeType,
 ) {
-  const { type, visibility, data } = metadata;
+  const { name, type, visibility, data } = metadata;
 
   const assetId = randomUUID();
   const key = `${userHashedEmail}/${assetId}`;
@@ -101,7 +101,7 @@ async function saveAsset(
     data: {
       uuid: assetId,
       creatorId: userId,
-      name: data.name,
+      name: name,
       type: type,
       visibility: visibility,
       description: description,
