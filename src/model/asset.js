@@ -95,7 +95,7 @@ async function saveAsset(
     },
   });
 
-  // Save asset to database based on the type
+  // Save asset to database
   let asset;
   asset = await prisma.asset.create({
     data: {
@@ -117,7 +117,7 @@ async function saveAsset(
 }
 
 async function getAsset(assetUuid) {
-  // Get asset from database based on the type
+  // Get asset from database
   let asset = await prisma.asset.findUniqueOrThrow({
     where: { uuid: assetUuid },
     include: {
