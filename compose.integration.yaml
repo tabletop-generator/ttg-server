@@ -21,7 +21,7 @@ services:
       GROQ_MODEL: "${GROQ_MODEL}"
       CF_TEXT_TO_IMAGE_MODEL: "${CF_TEXT_TO_IMAGE_MODEL}"
     env_file:
-      - .env.docker-compose
+      - .env.compose
     init: true
 
   postgres:
@@ -37,7 +37,7 @@ services:
       timeout: 5s
       retries: 5
     env_file:
-      - .env.docker-compose
+      - .env.compose
     init: true
 
   minio:
@@ -53,7 +53,7 @@ services:
       timeout: 5s
       retries: 5
     env_file:
-      - .env.docker-compose
+      - .env.compose
     init: true
 
   mc:
@@ -71,4 +71,4 @@ services:
       done;
       "
     env_file:
-      - .env.docker-compose
+      - .env.compose

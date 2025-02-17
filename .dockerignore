@@ -13,7 +13,7 @@ tests/
 .lintstagedrc.js
 .nvmrc
 .prettierrc
-docker-compose.ci.yml
-docker-compose.yml
+compose.integration.yaml
+compose.yaml
 eslint.config.mjs
 jest.config.mjs
