@@ -90,11 +90,11 @@ You can also use the Visual Studio Code debugger instead of `npm run dev`:
 
 1. Click Run and Debug:
 
-![Run and Debug](./img/vscode-debug-guide-01.png)
+   ![Run and Debug](./img/vscode-debug-guide-01.png)
 
 2. Click "Launch via NPM":
 
-![Launch via NPM](./img/vscode-debug-guide-02.png)
+   ![Launch via NPM](./img/vscode-debug-guide-02.png)
 
 ### Using MinIO and the MinIO Console in Docker Compose
 
@@ -116,23 +116,23 @@ While the Postgres and pgAdmin Docker Compose services are running, you can acce
 
 1. Click on "Add New Server":
 
-![Add New Server button in pgAdmin](./img/pgadmin-guide-01.png)
+   ![Add New Server button in pgAdmin](./img/pgadmin-guide-01.png)
 
 2. Enter a name:
 
-![Entering the server name in pgAdmin](./img/pgadmin-guide-02.png)
+   ![Entering the server name in pgAdmin](./img/pgadmin-guide-02.png)
 
 3. Click on Connection and enter the hostname/address `postgres` and the password `mypassword`. Then click the Save button:
 
-![Entering the hostname and password in pgAdmin](./img/pgadmin-guide-03.png)
+   ![Entering the hostname and password in pgAdmin](./img/pgadmin-guide-03.png)
 
 4. You should see the postgres server and tables in the Object Explorer on the left:
 
-![Postgres server appearing in the pgAdmin Object Explorer](./img/pgadmin-guide-04.png)
+   ![Postgres server appearing in the pgAdmin Object Explorer](./img/pgadmin-guide-04.png)
 
 5. You can then view/edit data or perform other operations on the tables:
 
-![pgAdmin table context menu](./img/pgadmin-guide-05.png)
+   ![pgAdmin table context menu](./img/pgadmin-guide-05.png)
 
 ### Re-initializing the Database
 
@@ -196,13 +196,13 @@ docker compose -f docker-compose.integration.yml down
 
 These scripts are located in `package.json` and can be run using `npm run <script>`.
 
-### Running
+### Run Scripts
 
 - `start`: Starts the server.
 - `dev`: Runs a development server which reloads on changes to the source code.
 - `debug`: Used to attach the VSCode Debugger. Not intended for manual use.
 
-### Testing
+### Test Scripts
 
 - `test`: Runs all unit tests. Pass globs for test files you want to run as arguments.
 - `test:watch`: Run unit tests and watch for changes to related files.
@@ -220,105 +220,91 @@ Please follow the [GitHub flow](https://docs.github.com/en/get-started/using-git
 
 1. **Update your local main branch**
 
-   Switch to your main branch and pull the latest changes from the remote repository:
-
    ```bash
    git switch main
    git pull --prune
    ```
 
-- The `--prune` option removes any references to branches that no longer exist on the remote.
+   Switch to your main branch and pull the latest changes from the remote repository. The `--prune` option removes any references to branches that no longer exist on the remote.
 
-2. **Create a new branch**
-
-   Name your branch following the convention `issue-number` (e.g., `issue-1`):
+2. **Create a new branch from main**
 
    ```bash
    git switch -c <issue-number> main
    ```
 
-   - If no issue exists for the change you are making, please [create one](https://github.com/tabletop-generator/ttg-server/issues/new/choose).
+   Name your branch following the convention `issue-number` (e.g., `issue-1`). If no issue exists for the change you are making, you should [create one](https://github.com/tabletop-generator/ttg-server/issues/new), unless the change is really quick or small.
 
-3. **Make your changes**
+3. **Make your changes, commit, and push**
 
-   Start the development server:
+   You should commit your changes as you're making them. Commit often - smaller commits are generally better. Ideally, each commit contains an isolated, complete change. This makes it easy to revert your changes if you decide to take a different approach. Avoid cosmetic changes to unrelated files in the same commit. If introducing new code, add tests for your changes.
 
-   ```bash
-   npm run dev
-   ```
-
-   - If introducing new code, add tests for your changes.
-
-4. **Test your changes**
-
-   Run the following checks to ensure everything works as expected:
-
-   ```bash
-   npm run lint
-   npm run test
-   docker compose up -d
-   npm run test:integration # Server must be running, so run "docker compose up" first
-   ```
-
-5. **Review your changes**
-
-   Check which files have been changed:
+   i. **Review your changes:** Check which files have been changed.
 
    ```bash
    git status
    ```
 
-6. **Stage your changes**
-
-   Add the relevant files to staging:
+   ii. **Stage your changes:** Add the relevant files to the index.
 
    ```bash
    git add <files>
    ```
 
-7. **Commit your changes**
-
-   Write a meaningful commit message:
+   iii. **Commit your changes:** Give each commit a descriptive message to help you and future contributors understand what changes the commit contains.
 
    ```bash
    git commit -m "<commit message>"
    ```
 
-8. **Push your branch**
-
-   Push your changes and set the upstream branch:
+   iv. **Push your branch:** Push your changes and set the upstream branch.
 
    ```bash
    git push -u origin <your-branch-name>
    ```
 
-9. **Create a pull request**
+   After you do this for the first time for your branch, your branch now exists on the remote repository, and commits can be pushed with `git push`.
 
-   [Create a pull request](https://github.com/tabletop-generator/ttg-server/compare) on GitHub. Fill in the template and link it to the issue using:
+   v. **Create a draft pull request:** [Create a draft pull request](https://github.com/tabletop-generator/ttg-server/compare) on GitHub to let others know you're working on the issue and to request feedback on your work as you're working on it. Link your pull request to the issue using [closing keywords](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword):
 
    ```txt
    Fixes #[issue number]
    ```
 
+   vi. Continue making changes, committing them, and pushing them until your changes are ready for review.
+
+4. **Mark your pull request ready for review**
+
+   Once your changes are ready for review, in the merge box, click Ready for review.
+
+   ![ready-for-review-button](https://docs.github.com/assets/cb-62675/mw-1440/images/help/pull_requests/ready-for-review-button.webp)
+
+5. **For maintainers: remember to squash and merge**
+
+   Squash and merge pull requests to keep a clean commit history on the main branch.
+
+## Resources
+
+- [Using Pull Requests](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/about-pull-requests)
+- [GitHub Docs](https://docs.github.com/)
+
 ## Documentation
 
 - **Language:** [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-- **Containerization:** [Docker](https://docs.docker.com/reference/)
 - **Server:** [Express](https://expressjs.com/en/4x/api.html)
   - **Logging:** [Pino](https://getpino.io/#/docs/api), [pino-pretty](https://github.com/pinojs/pino-pretty)
   - **Security:** [Helmet](https://helmetjs.github.io/), [Express/CORS](https://github.com/expressjs/cors#readme)
   - **Graceful Shutdown:** [Stoppable](https://github.com/hunterloftis/stoppable#readme)
   - **Rate Limiting:** [express-rate-limit](https://express-rate-limit.mintlify.app/)
-- **Storage:**
-  - **Production:** TBD
-  - **Local:** [Postgres](https://www.postgresql.org/), [MinIO](https://min.io/)
-- **Authorization:**
-  - [Passport.js](https://www.passportjs.org/)
-  - **Production:** [Amazon Cognito](https://aws.amazon.com/cognito/), [aws-jwt-verify](https://github.com/awslabs/aws-jwt-verify#readme), [passport-http-bearer](https://www.passportjs.org/packages/passport-http-bearer/)
+- **Storage:** [Prisma](https://www.prisma.io/docs), [AWS SDK for JavaScript S3 Client](https://www.npmjs.com/package/@aws-sdk/client-s3)
+- **Authorization:** [Passport.js](https://www.passportjs.org/)
+  - **Production:** [aws-jwt-verify](https://github.com/awslabs/aws-jwt-verify#readme), [passport-http-bearer](https://www.passportjs.org/packages/passport-http-bearer/)
   - **Local:** [http-auth](https://www.npmjs.com/package/http-auth), [http-auth-passport](https://www.npmjs.com/package/http-auth-passport)
 - **Testing:**
   - **Unit Testing:** [Jest](https://jestjs.io/), [Supertest](https://github.com/ladjs/supertest#readme)
-  - **Integration Testing:** [Hurl](https://hurl.dev/), [Docker Compose](https://docs.docker.com/compose/)
+  - **Integration Testing:** [Hurl](https://hurl.dev/)
+- **Containerization:** [Docker](https://docs.docker.com/reference/)
+- **Local Backing Services:** [Docker Compose](https://docs.docker.com/compose/), [Postgres Docker Image](https://hub.docker.com/_/postgres), [MinIO Docker Image](https://hub.docker.com/r/minio/minio)
 - **Runtime:** [Node.js](https://nodejs.org/docs/latest-v22.x/api/)
 - **Runners:** [nodemon](https://github.com/remy/nodemon#readme)
 - **Package Manager:** [npm](https://docs.npmjs.com/)
