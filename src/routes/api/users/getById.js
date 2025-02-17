@@ -41,5 +41,5 @@ module.exports = async (req, res, next) => {
   }
 
   logger.debug({ user }, `found user`);
-  return res.status(200).json(createSuccessResponse({user: user}));
+  return res.status(200).json(createSuccessResponse({ user: user }));
 };
