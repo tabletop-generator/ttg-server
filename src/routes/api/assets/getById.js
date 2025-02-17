@@ -24,12 +24,9 @@ module.exports = async (req, res, next) => {
 
     // Get asset with type-specific data
     const asset = await prisma.asset.findUnique({
-      where: { assetId },
+      where: { id: assetId },
       include: {
-        characterAsset: true,
-        locationAsset: true,
-        questAsset: true,
-        mapAsset: true,
+        character: true,
       },
     });
 
@@ -39,30 +36,27 @@ module.exports = async (req, res, next) => {
     }
 
     // Check visibility permissions
-    if (asset.visibility !== "public" && asset.userId !== req.user?.userId) {
+    if (asset.visibility !== "public" && asset.creatorId !== req.user?.id) {
       return res
         .status(403)
         .json(createErrorResponse(403, "Not authorized to view this asset"));
     }
 
-    // Get the specific asset type data
-    const typeData = asset[`${asset.type}Asset`];
-
-    // Return the asset
+    // Return the asset with character data if it exists
     return res.status(200).json(
       createSuccessResponse({
         asset: {
-          id: asset.assetId,
-          ownerId: asset.userId,
-          created: asset.createdDate,
-          updated: asset.updatedDate,
+          id: asset.id,
+          creatorId: asset.creatorId,
+          createdAt: asset.createdAt,
+          updatedAt: asset.updatedAt,
           name: asset.name,
           visibility: asset.visibility,
           likes: asset.likes,
           type: asset.type,
           imageUrl: asset.imageUrl,
           imageUrlExpiry: asset.imageUrlExpiry,
-          ...typeData,
+          character: asset.character, // Include the entire character object
         },
       }),
     );

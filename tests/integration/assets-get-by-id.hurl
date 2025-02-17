@@ -21,7 +21,7 @@ user1@email.com:password1
 }
 HTTP 201
 [Captures]
-asset_id: jsonpath "$.id"
+asset_id: jsonpath "$.asset.id"
 
 # 1. Get asset by ID (should succeed)
 GET http://localhost:8080/v1/assets/{{asset_id}}
@@ -62,4 +62,4 @@ HTTP 401
 [Asserts]
 jsonpath "$.status" == "error"
 jsonpath "$.error.code" == 401
-jsonpath "$.error.message" == "Unauthorized" 
+jsonpath "$.error.message" == "Unauthorized"
