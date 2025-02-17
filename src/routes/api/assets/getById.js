@@ -62,6 +62,6 @@ module.exports = async (req, res, next) => {
     );
   } catch (err) {
     logger.error({ err }, "Error getting asset by ID");
-    next(err);
+    return next(err);
   }
 };
