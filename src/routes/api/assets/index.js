@@ -18,8 +18,6 @@ const router = express.Router();
 
 router.post(`/`, assetGenerationLimiter, require("./post"));
 
-router.get(`/`, require("./get"));
-
 router.get(`/:assetId`, require("./getById"));
 
 router.patch(`/:assetId`, require("./patchById"));
