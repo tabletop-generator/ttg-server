@@ -10,9 +10,9 @@ HTTP/1.1 200
 jsonpath "$.status" == "ok"
 jsonpath "$.user.id" isInteger
 jsonpath "$.user.hashedEmail" == "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a"
-jsonpath "$.user.displayName" isString
-jsonpath "$.user.profileBio" isString
-jsonpath "$.user.profilePictureUrl" exists # These are nullable so this is all we can assert
+jsonpath "$.user.displayName" exists # These are nullable so this is all we can assert
+jsonpath "$.user.profileBio" exists
+jsonpath "$.user.profilePictureUrl" exists
 jsonpath "$.user.profilePictureUrlExpiry" exists
 
 
