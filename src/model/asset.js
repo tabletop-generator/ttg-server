@@ -72,6 +72,15 @@ const fullSchema = baseSchema
     }
   });
 
+/**
+ *
+ * @param {String} userHashedEmail
+ * @param {String} description
+ * @param {Buffer} image
+ * @param {Object} metadata
+ * @param {String} mimeType
+ * @returns {import("@prisma/client").Asset}
+ */
 async function saveAsset(
   userHashedEmail,
   description,
