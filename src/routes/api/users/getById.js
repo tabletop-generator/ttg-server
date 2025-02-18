@@ -1,7 +1,7 @@
 const logger = require("../../../logger");
 const validator = require("validator");
 const { PrismaClientKnownRequestError } = require("@prisma/client").Prisma;
-const { get } = require("../../../model/user");
+const user = require("../../../model/user");
 const { createSuccessResponse } = require("../../../response");
 
 /**
