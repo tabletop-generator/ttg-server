@@ -21,7 +21,7 @@ module.exports = async (req, res, next) => {
     return next({ status: 400, message: "Invalid uuid" });
   }
 
-  // Get the asset
+  // Get the asset with the associated user
   let foundAsset;
   try {
     foundAsset = await asset.get(req.params.assetId, true);
@@ -37,7 +37,7 @@ module.exports = async (req, res, next) => {
     return next({ status: 500, message: "Internal server error" });
   }
 
-  // Check visibility permissions
+  // Disallow viewing other users' private assets
   if (
     foundAsset.visibility == "private" &&
     foundAsset.user.hashedEmail !== req.user
