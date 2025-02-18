@@ -113,7 +113,14 @@ async function saveAsset(
   });
 }
 
-async function getAsset(assetUuid) {
+/**
+ *
+ * @param {import("node:crypto").UUID} assetUuid
+ * @param {Boolean} includeUser Whether to include the related user record
+ * @returns {import("@prisma/client").Asset}
+ * @throws
+ */
+async function getAsset(assetUuid, includeUser = false) {
   // Get asset from database
   let asset = await prisma.asset.findUniqueOrThrow({
     where: { uuid: assetUuid },
@@ -141,6 +148,7 @@ async function getAsset(assetUuid) {
       },
       include: {
         character: true,
+        user: includeUser,
       },
     });
   }
