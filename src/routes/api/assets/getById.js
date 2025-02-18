@@ -25,6 +25,7 @@ module.exports = async (req, res, next) => {
   let foundAsset;
   try {
     foundAsset = await asset.get(req.params.assetId, true);
+    logger.debug({ foundAsset }, "Retrieved asset");
   } catch (error) {
     logger.error({ error }, "Error fetching asset");
 
