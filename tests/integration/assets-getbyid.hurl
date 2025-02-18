@@ -68,7 +68,6 @@ jsonpath "$.error.message" == "Unauthorized"
 GET http://localhost:8080/v1/assets/{{asset_uuid}}
 [BasicAuth]
 user2@email.com:password2
-
 HTTP 403
 [Asserts]
 jsonpath "$.status" == "error"
