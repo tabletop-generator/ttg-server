@@ -17,7 +17,7 @@ POST http://localhost:8080/v1/assets
 [BasicAuth]
 user1@email.com:password1
 {
-  "name": "Thalor Duskbane"
+  "name": "Thalor Duskbane",
   "type": "character",
   "visibility": "public",
   "data": {
