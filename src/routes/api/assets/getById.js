@@ -42,7 +42,7 @@ module.exports = async (req, res, next) => {
     foundAsset.visibility == "private" &&
     foundAsset.user.hashedEmail !== req.user
   ) {
-    return next({ status: 403, message: "Not authorized to view this asset" });
+    return next({ status: 403, message: "Forbidden" });
   }
 
   // Return the asset

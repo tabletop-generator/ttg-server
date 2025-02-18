@@ -63,3 +63,15 @@ HTTP 401
 jsonpath "$.status" == "error"
 jsonpath "$.error.code" == 401
 jsonpath "$.error.message" == "Unauthorized"
+
+# 5. Test forbidden access
+GET http://localhost:8080/v1/assets/{{asset_uuid}}
+[BasicAuth]
+user2@email.com:password2
+
+HTTP 403
+[Asserts]
+jsonpath "$.status" == "error"
+jsonpath "$.error.code" == 403
+jsonpath "$.error.message" == "Forbidden"
+
