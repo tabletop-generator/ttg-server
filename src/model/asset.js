@@ -136,6 +136,7 @@ async function getAsset(assetUuid, includeUser = false) {
     where: { uuid: assetUuid },
     include: {
       character: true,
+      user: includeUser,
     },
   });
 
