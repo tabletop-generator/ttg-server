@@ -56,7 +56,7 @@ module.exports = async (req, res, next) => {
   }
 
   return res
-    .status(200)
+    .status(201)
     .set("Location", locationURL)
     .json(createSuccessResponse({ user: newUser }));
 };
