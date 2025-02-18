@@ -80,6 +80,7 @@ const fullSchema = baseSchema
  * @param {Object} metadata
  * @param {String} mimeType
  * @returns {import("@prisma/client").Asset}
+ * @throws
  */
 async function saveAsset(
   userHashedEmail,
