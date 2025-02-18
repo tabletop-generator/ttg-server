@@ -96,8 +96,7 @@ async function saveAsset(
   });
 
   // Save asset to database
-  let asset;
-  asset = await prisma.asset.create({
+  return await prisma.asset.create({
     data: {
       uuid: assetId,
       creatorId: userId,
@@ -112,8 +111,6 @@ async function saveAsset(
       },
     },
   });
-
-  return asset;
 }
 
 async function getAsset(assetUuid) {
