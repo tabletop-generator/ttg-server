@@ -21,10 +21,10 @@ module.exports = async (req, res, next) => {
     return next({ status: 400, message: "Invalid uuid" });
   }
 
-  // Get asset using the model's get function
+  // Get the asset
   let foundAsset;
   try {
-    foundAsset = await asset.get(req.params.assetId);
+    foundAsset = await asset.get(req.params.assetId, true);
   } catch (error) {
     logger.error({ error }, "Error fetching asset");
 
@@ -39,8 +39,8 @@ module.exports = async (req, res, next) => {
 
   // Check visibility permissions
   if (
-    foundAsset.visibility !== "public" &&
-    foundAsset.creatorId !== req.user
+    foundAsset.visibility == "private" &&
+    foundAsset.user.hashedEmail !== req.user
   ) {
     return next({ status: 403, message: "Not authorized to view this asset" });
   }
