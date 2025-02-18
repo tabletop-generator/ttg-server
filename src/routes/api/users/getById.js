@@ -34,11 +34,6 @@ module.exports = async (req, res, next) => {
     return next({ status: 500, message: "Internal server error" });
   }
 
-  if (!user) {
-    logger.warn("User not found");
-    return next({ status: 404, message: "User not found" });
-  }
-
   logger.debug({ user }, `found user`);
   return res.status(200).json(createSuccessResponse({ user: user }));
 };
