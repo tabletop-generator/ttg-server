@@ -1,6 +1,7 @@
 const logger = require("../../../logger");
 const validator = require("validator");
-const prisma = require("../../../model/data/prismaClient");
+const { PrismaClientKnownRequestError } = require("@prisma/client").Prisma;
+const { get } = require("../../../model/user");
 const { createSuccessResponse } = require("../../../response");
 
 /**
@@ -20,19 +21,17 @@ module.exports = async (req, res, next) => {
 
   let user;
   try {
-    user = await prisma.user.findUnique({
-      where: { hashedEmail: userId },
-      include: {
-        assets: true,
-        collections: true,
-        comments: true,
-      },
-    });
+    user = await get(userId);
   } catch (error) {
     logger.error({ error }, "Error fetching user");
-    error.status = 500;
-    error.message = "Internal server error";
-    return next(error);
+
+    if (
+      error instanceof PrismaClientKnownRequestError &&
+      error.code === "P2025"
+    ) {
+      return next({ status: 404, message: "User not found" });
+    }
+    return next({ status: 500, message: "Internal server error" });
   }
 
   if (!user) {
