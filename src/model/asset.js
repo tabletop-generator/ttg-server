@@ -4,52 +4,60 @@ const { uploadDataToS3, createPresignedUrl } = require("./data/aws");
 const prisma = require("./data/prismaClient");
 
 const baseSchema = z.object({
+  name: z.string(),
   type: z.enum(["character", "location", "quest", "map"]),
   visibility: z.enum(["public", "private", "unlisted"]),
 });
 
-const characterSchema = z.object({
-  name: z.string(),
-  race: z.enum([
-    "human",
-    "elf",
-    "drow",
-    "half_elf",
-    "half_orc",
-    "halfling",
-    "dwarf",
-    "gnome",
-    "tiefling",
-    "githyanki",
-    "dragonborn",
-  ]),
-  class: z.enum([
-    "barbarian",
-    "bard",
-    "cleric",
-    "druid",
-    "fighter",
-    "monk",
-    "paladin",
-    "ranger",
-    "rogue",
-    "sorcerer",
-    "warlock",
-    "wizard",
-  ]),
-  gender: z.enum(["male", "female", "non_binary", "genderfluid", "agender"]),
-  alignment: z.enum([
-    "lawful_good",
-    "neutral_good",
-    "chaotic_good",
-    "lawful_neutral",
-    "true_neutral",
-    "chaotic_neutral",
-    "lawful_evil",
-    "neutral_evil",
-    "chaotic_evil",
-  ]),
-});
+const characterSchema = z
+  .object({
+    race: z.enum([
+      "human",
+      "elf",
+      "drow",
+      "half_elf",
+      "half_orc",
+      "halfling",
+      "dwarf",
+      "gnome",
+      "tiefling",
+      "githyanki",
+      "dragonborn",
+    ]),
+    class: z.enum([
+      "barbarian",
+      "bard",
+      "cleric",
+      "druid",
+      "fighter",
+      "monk",
+      "paladin",
+      "ranger",
+      "rogue",
+      "sorcerer",
+      "warlock",
+      "wizard",
+    ]),
+    gender: z.enum(["male", "female", "non_binary", "genderfluid", "agender"]),
+    alignment: z.enum([
+      "lawful_good",
+      "neutral_good",
+      "chaotic_good",
+      "lawful_neutral",
+      "true_neutral",
+      "chaotic_neutral",
+      "lawful_evil",
+      "neutral_evil",
+      "chaotic_evil",
+    ]),
+    abilities: z.string().optional(),
+    appearance: z.string().optional(),
+    background: z.string().optional(),
+    equipment: z.string().optional(),
+    motivation: z.string().optional(),
+    personality: z.string().optional(),
+  })
+  .strict();
 
 const fullSchema = baseSchema
   .extend({
@@ -71,7 +79,7 @@ async function saveAsset(
   metadata,
   mimeType,
 ) {
-  const { type, visibility, data } = metadata;
+  const { name, type, visibility, data } = metadata;
 
   const assetId = randomUUID();
   const key = `${userHashedEmail}/${assetId}`;
@@ -87,44 +95,59 @@ async function saveAsset(
     },
   });
 
-  // Save asset to database based on the type
-  let asset;
-  switch (metadata.type) {
-    case "character":
-      asset = await prisma.asset.create({
-        data: {
-          uuid: assetId,
-          creatorId: userId,
-          name: data.name,
-          type: type,
-          visibility: visibility,
-          description: description,
-          imageUrl: url,
-          imageUrlExpiry: urlExpiry,
-          character: {
-            create: {
-              race: data.race,
-              class: data.class,
-              gender: data.gender,
-              alignment: data.alignment,
-              appearance: data.appearance,
-              abilities: data.abilities,
-              background: data.background,
-              equipment: data.equipment,
-              motivation: data.motivation,
-              personality: data.personality,
-            },
-          },
-        },
-      });
-      break;
+  // Save asset to database
+  return await prisma.asset.create({
+    data: {
+      uuid: assetId,
+      creatorId: userId,
+      name: name,
+      type: type,
+      visibility: visibility,
+      description: description,
+      imageUrl: url,
+      imageUrlExpiry: urlExpiry,
+      [type]: {
+        create: { ...data },
+      },
+    },
+  });
+}
 
-    default:
-      break;
+async function getAsset(assetUuid) {
+  // Get asset from database
+  let asset = await prisma.asset.findUniqueOrThrow({
+    where: { uuid: assetUuid },
+    include: {
+      character: true,
+    },
+  });
+
+  // If image url is expired or about to expire soon, create and save new url before returning
+  // Define a buffer time in milliseconds
+  const BUFFER_WINDOW = 2 * 60 * 1000;
+  const currentTime = new Date().getTime();
+
+  if (asset.imageUrlExpiry.getTime() <= currentTime + BUFFER_WINDOW) {
+    const key = `${asset.creatorId}/${asset.id}`;
+    const { url, urlExpiry } = await createPresignedUrl(key);
+
+    asset = prisma.asset.update({
+      where: {
+        id: asset.id,
+      },
+      data: {
+        imageUrl: url,
+        imageUrlExpiry: urlExpiry,
+      },
+      include: {
+        character: true,
+      },
+    });
   }
 
   return asset;
 }
 
 module.exports.save = saveAsset;
+module.exports.get = getAsset;
 module.exports.schema = fullSchema;
