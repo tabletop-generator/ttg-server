@@ -73,4 +73,3 @@ HTTP 403
 jsonpath "$.status" == "error"
 jsonpath "$.error.code" == 403
 jsonpath "$.error.message" == "Forbidden"
-
