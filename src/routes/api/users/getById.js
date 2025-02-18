@@ -1,16 +1,39 @@
 const logger = require("../../../logger");
+const validator = require("validator");
+const { PrismaClientKnownRequestError } = require("@prisma/client").Prisma;
+const user = require("../../../model/user");
 const { createSuccessResponse } = require("../../../response");
 
 /**
  * Get a user by their id
  */
-
-// eslint-disable-next-line no-unused-vars
 module.exports = async (req, res, next) => {
   logger.debug(
     { user: req.user, id: req.params.id },
     `received request: GET /v1/users/:userId`,
   );
 
-  return res.status(418).json(createSuccessResponse());
+  const userId = req.params.userId;
+
+  if (!validator.isHash(userId, "sha256")) {
+    return next({ status: 400, message: "Invalid hash" });
+  }
+
+  let foundUser;
+  try {
+    foundUser = await user.get(userId);
+  } catch (error) {
+    logger.error({ error }, "Error fetching user");
+
+    if (
+      error instanceof PrismaClientKnownRequestError &&
+      error.code === "P2025"
+    ) {
+      return next({ status: 404, message: "User not found" });
+    }
+    return next({ status: 500, message: "Internal server error" });
+  }
+
+  logger.debug({ user: foundUser }, `found user`);
+  return res.status(200).json(createSuccessResponse({ user: foundUser }));
 };
