@@ -21,7 +21,7 @@ module.exports = async (req, res, next) => {
 
   let user;
   try {
-    user = await get(userId);
+    user = await user.get(userId);
   } catch (error) {
     logger.error({ error }, "Error fetching user");
 
