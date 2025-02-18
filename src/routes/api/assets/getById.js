@@ -40,7 +40,7 @@ module.exports = async (req, res, next) => {
   // Check visibility permissions
   if (
     foundAsset.visibility !== "public" &&
-    foundAsset.creatorId !== req.user?.id
+    foundAsset.creatorId !== req.user
   ) {
     return next({ status: 403, message: "Not authorized to view this asset" });
   }
