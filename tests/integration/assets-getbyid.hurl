@@ -5,7 +5,7 @@ user1@email.com:password1
 {
   "name": "Thalor Duskbane",
   "type": "character",
-  "visibility": "public",
+  "visibility": "private",
   "data": {
     "race": "tiefling",
     "class": "warlock",
