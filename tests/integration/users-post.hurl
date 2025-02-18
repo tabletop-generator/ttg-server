@@ -3,7 +3,7 @@ POST http://localhost:8080/v1/users
 [BasicAuth]
 newuser@email.com:newpassword
 
-HTTP/1.1 200
+HTTP/1.1 201
 [Asserts]
 header "Location" matches "^(http|https):\/\/localhost:8080\/v1\/users\/[A-Za-z0-9_-]+$"
 jsonpath "$.status" == "ok"
