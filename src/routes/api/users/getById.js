@@ -19,9 +19,9 @@ module.exports = async (req, res, next) => {
     return next({ status: 400, message: "Invalid hash" });
   }
 
-  let user;
+  let foundUser;
   try {
-    user = await user.get(userId);
+    foundUser = await user.get(userId);
   } catch (error) {
     logger.error({ error }, "Error fetching user");
 
@@ -34,6 +34,6 @@ module.exports = async (req, res, next) => {
     return next({ status: 500, message: "Internal server error" });
   }
 
-  logger.debug({ user }, `found user`);
-  return res.status(200).json(createSuccessResponse({ user: user }));
+  logger.debug({ user: foundUser }, `found user`);
+  return res.status(200).json(createSuccessResponse({ user: foundUser }));
 };
