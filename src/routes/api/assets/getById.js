@@ -24,7 +24,7 @@ module.exports = async (req, res, next) => {
   // Get the asset with the associated user
   let foundAsset;
   try {
-    foundAsset = await asset.get(req.params.assetId, true);
+    foundAsset = await asset.get(req.params.assetId);
     logger.debug({ foundAsset }, "Retrieved asset");
   } catch (error) {
     logger.error({ error }, "Error fetching asset");
