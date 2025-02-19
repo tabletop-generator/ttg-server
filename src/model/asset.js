@@ -146,7 +146,7 @@ async function getAsset(assetUuid, includeUser = false) {
   const currentTime = new Date().getTime();
 
   if (asset.imageUrlExpiry.getTime() <= currentTime + BUFFER_WINDOW) {
-    const key = `${asset.creatorId}/${asset.id}`;
+    const key = `${asset.user.hashedEmail}/${asset.uuid}`;
     const { url, urlExpiry } = await createPresignedUrl(key);
 
     asset = prisma.asset.update({
