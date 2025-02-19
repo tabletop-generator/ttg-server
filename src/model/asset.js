@@ -130,7 +130,7 @@ async function saveAsset(
  * @returns {import("@prisma/client").Asset}
  * @throws
  */
-async function getAsset(assetUuid, includeUser = false) {
+async function getAsset(assetUuid) {
   // Get asset from database
   let asset = await prisma.asset.findUniqueOrThrow({
     where: { uuid: assetUuid },
@@ -158,7 +158,7 @@ async function getAsset(assetUuid, includeUser = false) {
       },
       include: {
         character: true,
-        user: includeUser,
+        user: true,
       },
     });
   }
