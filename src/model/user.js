@@ -25,7 +25,7 @@ async function getUser(hashedEmail) {
   const currentTime = new Date().getTime();
 
   if (user.profilePictureUrlExpiry.getTime() <= currentTime + BUFFER_WINDOW) {
-    const key = user.id;
+    const key = user.hashedEmail;
     const { url, urlExpiry } = await createPresignedUrl(key);
 
     user = prisma.user.update({
