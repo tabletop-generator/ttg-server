@@ -1,19 +1,22 @@
 # Test PATCH /assets/:assetId endpoints
 
-# First ensure user1 exists
+# First create user1
 POST http://localhost:8080/v1/users
 [BasicAuth]
 user1@email.com:password1
 
-# Create the test asset
+HTTP 200
+# Don't need to capture anything from user creation
+
+# First create an asset to update
 POST http://localhost:8080/v1/assets
 [BasicAuth]
 user1@email.com:password1
 {
+  "name": "Thalor Duskbane",
   "type": "character",
   "visibility": "public",
   "data": {
-    "name": "Thalor Duskbane",
     "race": "tiefling",
     "class": "warlock",
     "gender": "male",
@@ -26,34 +29,54 @@ user1@email.com:password1
     "motivation": "Seek power"
   }
 }
+
 HTTP 201
 [Captures]
-asset_id: jsonpath "$.id"
+asset_uuid: jsonpath "$.asset.uuid"
 
-# 1. Update asset (should succeed)
-PATCH http://localhost:8080/v1/assets/{{asset_id}}
+# 1. Update asset successfully
+PATCH http://localhost:8080/v1/assets/{{asset_uuid}}
 [BasicAuth]
 user1@email.com:password1
 {
-    "name": "Updated Thalor Duskbane",
-    "description": "Updated description",
+    "name": "Updated Name",
     "visibility": "private"
 }
 HTTP 200
 [Asserts]
 jsonpath "$.status" == "ok"
-jsonpath "$.asset" exists
-jsonpath "$.asset.name" == "Updated Thalor Duskbane"
-jsonpath "$.asset.description" == "Updated description"
+jsonpath "$.asset.name" == "Updated Name"
 jsonpath "$.asset.visibility" == "private"
 
-# Ensure user2 exists before testing forbidden access
+# Create user2 for forbidden test
 POST http://localhost:8080/v1/users
 [BasicAuth]
 user2@email.com:password2
 
-# 2. Update non-existent asset (should fail)
-PATCH http://localhost:8080/v1/assets/999999
+HTTP 200
+
+# Create another asset owned by user2
+POST http://localhost:8080/v1/assets
+[BasicAuth]
+user2@email.com:password2
+{
+  "name": "Other User's Asset",
+  "type": "character",
+  "visibility": "public",
+  "data": {
+    "race": "human",
+    "class": "fighter",
+    "gender": "male",
+    "alignment": "lawful_good"
+  }
+}
+
+HTTP 201
+[Captures]
+other_asset_uuid: jsonpath "$.asset.uuid"
+
+# 2. Update non-existent asset
+PATCH http://localhost:8080/v1/assets/123e4567-e89b-12d3-a456-426614174000
 [BasicAuth]
 user1@email.com:password1
 {
@@ -79,7 +102,7 @@ jsonpath "$.error.code" == 400
 jsonpath "$.error.message" == "invalid asset id"
 
 # 4. Update asset without authentication
-PATCH http://localhost:8080/v1/assets/{{asset_id}}
+PATCH http://localhost:8080/v1/assets/{{asset_uuid}}
 {
     "name": "Test Name"
 }
@@ -90,27 +113,8 @@ jsonpath "$.error.code" == 401
 jsonpath "$.error.message" == "Unauthorized"
 
 # 5. Update someone else's asset (should fail)
-# Create another user's asset
-POST http://localhost:8080/v1/assets
-[BasicAuth]
-user2@email.com:password2
-{
-  "type": "character",
-  "visibility": "public",
-  "data": {
-    "name": "Other User's Character",
-    "race": "human",
-    "class": "fighter",
-    "gender": "male",
-    "alignment": "lawful_good"
-  }
-}
-HTTP 201
-[Captures]
-other_asset_id: jsonpath "$.id"
-
 # Try to update other user's asset
-PATCH http://localhost:8080/v1/assets/{{other_asset_id}}
+PATCH http://localhost:8080/v1/assets/{{other_asset_uuid}}
 [BasicAuth]
 user1@email.com:password1
 {
