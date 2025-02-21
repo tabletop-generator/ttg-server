@@ -1,13 +1,5 @@
 # Test PATCH /assets/:assetId endpoints
 
-# First create user1
-POST http://localhost:8080/v1/users
-[BasicAuth]
-user1@email.com:password1
-
-HTTP 200
-# Don't need to capture anything from user creation
-
 # First create an asset to update
 POST http://localhost:8080/v1/assets
 [BasicAuth]
@@ -34,28 +26,7 @@ HTTP 201
 [Captures]
 asset_uuid: jsonpath "$.asset.uuid"
 
-# 1. Update asset successfully
-PATCH http://localhost:8080/v1/assets/{{asset_uuid}}
-[BasicAuth]
-user1@email.com:password1
-{
-    "name": "Updated Name",
-    "visibility": "private"
-}
-HTTP 200
-[Asserts]
-jsonpath "$.status" == "ok"
-jsonpath "$.asset.name" == "Updated Name"
-jsonpath "$.asset.visibility" == "private"
-
-# Create user2 for forbidden test
-POST http://localhost:8080/v1/users
-[BasicAuth]
-user2@email.com:password2
-
-HTTP 200
-
-# Create another asset owned by user2
+# Create another asset owned by user2 (for forbidden test)
 POST http://localhost:8080/v1/assets
 [BasicAuth]
 user2@email.com:password2
@@ -74,6 +45,20 @@ user2@email.com:password2
 HTTP 201
 [Captures]
 other_asset_uuid: jsonpath "$.asset.uuid"
+
+# 1. Update asset successfully
+PATCH http://localhost:8080/v1/assets/{{asset_uuid}}
+[BasicAuth]
+user1@email.com:password1
+{
+    "name": "Updated Name",
+    "visibility": "private"
+}
+HTTP 200
+[Asserts]
+jsonpath "$.status" == "ok"
+jsonpath "$.asset.name" == "Updated Name"
+jsonpath "$.asset.visibility" == "private"
 
 # 2. Update non-existent asset
 PATCH http://localhost:8080/v1/assets/123e4567-e89b-12d3-a456-426614174000
