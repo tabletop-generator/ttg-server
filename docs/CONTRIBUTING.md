@@ -82,7 +82,7 @@ You will need to add the email you used to sign in to the local development data
 
 - **From Debug Logs:** Run the server with the environment variable `LOG_LEVEL=debug` and send a request to an auth-protected endpoint. You should see a log message saying "Authenticated user" with the hashed email beside it.
 
-Once you have your hashed email, you will need to add this to your local Docker Compose Postgres database. You can do this using Prisma Studio. See [With Prisma Studio](#with-prisma-studio).
+Once you have your hashed email, you will need to add this to your local Docker Compose Postgres database. You can do this using Prisma Studio. See [Using Postgres in Docker Compose](#using-postgres-in-docker-compose).
 
 ### Using the Visual Studio Code Debugger
 
@@ -102,9 +102,7 @@ You can use the Docker Compose MinIO service as the S3 endpoint for object stora
 
 ### Using Postgres in Docker Compose
 
-You can use the Docker Compose Postgres service as the Postgres database for development. There are two ways to interact with it using a GUI:
-
-#### With Prisma Studio
+You can use the Docker Compose Postgres service as the Postgres database for development.
 
 While the Postgres database Docker Compose service is running, you can use Prisma Studio with `npx prisma studio` to view and edit data in the database.
 
@@ -114,13 +112,13 @@ While the Postgres database Docker Compose service is running, you can use Prism
 
 If the database initialization script (`docker/postgres/initdb/initdb.sql`) on the `main` branch has changed since you initialized your local Postgres database (the last time you ran `docker compose up`), you need to re-initialize your local database and re-generate your Prisma client.
 
-Remove the Postgres containers, remove their Docker volumes, and restart the services. The database will be re-initialized from the new initialization script. Next, re-generate the Prisma client.
+Remove the Postgres container, remove its Docker volume, and restart the service. The database will be re-initialized from the new initialization script. Next, re-generate the Prisma client.
 
 ```bash
 # Remove the Postgres service and volume
 docker compose rm postgres
 
-# Remove persistent storage for the Postgres services
+# Remove persistent storage for the Postgres service
 docker volume rm ttg_postgres_data
 
 # Restart the Postgres service and re-initialize the database
