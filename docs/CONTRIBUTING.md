@@ -42,8 +42,8 @@ The recommended setup for development is running the server on the host machine 
 # Create a .env file with development presets
 cp .env.example .env
 
-# Start MinIO, create the default bucket, and start Postgres and pgAdmin
-docker compose up mc pgadmin # -d to detach i.e. run in background
+# Start MinIO, create the default bucket, and start Postgres
+docker compose up # -d to detach i.e. run in background
 
 # Run server and restart on changes to source code
 npm run dev
@@ -110,45 +110,21 @@ While the Postgres database Docker Compose service is running, you can use Prism
 
 ![Prisma Studio screenshot](./img/prisma-studio.png)
 
-#### With pgAdmin
-
-While the Postgres and pgAdmin Docker Compose services are running, you can access pgAdmin at `localhost:5050` to interact with the Postgres service using a GUI. The default pgAdmin credentials are `postgres@email.com` and `mypassword`. Once in pgAdmin, you can connect to the Postgres service:
-
-1. Click on "Add New Server":
-
-   ![Add New Server button in pgAdmin](./img/pgadmin-guide-01.png)
-
-2. Enter a name:
-
-   ![Entering the server name in pgAdmin](./img/pgadmin-guide-02.png)
-
-3. Click on Connection and enter the hostname/address `postgres` and the password `mypassword`. Then click the Save button:
-
-   ![Entering the hostname and password in pgAdmin](./img/pgadmin-guide-03.png)
-
-4. You should see the postgres server and tables in the Object Explorer on the left:
-
-   ![Postgres server appearing in the pgAdmin Object Explorer](./img/pgadmin-guide-04.png)
-
-5. You can then view/edit data or perform other operations on the tables:
-
-   ![pgAdmin table context menu](./img/pgadmin-guide-05.png)
-
 ### Re-initializing the Database
 
 If the database initialization script (`docker/postgres/initdb/initdb.sql`) on the `main` branch has changed since you initialized your local Postgres database (the last time you ran `docker compose up`), you need to re-initialize your local database and re-generate your Prisma client.
 
-Remove the Postgres and pgAdmin containers, remove their Docker volumes, and restart the services. The database will be re-initialized from the new initialization script. Next, re-generate the Prisma client.
+Remove the Postgres containers, remove their Docker volumes, and restart the services. The database will be re-initialized from the new initialization script. Next, re-generate the Prisma client.
 
 ```bash
-# Remove the Postgres services
-docker compose rm postgres pgadmin
+# Remove the Postgres service and volume
+docker compose rm postgres
 
 # Remove persistent storage for the Postgres services
-docker volume rm ttg_postgres_data ttg_pgadmin_data
+docker volume rm ttg_postgres_data
 
-# Restart the Postgres services and re-initialize the database
-docker compose up pgadmin
+# Restart the Postgres service and re-initialize the database
+docker compose up [-d]
 
 # Update your Prisma client with the new schema
 npx prisma generate
@@ -159,14 +135,14 @@ npx prisma generate
 If you update the database initialization script (`docker/postgres/initdb/initdb.sql`), you need to follow almost the same steps as [Re-initializing the Database](#re-initializing-the-database), but you also need to update the Prisma schema before re-generating your client:
 
 ```bash
-# Remove the Postgres services
-docker compose rm postgres pgadmin
+# Remove the Postgres service
+docker compose rm
 
-# Remove persistent storage for the Postgres services
-docker volume rm ttg_postgres_data ttg_pgadmin_data
+# Remove persistent storage for the Postgres service
+docker volume rm ttg_postgres_data
 
-# Restart the Postgres services and re-initialize the database
-docker compose up pgadmin
+# Restart the Postgres service and re-initialize the database
+docker compose up [-d]
 
 # Inspect the database and update the Prisma schema
 npx prisma db pull
