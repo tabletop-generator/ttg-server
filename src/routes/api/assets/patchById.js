@@ -78,14 +78,20 @@ module.exports = async (req, res, next) => {
 
   // Update the asset
   try {
+    const updateData = {
+      updatedAt: new Date(),
+      ...(req.body.name !== undefined && { name: req.body.name }),
+      ...(req.body.description !== undefined && {
+        description: req.body.description,
+      }),
+      ...(req.body.visibility !== undefined && {
+        visibility: req.body.visibility,
+      }),
+    };
+
     const updatedAsset = await prisma.asset.update({
       where: { id: asset.id },
-      data: {
-        name: req.body.name,
-        description: req.body.description,
-        visibility: req.body.visibility,
-        updatedAt: new Date(),
-      },
+      data: updateData,
     });
     return res.status(200).json(createSuccessResponse({ asset: updatedAsset }));
   } catch (error) {
