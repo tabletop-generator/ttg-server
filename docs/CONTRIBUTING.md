@@ -82,7 +82,7 @@ You will need to add the email you used to sign in to the local development data
 
 - **From Debug Logs:** Run the server with the environment variable `LOG_LEVEL=debug` and send a request to an auth-protected endpoint. You should see a log message saying "Authenticated user" with the hashed email beside it.
 
-Once you have your hashed email, you will need to add this to your local Docker Compose Postgres database. You can do this using Prisma Studio. See [Using Postgres in Docker Compose](#using-postgres-in-docker-compose).
+Once you have your hashed email, you will need to add this to your local Docker Compose Postgres database. You can do this by sending a request to `POST /v1/users/:id` (where `:id` is your hashed email), or you can do it with Prisma Studio. See [Using Postgres in Docker Compose](#using-postgres-in-docker-compose).
 
 ### Using the Visual Studio Code Debugger
 
