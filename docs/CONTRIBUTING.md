@@ -112,16 +112,13 @@ While the Postgres database Docker Compose service is running, you can use Prism
 
 If the database initialization script (`docker/postgres/initdb/initdb.sql`) on the `main` branch has changed since you initialized your local Postgres database (the last time you ran `docker compose up`), you need to re-initialize your local database and re-generate your Prisma client.
 
-Remove the Postgres container, remove its Docker volume, and restart the service. The database will be re-initialized from the new initialization script. Next, re-generate the Prisma client.
+Remove the backing services and their volumes, and restart them. The database will be re-initialized from the new initialization script. Next, re-generate the Prisma client.
 
 ```bash
-# Remove the Postgres service and volume
-docker compose rm postgres
+# Remove backing services and volumes
+docker compose down -v
 
-# Remove persistent storage for the Postgres service
-docker volume rm ttg_postgres_data
-
-# Restart the Postgres service and re-initialize the database
+# Restart services and re-initialize the database
 docker compose up [-d]
 
 # Update your Prisma client with the new schema
@@ -133,13 +130,10 @@ npx prisma generate
 If you update the database initialization script (`docker/postgres/initdb/initdb.sql`), you need to follow almost the same steps as [Re-initializing the Database](#re-initializing-the-database), but you also need to update the Prisma schema before re-generating your client:
 
 ```bash
-# Remove the Postgres service
-docker compose rm
+# Remove backing services and volumes
+docker compose down -v
 
-# Remove persistent storage for the Postgres service
-docker volume rm ttg_postgres_data
-
-# Restart the Postgres service and re-initialize the database
+# Restart services and re-initialize the database
 docker compose up [-d]
 
 # Inspect the database and update the Prisma schema
