@@ -1,4 +1,5 @@
 const { createPresignedUrl } = require("./data/aws");
+const { get: getAsset } = require("./asset");
 const prisma = require("./data/prismaClient");
 
 async function getUser(hashedEmail) {
@@ -8,11 +9,21 @@ async function getUser(hashedEmail) {
       hashedEmail: hashedEmail,
     },
     include: {
-      assets: true,
+      assets: {
+        select: {
+          uuid: true,
+        },
+      },
       collections: true,
       comments: true,
     },
   });
+
+  // Re-get the assets to refresh the URL
+  // This is a hack and we should be using GET /v1/assets?userId
+  user.assets = await Promise.all(
+    user.assets.map(async (asset) => await getAsset(asset.uuid)),
+  );
 
   // If the user doesn't have a profile picture we don't need to check if the url is expired
   if (!(user.profilePictureUrl && user.profilePictureUrlExpiry)) {
@@ -28,7 +39,7 @@ async function getUser(hashedEmail) {
     const key = user.hashedEmail;
     const { url, urlExpiry } = await createPresignedUrl(key);
 
-    user = prisma.user.update({
+    user = await prisma.user.update({
       where: {
         id: user.id,
       },
@@ -37,7 +48,11 @@ async function getUser(hashedEmail) {
         profilePictureUrlExpiry: urlExpiry,
       },
       include: {
-        assets: true,
+        assets: {
+          select: {
+            uuid: true,
+          },
+        },
         collections: true,
         comments: true,
       },

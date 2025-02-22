@@ -3,6 +3,8 @@ POST http://localhost:8080/v1/users
 [BasicAuth]
 newuser@email.com:newpassword
 
+# TODO: We don't have a way to delete the user before/after the tests so for
+# now this test fails after the first run
 HTTP/1.1 201
 [Asserts]
 header "Location" matches "^(http|https):\/\/localhost:8080\/v1\/users\/[A-Za-z0-9_-]+$"

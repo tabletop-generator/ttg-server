@@ -1,6 +1,10 @@
 const { randomUUID } = require("node:crypto");
 const { z } = require("zod");
-const { uploadDataToS3, createPresignedUrl } = require("./data/aws");
+const {
+  uploadDataToS3,
+  createPresignedUrl,
+  deleteDataFromS3,
+} = require("./data/aws");
 const prisma = require("./data/prismaClient");
 
 const baseSchema = z.object({
@@ -109,7 +113,6 @@ async function saveAsset(
   return await prisma.asset.create({
     data: {
       uuid: assetId,
-      creatorId: userId,
       name: name,
       type: type,
       visibility: visibility,
@@ -118,6 +121,11 @@ async function saveAsset(
       imageUrlExpiry: urlExpiry,
       [type]: {
         create: { ...data },
+      },
+      user: {
+        connect: {
+          id: userId,
+        },
       },
     },
   });
@@ -149,7 +157,7 @@ async function getAsset(assetUuid) {
     const key = `${asset.user.hashedEmail}/${asset.uuid}`;
     const { url, urlExpiry } = await createPresignedUrl(key);
 
-    asset = prisma.asset.update({
+    asset = await prisma.asset.update({
       where: {
         id: asset.id,
       },
@@ -167,6 +175,36 @@ async function getAsset(assetUuid) {
   return asset;
 }
 
+/**
+ *
+ * @param {import("node:crypto").UUID} assetUuid
+ * @returns {import("@prisma/client").Asset}
+ * @throws
+ */
+async function deleteAsset(assetUuid) {
+  // Delete image from object store
+  await deleteDataFromS3(assetUuid);
+
+  // Delete records for related comments
+  await prisma.comment.deleteMany({
+    where: {
+      asset: {
+        is: {
+          uuid: assetUuid,
+        },
+      },
+    },
+  });
+
+  // Delete asset record
+  return await prisma.asset.delete({
+    where: {
+      uuid: assetUuid,
+    },
+  });
+}
+
 module.exports.save = saveAsset;
 module.exports.get = getAsset;
+module.exports.delete = deleteAsset;
 module.exports.schema = fullSchema;
