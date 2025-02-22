@@ -1,5 +1,5 @@
 const { createPresignedUrl } = require("./data/aws");
-const { get } = require("./asset");
+const { get: getAsset } = require("./asset");
 const prisma = require("./data/prismaClient");
 
 async function getUser(hashedEmail) {
@@ -55,9 +55,9 @@ async function getUser(hashedEmail) {
 
   // Re-get the assets to refresh the URL
   // This is a hack and we should be using GET /v1/assets?userId
-  for (let asset of user.assets) {
-    asset = await get(asset.uuid);
-  }
+  user.assets = await Promise.all(
+    user.assets.map(async (asset) => await getAsset(asset.uuid)),
+  );
 
   return user;
 }
