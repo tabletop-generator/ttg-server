@@ -77,14 +77,25 @@ const locationSchema = z
   })
   .strict();
 
+const mapSchema = z
+  .object({
+    type: z.string(),
+    terrain: z.string().optional(),
+    scale: z.string().optional(),
+    pointsOfInterest: z.string().optional(),
+    customDescription: z.string().optional(),
+  })
+  .strict();
+
 const schemaMap = {
   character: characterSchema,
   location: locationSchema,
+  map: mapSchema,
 };
 
 const fullSchema = baseSchema
   .extend({
-    data: z.union([characterSchema, locationSchema]),
+    data: z.union([characterSchema, locationSchema, mapSchema]),
   })
   .refine((fullSchema) => {
     const assetTypeSchema = schemaMap[fullSchema.type];
