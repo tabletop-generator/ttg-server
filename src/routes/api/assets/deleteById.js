@@ -1,5 +1,8 @@
 const logger = require("../../../logger");
+const validator = require("validator");
+const { deleteAsset, get } = require("../../../model/asset");
 const { createSuccessResponse } = require("../../../response");
+const { PrismaClientKnownRequestError } = require("@prisma/client").Prisma;
 
 /**
  * Delete an asset by it's id
@@ -12,5 +15,31 @@ module.exports = async (req, res, next) => {
     `received request: DELETE /v1/assets/:assetId`,
   );
 
-  return res.status(418).json(createSuccessResponse());
+  const assetId = req.params.assetId;
+
+  if (!validator.isUUID(assetId)) {
+    return next({ status: 400, message: "Invalid UUID" });
+  }
+
+  let asset;
+  try {
+    asset = await get(assetId);
+  } catch (error) {
+    logger.error(error, "Error deleting asset");
+
+    if (
+      error instanceof PrismaClientKnownRequestError &&
+      error.code === "P2025"
+    ) {
+      return next({ status: 404, message: "Asset not found" });
+    }
+
+    return next({ status: 500, message: "Internal server error" });
+  }
+  await deleteAsset(asset.uuid);
+
+  logger.debug({ assetId }, "Asset deleted");
+  return res
+    .status(200)
+    .json(createSuccessResponse({ message: "Asset deleted successfully" }));
 };
