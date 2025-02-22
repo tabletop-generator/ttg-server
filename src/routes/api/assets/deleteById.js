@@ -38,7 +38,7 @@ module.exports = async (req, res, next) => {
   }
   await deleteAsset(asset.uuid);
 
-  logger.debug({ assetId }, "Asset deleted");
+  logger.debug(asset.uuid, "Asset deleted");
   return res
     .status(200)
     .json(createSuccessResponse({ message: "Asset deleted successfully" }));
