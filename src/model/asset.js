@@ -113,7 +113,6 @@ async function saveAsset(
   return await prisma.asset.create({
     data: {
       uuid: assetId,
-      creatorId: userId,
       name: name,
       type: type,
       visibility: visibility,
@@ -122,6 +121,11 @@ async function saveAsset(
       imageUrlExpiry: urlExpiry,
       [type]: {
         create: { ...data },
+      },
+      user: {
+        connect: {
+          id: userId,
+        },
       },
     },
   });
