@@ -7,7 +7,7 @@ const { createSuccessResponse } = require("../../../response");
 const patchSchema = z
   .object({
     name: z.string().optional(),
-    description: z.string().optional(),
+    description: z.string().nullable().optional(),
     visibility: z.enum(["public", "private", "unlisted"]).optional(),
   })
   .strict();
@@ -78,21 +78,16 @@ module.exports = async (req, res, next) => {
 
   // Update the asset
   try {
-    const updateData = {
-      updatedAt: new Date(),
-      ...(req.body.name !== undefined && { name: req.body.name }),
-      ...(req.body.description !== undefined && {
-        description: req.body.description,
-      }),
-      ...(req.body.visibility !== undefined && {
-        visibility: req.body.visibility,
-      }),
-    };
-
     const updatedAsset = await prisma.asset.update({
       where: { id: asset.id },
-      data: updateData,
+      data: {
+        name: req.body.name,
+        description: req.body.description,
+        visibility: req.body.visibility,
+        updatedAt: new Date(),
+      },
     });
+
     return res.status(200).json(createSuccessResponse({ asset: updatedAsset }));
   } catch (error) {
     logger.error({ error }, "Error updating asset");
