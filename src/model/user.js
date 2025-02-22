@@ -19,6 +19,12 @@ async function getUser(hashedEmail) {
     },
   });
 
+  // Re-get the assets to refresh the URL
+  // This is a hack and we should be using GET /v1/assets?userId
+  user.assets = await Promise.all(
+    user.assets.map(async (asset) => await getAsset(asset.uuid)),
+  );
+
   // If the user doesn't have a profile picture we don't need to check if the url is expired
   if (!(user.profilePictureUrl && user.profilePictureUrlExpiry)) {
     return user;
@@ -52,12 +58,6 @@ async function getUser(hashedEmail) {
       },
     });
   }
-
-  // Re-get the assets to refresh the URL
-  // This is a hack and we should be using GET /v1/assets?userId
-  user.assets = await Promise.all(
-    user.assets.map(async (asset) => await getAsset(asset.uuid)),
-  );
 
   return user;
 }
