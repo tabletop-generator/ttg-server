@@ -25,6 +25,7 @@ user1@email.com:password1
 HTTP 201
 [Captures]
 asset_uuid: jsonpath "$.asset.uuid"
+initial_description: jsonpath "$.asset.description"  # Capture the initial description
 
 # Create another asset owned by user2 (for forbidden test)
 POST http://localhost:8080/v1/assets
@@ -110,3 +111,32 @@ HTTP 403
 jsonpath "$.status" == "error"
 jsonpath "$.error.code" == 403
 jsonpath "$.error.message" == "forbidden"
+
+# 6. Update only specific fields (description should remain unchanged)
+PATCH http://localhost:8080/v1/assets/{{asset_uuid}}
+[BasicAuth]
+user1@email.com:password1
+{
+    "name": "Partial Update Name",
+    "visibility": "unlisted"
+}
+HTTP 200
+[Asserts]
+jsonpath "$.status" == "ok"
+jsonpath "$.asset.name" == "Partial Update Name"
+jsonpath "$.asset.visibility" == "unlisted"
+jsonpath "$.asset.description" == {{initial_description}}  # Should match the auto-generated description
+
+# 7. Add a description
+PATCH http://localhost:8080/v1/assets/{{asset_uuid}}
+[BasicAuth]
+user1@email.com:password1
+{
+    "description": "New description"
+}
+HTTP 200
+[Asserts]
+jsonpath "$.status" == "ok"
+jsonpath "$.asset.name" == "Partial Update Name"  # Name should remain unchanged
+jsonpath "$.asset.visibility" == "unlisted"  # Visibility should remain unchanged
+jsonpath "$.asset.description" == "New description"
