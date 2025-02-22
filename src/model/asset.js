@@ -113,7 +113,6 @@ async function saveAsset(
   return await prisma.asset.create({
     data: {
       uuid: assetId,
-      creatorId: userId,
       name: name,
       type: type,
       visibility: visibility,
@@ -122,6 +121,11 @@ async function saveAsset(
       imageUrlExpiry: urlExpiry,
       [type]: {
         create: { ...data },
+      },
+      user: {
+        connect: {
+          id: userId,
+        },
       },
     },
   });
@@ -153,7 +157,7 @@ async function getAsset(assetUuid) {
     const key = `${asset.user.hashedEmail}/${asset.uuid}`;
     const { url, urlExpiry } = await createPresignedUrl(key);
 
-    asset = prisma.asset.update({
+    asset = await prisma.asset.update({
       where: {
         id: asset.id,
       },
