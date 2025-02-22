@@ -1,6 +1,10 @@
 const { randomUUID } = require("node:crypto");
 const { z } = require("zod");
-const { uploadDataToS3, createPresignedUrl } = require("./data/aws");
+const {
+  uploadDataToS3,
+  createPresignedUrl,
+  deleteDataFromS3,
+} = require("./data/aws");
 const prisma = require("./data/prismaClient");
 
 const baseSchema = z.object({
@@ -166,6 +170,36 @@ async function getAsset(assetUuid) {
   return asset;
 }
 
+/**
+ *
+ * @param {import("node:crypto").UUID} assetUuid
+ * @returns {import("@prisma/client").Asset}
+ * @throws
+ */
+async function deleteAsset(assetUuid) {
+  // Delete image from object store
+  await deleteDataFromS3(assetUuid);
+
+  // Delete records for related comments
+  await prisma.comment.deleteMany({
+    where: {
+      asset: {
+        is: {
+          uuid: assetUuid,
+        },
+      },
+    },
+  });
+
+  // Delete asset record
+  return await prisma.asset.delete({
+    where: {
+      uuid: assetUuid,
+    },
+  });
+}
+
 module.exports.save = saveAsset;
 module.exports.get = getAsset;
+module.exports.delete = deleteAsset;
 module.exports.schema = fullSchema;
