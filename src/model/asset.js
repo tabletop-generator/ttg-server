@@ -173,6 +173,7 @@ async function getAsset(assetUuid) {
     include: {
       character: true,
       location: true,
+      map: true,
       user: true,
     },
   });
@@ -197,6 +198,7 @@ async function getAsset(assetUuid) {
       include: {
         character: true,
         location: true,
+        map: true,
         user: true,
       },
     });
