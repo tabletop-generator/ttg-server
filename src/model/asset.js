@@ -161,6 +161,7 @@ async function getAsset(assetUuid) {
     where: { uuid: assetUuid },
     include: {
       character: true,
+      location: true,
       user: true,
     },
   });
@@ -184,6 +185,7 @@ async function getAsset(assetUuid) {
       },
       include: {
         character: true,
+        location: true,
         user: true,
       },
     });
