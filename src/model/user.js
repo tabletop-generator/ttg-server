@@ -28,7 +28,7 @@ async function getUser(hashedEmail) {
     const key = user.hashedEmail;
     const { url, urlExpiry } = await createPresignedUrl(key);
 
-    user = prisma.user.update({
+    user = await prisma.user.update({
       where: {
         id: user.id,
       },
