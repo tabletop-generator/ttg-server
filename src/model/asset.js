@@ -63,17 +63,34 @@ const characterSchema = z
   })
   .strict();
 
+const locationSchema = z
+  .object({
+    type: z.string(),
+    terrain: z.string().optional(),
+    climate: z.string().optional(),
+    atmosphere: z.string().optional(),
+    inhabitants: z.string().optional(),
+    dangerLevel: z.string().optional(),
+    pointsOfInterest: z.string().optional(),
+    narrativeRole: z.string().optional(),
+    customDescription: z.string().optional(),
+  })
+  .strict();
+
+const schemaMap = {
+  character: characterSchema,
+  location: locationSchema,
+};
+
 const fullSchema = baseSchema
   .extend({
-    data: z.union([characterSchema]),
+    data: z.union([characterSchema, locationSchema]),
   })
   .refine((fullSchema) => {
-    switch (fullSchema.type) {
-      case "character":
-        return characterSchema.safeParse(fullSchema.data).success;
-      default:
-        break;
-    }
+    const assetTypeSchema = schemaMap[fullSchema.type];
+    return assetTypeSchema
+      ? assetTypeSchema.safeParse(fullSchema.data).success
+      : false;
   });
 
 /**
