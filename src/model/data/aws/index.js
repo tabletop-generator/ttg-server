@@ -1,4 +1,8 @@
-const { PutObjectCommand, GetObjectCommand } = require("@aws-sdk/client-s3");
+const {
+  PutObjectCommand,
+  GetObjectCommand,
+  DeleteObjectCommand,
+} = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const s3Client = require("./s3Client");
 const logger = require("../../../logger");
@@ -48,5 +52,23 @@ async function createPresignedUrl(key) {
   }
 }
 
+async function deleteDataFromS3(key) {
+  const params = {
+    Bucket: process.env.AWS_S3_BUCKET_NAME,
+    Key: key,
+  };
+
+  const command = new DeleteObjectCommand(params);
+  try {
+    await s3Client.send(command);
+  } catch (err) {
+    const { Bucket, Key } = params;
+    logger.warn({ err, Bucket, Key }, "error deleting data from S3");
+
+    throw err;
+  }
+}
+
 module.exports.uploadDataToS3 = uploadDataToS3;
+module.exports.deleteDataFromS3 = deleteDataFromS3;
 module.exports.createPresignedUrl = createPresignedUrl;
