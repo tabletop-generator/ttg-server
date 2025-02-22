@@ -27,6 +27,7 @@ module.exports = async (req, res, next) => {
   let description, image, mimeType;
   try {
     ({ description, image, mimeType } = await generate(
+      req.body.name,
       req.body.type,
       req.body.data,
     ));
