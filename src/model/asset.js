@@ -152,7 +152,7 @@ async function getAsset(assetUuid) {
     const key = `${asset.user.hashedEmail}/${asset.uuid}`;
     const { url, urlExpiry } = await createPresignedUrl(key);
 
-    asset = prisma.asset.update({
+    asset = await asset.update({
       where: {
         id: asset.id,
       },
