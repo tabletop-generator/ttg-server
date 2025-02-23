@@ -44,14 +44,13 @@ async function createPresignedUrl(key) {
     // S3 needs it in seconds
     const EXPIRES_IN_SECONDS = 7 * 24 * 60 * 60;
 
-    // Everywhere else uses milliseconds
-    const EXPIRES_IN_MILLISECONDS = EXPIRES_IN_SECONDS * 1000;
-
-    const urlExpiry = new Date(Date.now() + EXPIRES_IN_MILLISECONDS);
-
     const url = await getSignedUrl(s3Client, command, {
       expiresIn: EXPIRES_IN_SECONDS,
     });
+
+    // Everywhere else uses milliseconds
+    const EXPIRES_IN_MILLISECONDS = EXPIRES_IN_SECONDS * 1000;
+    const urlExpiry = new Date(Date.now() + EXPIRES_IN_MILLISECONDS);
 
     return { url, urlExpiry };
   } catch (error) {
