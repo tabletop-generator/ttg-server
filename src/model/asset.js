@@ -192,6 +192,7 @@ async function getAsset(assetUuid) {
       character: true,
       location: true,
       map: true,
+      quest: true,
       user: true,
     },
   });
@@ -217,6 +218,7 @@ async function getAsset(assetUuid) {
         character: true,
         location: true,
         map: true,
+        quest: true,
         user: true,
       },
     });
