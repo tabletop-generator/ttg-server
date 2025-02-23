@@ -87,18 +87,36 @@ const mapSchema = z
   })
   .strict();
 
-const schemaMap = {
+const questSchema = z
+  .object({
+    type: z.string(),
+    tone: z.string().optional(),
+    location: z.string().optional(),
+    complexity: z.string().optional(),
+    objective: z.string().optional(),
+    antagonist: z.string().optional(),
+    notableNpcs: z.string().optional(),
+    hasCombat: z.boolean().optional(),
+    hasPuzzles: z.boolean().optional(),
+    hasSkillChallenges: z.boolean().optional(),
+    hasDilemmas: z.boolean().optional(),
+    customDescription: z.string().optional(),
+  })
+  .strict();
+
+const schemas = {
   character: characterSchema,
   location: locationSchema,
   map: mapSchema,
+  quest: questSchema,
 };
 
 const fullSchema = baseSchema
   .extend({
-    data: z.union([characterSchema, locationSchema, mapSchema]),
+    data: z.union([characterSchema, locationSchema, mapSchema, questSchema]),
   })
   .refine((fullSchema) => {
-    const assetTypeSchema = schemaMap[fullSchema.type];
+    const assetTypeSchema = schemas[fullSchema.type];
     return assetTypeSchema
       ? assetTypeSchema.safeParse(fullSchema.data).success
       : false;
