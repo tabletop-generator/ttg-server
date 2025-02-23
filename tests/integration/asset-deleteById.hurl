@@ -65,6 +65,30 @@ jsonpath "$.status" == "error"
 jsonpath "$.error.code" == 401
 jsonpath "$.error.message" == "Unauthorized"
 
+POST http://localhost:8080/v1/assets
+[BasicAuth]
+user1@email.com:password1
+
+{
+  "name": "guy",
+  "type": "character",
+  "visibility": "private",
+  "data": {
+    "race": "tiefling",
+    "class": "warlock",
+    "gender": "male",
+    "alignment": "neutral_evil",
+    "appearance": "Ash-gray skin, glowing red eyes",
+    "personality": "Manipulative and cunning",
+    "background": "Born to a cursed bloodline",
+    "abilities": "Eldritch blast",
+    "equipment": "Obsidian staff",
+    "motivation": "Seek power"
+  }
+}
+HTTP 201
+[Captures]
+asset_uuid: jsonpath "$.asset.uuid"
 
 DELETE http://localhost:8080/v1/assets/{{asset_uuid}}
 [BasicAuth]

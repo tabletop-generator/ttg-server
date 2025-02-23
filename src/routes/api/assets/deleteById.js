@@ -2,7 +2,8 @@ const logger = require("../../../logger");
 const z = require("zod");
 const { deleteAsset } = require("../../../model/asset");
 const { createSuccessResponse } = require("../../../response");
-const prisma = require("prisma");
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
 
 /**
  * Delete an asset by its id after verifying ownership
@@ -42,7 +43,7 @@ module.exports = async (req, res, next) => {
     return next({ status: 404, message: "Asset not found" });
   }
 
-  if (asset.user.id !== req.user.id) {
+  if (asset.user.hashedEmail !== req.user) {
     return next({
       status: 403,
       message: "Forbidden",
