@@ -24,22 +24,26 @@ model Asset {
   user           User            @relation(fields: [creatorId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   character      Character?
   comments       Comment[]
-  collections    Collection[]
+  location       Location?
+  map            Map?
+  quest          Quest?
+  collections    Collection[]    @relation("AssetToCollection")
 }
 
 model Character {
-  assetId     Int                      @id @map("asset_id")
-  race        enum_character_race
-  class       enum_character_class
-  gender      enum_character_gender
-  alignment   enum_character_alignment
-  abilities   String?
-  appearance  String?
-  background  String?
-  equipment   String?
-  motivation  String?
-  personality String?
-  asset       Asset                    @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  assetId           Int                      @id @map("asset_id")
+  race              enum_character_race
+  class             enum_character_class
+  gender            enum_character_gender
+  alignment         enum_character_alignment
+  abilities         String?
+  appearance        String?
+  background        String?
+  equipment         String?
+  motivation        String?
+  personality       String?
+  customDescription String?                  @map("custom_description")
+  asset             Asset                    @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model Collection {
@@ -51,7 +55,7 @@ model Collection {
   name        String
   description String?
   user        User            @relation(fields: [creatorId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  assets      Asset[]
+  assets      Asset[]         @relation("AssetToCollection")
 }
 
 model Comment {
@@ -76,6 +80,47 @@ model User {
   assets                  Asset[]
   collections             Collection[]
   comments                Comment[]
+}
+
+model Location {
+  assetId           Int     @id @map("asset_id")
+  type              String
+  terrain           String?
+  climate           String?
+  atmosphere        String?
+  inhabitants       String?
+  dangerLevel       String? @map("danger_level")
+  pointsOfInterest  String? @map("points_of_interest")
+  narrativeRole     String? @map("narrative_role")
+  customDescription String? @map("custom_description")
+  asset             Asset   @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model Map {
+  assetId           Int     @id @map("asset_id")
+  type              String
+  scale             String?
+  terrain           String?
+  pointsOfInterest  String? @map("points_of_interest")
+  customDescription String? @map("custom_description")
+  asset             Asset   @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model Quest {
+  assetId            Int     @id @map("asset_id")
+  type               String
+  tone               String?
+  location           String?
+  complexity         String?
+  objective          String?
+  antagonist         String?
+  notableNpcs        String? @map("notable_npcs")
+  hasCombat          Boolean @map("has_combat")
+  hasPuzzles         Boolean @map("has_puzzles")
+  hasSkillChallenges Boolean @map("has_skill_challenges")
+  hasDilemmas        Boolean @map("has_dilemmas")
+  customDescription  String? @map("custom_description")
+  asset              Asset   @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 enum enum_asset_type {

@@ -3,19 +3,21 @@
  * @param {Object}
  * @returns {Object[]}
  */
-function buildDescPrompt({
+function buildDescPrompt(
   name,
-  race,
-  class: charClass,
-  gender,
-  alignment,
-  appearance,
-  personality,
-  background,
-  abilities,
-  equipment,
-  motivation,
-}) {
+  {
+    race,
+    class: charClass,
+    gender,
+    alignment,
+    appearance,
+    personality,
+    background,
+    abilities,
+    equipment,
+    motivation,
+  },
+) {
   return [
     {
       role: "system",
