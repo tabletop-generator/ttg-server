@@ -72,7 +72,7 @@ function buildDescPrompt(
         (dangerLevel ? `Danger Level: ${dangerLevel}\n` : "") +
         (pointsOfInterest ? `Points of Interest: ${pointsOfInterest}\n` : "") +
         (narrativeRole ? `Narrative Role: ${narrativeRole}\n` : "") +
-        (customDescription ? `Custom Description: ${customDescription}` : ""),
+        (customDescription ? `Description: ${customDescription}\n` : ""),
     },
   ];
 }

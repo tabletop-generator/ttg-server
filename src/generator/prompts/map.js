@@ -48,7 +48,7 @@ function buildDescPrompt(
         (scale ? `Scale: ${scale}\n` : "") +
         (terrain ? `Terrain: ${terrain}\n` : "") +
         (pointsOfInterest ? `Points of Interest: ${pointsOfInterest}\n` : "") +
-        (customDescription ? `Custom Description: ${customDescription}` : ""),
+        (customDescription ? `Description: ${customDescription}\n` : ""),
     },
   ];
 }
