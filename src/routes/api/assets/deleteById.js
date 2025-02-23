@@ -1,9 +1,8 @@
 const logger = require("../../../logger");
-const validator = require("validator");
-const { deleteAsset, get } = require("../../../model/asset");
+const z = require("zod");
+const { deleteAsset } = require("../../../model/asset");
 const { createSuccessResponse } = require("../../../response");
-const { PrismaClientKnownRequestError } = require("@prisma/client").Prisma;
-const prisma = require("../../../model/data/prismaClient");
+const prisma = require("prisma");
 
 /**
  * Delete an asset by its id after verifying ownership
@@ -15,46 +14,39 @@ module.exports = async (req, res, next) => {
     `received request: DELETE /v1/assets/:assetId`,
   );
 
-  const assetId = req.params.assetId;
+  const assetId = await req.params.assetId;
 
-  if (!validator.isUUID(assetId)) {
-    return next({ status: 400, message: "Invalid UUID" });
+  try {
+    z.string().uuid().parse(assetId);
+  } catch (error) {
+    logger.debug({ error }, "invalid asset ID format");
+    return next({ status: 400, message: "invalid asset id" });
   }
 
   let asset;
   try {
-    asset = await get(assetId);
+    asset = await prisma.asset.findUnique({
+      where: { uuid: assetId },
+      include: {
+        character: true,
+        user: true,
+      },
+    });
   } catch (error) {
     logger.error(error, "Error fetching asset");
-
-    if (
-      error instanceof PrismaClientKnownRequestError &&
-      error.code === "P2025"
-    ) {
-      return next({ status: 404, message: "Asset not found" });
-    }
-
     return next({ status: 500, message: "Internal server error" });
   }
 
-  try {
-    const user = await prisma.user.findUnique({
-      where: { hashedEmail: req.user },
+  if (!asset) {
+    logger.debug("asset not found");
+    return next({ status: 404, message: "Asset not found" });
+  }
+
+  if (asset.user.id !== req.user.id) {
+    return next({
+      status: 403,
+      message: "Forbidden",
     });
-
-    if (!user) {
-      return next({ status: 404, message: "User not found" });
-    }
-
-    if (user.id !== asset.creatorId) {
-      return next({
-        status: 403,
-        message: "Forbidden",
-      });
-    }
-  } catch (error) {
-    logger.error(error, "Error verifying asset ownership");
-    return next({ status: 500, message: "Internal server error" });
   }
 
   try {
