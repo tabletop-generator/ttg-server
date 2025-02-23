@@ -85,10 +85,10 @@ A successful response returns an HTTP `201`. It includes a `Location` header wit
 
 ```json
 {
+  "name": "Thalor Duskbane",
   "type": "character",
   "visibility": "public",
   "data": {
-    "name": "Thalor Duskbane",
     "race": "tiefling",
     "class": "warlock",
     "gender": "male",
