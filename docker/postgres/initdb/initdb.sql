@@ -1,6 +1,8 @@
--- Create enums
+-- Create base asset enums
 CREATE TYPE enum_asset_type AS ENUM ('character', 'quest', 'map', 'location');
 CREATE TYPE enum_visibility AS ENUM ('public', 'private', 'unlisted');
+
+-- Create character asset enums
 CREATE TYPE enum_character_race AS ENUM ('human', 'elf', 'drow', 'half_elf', 'half_orc', 'halfling', 'dwarf', 'gnome', 'tiefling', 'githyanki', 'dragonborn');
 CREATE TYPE enum_character_class AS ENUM ('barbarian', 'bard', 'cleric', 'druid', 'fighter', 'monk', 'paladin', 'ranger', 'rogue', 'sorcerer', 'warlock', 'wizard');
 CREATE TYPE enum_character_gender AS ENUM ('male', 'female', 'non_binary', 'genderfluid', 'agender');
@@ -46,23 +48,50 @@ CREATE TABLE "Character" (
     "background" TEXT,
     "equipment" TEXT,
     "motivation" TEXT,
-    "personality" TEXT
+    "personality" TEXT,
+    "custom_description" TEXT
 );
 
--- -- Create Location table
--- CREATE TABLE "Location" (
---     "asset_id" INT PRIMARY KEY REFERENCES "Asset"("id") ON DELETE CASCADE
--- );
+-- Create Location table
+CREATE TABLE "Location" (
+    "asset_id" INT PRIMARY KEY REFERENCES "Asset"("id") ON DELETE CASCADE,
+    "type" TEXT NOT NULL,
+    "terrain" TEXT,
+    "climate" TEXT,
+    "atmosphere" TEXT,
+    "inhabitants" TEXT,
+    "danger_level" TEXT,
+    "points_of_interest" TEXT,
+    "narrative_role" TEXT,
+    "custom_description" TEXT
+);
 
--- -- Create Quest table
--- CREATE TABLE "Quest" (
---     "asset_id" INT PRIMARY KEY REFERENCES "Asset"("id") ON DELETE CASCADE
--- );
+-- Create Quest table
+CREATE TABLE "Quest" (
+    "asset_id" INT PRIMARY KEY REFERENCES "Asset"("id") ON DELETE CASCADE,
+    "type" TEXT NOT NULL,
+    "tone" TEXT,
+    "location" TEXT,
+    "complexity" TEXT,
+    "objective" TEXT,
+    "antagonist" TEXT,
+    "notable_npcs" TEXT,
+    "has_combat" BOOLEAN NOT NULL,
+    "has_puzzles" BOOLEAN NOT NULL,
+    "has_skill_challenges" BOOLEAN NOT NULL,
+    "has_dilemmas" BOOLEAN NOT NULL,
+    "custom_description" TEXT
+);
 
--- -- Create Map table
--- CREATE TABLE "Map" (
---     "asset_id" INT PRIMARY KEY REFERENCES "Asset"("id") ON DELETE CASCADE
--- );
+-- Create Map table
+CREATE TABLE "Map" (
+    "asset_id" INT PRIMARY KEY REFERENCES "Asset"("id") ON DELETE CASCADE,
+    "type" TEXT NOT NULL,
+    "scale" TEXT,
+    "terrain" TEXT,
+    "points_of_interest" TEXT,
+    "custom_description" TEXT
+);
 
 -- Create Comment table
 CREATE TABLE "Comment" (
