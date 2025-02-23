@@ -63,17 +63,63 @@ const characterSchema = z
   })
   .strict();
 
+const locationSchema = z
+  .object({
+    type: z.string(),
+    terrain: z.string().optional(),
+    climate: z.string().optional(),
+    atmosphere: z.string().optional(),
+    inhabitants: z.string().optional(),
+    dangerLevel: z.string().optional(),
+    pointsOfInterest: z.string().optional(),
+    narrativeRole: z.string().optional(),
+    customDescription: z.string().optional(),
+  })
+  .strict();
+
+const mapSchema = z
+  .object({
+    type: z.string(),
+    terrain: z.string().optional(),
+    scale: z.string().optional(),
+    pointsOfInterest: z.string().optional(),
+    customDescription: z.string().optional(),
+  })
+  .strict();
+
+const questSchema = z
+  .object({
+    type: z.string(),
+    tone: z.string().optional(),
+    location: z.string().optional(),
+    complexity: z.string().optional(),
+    objective: z.string().optional(),
+    antagonist: z.string().optional(),
+    notableNpcs: z.string().optional(),
+    hasCombat: z.boolean().optional(),
+    hasPuzzles: z.boolean().optional(),
+    hasSkillChallenges: z.boolean().optional(),
+    hasDilemmas: z.boolean().optional(),
+    customDescription: z.string().optional(),
+  })
+  .strict();
+
+const schemas = {
+  character: characterSchema,
+  location: locationSchema,
+  map: mapSchema,
+  quest: questSchema,
+};
+
 const fullSchema = baseSchema
   .extend({
-    data: z.union([characterSchema]),
+    data: z.union([characterSchema, locationSchema, mapSchema, questSchema]),
   })
   .refine((fullSchema) => {
-    switch (fullSchema.type) {
-      case "character":
-        return characterSchema.safeParse(fullSchema.data).success;
-      default:
-        break;
-    }
+    const assetTypeSchema = schemas[fullSchema.type];
+    return assetTypeSchema
+      ? assetTypeSchema.safeParse(fullSchema.data).success
+      : false;
   });
 
 /**
@@ -144,6 +190,9 @@ async function getAsset(assetUuid) {
     where: { uuid: assetUuid },
     include: {
       character: true,
+      location: true,
+      map: true,
+      quest: true,
       user: true,
     },
   });
@@ -167,6 +216,9 @@ async function getAsset(assetUuid) {
       },
       include: {
         character: true,
+        location: true,
+        map: true,
+        quest: true,
         user: true,
       },
     });
