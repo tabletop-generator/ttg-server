@@ -60,7 +60,7 @@ COPY --from=dependencies --chown=node:node /app/node_modules ./node_modules
 COPY --chown=node:node ./src/ ./src
 
 # Switch to the unprivileged user
-USER node
+# USER node
 
 # Start the container by running our server
 CMD ["node", "src/index.js"]
