@@ -9,7 +9,8 @@ const { rateLimit } = require("express-rate-limit");
 
 const assetGenerationLimiter = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minute window
-  limit: 10, // 10 requests per window
+  //COMMENTED OUT ON PURPOSE, ADJUST WHEN PROD RELEASE
+  //limit: 10, // 10 requests per window
   standardHeaders: true,
   legacyHeaders: false,
 });

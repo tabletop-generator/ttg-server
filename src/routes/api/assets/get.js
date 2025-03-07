@@ -1,9 +1,19 @@
 const logger = require("../../../logger");
+const { z } = require("zod");
 const prisma = require("../../../model/data/prismaClient");
-const {
-  createSuccessResponse,
-  createErrorResponse,
-} = require("../../../response");
+const asset = require("../../../model/asset");
+const { createSuccessResponse } = require("../../../response");
+
+// Schema for query validation
+const querySchema = z
+  .object({
+    name: z.string().optional(),
+    type: z.enum(["character", "quest", "map", "location"]).optional(),
+    userId: z.string().optional(),
+    visibility: z.enum(["public", "private", "unlisted"]).optional(),
+    expand: z.enum(["true", "false"]).optional(),
+  })
+  .strict();
 
 /**
  * Get a list of assets filtered by the query
@@ -16,13 +26,33 @@ const {
  */
 
 module.exports = async (req, res, next) => {
-  try {
-    logger.debug(
-      { user: req.user, query: req.query },
-      `received request: GET /v1/assets`,
-    );
+  logger.debug(
+    { user: req.user, query: req.query },
+    `received request: GET /v1/assets`,
+  );
 
-    const { name, type, userId, visibility, expand } = req.query;
+  // Validate query parameters
+  try {
+    querySchema.parse(req.query);
+  } catch (error) {
+    logger.debug({ error }, "invalid query parameters");
+    return next({ status: 400, message: "Invalid query parameters" });
+  }
+
+  const { name, type, userId, visibility, expand } = req.query;
+
+  try {
+    // Get the authenticated user's ID if available
+    let authenticatedUserId;
+    if (req.user) {
+      const user = await prisma.user.findUnique({
+        where: { hashedEmail: req.user },
+        select: { id: true },
+      });
+      if (user) {
+        authenticatedUserId = user.id;
+      }
+    }
 
     // Build where clause based on query parameters
     const where = {};
@@ -35,89 +65,109 @@ module.exports = async (req, res, next) => {
     }
 
     if (type) {
-      where.type = type.toLowerCase();
+      where.type = type;
     }
 
     if (userId) {
-      where.creatorId = parseInt(userId);
-      if (isNaN(where.creatorId)) {
-        return res
-          .status(400)
-          .json(createErrorResponse(400, "Invalid user ID format"));
-      }
+      where.creatorId = parseInt(userId, 10);
     }
 
     if (visibility) {
-      where.visibility = visibility.toLowerCase();
+      where.visibility = visibility;
     }
 
-    // If not querying for a specific user, only show public assets
-    // Unless the request is from the asset owner
-    if (!userId) {
+    // Visibility filter logic
+    if (
+      userId &&
+      authenticatedUserId &&
+      parseInt(userId, 10) === authenticatedUserId
+    ) {
+      // Case 1: User is viewing their own assets - no visibility filter needed
+    } else if (userId) {
+      // Case 2: User is viewing someone else's assets - only public
+      where.visibility = "public";
+    } else if (!authenticatedUserId) {
+      // Case 3: No authentication - only show public assets
+      where.visibility = "public";
+    } else {
+      // Case 4: Authenticated user, no specific userId
       where.OR = [
         { visibility: "public" },
         {
-          creatorId: req.user?.id,
+          creatorId: authenticatedUserId,
           visibility: { in: ["private", "unlisted"] },
         },
       ];
     }
 
     // Get assets from database
-    const assets = await prisma.asset.findMany({
+    const assetResults = await prisma.asset.findMany({
       where,
-      include: {
-        character: true,
-        user: true,
-        comments: true,
-        collections: true,
+      select: {
+        uuid: true,
       },
       orderBy: {
         updatedAt: "desc",
       },
     });
 
-    // If no assets found, return empty array
-    if (!assets.length) {
+    // Format response based on expand parameter
+    if (expand === "true") {
+      // Fetch full asset details for each UUID using asset.get
+      const detailedAssets = await Promise.all(
+        assetResults.map(async (result) => {
+          try {
+            return await asset.get(result.uuid);
+          } catch (error) {
+            logger.error(
+              { error, uuid: result.uuid },
+              "Error fetching asset details",
+            );
+            return null;
+          }
+        }),
+      );
+
+      // Filter out any nulls (failed fetches)
+      const validAssets = detailedAssets.filter((asset) => asset !== null);
+
+      // Format the assets for the response
+      const formattedAssets = validAssets.map((asset) => ({
+        uuid: asset.uuid,
+        name: asset.name,
+        type: asset.type,
+        visibility: asset.visibility,
+        description: asset.description,
+        createdAt: asset.createdAt,
+        updatedAt: asset.updatedAt,
+        isFeatured: asset.isFeatured,
+        likes: asset.likes,
+        imageUrl: asset.imageUrl,
+        user: {
+          hashedEmail: asset.user.hashedEmail,
+          displayName: asset.user.displayName,
+        },
+        ...(asset.type === "character" && { character: asset.character }),
+        ...(asset.type === "location" && { location: asset.location }),
+        ...(asset.type === "map" && { map: asset.map }),
+        ...(asset.type === "quest" && { quest: asset.quest }),
+      }));
+
       return res.status(200).json(
         createSuccessResponse({
-          assets: [],
+          assets: formattedAssets,
+        }),
+      );
+    } else {
+      // Return just the UUIDs
+      return res.status(200).json(
+        createSuccessResponse({
+          assets: assetResults.map((asset) => asset.uuid),
         }),
       );
     }
-
-    // If expand is not true, return just the IDs
-    if (expand !== "true") {
-      return res.status(200).json(
-        createSuccessResponse({
-          assets: assets.map((asset) => asset.id),
-        }),
-      );
-    }
-
-    // Return expanded asset objects
-    return res.status(200).json(
-      createSuccessResponse({
-        assets: assets.map((asset) => ({
-          id: asset.id,
-          uuid: asset.uuid,
-          creatorId: asset.creatorId,
-          created: asset.createdAt,
-          updated: asset.updatedAt,
-          isFeatured: asset.isFeatured,
-          likes: asset.likes,
-          type: asset.type,
-          visibility: asset.visibility,
-          name: asset.name,
-          description: asset.description,
-          imageUrl: asset.imageUrl,
-          imageUrlExpiry: asset.imageUrlExpiry,
-          character: asset.type === "character" ? asset.character : undefined,
-        })),
-      }),
-    );
-  } catch (err) {
-    logger.error({ err }, "Error getting assets");
-    next(err);
+  } catch (error) {
+    logger.error({ error }, "Error fetching assets");
+    return next({ status: 500, message: "Internal server error" });
   }
 };
