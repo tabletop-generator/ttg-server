@@ -1,16 +1,76 @@
 const logger = require("../../../logger");
 const { createSuccessResponse } = require("../../../response");
-
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
+const { get: getUser } = require("../../../model/user");
 /**
  * Get a collection by it's id
  */
 
-// eslint-disable-next-line no-unused-vars
 module.exports = async (req, res, next) => {
-  logger.debug(
-    { user: req.user, id: req.params.id },
-    `received request: GET /v1/collections/:collectionId`,
-  );
+  try {
+    const collectionId = parseInt(req.params.collectionId);
+    const collection = await prisma.collection.findUnique({
+      where: { id: collectionId },
+      include: {
+        assets: {
+          select: {
+            id: true,
+            name: true,
+            type: true,
+            visibility: true,
+          },
+        },
+        user: {
+          select: {
+            id: true,
+            hashedEmail: true,
+            displayName: true,
+          },
+        },
+      },
+    });
 
-  return res.status(418).json(createSuccessResponse());
+    if (!collection) {
+      return res.status(404).json({
+        status: "error",
+        error: { code: 404, message: "Collection not found" },
+      });
+    }
+
+    if (collection.visibility !== "public") {
+      try {
+        const user = await getUser(req.user);
+        if (user.id !== collection.creatorId) {
+          return res.status(403).json({
+            status: "error",
+            error: { code: 403, message: "Forbidden" },
+          });
+        }
+      } catch (error) {
+        logger.error({ error }, "Error fetching collection");
+        return res.status(403).json({
+          status: "error",
+          error: { code: 403, message: "Forbidden" },
+        });
+      }
+    }
+
+    const responseData = {
+      id: collection.id,
+      user: collection.user,
+      created: collection.createdAt,
+      updated: collection.updatedAt,
+      name: collection.name,
+      visibility: collection.visibility,
+      assets: collection.assets,
+    };
+
+    return res
+      .status(200)
+      .json(createSuccessResponse({ collection: responseData }));
+  } catch (error) {
+    logger.error(error, "Error fetching collection");
+    return next({ status: 500, message: "Internal server error" });
+  }
 };
