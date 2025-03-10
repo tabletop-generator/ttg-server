@@ -4,8 +4,6 @@ const express = require("express");
  * The entry-point for /assets endpoints
  */
 
-// Create a stricter rate limiter for POST /assets
-
 const router = express.Router();
 
 router.post(`/`, require("./post"));
