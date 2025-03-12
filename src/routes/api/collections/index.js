@@ -10,7 +10,7 @@ router.post(`/`, require("./post"));
 
 router.get(`/`, require("./get"));
 
-router.get(`/:collectionId`, require("./get"));
+router.get(`/:collectionId`, require("./getById"));
 
 router.patch(`/:collectionId`, require("./patchById"));
 
