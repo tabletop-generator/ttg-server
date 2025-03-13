@@ -43,7 +43,7 @@ module.exports = async (req, res, next) => {
         assets: {
           connect: req.body?.assetsToAdd.map((assetId) => ({ id: assetId })),
           disconnect: req.body?.assetsToRemove.map((assetId) => ({
-            id: assetId,
+            uuid: assetId,
           })),
         },
       },
