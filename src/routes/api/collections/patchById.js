@@ -32,6 +32,39 @@ module.exports = async (req, res, next) => {
     return next({ status: 400, message: "Invalid request format" });
   }
 
+  // Filter out other users' private assets
+  let validAssets;
+  try {
+    validAssets = await prisma.asset.findMany({
+      where: {
+        uuid: { in: req.body?.assetsToAdd },
+        OR: [
+          {
+            creatorId: {
+              equals: req.user, // If the current user owns it, allow it
+            },
+          },
+          {
+            visibility: {
+              not: "private", // Otherwise, it must be public or unlisted
+            },
+          },
+        ],
+      },
+      select: { id: true, uuid: true },
+    });
+  } catch (error) {
+    logger.warn({ error }, "error updating collection");
+
+    if (
+      error instanceof PrismaClientKnownRequestError &&
+      error.code === "P2025"
+    ) {
+      return next({ status: 404, message: "Asset not found" });
+    }
+    return next({ status: 500, message: "Error updating collection" });
+  }
+
   let updatedCollection;
   try {
     updatedCollection = await prisma.collection.update({
@@ -41,7 +74,7 @@ module.exports = async (req, res, next) => {
         description: req.body?.description,
         visibility: req.body?.visibility,
         assets: {
-          connect: req.body?.assetsToAdd.map((assetId) => ({ id: assetId })),
+          connect: validAssets.map((asset) => ({ id: asset.id })),
           disconnect: req.body?.assetsToRemove.map((assetId) => ({
             uuid: assetId,
           })),
