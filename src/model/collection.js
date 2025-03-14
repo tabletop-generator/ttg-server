@@ -39,8 +39,8 @@ async function save(userHashedEmail, collectionData) {
       description: collectionData.description,
       visibility: collectionData.visibility,
       assets: {
-            connect: collectionData.assets?.map((uuid) => ({ uuid })),
-          },
+        connect: collectionData.assets?.map((uuid) => ({ uuid })),
+      },
     },
     include: {
       assets: {
