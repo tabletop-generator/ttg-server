@@ -13,7 +13,7 @@ HTTP/1.1 200
 [Asserts]
 jsonpath "$.status" == "ok"
 jsonpath "$.collection.id" isInteger
-jsonpath "$.collection.user.hashedEmail" == "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a"
+jsonpath "$.collection.ownerId" == "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a"
 jsonpath "$.collection.createdAt" isIsoDate
 jsonpath "$.collection.updatedAt" isIsoDate
 jsonpath "$.collection.description" == "This is User 1's collection"
@@ -36,8 +36,8 @@ HTTP/1.1 200
 [Asserts]
 jsonpath "$.status" == "ok"
 jsonpath "$.collection.assets" isCollection
-jsonpath "$.collection.assets[?(@.uuid == '6ef5db05-9a0f-4556-b7b9-bf35744d5174')].uuid" exists
-jsonpath "$.collection.assets[?(@.uuid == '6b530b4c-5b56-4a7d-8085-2ac070920175')].uuid" exists
+jsonpath "$.collection.assets" includes "6ef5db05-9a0f-4556-b7b9-bf35744d5174"
+jsonpath "$.collection.assets" includes "6b530b4c-5b56-4a7d-8085-2ac070920175"
 
 
 # 3. Try modifying another user's collection
