@@ -22,26 +22,37 @@ module.exports = async (req, res, next) => {
   }
 
   // Save collection
+  let newCollection;
   try {
-    const newCollection = await collection.save(req.user, req.body);
-
-    // Create location URL for the new collection
-    const locationURL = new URL(
-      `/v1/collections/${newCollection.id}`,
-      process.env?.API_URL || `https://${req.headers?.host}`,
-    );
-
-    logger.debug(
-      { locationURL, collection: newCollection },
-      `constructed URL for Location header for new collection`,
-    );
-
-    // Return collection data
-    return res
-      .status(201)
-      .set("Location", locationURL)
-      .json(createSuccessResponse({ collection: newCollection }));
+    newCollection = await collection.save(req.user, req.body);
   } catch (error) {
+    logger.warn({ requestBody: req.body }, "error creating collection");
     return next(error);
   }
+
+  logger.info(
+    {
+      collectionId: newCollection.id,
+      collectionName: newCollection.name,
+      userId: req.user,
+    },
+    `user created new collection: "${newCollection.name}"`,
+  );
+
+  // Create location URL for the new collection
+  const locationURL = new URL(
+    `/v1/collections/${newCollection.id}`,
+    process.env?.API_URL || `https://${req.headers?.host}`,
+  );
+
+  logger.debug(
+    { locationURL, collection: newCollection },
+    `constructed URL for Location header for new collection`,
+  );
+
+  // Return collection data
+  return res
+    .status(201)
+    .set("Location", locationURL)
+    .json(createSuccessResponse({ collection: newCollection }));
 };
