@@ -36,7 +36,7 @@ async function save(userHashedEmail, collectionData) {
     data: {
       creatorId: user.id,
       name: collectionData.name,
-      description: collectionData.description || null,
+      description: collectionData.description,
       visibility: collectionData.visibility,
       assets: collectionData.assets
         ? {
