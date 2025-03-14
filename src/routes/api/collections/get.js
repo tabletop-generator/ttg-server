@@ -1,7 +1,6 @@
 const logger = require("../../../logger");
 const { createSuccessResponse } = require("../../../response");
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+const prisma = require("../../../model/data/prismaClient");
 const { get: getUser } = require("../../../model/user");
 /**
  * Get a list of collections filtered by the query
@@ -17,15 +16,13 @@ module.exports = async (req, res, next) => {
     if (userId) {
       try {
         const user = await getUser(userId);
-        const isCurrentUser = userId === req.user;
+        const currentUser = await getUser(req.user);
+        const isCurrentUser = currentUser.hashedEmail === userId;
 
         where.creatorId = user.id;
-
-        if (isCurrentUser) {
-          where.visibility = { in: ["public", "private", "unlisted"] };
-        } else {
-          where.visibility = "public";
-        }
+        where.visibility = isCurrentUser
+          ? { in: ["public", "private", "unlisted"] }
+          : "public";
       } catch (error) {
         logger.error({ error }, "Error fetching collection");
         return res.status(404).json({
@@ -46,13 +43,13 @@ module.exports = async (req, res, next) => {
       select: expandCollections
         ? {
             id: true,
-            creatorId: true,
             createdAt: true,
             updatedAt: true,
             visibility: true,
             name: true,
             description: true,
             assets: { select: { id: true } },
+            user: { select: { hashedEmail: true } },
           }
         : { id: true },
     });
@@ -60,7 +57,7 @@ module.exports = async (req, res, next) => {
     const responseData = expandCollections
       ? collections.map((c) => ({
           id: c.id,
-          creatorId: c.creatorId,
+          ownerId: c.user.hashedEmail,
           created: c.createdAt,
           updated: c.updatedAt,
           name: c.name,
