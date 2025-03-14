@@ -20,6 +20,7 @@ services:
       CF_AIG_NAME: "${CF_AIG_NAME}"
       GROQ_MODEL: "${GROQ_MODEL}"
       CF_TEXT_TO_IMAGE_MODEL: "${CF_TEXT_TO_IMAGE_MODEL}"
+      LOG_LEVEL: "debug"
     env_file:
       - .env.compose
     init: true
