@@ -1,12 +1,14 @@
-GET http://localhost:8080/v1/users
+GET http://localhost:8080/v1/users/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a
 [BasicAuth]
 user1@email.com:password1
 HTTP 200
 [Captures]
 initial_display_name: jsonpath "$.user.displayName"
 initial_bio: jsonpath "$.user.profileBio"
+initial_avatar: jsonpath "$.user.profilePictureUrl"
 
-PATCH http://localhost:8080/v1/users
+
+PATCH http://localhost:8080/v1/users/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a
 [BasicAuth]
 user1@email.com:password1
 [MultipartFormData]
@@ -14,23 +16,23 @@ displayName: Updated Display Name
 profileBio: New bio content
 HTTP 200
 [Asserts]
-jsonpath "$.success" == true
+jsonpath "$.status" == "ok"
 jsonpath "$.user.displayName" == "Updated Display Name"
 jsonpath "$.user.profileBio" == "New bio content"
 
-PATCH http://localhost:8080/v1/users
+
+PATCH http://localhost:8080/v1/users/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a
 [BasicAuth]
 user1@email.com:password1
 [MultipartFormData]
-profilePicture: file,tests/resources/test-avatar.png; image/png
 displayName: User With Avatar
+profilePicture: file,../resources/test-avater.png; image/png
 HTTP 200
 [Asserts]
-jsonpath "$.success" == true
-jsonpath "$.user.profilePictureUrl" exists
+jsonpath "$.status" == "ok"
 jsonpath "$.user.displayName" == "User With Avatar"
+jsonpath "$.user.profilePictureUrl" exists
 
-# 3. Update non-authenticated user
 PATCH http://localhost:8080/v1/users
 [MultipartFormData]
 displayName: Should Fail
@@ -40,8 +42,8 @@ jsonpath "$.status" == "error"
 jsonpath "$.error.code" == 401
 jsonpath "$.error.message" == "Unauthorized"
 
-# 4. Update with invalid credentials
-PATCH http://localhost:8080/v1/users
+
+PATCH http://localhost:8080/v1/users/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a
 [BasicAuth]
 user1@email.com:wrongpassword
 [MultipartFormData]
@@ -51,19 +53,19 @@ HTTP 401
 jsonpath "$.status" == "error"
 jsonpath "$.error.code" == 401
 
-# 5. Update with invalid file type
-PATCH http://localhost:8080/v1/users
+
+PATCH http://localhost:8080/v1/users/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a
 [BasicAuth]
 user1@email.com:password1
 [MultipartFormData]
-profilePicture: file,tests/resources/invalid.txt; text/plain
+profilePicture: file,../resources/invalid.txt; text/plain
 HTTP 400
 [Asserts]
 jsonpath "$.status" == "error"
 jsonpath "$.error.code" == 400
 
-# 6. Update with extra fields
-PATCH http://localhost:8080/v1/users
+
+PATCH http://localhost:8080/v1/users/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a
 [BasicAuth]
 user1@email.com:password1
 [MultipartFormData]
@@ -74,21 +76,21 @@ HTTP 400
 jsonpath "$.status" == "error"
 jsonpath "$.error.code" == 400
 
-# 7. Partial update (keep existing values)
-PATCH http://localhost:8080/v1/users
+
+PATCH http://localhost:8080/v1/users/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a
 [BasicAuth]
 user1@email.com:password1
 [MultipartFormData]
 displayName: Partial Update Only
 HTTP 200
 [Asserts]
-jsonpath "$.success" == true
+jsonpath "$.status" == "ok"
 jsonpath "$.user.displayName" == "Partial Update Only"
-jsonpath "$.user.profileBio" == "New bio content"  # From previous update
-jsonpath "$.user.profilePictureUrl" exists  # From previous update
+jsonpath "$.user.profileBio" == {{initial_bio}}
+jsonpath "$.user.profilePictureUrl" exists
 
-# 8. Update with long bio (>500 chars)
-PATCH http://localhost:8080/v1/users
+
+PATCH http://localhost:8080/v1/users/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a
 [BasicAuth]
 user1@email.com:password1
 [MultipartFormData]
@@ -98,13 +100,13 @@ HTTP 400
 jsonpath "$.status" == "error"
 jsonpath "$.error.code" == 400
 
-# 9. Remove profile picture
-PATCH http://localhost:8080/v1/users
+
+PATCH http://localhost:8080/v1/users/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a
 [BasicAuth]
 user1@email.com:password1
 [MultipartFormData]
 profilePicture: null
 HTTP 200
 [Asserts]
-jsonpath "$.success" == true
+jsonpath "$.status" == "ok"
 jsonpath "$.user.profilePictureUrl" == null

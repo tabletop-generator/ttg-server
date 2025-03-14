@@ -10,7 +10,7 @@ const multer = require("multer");
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-const userPatchSchema = z
+const patchSchema = z
   .object({
     displayName: z.string().min(1).max(50).optional(),
     profileBio: z.string().max(500).nullable().optional(),
@@ -29,10 +29,12 @@ module.exports = [
     );
 
     try {
-      userPatchSchema.parse(req.body);
+      patchSchema.parse(req.body);
     } catch (error) {
-      logger.debug({ error }, "Invalid request body");
-      return next({ status: 400, message: "Invalid request format" });
+      logger.debug({ error }, "invalid request body");
+      error.status = 400;
+      error.message = "Invalid request format";
+      return next(error);
     }
 
     let user;
