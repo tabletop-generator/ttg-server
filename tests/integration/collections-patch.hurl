@@ -13,7 +13,7 @@ HTTP/1.1 200
 [Asserts]
 jsonpath "$.status" == "ok"
 jsonpath "$.collection.id" isInteger
-jsonpath "$.collection.user.hashedEmail" == "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a"
+jsonpath "$.collection.ownerId" == "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a"
 jsonpath "$.collection.createdAt" isIsoDate
 jsonpath "$.collection.updatedAt" isIsoDate
 jsonpath "$.collection.description" == "This is User 1's collection"
