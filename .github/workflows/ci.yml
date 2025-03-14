@@ -8,7 +8,7 @@ on:
 
 jobs:
   lint:
-    name: Prettier & ESLint
+    name: Prettier & ESLint Checks
     runs-on: ubuntu-latest
 
     strategy:
@@ -28,7 +28,7 @@ jobs:
       - name: Install node dependencies
         run: npm ci
 
-      - name: Run Prettier
+      - name: Run Prettier Check
         run: npx prettier --check .
 
       - name: Run ESLint
@@ -37,6 +37,7 @@ jobs:
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
+    needs: [lint]
 
     strategy:
       matrix:
@@ -69,6 +70,7 @@ jobs:
   integration-tests:
     name: Integration Tests
     runs-on: ubuntu-latest
+    needs: [lint, unit-tests, dockerfile-lint]
     env:
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       GROQ_MODEL: ${{ vars.GROQ_MODEL }}
