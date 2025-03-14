@@ -60,8 +60,8 @@ async function save(userHashedEmail, collectionData) {
   return {
     id: collection.id,
     ownerId: collection.user.hashedEmail,
-    created: collection.createdAt,
-    updated: collection.updatedAt,
+    createdAt: collection.createdAt,
+    updatedAt: collection.updatedAt,
     name: collection.name,
     description: collection.description,
     visibility: collection.visibility,
@@ -96,8 +96,8 @@ async function get(id) {
   return {
     id: collection.id,
     ownerId: collection.user.hashedEmail,
-    created: collection.createdAt,
-    updated: collection.updatedAt,
+    createdAt: collection.createdAt,
+    updatedAt: collection.updatedAt,
     name: collection.name,
     description: collection.description,
     visibility: collection.visibility,
