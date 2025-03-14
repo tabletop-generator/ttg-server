@@ -1,6 +1,6 @@
 const logger = require("../../../logger");
 const z = require("zod");
-const { deleteAsset } = require("../../../model/asset");
+const { delete: deleteAsset } = require("../../../model/asset");
 const { createSuccessResponse } = require("../../../response");
 const prisma = require("../../../model/data/prismaClient");
 
@@ -14,12 +14,12 @@ module.exports = async (req, res, next) => {
     `received request: DELETE /v1/assets/:assetId`,
   );
 
-  const assetId = await req.params.assetId;
+  const assetId = req.params.assetId;
 
   try {
     z.string().uuid().parse(assetId);
   } catch (error) {
-    logger.debug({ error }, "invalid asset ID format");
+    logger.warn({ error }, "invalid asset ID format");
     return next({ status: 400, message: "invalid asset id" });
   }
 
@@ -33,29 +33,29 @@ module.exports = async (req, res, next) => {
       },
     });
   } catch (error) {
-    logger.error(error, "Error fetching asset");
-    return next({ status: 500, message: "Internal server error" });
-  }
-
-  if (!asset) {
-    logger.debug("asset not found");
+    logger.warn(error, "asset not found");
     return next({ status: 404, message: "Asset not found" });
   }
 
-  if (asset.user.hashedEmail !== req.user) {
-    return next({
-      status: 403,
-      message: "Forbidden",
-    });
-  }
-
   try {
-    await deleteAsset(asset.uuid);
-    logger.debug(asset.uuid, "Asset deleted");
+    deleteAsset(asset.uuid, req.user);
+    logger.info(asset.uuid, "Asset deleted");
     return res
       .status(200)
       .json(createSuccessResponse({ message: "Asset deleted successfully" }));
   } catch (error) {
+    if (error.code === "P2025") {
+      logger.warn("Asset for the user not found");
+      return next({
+        status:
+          error.meta?.cause === "Record to delete does not exist" ? 403 : 404,
+        message:
+          error.meta?.cause === "Record to delete does not exist"
+            ? "Forbidden"
+            : "Asset not found",
+      });
+    }
+
     logger.error(error, "Error deleting asset");
     return next({ status: 500, message: "Internal server error" });
   }
