@@ -36,7 +36,7 @@ module.exports = async (req, res, next) => {
       collectionName: newCollection.name,
       userId: req.user,
     },
-    `user created new collection: "${newCollection.name}"`,
+    "user created new collection",
   );
 
   // Create location URL for the new collection
