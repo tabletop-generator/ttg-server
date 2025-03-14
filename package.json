@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.12.0",
-    "@orangeopensource/hurl": "^5.0.1",
+    "@orangeopensource/hurl": "^6.0.1",
     "@types/compression": "^1.7.5",
     "@types/cors": "^2.8.17",
     "@types/eslint": "^9.6.1",
