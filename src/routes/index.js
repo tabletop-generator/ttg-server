@@ -18,8 +18,27 @@ const router = express.Router();
 
 /**
  * Expose all of our API routes on /v1/* to include an API version.
+ * Use optional authentication for GET /assets
  */
-router.use(`/v1`, limiter, auth.authenticate(), require("./api"));
+router.use(
+  `/v1`,
+  limiter,
+  function (req, res, next) {
+    // For GET /assets, make authentication optional but still process it if provided
+    if (req.method === "GET" && req.path === "/assets") {
+      // If Authorization header exists, try to authenticate
+      if (req.headers.authorization) {
+        return auth.authenticate({ failWithError: false })(req, res, next);
+      }
+      // Otherwise proceed without authentication
+      return next();
+    }
+
+    // For all other routes, require authentication
+    auth.authenticate()(req, res, next);
+  },
+  require("./api"),
+);
 
 /**
  * Define a simple health check route. If the server is running
