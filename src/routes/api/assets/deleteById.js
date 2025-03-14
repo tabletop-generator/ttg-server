@@ -2,8 +2,7 @@ const logger = require("../../../logger");
 const z = require("zod");
 const { deleteAsset } = require("../../../model/asset");
 const { createSuccessResponse } = require("../../../response");
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+const prisma = require("../../../model/data/prismaClient");
 
 /**
  * Delete an asset by its id after verifying ownership
