@@ -2,15 +2,28 @@ const logger = require("../../../logger");
 const { createSuccessResponse } = require("../../../response");
 const prisma = require("../../../model/data/prismaClient");
 const { get: getUser } = require("../../../model/user");
-/**
- * Get a list of collections filtered by the query
- */
+const { z } = require("zod");
 
-// eslint-disable-next-line no-unused-vars
+const listCollectionsSchema = z.object({
+  query: z.object({
+    name: z.string().optional(),
+    userId: z.string().optional(),
+    expand: z
+      .string()
+      .regex(/^(true|false)$/, { message: "Expand must be 'true' or 'false'" })
+      .optional()
+      .transform((val) => val === "true"),
+  }),
+});
+
 module.exports = async (req, res, next) => {
   try {
-    const { name, userId, expand } = req.query;
-    const expandCollections = expand === "true";
+    const { query } = listCollectionsSchema.parse({
+      query: req.query,
+    });
+    const { name, userId, expand } = query;
+
+    const expandCollections = expand === true;
     const where = {};
 
     if (userId) {
@@ -70,6 +83,16 @@ module.exports = async (req, res, next) => {
       .status(200)
       .json(createSuccessResponse({ collections: responseData }));
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({
+        status: "error",
+        error: {
+          code: 400,
+          message: "Invalid query parameters",
+          details: error.errors.map((e) => e.message),
+        },
+      });
+    }
     logger.error(error, "Error fetching collections");
     return next({ status: 500, message: "Internal server error" });
   }

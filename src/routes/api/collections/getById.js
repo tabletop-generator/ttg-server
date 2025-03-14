@@ -1,15 +1,25 @@
 const logger = require("../../../logger");
 const { createSuccessResponse } = require("../../../response");
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+const prisma = require("../../../model/data/prismaClient");
 const { get: getUser } = require("../../../model/user");
-/**
- * Get a collection by it's id
- */
+const { z } = require("zod");
+
+const getCollectionSchema = z.object({
+  params: z.object({
+    collectionId: z.coerce
+      .number()
+      .int()
+      .positive({ message: "Collection ID must be a positive integer" }),
+  }),
+});
 
 module.exports = async (req, res, next) => {
   try {
-    const collectionId = parseInt(req.params.collectionId);
+    const { params } = getCollectionSchema.parse({
+      params: req.params,
+    });
+    const collectionId = params.collectionId;
+
     const collection = await prisma.collection.findUnique({
       where: { id: collectionId },
       include: {
@@ -70,6 +80,16 @@ module.exports = async (req, res, next) => {
       .status(200)
       .json(createSuccessResponse({ collection: responseData }));
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({
+        status: "error",
+        error: {
+          code: 400,
+          message: "Invalid collection ID",
+          details: error.errors.map((e) => e.message),
+        },
+      });
+    }
     logger.error(error, "Error fetching collection");
     return next({ status: 500, message: "Internal server error" });
   }
