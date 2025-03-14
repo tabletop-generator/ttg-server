@@ -32,8 +32,8 @@ If a response includes other data, it will be included along with the `status`, 
   "collection": {
     "id": "30a84843-0cd4-4975-95ba-b96112aea189",
     "ownerId": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
-    "created": "2021-11-02T15:09:50.403Z",
-    "updated": "2021-11-02T15:09:50.403Z",
+    "createdAt": "2021-11-02T15:09:50.403Z",
+    "updatedAt": "2021-11-02T15:09:50.403Z",
     "name": "My Collection",
     "visibility": "public",
     "assets": [
@@ -152,8 +152,8 @@ If `expand` is `true`, returns the full asset objects instead of just the IDs:
     {
       "id": "30a84843-0cd4-4975-95ba-b96112aea189",
       "ownerId": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
-      "created": "2021-11-02T15:09:50.403Z",
-      "updated": "2021-11-02T15:09:50.403Z",
+      "createdAt": "2021-11-02T15:09:50.403Z",
+      "updatedAt": "2021-11-02T15:09:50.403Z",
       "name": "Gilbert",
       "description": "Dwarf guy",
       "visibility": "unlisted",
@@ -170,8 +170,8 @@ If `expand` is `true`, returns the full asset objects instead of just the IDs:
     {
       "id": "40a84843-0cd4-4975-95ba-b96112aea189",
       "ownerId": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
-      "created": "2021-11-02T15:09:50.403Z",
-      "updated": "2021-11-02T15:09:50.403Z",
+      "createdAt": "2021-11-02T15:09:50.403Z",
+      "updatedAt": "2021-11-02T15:09:50.403Z",
       "name": "John",
       "description": "Knight",
       "visibility": "public",
@@ -227,8 +227,8 @@ A collection's data is stored in an object in the following format:
 {
   "id": "30a84843-0cd4-4975-95ba-b96112aea189",
   "ownerId": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
-  "created": "2021-11-02T15:09:50.403Z",
-  "updated": "2021-11-02T15:09:50.403Z",
+  "createdAt": "2021-11-02T15:09:50.403Z",
+  "updatedAt": "2021-11-02T15:09:50.403Z",
   "name": "My Collection",
   "visibility": "public",
   "assets": [
@@ -267,8 +267,8 @@ If `expand` is `true`, returns the full collection objects instead of just the I
     {
       "id": "30a84843-0cd4-4975-95ba-b96112aea189",
       "ownerId": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
-      "created": "2021-11-02T15:09:50.403Z",
-      "updated": "2021-11-02T15:09:50.403Z",
+      "createdAt": "2021-11-02T15:09:50.403Z",
+      "updatedAt": "2021-11-02T15:09:50.403Z",
       "name": "My Collection",
       "visibility": "public",
       "assets": [
@@ -344,8 +344,8 @@ A comment's data is stored in an object in the following format:
   "id": "30a84843-0cd4-4975-95ba-b96112aea189",
   "assetId": "40a84843-0cd4-4975-95ba-b96112aea189",
   "userId": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
-  "created": "2021-11-02T15:09:50.403Z",
-  "updated": "2021-11-02T15:09:50.403Z",
+  "createdAt": "2021-11-02T15:09:50.403Z",
+  "updatedAt": "2021-11-02T15:09:50.403Z",
   "body": "hello"
 }
 ```
