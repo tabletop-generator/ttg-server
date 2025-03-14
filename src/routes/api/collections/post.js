@@ -15,7 +15,7 @@ module.exports = async (req, res, next) => {
   try {
     collection.schema.parse(req.body);
   } catch (error) {
-    logger.debug({ error }, "invalid collection data");
+    logger.warn({ error }, "invalid collection data");
     const httpError = new Error("Invalid collection data");
     httpError.status = 400;
     return next(httpError);
@@ -26,7 +26,7 @@ module.exports = async (req, res, next) => {
   try {
     newCollection = await collection.save(req.user, req.body);
   } catch (error) {
-    logger.warn({ requestBody: req.body }, "error creating collection");
+    logger.warn({ error, requestBody: req.body }, "error creating collection");
     return next(error);
   }
 

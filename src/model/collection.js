@@ -1,6 +1,5 @@
 const { z } = require("zod");
 const prisma = require("./data/prismaClient");
-const logger = require("../logger");
 
 // Schema for collection validation
 const schema = z.object({
@@ -17,8 +16,6 @@ const schema = z.object({
  * @returns {Promise<Object>} - The saved collection
  */
 async function save(userHashedEmail, collectionData) {
-  logger.debug({ userHashedEmail, collectionData }, "saving collection");
-
   // Get the user's database id to create the foreign key with the collection
   const user = await prisma.user.findUnique({
     where: { hashedEmail: userHashedEmail },
