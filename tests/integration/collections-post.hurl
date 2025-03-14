@@ -17,8 +17,8 @@ header "Location" matches "^(http|https):\/\/localhost:8080\/v1\/collections\/[0
 jsonpath "$.status" == "ok"
 jsonpath "$.collection.id" isInteger
 jsonpath "$.collection.ownerId" == "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a"
-jsonpath "$.collection.created" isIsoDate
-jsonpath "$.collection.updated" isIsoDate
+jsonpath "$.collection.createdAt" isIsoDate
+jsonpath "$.collection.updatedAt" isIsoDate
 jsonpath "$.collection.name" == "My Fantasy Campaign"
 jsonpath "$.collection.visibility" == "public"
 jsonpath "$.collection.assets" count == 0
