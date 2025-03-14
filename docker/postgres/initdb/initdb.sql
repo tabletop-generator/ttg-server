@@ -129,10 +129,10 @@ INSERT INTO "User" (hashed_email) VALUES ('11d4c22e42c8f61feaba154683dea407b101c
 INSERT INTO "User" (hashed_email) VALUES ('b0194b2e11548b547ddaff0e105b22347f94b625a7b964d7db72e1658c461a7f');
 
 -- Insert testing assets
-INSERT INTO "Asset" (uuid, creator_id, type, visibility, name) VALUES ('6ef5db05-9a0f-4556-b7b9-bf35744d5174', '1', 'character', 'public', 'John');
+INSERT INTO "Asset" (uuid, creator_id, type, visibility, name) VALUES ('6ef5db05-9a0f-4556-b7b9-bf35744d5174', '1', 'character', 'private', 'John');
 INSERT INTO "Character" (asset_id, race, class, gender, alignment) VALUES ('1', 'human', 'monk', 'male', 'true_neutral');
 
-INSERT INTO "Asset" (uuid, creator_id, type, visibility, name) VALUES ('6b530b4c-5b56-4a7d-8085-2ac070920175', '1', 'character', 'public', 'Aldrich');
+INSERT INTO "Asset" (uuid, creator_id, type, visibility, name) VALUES ('6b530b4c-5b56-4a7d-8085-2ac070920175', '2', 'character', 'public', 'Aldrich');
 INSERT INTO "Character" (asset_id, race, class, gender, alignment) VALUES ('2', 'drow', 'cleric', 'non_binary', 'chaotic_good');
 
 -- Insert testing collection
