@@ -145,7 +145,18 @@ module.exports = async (req, res, next) => {
     "updated collection: debug info",
   );
 
-  return res
-    .status(200)
-    .json(createSuccessResponse({ collection: updatedCollection }));
+  return res.status(200).json(
+    createSuccessResponse({
+      collection: {
+        id: updatedCollection.id,
+        ownerId: updatedCollection.user.hashedEmail,
+        createdAt: updatedCollection.createdAt,
+        updatedAt: updatedCollection.updatedAt,
+        name: updatedCollection.name,
+        description: updatedCollection.description,
+        visibility: updatedCollection.visibility,
+        assets: updatedCollection.assets.map((asset) => asset.uuid),
+      },
+    }),
+  );
 };
