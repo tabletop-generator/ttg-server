@@ -7,11 +7,10 @@ const prisma = require("../../../model/data/prismaClient");
 /**
  * Delete an asset by its id after verifying ownership
  */
-
 module.exports = async (req, res, next) => {
   logger.debug(
-    { user: req.user, id: req.params.id },
-    `received request: DELETE /v1/assets/:assetId`,
+    { user: req.user, assetId: req.params.assetId },
+    "received request: DELETE /v1/assets/:assetId",
   );
 
   const assetId = req.params.assetId;
@@ -33,29 +32,26 @@ module.exports = async (req, res, next) => {
       },
     });
   } catch (error) {
-    logger.warn(error, "asset not found");
+    logger.error(error, "Error fetching asset");
+    return next({ status: 500, message: "Internal server error" });
+  }
+
+  if (!asset) {
+    logger.warn("Asset not found");
     return next({ status: 404, message: "Asset not found" });
   }
 
   try {
-    deleteAsset(asset.uuid, req.user);
+    await deleteAsset(asset.uuid, req.user);
     logger.info(asset.uuid, "Asset deleted");
     return res
       .status(200)
       .json(createSuccessResponse({ message: "Asset deleted successfully" }));
   } catch (error) {
     if (error.code === "P2025") {
-      logger.warn("Asset for the user not found");
-      return next({
-        status:
-          error.meta?.cause === "Record to delete does not exist" ? 403 : 404,
-        message:
-          error.meta?.cause === "Record to delete does not exist"
-            ? "Forbidden"
-            : "Asset not found",
-      });
+      logger.warn("Asset for the user not found during deletion");
+      return next({ status: 403, message: "Forbidden" });
     }
-
     logger.error(error, "Error deleting asset");
     return next({ status: 500, message: "Internal server error" });
   }
