@@ -67,11 +67,13 @@ async function save(userHashedEmail, collectionData) {
 }
 
 /**
- * Get a collection by ID
+ * Get a collection by ID with access control
  * @param {Number} id - The collection ID
+ * @param {Number} [currentUserId] - Optional current user's database ID
  * @returns {Promise<Object>} - The collection data
+ * @throws {Error} - Forbidden error if unauthorized
  */
-async function get(id) {
+async function get(id, currentUserId) {
   // Get collection from database
   const collection = await prisma.collection.findUniqueOrThrow({
     where: { id: Number(id) },
@@ -88,6 +90,16 @@ async function get(id) {
       },
     },
   });
+
+  // Authorization check
+  if (
+    collection.visibility !== "public" &&
+    collection.creatorId !== currentUserId
+  ) {
+    const error = new Error("Forbidden");
+    error.status = 403;
+    throw error;
+  }
 
   // Format the response to match the API spec
   return {
