@@ -1,7 +1,7 @@
 const logger = require("../../../logger");
 const { createSuccessResponse } = require("../../../response");
-const prisma = require("../../../model/data/prismaClient");
 const { get: getUser } = require("../../../model/user");
+const { listCollection } = require("../../../model/collection");
 const { z } = require("zod");
 
 const listCollectionsSchema = z.object({
@@ -10,7 +10,7 @@ const listCollectionsSchema = z.object({
     userId: z.string().optional(),
     expand: z
       .string()
-      .regex(/^(true|false)$/, { message: "Expand must be 'true' or 'false'" })
+      .regex(/^(true|false)$/)
       .optional()
       .transform((val) => val === "true"),
   }),
@@ -51,33 +51,7 @@ module.exports = async (req, res, next) => {
       where.name = { contains: name, mode: "insensitive" };
     }
 
-    const collections = await prisma.collection.findMany({
-      where,
-      select: expandCollections
-        ? {
-            id: true,
-            createdAt: true,
-            updatedAt: true,
-            visibility: true,
-            name: true,
-            description: true,
-            assets: { select: { id: true } },
-            user: { select: { hashedEmail: true } },
-          }
-        : { id: true },
-    });
-
-    const responseData = expandCollections
-      ? collections.map((c) => ({
-          id: c.id,
-          ownerId: c.user.hashedEmail,
-          created: c.createdAt,
-          updated: c.updatedAt,
-          name: c.name,
-          visibility: c.visibility,
-          assets: c.assets.map((a) => a.id),
-        }))
-      : collections.map((c) => c.id);
+    const responseData = await listCollection(where, expandCollections);
 
     return res
       .status(200)

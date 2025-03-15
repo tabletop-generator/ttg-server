@@ -102,8 +102,45 @@ async function get(id) {
   };
 }
 
+/**
+ * List collections with optional filtering
+ * @param {Object} where - Prisma where clause
+ * @param {Boolean} expand - Whether to expand results
+ * @returns {Promise<Array>} - Formatted collections
+ */
+async function listCollection(where, expand) {
+  const collections = await prisma.collection.findMany({
+    where,
+    select: expand
+      ? {
+          id: true,
+          createdAt: true,
+          updatedAt: true,
+          visibility: true,
+          name: true,
+          description: true,
+          assets: { select: { uuid: true } },
+          user: { select: { hashedEmail: true } },
+        }
+      : { id: true },
+  });
+
+  return expand
+    ? collections.map((c) => ({
+        id: c.id,
+        ownerId: c.user.hashedEmail,
+        createdAt: c.createdAt,
+        updatedAt: c.updatedAt,
+        name: c.name,
+        visibility: c.visibility,
+        assets: c.assets.map((a) => a.uuid),
+      }))
+    : collections.map((c) => c.id);
+}
+
 module.exports = {
   schema,
   save,
   get,
+  listCollection,
 };

@@ -61,8 +61,8 @@ jsonpath "$.status" == "ok"
 jsonpath "$.collections[?(@.id == {{collection_id_user1}})].name" includes "Test Collection Public"
 jsonpath "$.collections[?(@.id == {{collection_id_user1}})].visibility" includes "public"
 jsonpath "$.collections[?(@.id == {{collection_id_user1}})].ownerId" includes "{{owner_hashedEmail_user1}}"
-jsonpath "$.collections[?(@.id == {{collection_id_user1}})].created" exists
-jsonpath "$.collections[?(@.id == {{collection_id_user1}})].updated" exists
+jsonpath "$.collections[?(@.id == {{collection_id_user1}})].createdAt" exists
+jsonpath "$.collections[?(@.id == {{collection_id_user1}})].updatedAt" exists
 jsonpath "$.collections[?(@.id == {{collection_id_user1}})].assets" exists
 
 GET http://localhost:8080/v1/collections?userId={{owner_hashedEmail_user1}}&expand=true

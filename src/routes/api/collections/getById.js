@@ -69,8 +69,8 @@ module.exports = async (req, res, next) => {
     const responseData = {
       id: collection.id,
       user: collection.user,
-      created: collection.createdAt,
-      updated: collection.updatedAt,
+      createdAt: collection.createdAt,
+      updatedAt: collection.updatedAt,
       name: collection.name,
       visibility: collection.visibility,
       assets: collection.assets,
