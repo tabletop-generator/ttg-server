@@ -1,7 +1,6 @@
 const logger = require("../../../logger");
 const { createSuccessResponse } = require("../../../response");
-const prisma = require("../../../model/data/prismaClient");
-const { get: getUser } = require("../../../model/user");
+const { get } = require("../../../model/collection");
 const { z } = require("zod");
 
 const getCollectionSchema = z.object({
@@ -20,65 +19,22 @@ module.exports = async (req, res, next) => {
     });
     const collectionId = params.collectionId;
 
-    const collection = await prisma.collection.findUnique({
-      where: { id: collectionId },
-      include: {
-        assets: {
-          select: {
-            id: true,
-            name: true,
-            type: true,
-            visibility: true,
-          },
-        },
-        user: {
-          select: {
-            id: true,
-            hashedEmail: true,
-            displayName: true,
-          },
-        },
-      },
-    });
-
-    if (!collection) {
-      return res.status(404).json({
-        status: "error",
-        error: { code: 404, message: "Collection not found" },
-      });
+    let collection;
+    try {
+      collection = await get(collectionId);
+    } catch (error) {
+      logger.warn({ error }, "Collection not found");
+      return next({ status: 404, message: "Collection not found" });
     }
 
-    if (collection.visibility !== "public") {
-      try {
-        const user = await getUser(req.user);
-        if (user.id !== collection.creatorId) {
-          return res.status(403).json({
-            status: "error",
-            error: { code: 403, message: "Forbidden" },
-          });
-        }
-      } catch (error) {
-        logger.error({ error }, "Error fetching collection");
-        return res.status(403).json({
-          status: "error",
-          error: { code: 403, message: "Forbidden" },
-        });
-      }
+    if (collection.visibility !== "public" && collection.ownerId !== req.user) {
+      logger.warn("User not authorized to access private collection");
+      return next({ status: 403, message: "Forbidden" });
     }
-
-    const responseData = {
-      id: collection.id,
-      user: collection.user,
-      createdAt: collection.createdAt,
-      updatedAt: collection.updatedAt,
-      name: collection.name,
-      visibility: collection.visibility,
-      assets: collection.assets,
-    };
 
     return res
       .status(200)
-      .json(createSuccessResponse({ collection: responseData }));
+      .json(createSuccessResponse({ collection: collection }));
   } catch (error) {
     if (error instanceof z.ZodError) {
       return next({ status: 400, message: "Invalid collection id" });
