@@ -65,6 +65,7 @@ jsonpath "$.error.code" == 400
 jsonpath "$.error.message" == "Invalid collection id"
 
 GET http://localhost:8080/v1/collections/99999
+[BasicAuth]
 user1@email.com:password1
 HTTP 404
 [Asserts]
