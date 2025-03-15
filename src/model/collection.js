@@ -67,11 +67,13 @@ async function save(userHashedEmail, collectionData) {
 }
 
 /**
- * Get a collection by ID
+ * Get a collection by ID with access control
  * @param {Number} id - The collection ID
+ * @param {Number} [currentUserId] - Optional current user's database ID
  * @returns {Promise<Object>} - The collection data
+ * @throws {Error} - Forbidden error if unauthorized
  */
-async function get(id) {
+async function get(id, currentUserId) {
   // Get collection from database
   const collection = await prisma.collection.findUniqueOrThrow({
     where: { id: Number(id) },
@@ -89,6 +91,16 @@ async function get(id) {
     },
   });
 
+  // Authorization check
+  if (
+    collection.visibility !== "public" &&
+    collection.creatorId !== currentUserId
+  ) {
+    const error = new Error("Forbidden");
+    error.status = 403;
+    throw error;
+  }
+
   // Format the response to match the API spec
   return {
     id: collection.id,
@@ -102,8 +114,45 @@ async function get(id) {
   };
 }
 
+/**
+ * List collections with optional filtering
+ * @param {Object} where - Prisma where clause
+ * @param {Boolean} expand - Whether to expand results
+ * @returns {Promise<Array>} - Formatted collections
+ */
+async function listCollection(where, expand) {
+  const collections = await prisma.collection.findMany({
+    where,
+    select: expand
+      ? {
+          id: true,
+          createdAt: true,
+          updatedAt: true,
+          visibility: true,
+          name: true,
+          description: true,
+          assets: { select: { uuid: true } },
+          user: { select: { hashedEmail: true } },
+        }
+      : { id: true },
+  });
+
+  return expand
+    ? collections.map((c) => ({
+        id: c.id,
+        ownerId: c.user.hashedEmail,
+        createdAt: c.createdAt,
+        updatedAt: c.updatedAt,
+        name: c.name,
+        visibility: c.visibility,
+        assets: c.assets.map((a) => a.uuid),
+      }))
+    : collections.map((c) => c.id);
+}
+
 module.exports = {
   schema,
   save,
   get,
+  listCollection,
 };
