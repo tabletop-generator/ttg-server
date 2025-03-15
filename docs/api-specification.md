@@ -225,7 +225,7 @@ A collection's data is stored in an object in the following format:
 
 ```json
 {
-  "id": "30a84843-0cd4-4975-95ba-b96112aea189",
+  "id": 1,
   "ownerId": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
   "createdAt": "2021-11-02T15:09:50.403Z",
   "updatedAt": "2021-11-02T15:09:50.403Z",
@@ -252,8 +252,8 @@ Gets a list of all public collections from all users, filtered by name and the c
 {
   "status": "ok",
   "collections": [
-    "b9e7a264-630f-436d-a785-27f30233faea",
-    "dad25b07-8cd6-498b-9aaf-46d358ea97fe"
+    1,
+    2
   ]
 }
 ```
@@ -265,7 +265,7 @@ If `expand` is `true`, returns the full collection objects instead of just the I
   "status": "ok",
   "collections": [
     {
-      "id": "30a84843-0cd4-4975-95ba-b96112aea189",
+      "id": 1,
       "ownerId": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
       "createdAt": "2021-11-02T15:09:50.403Z",
       "updatedAt": "2021-11-02T15:09:50.403Z",
