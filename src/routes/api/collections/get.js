@@ -22,14 +22,7 @@ module.exports = async (req, res, next) => {
     query = listCollectionsSchema.parse({ query: req.query }).query;
   } catch (error) {
     logger.warn({ error }, "Invalid query parameters");
-    return res.status(400).json({
-      status: "error",
-      error: {
-        code: 400,
-        message: "Invalid query parameters",
-        details: error.errors.map((e) => e.message),
-      },
-    });
+    return next({ status: 400, message: "Invalid query parameters" });
   }
 
   const { name, userId, expand } = query;
@@ -43,10 +36,7 @@ module.exports = async (req, res, next) => {
       currentUser = await getUser(req.user);
     } catch (error) {
       logger.warn({ error }, "User not found");
-      return res.status(404).json({
-        status: "error",
-        error: { code: 404, message: "User not found" },
-      });
+      return next({ status: 404, message: "User not found" });
     }
     const isCurrentUser = currentUser.hashedEmail === userId;
     where.creatorId = user.id;
