@@ -81,14 +81,7 @@ module.exports = async (req, res, next) => {
       .json(createSuccessResponse({ collection: responseData }));
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return res.status(400).json({
-        status: "error",
-        error: {
-          code: 400,
-          message: "Invalid collection ID",
-          details: error.errors.map((e) => e.message),
-        },
-      });
+      return next({ status: 400, message: "Invalid collection id" });
     }
     logger.error(error, "Error fetching collection");
     return next({ status: 500, message: "Internal server error" });

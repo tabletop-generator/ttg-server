@@ -58,6 +58,14 @@ jsonpath "$.error.message" == "Forbidden"
 GET http://localhost:8080/v1/collections/123e4567-e89b-12d3-a456-426614174000
 [BasicAuth]
 user1@email.com:password1
+HTTP 400
+[Asserts]
+jsonpath "$.status" == "error"
+jsonpath "$.error.code" == 400
+jsonpath "$.error.message" == "Invalid collection id"
+
+GET http://localhost:8080/v1/collections/99999
+user1@email.com:password1
 HTTP 404
 [Asserts]
 jsonpath "$.status" == "error"
