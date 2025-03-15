@@ -43,10 +43,6 @@ module.exports = async (req, res, next) => {
 
   try {
     await deleteAsset(asset.uuid, req.user);
-    logger.info(asset.uuid, "Asset deleted");
-    return res
-      .status(200)
-      .json(createSuccessResponse({ message: "Asset deleted successfully" }));
   } catch (error) {
     if (error.code === "P2025") {
       logger.warn("Asset for the user not found during deletion");
@@ -55,4 +51,9 @@ module.exports = async (req, res, next) => {
     logger.error(error, "Error deleting asset");
     return next({ status: 500, message: "Internal server error" });
   }
+
+  logger.info(asset.uuid, "Asset deleted");
+  return res
+    .status(200)
+    .json(createSuccessResponse({ message: "Asset deleted successfully" }));
 };
