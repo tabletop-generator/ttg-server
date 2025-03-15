@@ -14,22 +14,24 @@ const getCollectionSchema = z.object({
 
 module.exports = async (req, res, next) => {
   try {
-    const { params } = getCollectionSchema.parse({
-      params: req.params,
-    });
+    const { params } = getCollectionSchema.parse({ params: req.params });
     const collectionId = params.collectionId;
 
     let collection;
     try {
-      collection = await get(collectionId);
+      collection = await get(collectionId, req.user);
     } catch (error) {
-      logger.warn({ error }, "Collection not found");
-      return next({ status: 404, message: "Collection not found" });
-    }
-
-    if (collection.visibility !== "public" && collection.ownerId !== req.user) {
-      logger.warn("User not authorized to access private collection");
-      return next({ status: 403, message: "Forbidden" });
+      logger.warn({ error }, "Error fetching collection");
+      if (error.status === 403) {
+        return next({ status: 403, message: "Forbidden" });
+      } else if (
+        error.code === "P2025" ||
+        (error.message && error.message.includes("No Collection found"))
+      ) {
+        return next({ status: 404, message: "Collection not found" });
+      } else {
+        return next({ status: 500, message: "Internal server error" });
+      }
     }
 
     return res
