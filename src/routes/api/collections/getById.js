@@ -21,7 +21,7 @@ module.exports = async (req, res, next) => {
     try {
       collection = await get(collectionId, req.user);
     } catch (error) {
-      logger.warn({ error }, "Error fetching collection");
+      logger.warn({ error }, "Expected error fetching collection");
       if (error.status === 403) {
         return next({ status: 403, message: "Forbidden" });
       } else if (
@@ -30,13 +30,16 @@ module.exports = async (req, res, next) => {
       ) {
         return next({ status: 404, message: "Collection not found" });
       } else {
+        logger.error(error, "Unexpected error fetching collection");
         return next({ status: 500, message: "Internal server error" });
       }
     }
 
-    return res
-      .status(200)
-      .json(createSuccessResponse({ collection: collection }));
+    logger.info(
+      { collectionId, query: req.query },
+      "Successfully retrieved collection",
+    );
+    return res.status(200).json(createSuccessResponse({ collection }));
   } catch (error) {
     if (error instanceof z.ZodError) {
       return next({ status: 400, message: "Invalid collection id" });

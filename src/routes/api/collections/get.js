@@ -1,7 +1,7 @@
 const logger = require("../../../logger");
 const { createSuccessResponse } = require("../../../response");
 const { get: getUser } = require("../../../model/user");
-const { listCollection } = require("../../../model/collection");
+const { listCollections } = require("../../../model/collection");
 const { z } = require("zod");
 
 const listCollectionsSchema = z.object({
@@ -17,6 +17,11 @@ const listCollectionsSchema = z.object({
 });
 
 module.exports = async (req, res, next) => {
+  logger.debug(
+    { user: req.user, query: req.query },
+    "received request: GET /v1/collections",
+  );
+
   let query;
   try {
     query = listCollectionsSchema.parse({ query: req.query }).query;
@@ -30,19 +35,17 @@ module.exports = async (req, res, next) => {
   const where = {};
 
   if (userId) {
-    let user, currentUser;
     try {
-      user = await getUser(userId);
-      currentUser = await getUser(req.user);
+      const user = await getUser(userId);
+      const isCurrentUser = userId === req.user;
+      where.creatorId = user.id;
+      where.visibility = isCurrentUser
+        ? { in: ["public", "private", "unlisted"] }
+        : "public";
     } catch (error) {
-      logger.warn({ error }, "User not found");
+      logger.error({ error }, "Error fetching user for collection filtering");
       return next({ status: 404, message: "User not found" });
     }
-    const isCurrentUser = currentUser.hashedEmail === userId;
-    where.creatorId = user.id;
-    where.visibility = isCurrentUser
-      ? { in: ["public", "private", "unlisted"] }
-      : "public";
   } else {
     where.visibility = "public";
   }
@@ -51,14 +54,15 @@ module.exports = async (req, res, next) => {
     where.name = { contains: name, mode: "insensitive" };
   }
 
-  let collections;
   try {
-    collections = await listCollection(where, expandCollections);
+    const collections = await listCollections(where, expandCollections);
+    logger.info(
+      { count: collections.length, query: req.query },
+      "Collections retrieved successfully",
+    );
+    return res.status(200).json(createSuccessResponse({ collections }));
   } catch (error) {
-    logger.error({ error }, "Error listing collections");
+    logger.error(error, "Error fetching collections");
     return next({ status: 500, message: "Internal server error" });
   }
-
-  logger.info("Collections listed successfully");
-  return res.status(200).json(createSuccessResponse({ collections }));
 };

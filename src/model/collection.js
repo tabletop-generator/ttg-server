@@ -73,9 +73,10 @@ async function save(userHashedEmail, collectionData) {
  * @returns {Promise<Object>} - The collection data
  * @throws {Error} - Forbidden error if unauthorized
  */
-async function get(id, currentUserId) {
+async function get(id, userHashedEmail) {
+  let collection;
   // Get collection from database
-  const collection = await prisma.collection.findUniqueOrThrow({
+  collection = await prisma.collection.findUniqueOrThrow({
     where: { id: Number(id) },
     include: {
       assets: {
@@ -91,10 +92,16 @@ async function get(id, currentUserId) {
     },
   });
 
+  if (!collection) {
+    const err = new Error("Collection not found");
+    err.status = 404;
+    throw err;
+  }
+
   // Authorization check
   if (
     collection.visibility !== "public" &&
-    collection.creatorId !== currentUserId
+    collection.user.hashedEmail !== userHashedEmail
   ) {
     const error = new Error("Forbidden");
     error.status = 403;
@@ -115,14 +122,15 @@ async function get(id, currentUserId) {
 }
 
 /**
- * List collections with optional filtering
- * @param {Object} where - Prisma where clause
- * @param {Boolean} expand - Whether to expand results
- * @returns {Promise<Array>} - Formatted collections
+ * List collections based on a filter.
+ *
+ * @param {Object} whereClause - The filtering conditions.
+ * @param {Boolean} expand - Whether to return full collection objects or only IDs.
+ * @returns {Promise<Array>} - The list of collections.
  */
-async function listCollection(where, expand) {
+async function listCollections(whereClause, expand = false) {
   const collections = await prisma.collection.findMany({
-    where,
+    where: whereClause,
     select: expand
       ? {
           id: true,
@@ -144,6 +152,7 @@ async function listCollection(where, expand) {
         createdAt: c.createdAt,
         updatedAt: c.updatedAt,
         name: c.name,
+        description: c.description,
         visibility: c.visibility,
         assets: c.assets.map((a) => a.uuid),
       }))
@@ -154,5 +163,5 @@ module.exports = {
   schema,
   save,
   get,
-  listCollection,
+  listCollections,
 };
