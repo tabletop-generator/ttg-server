@@ -251,10 +251,7 @@ Gets a list of all public collections from all users, filtered by name and the c
 ```json
 {
   "status": "ok",
-  "collections": [
-    1,
-    2
-  ]
+  "collections": [1, 2]
 }
 ```
 
