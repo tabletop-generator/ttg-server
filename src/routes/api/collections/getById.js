@@ -1,16 +1,50 @@
 const logger = require("../../../logger");
 const { createSuccessResponse } = require("../../../response");
+const { get } = require("../../../model/collection");
+const { z } = require("zod");
 
-/**
- * Get a collection by it's id
- */
+const getCollectionSchema = z.object({
+  params: z.object({
+    collectionId: z.coerce
+      .number()
+      .int()
+      .positive({ message: "Collection ID must be a positive integer" }),
+  }),
+});
 
-// eslint-disable-next-line no-unused-vars
 module.exports = async (req, res, next) => {
-  logger.debug(
-    { user: req.user, id: req.params.id },
-    `received request: GET /v1/collections/:collectionId`,
-  );
+  try {
+    const { params } = getCollectionSchema.parse({ params: req.params });
+    const collectionId = params.collectionId;
 
-  return res.status(418).json(createSuccessResponse());
+    let collection;
+    try {
+      collection = await get(collectionId, req.user);
+    } catch (error) {
+      logger.warn({ error }, "Expected error fetching collection");
+      if (error.status === 403) {
+        return next({ status: 403, message: "Forbidden" });
+      } else if (
+        error.code === "P2025" ||
+        (error.message && error.message.includes("No Collection found"))
+      ) {
+        return next({ status: 404, message: "Collection not found" });
+      } else {
+        logger.error(error, "Unexpected error fetching collection");
+        return next({ status: 500, message: "Internal server error" });
+      }
+    }
+
+    logger.info(
+      { collectionId, query: req.query },
+      "Successfully retrieved collection",
+    );
+    return res.status(200).json(createSuccessResponse({ collection }));
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return next({ status: 400, message: "Invalid collection id" });
+    }
+    logger.error(error, "Error fetching collection");
+    return next({ status: 500, message: "Internal server error" });
+  }
 };
