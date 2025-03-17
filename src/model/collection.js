@@ -67,13 +67,16 @@ async function save(userHashedEmail, collectionData) {
 }
 
 /**
- * Get a collection by ID
+ * Get a collection by ID with access control
  * @param {Number} id - The collection ID
+ * @param {Number} [currentUserId] - Optional current user's database ID
  * @returns {Promise<Object>} - The collection data
+ * @throws {Error} - Forbidden error if unauthorized
  */
-async function get(id) {
+async function get(id, userHashedEmail) {
+  let collection;
   // Get collection from database
-  const collection = await prisma.collection.findUniqueOrThrow({
+  collection = await prisma.collection.findUniqueOrThrow({
     where: { id: Number(id) },
     include: {
       assets: {
@@ -89,6 +92,22 @@ async function get(id) {
     },
   });
 
+  if (!collection) {
+    const err = new Error("Collection not found");
+    err.status = 404;
+    throw err;
+  }
+
+  // Authorization check
+  if (
+    collection.visibility !== "public" &&
+    collection.user.hashedEmail !== userHashedEmail
+  ) {
+    const error = new Error("Forbidden");
+    error.status = 403;
+    throw error;
+  }
+
   // Format the response to match the API spec
   return {
     id: collection.id,
@@ -102,8 +121,47 @@ async function get(id) {
   };
 }
 
+/**
+ * List collections based on a filter.
+ *
+ * @param {Object} whereClause - The filtering conditions.
+ * @param {Boolean} expand - Whether to return full collection objects or only IDs.
+ * @returns {Promise<Array>} - The list of collections.
+ */
+async function listCollections(whereClause, expand = false) {
+  const collections = await prisma.collection.findMany({
+    where: whereClause,
+    select: expand
+      ? {
+          id: true,
+          createdAt: true,
+          updatedAt: true,
+          visibility: true,
+          name: true,
+          description: true,
+          assets: { select: { uuid: true } },
+          user: { select: { hashedEmail: true } },
+        }
+      : { id: true },
+  });
+
+  return expand
+    ? collections.map((c) => ({
+        id: c.id,
+        ownerId: c.user.hashedEmail,
+        createdAt: c.createdAt,
+        updatedAt: c.updatedAt,
+        name: c.name,
+        description: c.description,
+        visibility: c.visibility,
+        assets: c.assets.map((a) => a.uuid),
+      }))
+    : collections.map((c) => c.id);
+}
+
 module.exports = {
   schema,
   save,
   get,
+  listCollections,
 };
