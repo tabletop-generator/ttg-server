@@ -230,13 +230,13 @@ async function getAsset(assetUuid) {
 /**
  *
  * @param {import("node:crypto").UUID} assetUuid
+ * @param {String} userHashedEmail
  * @returns {import("@prisma/client").Asset}
  * @throws
  */
-async function deleteAsset(assetUuid) {
+async function deleteAsset(assetUuid, userHashedEmail) {
   // Delete image from object store
   await deleteDataFromS3(assetUuid);
-
   // Delete records for related comments
   await prisma.comment.deleteMany({
     where: {
@@ -252,6 +252,7 @@ async function deleteAsset(assetUuid) {
   return await prisma.asset.delete({
     where: {
       uuid: assetUuid,
+      user: { hashedEmail: userHashedEmail },
     },
   });
 }
