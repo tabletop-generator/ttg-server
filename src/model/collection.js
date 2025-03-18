@@ -159,9 +159,26 @@ async function listCollections(whereClause, expand = false) {
     : collections.map((c) => c.id);
 }
 
+/**
+ *
+ * @param {Number} collectionId
+ * @param {String} userHashedEmail
+ * @returns {import("@prisma/client").Collection}
+ * @throws
+ */
+async function deleteCollection(collectionId, userHashedEmail) {
+  return await prisma.collection.delete({
+    where: {
+      id: collectionId,
+      user: { hashedEmail: userHashedEmail },
+    },
+  });
+}
+
 module.exports = {
   schema,
   save,
   get,
   listCollections,
+  deleteCollection,
 };
