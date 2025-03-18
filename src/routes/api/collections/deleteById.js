@@ -1,8 +1,7 @@
 const logger = require("../../../logger");
 const { z } = require("zod");
 const { createSuccessResponse } = require("../../../response");
-const prisma = require("../../../model/data/prismaClient");
-const { get } = require("../../../model/collection");
+const collection = require("../../../model/collection");
 
 module.exports = async (req, res, next) => {
   logger.debug(
@@ -11,17 +10,17 @@ module.exports = async (req, res, next) => {
   );
 
   const collectionIdParam = req.params.collectionId;
-
+  const userHash = req.user;
   let collectionId;
   try {
     collectionId = z.coerce.number().int().parse(collectionIdParam);
   } catch (error) {
-    logger.debug({ error }, "Invalid collection ID format");
+    logger.warn({ error }, "Invalid collection ID format");
     return next({ status: 400, message: "Invalid collection ID" });
   }
 
   try {
-    await get(collectionId, req.user);
+    await collection.get(collectionId, userHash);
   } catch (error) {
     logger.warn({ error }, "Error fetching collection");
     if (error.status === 403) {
@@ -37,10 +36,7 @@ module.exports = async (req, res, next) => {
   }
 
   try {
-    await prisma.collection.delete({
-      //def not the way to do it
-      where: { id: collectionId },
-    });
+    await collection.deleteCollection(collectionId, userHash);
 
     logger.debug(collectionId, "Collection deleted");
     return res

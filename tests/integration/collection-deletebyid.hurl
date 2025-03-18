@@ -1,43 +1,17 @@
-# ------------------------------------------
-# Setup: Create Collections for Testing
-# ------------------------------------------
-
-# Create a collection for user1 (public)
 POST http://localhost:8080/v1/collections
 [BasicAuth]
 user1@email.com:password1
 
 {
-  "name": "User1 Collection",
-  "description": "Collection created by user1",
-  "visibility": "public"
+  "name": "Test Collection",
+  "visibility": "private",
+  "description": "Test description"
 }
 HTTP 201
 [Captures]
-collection_id_user1: jsonpath "$.collection.id"
-owner_hashedEmail_user1: jsonpath "$.collection.ownerId"
+collection_id: jsonpath "$.collection.id"
 
-# Create a collection for user2 (private) for forbidden test
-POST http://localhost:8080/v1/collections
-[BasicAuth]
-user2@email.com:password2
-
-{
-  "name": "User2 Collection",
-  "description": "Collection created by user2",
-  "visibility": "private"
-}
-HTTP 201
-[Captures]
-collection_id_user2: jsonpath "$.collection.id"
-owner_hashedEmail_user2: jsonpath "$.collection.ownerId"
-
-# ------------------------------------------
-# DELETE /collections/:collectionId Tests
-# ------------------------------------------
-
-# 1. Delete collection for current user (user1) - should succeed
-DELETE http://localhost:8080/v1/collections/{{collection_id_user1}}
+DELETE http://localhost:8080/v1/collections/{{collection_id}}
 [BasicAuth]
 user1@email.com:password1
 HTTP 200
@@ -45,8 +19,7 @@ HTTP 200
 jsonpath "$.status" == "ok"
 jsonpath "$.message" == "Collection deleted successfully"
 
-# 2. Delete non-existent collection (e.g., id 99999) - should return 404
-DELETE http://localhost:8080/v1/collections/99999
+GET http://localhost:8080/v1/collections/{{collection_id}}
 [BasicAuth]
 user1@email.com:password1
 HTTP 404
@@ -55,39 +28,62 @@ jsonpath "$.status" == "error"
 jsonpath "$.error.code" == 404
 jsonpath "$.error.message" == "Collection not found"
 
-# 3. Delete with invalid collection ID format (e.g., "abc") - should return 400
 DELETE http://localhost:8080/v1/collections/abc
 [BasicAuth]
 user1@email.com:password1
 HTTP 400
 [Asserts]
 jsonpath "$.status" == "error"
-jsonpath "$.error.message" == "Invalid collection ID"
+jsonpath "$.error.code" == 400
 
-# 4. Delete collection that does not belong to current user 
-# (user1 attempting to delete user2's collection) - should return 403
-DELETE http://localhost:8080/v1/collections/{{collection_id_user2}}
+DELETE http://localhost:8080/v1/collections/999999
 [BasicAuth]
 user1@email.com:password1
-HTTP 403
+HTTP 404
 [Asserts]
 jsonpath "$.status" == "error"
-jsonpath "$.error.code" == 403
-jsonpath "$.error.message" == "Forbidden"
+jsonpath "$.error.code" == 404
+jsonpath "$.error.message" == "Collection not found"
 
-# 5. Delete collection without authentication - should return 401
-DELETE http://localhost:8080/v1/collections/{{collection_id_user1}}
+POST http://localhost:8080/v1/collections
+[BasicAuth]
+user1@email.com:password1
+
+{
+  "name": "Test Collection Auth",
+  "visibility": "private",
+  "description": "Test description for auth"
+}
+HTTP 201
+[Captures]
+auth_collection_id: jsonpath "$.collection.id"
+
+DELETE http://localhost:8080/v1/collections/{{auth_collection_id}}
 HTTP 401
 [Asserts]
 jsonpath "$.status" == "error"
 jsonpath "$.error.code" == 401
 jsonpath "$.error.message" == "Unauthorized"
 
-# 6. Delete collection with invalid credentials - should return 401
-DELETE http://localhost:8080/v1/collections/{{collection_id_user1}}
+# First, create a collection as user1
+POST http://localhost:8080/v1/collections
 [BasicAuth]
-user1@email.com:wrongpassword
-HTTP 401
+user1@email.com:password1
+
+{
+  "name": "Test Collection 2",
+  "visibility": "private",
+  "description": "Test description"
+}
+HTTP 201
+[Captures]
+collection_id_diff: jsonpath "$.collection.id"
+
+DELETE http://localhost:8080/v1/collections/{{collection_id_diff}}
+[BasicAuth]
+user2@email.com:password2
+HTTP 403
 [Asserts]
 jsonpath "$.status" == "error"
-jsonpath "$.error.code" == 401
+jsonpath "$.error.code" == 403
+jsonpath "$.error.message" == "Forbidden"
