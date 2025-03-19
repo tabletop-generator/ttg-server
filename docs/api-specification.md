@@ -32,8 +32,8 @@ If a response includes other data, it will be included along with the `status`, 
   "collection": {
     "id": "30a84843-0cd4-4975-95ba-b96112aea189",
     "ownerId": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
-    "created": "2021-11-02T15:09:50.403Z",
-    "updated": "2021-11-02T15:09:50.403Z",
+    "createdAt": "2021-11-02T15:09:50.403Z",
+    "updatedAt": "2021-11-02T15:09:50.403Z",
     "name": "My Collection",
     "visibility": "public",
     "assets": [
@@ -85,10 +85,10 @@ A successful response returns an HTTP `201`. It includes a `Location` header wit
 
 ```json
 {
+  "name": "Thalor Duskbane",
   "type": "character",
   "visibility": "public",
   "data": {
-    "name": "Thalor Duskbane",
     "race": "tiefling",
     "class": "warlock",
     "gender": "male",
@@ -152,8 +152,8 @@ If `expand` is `true`, returns the full asset objects instead of just the IDs:
     {
       "id": "30a84843-0cd4-4975-95ba-b96112aea189",
       "ownerId": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
-      "created": "2021-11-02T15:09:50.403Z",
-      "updated": "2021-11-02T15:09:50.403Z",
+      "createdAt": "2021-11-02T15:09:50.403Z",
+      "updatedAt": "2021-11-02T15:09:50.403Z",
       "name": "Gilbert",
       "description": "Dwarf guy",
       "visibility": "unlisted",
@@ -170,8 +170,8 @@ If `expand` is `true`, returns the full asset objects instead of just the IDs:
     {
       "id": "40a84843-0cd4-4975-95ba-b96112aea189",
       "ownerId": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
-      "created": "2021-11-02T15:09:50.403Z",
-      "updated": "2021-11-02T15:09:50.403Z",
+      "createdAt": "2021-11-02T15:09:50.403Z",
+      "updatedAt": "2021-11-02T15:09:50.403Z",
       "name": "John",
       "description": "Knight",
       "visibility": "public",
@@ -225,10 +225,10 @@ A collection's data is stored in an object in the following format:
 
 ```json
 {
-  "id": "30a84843-0cd4-4975-95ba-b96112aea189",
+  "id": 1,
   "ownerId": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
-  "created": "2021-11-02T15:09:50.403Z",
-  "updated": "2021-11-02T15:09:50.403Z",
+  "createdAt": "2021-11-02T15:09:50.403Z",
+  "updatedAt": "2021-11-02T15:09:50.403Z",
   "name": "My Collection",
   "visibility": "public",
   "assets": [
@@ -251,10 +251,7 @@ Gets a list of all public collections from all users, filtered by name and the c
 ```json
 {
   "status": "ok",
-  "collections": [
-    "b9e7a264-630f-436d-a785-27f30233faea",
-    "dad25b07-8cd6-498b-9aaf-46d358ea97fe"
-  ]
+  "collections": [1, 2]
 }
 ```
 
@@ -265,10 +262,10 @@ If `expand` is `true`, returns the full collection objects instead of just the I
   "status": "ok",
   "collections": [
     {
-      "id": "30a84843-0cd4-4975-95ba-b96112aea189",
+      "id": 1,
       "ownerId": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
-      "created": "2021-11-02T15:09:50.403Z",
-      "updated": "2021-11-02T15:09:50.403Z",
+      "createdAt": "2021-11-02T15:09:50.403Z",
+      "updatedAt": "2021-11-02T15:09:50.403Z",
       "name": "My Collection",
       "visibility": "public",
       "assets": [
@@ -344,8 +341,8 @@ A comment's data is stored in an object in the following format:
   "id": "30a84843-0cd4-4975-95ba-b96112aea189",
   "assetId": "40a84843-0cd4-4975-95ba-b96112aea189",
   "userId": "11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a",
-  "created": "2021-11-02T15:09:50.403Z",
-  "updated": "2021-11-02T15:09:50.403Z",
+  "createdAt": "2021-11-02T15:09:50.403Z",
+  "updatedAt": "2021-11-02T15:09:50.403Z",
   "body": "hello"
 }
 ```
