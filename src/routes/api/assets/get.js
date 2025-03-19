@@ -11,6 +11,7 @@ const querySchema = z
     type: z.enum(["character", "quest", "map", "location"]).optional(),
     userId: z.string().optional(),
     visibility: z.enum(["public", "private", "unlisted"]).optional(),
+    collectionId: z.string().regex(/^\d+$/).optional(),
     expand: z.enum(["true", "false"]).optional(),
   })
   .strict();
@@ -20,8 +21,9 @@ const querySchema = z
  * Query parameters:
  * - name: string
  * - type: asset_type (character, quest, map, location)
- * - userId: number
+ * - userId: string (hashed email)
  * - visibility: visibility_type (public, private, unlisted)
+ * - collectionId: string (numeric collection ID)
  * - expand: boolean
  */
 
@@ -39,7 +41,7 @@ module.exports = async (req, res, next) => {
     return next({ status: 400, message: "Invalid query parameters" });
   }
 
-  const { name, type, userId, visibility, expand } = req.query;
+  const { name, type, userId, visibility, collectionId, expand } = req.query;
 
   try {
     // Get the authenticated user's ID if available
@@ -69,18 +71,78 @@ module.exports = async (req, res, next) => {
     }
 
     if (userId) {
-      where.creatorId = parseInt(userId, 10);
+      // Look up user's internal ID from hashedEmail
+      const user = await prisma.user.findUnique({
+        where: { hashedEmail: userId },
+        select: { id: true },
+      });
+
+      if (!user) {
+        logger.warn({ userId }, "User not found when filtering assets");
+        return next({ status: 404, message: "User not found" });
+      }
+
+      // Use the internal ID for database filtering
+      where.creatorId = user.id;
     }
 
     if (visibility) {
       where.visibility = visibility;
     }
 
+    // Collection filtering - new code
+    if (collectionId) {
+      // Make sure collection exists and check access permissions
+      try {
+        // Get collection to verify permissions
+        const collection = await prisma.collection.findUniqueOrThrow({
+          where: { id: parseInt(collectionId, 10) },
+          select: {
+            visibility: true,
+            creatorId: true,
+            assets: { select: { uuid: true } },
+          },
+        });
+
+        // Check visibility permissions
+        if (collection.visibility !== "public") {
+          // For non-public collections, check if user is the owner
+          if (
+            !authenticatedUserId ||
+            collection.creatorId !== authenticatedUserId
+          ) {
+            logger.warn(
+              { collectionId, user: req.user },
+              "Attempted to access non-public collection",
+            );
+            return next({ status: 403, message: "Forbidden" });
+          }
+        }
+
+        // Filter assets that belong to this collection
+        where.uuid = {
+          in: collection.assets.map((asset) => asset.uuid),
+        };
+
+        logger.debug(
+          { collectionId, assetCount: collection.assets.length },
+          "Filtering assets by collection",
+        );
+      } catch (error) {
+        if (error.code === "P2025") {
+          logger.warn({ collectionId }, "Collection not found");
+          return next({ status: 404, message: "Collection not found" });
+        }
+        logger.error({ error, collectionId }, "Error fetching collection");
+        return next({ status: 500, message: "Internal server error" });
+      }
+    }
+
     // Visibility filter logic
     if (
       userId &&
       authenticatedUserId &&
-      parseInt(userId, 10) === authenticatedUserId
+      req.user === userId // Compare hashedEmails directly
     ) {
       // Case 1: User is viewing their own assets - no visibility filter needed
     } else if (userId) {

@@ -98,14 +98,42 @@ GET http://localhost:8080/v1/assets/{{public_asset_uuid}}
 user1@email.com:password1
 HTTP 200
 [Captures]
-user1_id: jsonpath "$.asset.creatorId"
+user1_id: jsonpath "$.asset.user.hashedEmail"
 
 GET http://localhost:8080/v1/assets/{{user2_public_asset_uuid}}
 [BasicAuth]
 user2@email.com:password2
 HTTP 200
 [Captures]
-user2_id: jsonpath "$.asset.creatorId"
+user2_id: jsonpath "$.asset.user.hashedEmail"
+
+# Create collection for testing asset filtering
+POST http://localhost:8080/v1/collections
+[BasicAuth]
+user1@email.com:password1
+{
+  "name": "Test Collection",
+  "description": "A collection for testing asset filtering",
+  "visibility": "public",
+  "assets": ["{{public_asset_uuid}}", "{{private_asset_uuid}}"]
+}
+HTTP 201
+[Captures]
+test_collection_id: jsonpath "$.collection.id"
+
+# Create private collection for testing permissions
+POST http://localhost:8080/v1/collections
+[BasicAuth]
+user1@email.com:password1
+{
+  "name": "Private Test Collection",
+  "description": "A private collection for testing permissions",
+  "visibility": "private",
+  "assets": ["{{unlisted_asset_uuid}}"]
+}
+HTTP 201
+[Captures]
+private_collection_id: jsonpath "$.collection.id"
 
 # Test 1: Get all assets (without authentication)
 GET http://localhost:8080/v1/assets
@@ -203,3 +231,71 @@ HTTP 400
 [Asserts]
 jsonpath "$.status" == "error"
 jsonpath "$.error.message" == "Invalid query parameters"
+
+# Test 10: Filter by collection ID
+GET http://localhost:8080/v1/assets?collectionId={{test_collection_id}}
+[BasicAuth]
+user1@email.com:password1
+HTTP 200
+[Asserts]
+jsonpath "$.status" == "ok"
+jsonpath "$.assets" count == 2
+jsonpath "$.assets" includes {{public_asset_uuid}}
+jsonpath "$.assets" includes {{private_asset_uuid}}
+jsonpath "$.assets" not includes {{unlisted_asset_uuid}}
+
+# Test 11: Filter by collection with expand=true
+GET http://localhost:8080/v1/assets?collectionId={{test_collection_id}}&expand=true
+[BasicAuth]
+user1@email.com:password1
+HTTP 200
+[Asserts]
+jsonpath "$.status" == "ok"
+jsonpath "$.assets" count == 2
+jsonpath "$.assets[*].uuid" includes {{public_asset_uuid}}
+jsonpath "$.assets[*].uuid" includes {{private_asset_uuid}}
+
+# Test 12: Combine collection filter with other filters
+GET http://localhost:8080/v1/assets?collectionId={{test_collection_id}}&type=character
+[BasicAuth]
+user1@email.com:password1
+HTTP 200
+[Asserts]
+jsonpath "$.status" == "ok"
+jsonpath "$.assets" count == 2
+jsonpath "$.assets" includes {{public_asset_uuid}}
+jsonpath "$.assets" includes {{private_asset_uuid}}
+
+# Test 13: Non-existent collection ID
+GET http://localhost:8080/v1/assets?collectionId=99999
+[BasicAuth]
+user1@email.com:password1
+HTTP 404
+[Asserts]
+jsonpath "$.status" == "error"
+jsonpath "$.error.message" == "Collection not found"
+
+# Test 14: Access private collection as owner
+GET http://localhost:8080/v1/assets?collectionId={{private_collection_id}}
+[BasicAuth]
+user1@email.com:password1
+HTTP 200
+[Asserts]
+jsonpath "$.status" == "ok"
+jsonpath "$.assets" includes {{unlisted_asset_uuid}}
+
+# Test 15: Try to access private collection as another user
+GET http://localhost:8080/v1/assets?collectionId={{private_collection_id}}
+[BasicAuth]
+user2@email.com:password2
+HTTP 403
+[Asserts]
+jsonpath "$.status" == "error"
+jsonpath "$.error.message" == "Forbidden"
+
+# Test 16: Try to access private collection without authentication
+GET http://localhost:8080/v1/assets?collectionId={{private_collection_id}}
+HTTP 403
+[Asserts]
+jsonpath "$.status" == "error"
+jsonpath "$.error.message" == "Forbidden"
