@@ -79,7 +79,7 @@ An unauthenticated `/` route is available for checking the health of the service
 
 Generates an asset for the current user (i.e. authenticated user). The asset parameters are used to fill in prompts and send an API call to the image and text generation APIs. The generated image and other asset data are stored. A presigned URL for the image is created and stored along with it's expiration timestamp.
 
-A successful response returns an HTTP `201`. It includes a `Location` header with a full URL to use in order to access the newly created asset, for example: Location: https://ttg-api.com/v1/assets/30a84843-0cd4-4975-95ba-b96112aea189. See https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.30.
+A successful response returns an HTTP `201`. It includes a `Location` header with a full URL to use in order to access the newly created asset, for example: Location: `https://ttg-api.com/v1/assets/30a84843-0cd4-4975-95ba-b96112aea189`. See [RFC 9110: HTTP Semantics: 10.2.2. Location](https://www.rfc-editor.org/rfc/rfc9110.html#field.location).
 
 ##### Request
 
