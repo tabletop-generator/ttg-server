@@ -10,9 +10,6 @@ const { createSuccessResponse } = require("../response");
 // Our authentication middleware
 const auth = require("../auth");
 
-// Our rate limiter
-//const limiter = require("../limiter");
-
 // Create a router that we can use to mount our API
 const router = express.Router();
 
