@@ -78,11 +78,14 @@ jsonpath "$.status" == "error"
 jsonpath "$.error.code" == 404
 jsonpath "$.error.message" == "Asset not found"
 
-# 4. Comments endpoint should be authenticated
+# 4. Comments endpoint should allow unauthenticated access for GET requests
 GET http://localhost:8080/v1/comments?assetId={{asset_uuid}}
 
-HTTP 401
+HTTP 200
 [Asserts]
-jsonpath "$.status" == "error"
-jsonpath "$.error.code" == 401
-jsonpath "$.error.message" == "Unauthorized" 
+jsonpath "$.status" == "ok"
+jsonpath "$.comments" isCollection
+jsonpath "$.comments[0].assetId" == "{{asset_uuid}}"
+jsonpath "$.comments[1].assetId" == "{{asset_uuid}}"
+jsonpath "$.comments[*].body" includes "First test comment"
+jsonpath "$.comments[*].body" includes "Second test comment" 
