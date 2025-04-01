@@ -77,7 +77,73 @@ async function create(userHashedEmail, commentData) {
   };
 }
 
+/**
+ * Delete a comment by ID
+ * @param {String} userHashedEmail - The hashed email of the user attempting to delete
+ * @param {Number} commentId - The ID of the comment to delete
+ * @returns {Promise<Boolean>} - True if deletion was successful
+ */
+async function deleteById(userHashedEmail, commentId) {
+  logger.debug({ userHashedEmail, commentId }, "deleting comment");
+
+  // Find the comment with its related user and asset/asset owner
+  const comment = await prisma.comment.findUnique({
+    where: { id: parseInt(commentId, 10) },
+    include: {
+      user: {
+        select: {
+          hashedEmail: true,
+        },
+      },
+      asset: {
+        select: {
+          uuid: true,
+          user: {
+            select: {
+              hashedEmail: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  // Check if comment exists
+  if (!comment) {
+    const error = new Error("Comment not found");
+    error.status = 404;
+    throw error;
+  }
+
+  // Verify user permission (either comment author or asset owner can delete)
+  const isCommentAuthor = comment.user.hashedEmail === userHashedEmail;
+  const isAssetOwner = comment.asset.user.hashedEmail === userHashedEmail;
+
+  if (!isCommentAuthor && !isAssetOwner) {
+    logger.debug(
+      {
+        commentId,
+        userHashedEmail,
+        commentUser: comment.user.hashedEmail,
+        assetOwner: comment.asset.user.hashedEmail,
+      },
+      "User not authorized to delete comment",
+    );
+    const error = new Error("Forbidden");
+    error.status = 403;
+    throw error;
+  }
+
+  // Delete the comment
+  await prisma.comment.delete({
+    where: { id: parseInt(commentId, 10) },
+  });
+
+  return true;
+}
+
 module.exports = {
   schema,
   create,
+  deleteById,
 };
