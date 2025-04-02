@@ -1,3 +1,18 @@
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "5.18.1"
+}
+
+module "security-group" {
+  source  = "terraform-aws-modules/security-group/aws"
+  version = "5.3.0"
+}
+
+module "key-pair" {
+  source  = "terraform-aws-modules/key-pair/aws"
+  version = "2.0.3"
+}
+
 module "ec2-instance" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "5.7.1"
