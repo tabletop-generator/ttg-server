@@ -1,86 +1,35 @@
-POST http://localhost:8080/v1/assets
-[BasicAuth]
-user1@email.com:password1
-{
-  "name": "Asset for Comments Delete Test",
-  "type": "character",
-  "visibility": "public",
-  "data": {
-    "race": "half_orc",
-    "class": "barbarian",
-    "gender": "male",
-    "alignment": "chaotic_neutral",
-    "appearance": "Scarred and muscular with tusks protruding from lower jaw",
-    "personality": "Aggressive but loyal to friends",
-    "background": "Raised by a warrior tribe in the mountains",
-    "abilities": "Rage, great weapon fighting, intimidation",
-    "equipment": "Great axe, hide armor, tribal totems",
-    "motivation": "Prove strength and worth to tribe"
-  }
-}
-
-HTTP 201
-[Captures]
-asset_uuid: jsonpath "$.asset.uuid"
-
 # Add a comment from user1 (same as asset owner)
 POST http://localhost:8080/v1/comments
 [BasicAuth]
 user1@email.com:password1
 {
-  "assetId": "{{asset_uuid}}",
+  "assetId": "{{user1_public_asset_uuid}}",
   "body": "Comment from user1 (asset owner)"
 }
 
 HTTP 201
 [Captures]
-comment_id_user1: jsonpath "$.comment.id"
+user1_comment_id: jsonpath "$.comment.id"
 
 # Add another comment from user2
 POST http://localhost:8080/v1/comments
 [BasicAuth]
 user2@email.com:password2
 {
-  "assetId": "{{asset_uuid}}",
+  "assetId": "{{user1_public_asset_uuid}}",
   "body": "Comment from user2"
 }
 
 HTTP 201
 [Captures]
-comment_id_user2: jsonpath "$.comment.id"
-
-# Create a second asset from user2
-POST http://localhost:8080/v1/assets
-[BasicAuth]
-user2@email.com:password2
-{
-  "name": "User2's Asset for Comments Delete Test",
-  "type": "character",
-  "visibility": "public",
-  "data": {
-    "race": "gnome",
-    "class": "rogue",
-    "gender": "female",
-    "alignment": "chaotic_good",
-    "appearance": "Small with bright red hair and mischievous eyes",
-    "personality": "Curious and always tinkering with gadgets",
-    "background": "Street urchin turned master thief",
-    "abilities": "Sneak attack, lockpicking, trapfinding",
-    "equipment": "Daggers, leather armor, thieves' tools, smoke bombs",
-    "motivation": "Collect rare and interesting trinkets"
-  }
-}
-
-HTTP 201
-[Captures]
-asset_uuid_user2: jsonpath "$.asset.uuid"
+user2_comment_id: jsonpath "$.comment.id"
 
 # Add a comment from user1 on user2's asset
 POST http://localhost:8080/v1/comments
 [BasicAuth]
 user1@email.com:password1
 {
-  "assetId": "{{asset_uuid_user2}}",
+  "assetId": "{{user2_public_asset_uuid}}",
   "body": "Comment from user1 on user2's asset"
 }
 
@@ -89,7 +38,7 @@ HTTP 201
 comment_id_user1_on_user2_asset: jsonpath "$.comment.id"
 
 # 1. Delete a comment as comment author
-DELETE http://localhost:8080/v1/comments/{{comment_id_user1}}
+DELETE http://localhost:8080/v1/comments/{{user1_comment_id}}
 [BasicAuth]
 user1@email.com:password1
 
@@ -99,13 +48,13 @@ jsonpath "$.status" == "ok"
 jsonpath "$.message" == "Comment deleted successfully"
 
 # Verify comment is gone
-GET http://localhost:8080/v1/comments?assetId={{asset_uuid}}
+GET http://localhost:8080/v1/comments?assetId={{user1_public_asset_uuid}}
 HTTP 200
 [Asserts]
-jsonpath "$.comments[*].id" not includes {{comment_id_user1}}
+jsonpath "$.comments[*].id" not includes {{user1_comment_id}}
 
 # 2. Delete a comment as asset owner (even if not comment author)
-DELETE http://localhost:8080/v1/comments/{{comment_id_user2}}
+DELETE http://localhost:8080/v1/comments/{{user2_comment_id}}
 [BasicAuth]
 user1@email.com:password1
 
@@ -115,7 +64,7 @@ jsonpath "$.status" == "ok"
 jsonpath "$.message" == "Comment deleted successfully"
 
 # Verify comment is gone
-GET http://localhost:8080/v1/comments?assetId={{asset_uuid}}
+GET http://localhost:8080/v1/comments?assetId={{user1_public_asset_uuid}}
 HTTP 200
 [Asserts]
 jsonpath "$.comments" isEmpty
@@ -162,7 +111,7 @@ jsonpath "$.status" == "ok"
 jsonpath "$.message" == "Comment deleted successfully"
 
 # Verify comment is gone
-GET http://localhost:8080/v1/comments?assetId={{asset_uuid_user2}}
+GET http://localhost:8080/v1/comments?assetId={{user2_public_asset_uuid}}
 HTTP 200
 [Asserts]
 jsonpath "$.comments" isEmpty 
