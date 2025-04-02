@@ -1,37 +1,16 @@
-POST http://localhost:8080/v1/assets
+# This test is not idempotent because re-creating assets requires an external API.
+# We cannot use external APIs during testing because they may fail.
+
+DELETE http://localhost:8080/v1/assets/6b530b4c-5b56-4a7d-8085-2ac070920176
 [BasicAuth]
 user1@email.com:password1
 
-{
-  "name": "guy",
-  "type": "character",
-  "visibility": "private",
-  "data": {
-    "race": "tiefling",
-    "class": "warlock",
-    "gender": "male",
-    "alignment": "neutral_evil",
-    "appearance": "Ash-gray skin, glowing red eyes",
-    "personality": "Manipulative and cunning",
-    "background": "Born to a cursed bloodline",
-    "abilities": "Eldritch blast",
-    "equipment": "Obsidian staff",
-    "motivation": "Seek power"
-  }
-}
-HTTP 201
-[Captures]
-asset_uuid: jsonpath "$.asset.uuid"
-
-DELETE http://localhost:8080/v1/assets/{{asset_uuid}}
-[BasicAuth]
-user1@email.com:password1
 HTTP 200
 [Asserts]
 jsonpath "$.status" == "ok"
 jsonpath "$.message" == "Asset deleted successfully"
 
-GET http://localhost:8080/v1/assets/{{asset_uuid}}
+GET http://localhost:8080/v1/assets/6b530b4c-5b56-4a7d-8085-2ac070920176
 [BasicAuth]
 user1@email.com:password1
 
@@ -41,9 +20,10 @@ jsonpath "$.status" == "error"
 jsonpath "$.error.code" == 404
 jsonpath "$.error.message" == "Asset not found"
 
-DELETE http://localhost:8080/v1/assets/122e4444-e70b-15d3-a456-426614174000
+DELETE http://localhost:8080/v1/assets/6b530b4c-5b56-4a7d-8085-2ac070920176
 [BasicAuth]
 user1@email.com:password1
+
 HTTP 404
 [Asserts]
 jsonpath "$.status" == "error"
@@ -53,46 +33,24 @@ jsonpath "$.error.message" == "Asset not found"
 DELETE http://localhost:8080/v1/assets/not-a-uuid
 [BasicAuth]
 user1@email.com:password1
+
 HTTP 400
 [Asserts]
 jsonpath "$.status" == "error"
 jsonpath "$.error.code" == 400
 
-DELETE http://localhost:8080/v1/assets/{{asset_uuid}}
+DELETE http://localhost:8080/v1/assets/6b530b4c-5b56-4a7d-8085-2ac070920175
+
 HTTP 401
 [Asserts]
 jsonpath "$.status" == "error"
 jsonpath "$.error.code" == 401
 jsonpath "$.error.message" == "Unauthorized"
 
-POST http://localhost:8080/v1/assets
+DELETE http://localhost:8080/v1/assets/6b530b4c-5b56-4a7d-8085-2ac070920175
 [BasicAuth]
 user1@email.com:password1
 
-{
-  "name": "guy",
-  "type": "character",
-  "visibility": "private",
-  "data": {
-    "race": "tiefling",
-    "class": "warlock",
-    "gender": "male",
-    "alignment": "neutral_evil",
-    "appearance": "Ash-gray skin, glowing red eyes",
-    "personality": "Manipulative and cunning",
-    "background": "Born to a cursed bloodline",
-    "abilities": "Eldritch blast",
-    "equipment": "Obsidian staff",
-    "motivation": "Seek power"
-  }
-}
-HTTP 201
-[Captures]
-asset_uuid: jsonpath "$.asset.uuid"
-
-DELETE http://localhost:8080/v1/assets/{{asset_uuid}}
-[BasicAuth]
-user2@email.com:password2
 HTTP 403
 [Asserts]
 jsonpath "$.status" == "error"
