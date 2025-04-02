@@ -122,7 +122,7 @@ jobs:
           done
           echo "All services are healthy!"
 
-      - name: Run flaky Hurl tests
+      - name: Run Hurl tests
         # Print the logs if the tests fail
         run: npm run test:integration:ci || (docker compose -f compose.integration.yaml logs; exit 1)
 
@@ -181,7 +181,7 @@ jobs:
           done
           echo "All services are healthy!"
 
-      - name: Run Hurl tests
+      - name: Run flaky Hurl tests
         # Print the logs if the tests fail
         run: npm run test:integration:flaky || (docker compose -f compose.integration.yaml logs; exit 1)
 
