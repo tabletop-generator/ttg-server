@@ -67,7 +67,7 @@ jsonpath "$.message" == "Comment deleted successfully"
 GET http://localhost:8080/v1/comments?assetId={{user1_public_asset_uuid}}
 HTTP 200
 [Asserts]
-jsonpath "$.comments" "$.comments[*].id" not includes {{user2_comment_id}}
+jsonpath "$.comments[*].id" not includes {{user2_comment_id}}
 
 # 3. Try to delete a comment when not the asset owner or comment author
 DELETE http://localhost:8080/v1/comments/{{comment_id_user1_on_user2_asset}}
@@ -114,4 +114,4 @@ jsonpath "$.message" == "Comment deleted successfully"
 GET http://localhost:8080/v1/comments?assetId={{user2_public_asset_uuid}}
 HTTP 200
 [Asserts]
-"$.comments[*].id" not includes {{comment_id_user1_on_user2_asset}}
+jsonpath "$.comments[*].id" not includes {{comment_id_user1_on_user2_asset}}
