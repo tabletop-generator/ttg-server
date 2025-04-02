@@ -11,15 +11,15 @@ services:
       mc:
         condition: service_completed_successfully
     ports:
-      - 8080:8080
+      - "8080:8080"
     environment:
-      GROQ_API_KEY: "${GROQ_API_KEY}"
-      CF_ACCOUNT_ID: "${CF_ACCOUNT_ID}"
-      CF_TOKEN: "${CF_TOKEN}"
-      CF_AIG_TOKEN: "${CF_AIG_TOKEN}"
-      CF_AIG_NAME: "${CF_AIG_NAME}"
-      GROQ_MODEL: "${GROQ_MODEL}"
-      CF_TEXT_TO_IMAGE_MODEL: "${CF_TEXT_TO_IMAGE_MODEL}"
+      GROQ_API_KEY: ${GROQ_API_KEY}
+      CF_ACCOUNT_ID: ${CF_ACCOUNT_ID}
+      CF_TOKEN: ${CF_TOKEN}
+      CF_AIG_TOKEN: ${CF_AIG_TOKEN}
+      CF_AIG_NAME: ${CF_AIG_NAME}
+      GROQ_MODEL: ${GROQ_MODEL}
+      CF_TEXT_TO_IMAGE_MODEL: ${CF_TEXT_TO_IMAGE_MODEL}
     env_file:
       - .env.compose
     init: true
@@ -28,11 +28,13 @@ services:
     container_name: ttg-integration-postgres
     image: postgres:17.2-alpine3.21
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
       - ./docker/postgres/initdb:/docker-entrypoint-initdb.d
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test:
+        - CMD-SHELL
+        - pg_isready -U postgres
       interval: 10s
       timeout: 5s
       retries: 5
@@ -48,7 +50,11 @@ services:
       # The minio API endpoint
       - "9000:9000"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      test:
+        - CMD
+        - curl
+        - "-f"
+        - http://localhost:9000/minio/health/live
       interval: 10s
       timeout: 5s
       retries: 5
@@ -63,12 +69,10 @@ services:
       minio:
         condition: service_healthy
       # Create bucket if missing
-    entrypoint: >
-      /bin/sh -c "
-      until (mc alias set local http://minio:9000 $$MINIO_ROOT_USER $$MINIO_ROOT_PASSWORD && mc mb --region us-east-2 --ignore-existing local/ttg); do
+    entrypoint: |
+      /bin/sh -c " until (mc alias set local http://minio:9000 $$MINIO_ROOT_USER $$MINIO_ROOT_PASSWORD && mc mb --region us-east-2 --ignore-existing local/ttg); do
         echo 'Waiting for MinIO to be ready...';
         sleep 5;
-      done;
-      "
+      done; "
     env_file:
       - .env.compose
