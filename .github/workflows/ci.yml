@@ -124,7 +124,66 @@ jobs:
 
       - name: Run Hurl tests
         # Print the logs if the tests fail
-        run: npm run test:integration || (docker compose -f compose.integration.yaml logs; exit 1)
+        run: npm run test:integration:ci || (docker compose -f compose.integration.yaml logs; exit 1)
+
+  flaky-integration-tests:
+    name: Integration Tests (Flaky)
+    runs-on: ubuntu-latest
+    needs: [lint, unit-tests, dockerfile-lint]
+    env:
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      GROQ_MODEL: ${{ vars.GROQ_MODEL }}
+      CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+      CF_TOKEN: ${{ secrets.CF_TOKEN }}
+      CF_AIG_TOKEN: ${{ secrets.CF_AIG_TOKEN }}
+      CF_AIG_NAME: ${{ secrets.CF_AIG_NAME }}
+      CF_TEXT_TO_IMAGE_MODEL: ${{ vars.CF_TEXT_TO_IMAGE_MODEL }}
+
+    strategy:
+      matrix:
+        node-version: [22.13]
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      - name: Install Node.js dependencies
+        # NOTE: we need to install dev dependencies too vs. production only for hurl
+        run: npm install
+
+      - name: Start Docker Compose services
+        run: docker compose -f compose.integration.yaml up -d
+
+      - name: Wait for services to be healthy
+        run: |
+          services=(ttg-integration-postgres ttg-integration-minio ttg-integration-server)
+          timeout=300 # Timeout in seconds (5 minutes)
+          for service in "${services[@]}"; do
+            echo "Waiting for $service to be healthy..."
+            elapsed=0
+            until [ "`docker inspect -f {{.State.Health.Status}} $service`" == "healthy" ]; do
+              if [ $elapsed -ge $timeout ]; then
+                echo "Timeout reached for service $service"
+                echo "Printing Docker Compose logs..."
+                docker compose -f compose.integration.yaml logs
+                exit 1
+              fi
+              sleep 5
+              elapsed=$((elapsed + 5))
+            done
+            echo "$service is healthy!"
+          done
+          echo "All services are healthy!"
+
+      - name: Run flaky Hurl tests
+        # Print the logs if the tests fail
+        run: npm run test:integration:flaky || (docker compose -f compose.integration.yaml logs; exit 1)
 
   docker-build:
     name: Docker Build
