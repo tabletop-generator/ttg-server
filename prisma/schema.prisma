@@ -27,6 +27,7 @@ model Asset {
   location       Location?
   map            Map?
   quest          Quest?
+  UserAssetLike  UserAssetLike[]
   collections    Collection[]    @relation("AssetToCollection")
 }
 
@@ -70,16 +71,17 @@ model Comment {
 }
 
 model User {
-  id                      Int          @id @default(autoincrement())
-  hashedEmail             String       @unique @map("hashed_email")
-  joinDate                DateTime     @default(now()) @map("join_date") @db.Timestamp(6)
-  displayName             String?      @map("display_name")
-  profileBio              String?      @map("profile_bio")
-  profilePictureUrl       String?      @map("profile_picture_url")
-  profilePictureUrlExpiry DateTime?    @map("profile_picture_url_expiry") @db.Timestamp(6)
+  id                      Int             @id @default(autoincrement())
+  hashedEmail             String          @unique @map("hashed_email")
+  joinDate                DateTime        @default(now()) @map("join_date") @db.Timestamp(6)
+  displayName             String?         @map("display_name")
+  profileBio              String?         @map("profile_bio")
+  profilePictureUrl       String?         @map("profile_picture_url")
+  profilePictureUrlExpiry DateTime?       @map("profile_picture_url_expiry") @db.Timestamp(6)
   assets                  Asset[]
   collections             Collection[]
   comments                Comment[]
+  UserAssetLike           UserAssetLike[]
 }
 
 model Location {
@@ -121,6 +123,17 @@ model Quest {
   hasDilemmas        Boolean @map("has_dilemmas")
   customDescription  String? @map("custom_description")
   asset              Asset   @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model UserAssetLike {
+  user_id  Int
+  asset_id Int
+  liked_at DateTime @default(now()) @db.Timestamp(6)
+  Asset    Asset    @relation(fields: [asset_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  User     User     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([user_id, asset_id])
+  @@index([user_id, asset_id], map: "idx_user_asset_like")
 }
 
 enum enum_asset_type {

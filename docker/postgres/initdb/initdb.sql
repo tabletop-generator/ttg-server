@@ -36,6 +36,17 @@ CREATE TABLE "Asset" (
     "image_url_expiry" TIMESTAMP NOT NULL
 );
 
+-- Create table for tracking likes (many-to-many relationship)
+CREATE TABLE "UserAssetLike" (
+    "user_id" INT NOT NULL REFERENCES "User"("id") ON DELETE CASCADE,
+    "asset_id" INT NOT NULL REFERENCES "Asset"("id") ON DELETE CASCADE,
+    "liked_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY ("user_id", "asset_id")
+);
+
+-- Create index for faster queries
+CREATE INDEX "idx_user_asset_like" ON "UserAssetLike" ("user_id", "asset_id");
+
 -- Create Character table
 CREATE TABLE "Character" (
     "asset_id" INT PRIMARY KEY REFERENCES "Asset"("id") ON DELETE CASCADE,
@@ -129,11 +140,33 @@ INSERT INTO "User" (hashed_email) VALUES ('11d4c22e42c8f61feaba154683dea407b101c
 INSERT INTO "User" (hashed_email) VALUES ('b0194b2e11548b547ddaff0e105b22347f94b625a7b964d7db72e1658c461a7f');
 
 -- Insert testing assets
-INSERT INTO "Asset" (uuid, creator_id, type, visibility, name, image_url, image_url_expiry) VALUES ('6ef5db05-9a0f-4556-b7b9-bf35744d5174', '1', 'character', 'private', 'John', 'http://localhost:9000/ttg/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a/eaf3741c-eb64-44bb-b4f6-3b52e211ef27?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=minio-username%2F20250314%2Fna-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250314T033541Z&X-Amz-Expires=604800&X-Amz-Signature=974b561aeb8d0a81be8a82bb5e6647f93f005309040219fe2794e6bcfcb1d325&X-Amz-SignedHeaders=host&x-id=GetObject', '2025-03-21T03:35:41.945Z');
-INSERT INTO "Character" (asset_id, race, class, gender, alignment) VALUES ('1', 'human', 'monk', 'male', 'true_neutral');
+-- user1, private
+INSERT INTO "Asset" (uuid, creator_id, type, visibility, name, image_url, image_url_expiry) VALUES ('6ef5db05-9a0f-4556-b7b9-bf35744d5174', '1', 'character', 'private', 'User 1 Private Asset', 'http://localhost:9000/ttg/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a/eaf3741c-eb64-44bb-b4f6-3b52e211ef27?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=minio-username%2F20250314%2Fna-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250314T033541Z&X-Amz-Expires=604800&X-Amz-Signature=974b561aeb8d0a81be8a82bb5e6647f93f005309040219fe2794e6bcfcb1d325&X-Amz-SignedHeaders=host&x-id=GetObject', '2025-03-21T03:35:41.945Z');
+INSERT INTO "Character" (asset_id, race, class, gender, alignment) VALUES ('1', 'elf', 'wizard', 'female', 'neutral_good');
 
-INSERT INTO "Asset" (uuid, creator_id, type, visibility, name, image_url, image_url_expiry) VALUES ('6b530b4c-5b56-4a7d-8085-2ac070920175', '2', 'character', 'public', 'Aldrich', 'http://localhost:9000/ttg/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a/e4062429-9128-4d7b-9cb1-3e954338c236?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=minio-username%2F20250314%2Fna-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250314T033541Z&X-Amz-Expires=604800&X-Amz-Signature=ba7de972bcef0f4af825ca7ddb993b238af76e5c7085402b2e83ead895394650&X-Amz-SignedHeaders=host&x-id=GetObject', '2025-03-21T03:35:41.989Z');
-INSERT INTO "Character" (asset_id, race, class, gender, alignment) VALUES ('2', 'drow', 'cleric', 'non_binary', 'chaotic_good');
+-- user2, public
+INSERT INTO "Asset" (uuid, creator_id, type, visibility, name, image_url, image_url_expiry) VALUES ('6b530b4c-5b56-4a7d-8085-2ac070920175', '2', 'quest', 'public', 'User 2 Public Asset', 'http://localhost:9000/ttg/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a/e4062429-9128-4d7b-9cb1-3e954338c236?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=minio-username%2F20250314%2Fna-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250314T033541Z&X-Amz-Expires=604800&X-Amz-Signature=ba7de972bcef0f4af825ca7ddb993b238af76e5c7085402b2e83ead895394650&X-Amz-SignedHeaders=host&x-id=GetObject', '2025-03-21T03:35:41.989Z');
+INSERT INTO "Quest" (asset_id, type, has_combat, has_puzzles, has_skill_challenges, has_dilemmas) VALUES ('2', 'rescue', true, true, false, true);
+
+-- user1, public, gets deleted in asset-deleteById.hurl
+INSERT INTO "Asset" (uuid, creator_id, type, visibility, name, image_url, image_url_expiry) VALUES ('6b530b4c-5b56-4a7d-8085-2ac070920176', '1', 'character', 'public', 'Asset for testing deletion', 'http://localhost:9000/ttg/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a/e4062429-9128-4d7b-9cb1-3e954338c236?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=minio-username%2F20250314%2Fna-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250314T033541Z&X-Amz-Expires=604800&X-Amz-Signature=ba7de972bcef0f4af825ca7ddb993b238af76e5c7085402b2e83ead895394650&X-Amz-SignedHeaders=host&x-id=GetObject', '2025-03-21T03:35:41.989Z');
+INSERT INTO "Character" (asset_id, race, class, gender, alignment) VALUES ('3', 'drow', 'cleric', 'non_binary', 'chaotic_good');
+
+-- user1, public
+INSERT INTO "Asset" (uuid, creator_id, type, visibility, name, image_url, image_url_expiry) VALUES ('6b530b4c-5b56-4a7d-8085-2ac070920177', '1', 'character', 'public', 'User 1 Public Asset', 'http://localhost:9000/ttg/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a/e4062429-9128-4d7b-9cb1-3e954338c236?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=minio-username%2F20250314%2Fna-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250314T033541Z&X-Amz-Expires=604800&X-Amz-Signature=ba7de972bcef0f4af825ca7ddb993b238af76e5c7085402b2e83ead895394650&X-Amz-SignedHeaders=host&x-id=GetObject', '2025-03-21T03:35:41.989Z');
+INSERT INTO "Character" (asset_id, race, class, gender, alignment) VALUES ('4', 'human', 'fighter', 'male', 'lawful_good');
+
+-- user1, unlisted
+INSERT INTO "Asset" (uuid, creator_id, type, visibility, name, image_url, image_url_expiry) VALUES ('6b530b4c-5b56-4a7d-8085-2ac070920178', '1', 'map', 'unlisted', 'User 1 Unlisted Asset', 'http://localhost:9000/ttg/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a/e4062429-9128-4d7b-9cb1-3e954338c236?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=minio-username%2F20250314%2Fna-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250314T033541Z&X-Amz-Expires=604800&X-Amz-Signature=ba7de972bcef0f4af825ca7ddb993b238af76e5c7085402b2e83ead895394650&X-Amz-SignedHeaders=host&x-id=GetObject', '2025-03-21T03:35:41.989Z');
+INSERT INTO "Map" (asset_id, type, scale) VALUES ('5', 'dungeon', 'large');
+
+-- user2, private
+INSERT INTO "Asset" (uuid, creator_id, type, visibility, name, image_url, image_url_expiry) VALUES ('6b530b4c-5b56-4a7d-8085-2ac070920179', '2', 'location', 'private', 'User 2 Private Asset', 'http://localhost:9000/ttg/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a/e4062429-9128-4d7b-9cb1-3e954338c236?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=minio-username%2F20250314%2Fna-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250314T033541Z&X-Amz-Expires=604800&X-Amz-Signature=ba7de972bcef0f4af825ca7ddb993b238af76e5c7085402b2e83ead895394650&X-Amz-SignedHeaders=host&x-id=GetObject', '2025-03-21T03:35:41.989Z');
+INSERT INTO "Location" (asset_id, type, terrain, climate) VALUES ('6', 'castle', 'mountains', 'cold');
+
+-- user1, public, gets updated in asset-patchbyid.hurl
+INSERT INTO "Asset" (uuid, creator_id, type, visibility, name, image_url, image_url_expiry) VALUES ('6b530b4c-5b56-4a7d-8085-2ac070920180', '1', 'character', 'public', 'Asset for testing updating', 'http://localhost:9000/ttg/11d4c22e42c8f61feaba154683dea407b101cfd90987dda9e342843263ca420a/e4062429-9128-4d7b-9cb1-3e954338c236?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=minio-username%2F20250314%2Fna-east-2%2Fs3%2Faws4_request&X-Amz-Date=20250314T033541Z&X-Amz-Expires=604800&X-Amz-Signature=ba7de972bcef0f4af825ca7ddb993b238af76e5c7085402b2e83ead895394650&X-Amz-SignedHeaders=host&x-id=GetObject', '2025-03-21T03:35:41.989Z');
+INSERT INTO "Character" (asset_id, race, class, gender, alignment) VALUES ('7', 'drow', 'cleric', 'non_binary', 'chaotic_good');
 
 -- Insert testing collection
 INSERT INTO "Collection" (creator_id, visibility, name) VALUES ('1', 'public', 'collection1');

@@ -68,38 +68,18 @@ jsonpath "$.status" == "error"
 jsonpath "$.error.code" == 401
 jsonpath "$.error.message" == "Unauthorized"
 
-# 5. Create a collection with assets (first create an asset to use)
-POST http://localhost:8080/v1/assets
-[BasicAuth]
-user1@email.com:password1
-{
-  "name": "Collection Test Character",
-  "type": "character",
-  "visibility": "public",
-  "data": {
-    "race": "human",
-    "class": "bard",
-    "gender": "female",
-    "alignment": "chaotic_good"
-  }
-}
-
-HTTP 201
-[Captures]
-asset_uuid: jsonpath "$.asset.uuid"
-
-# Now create a collection with this asset
+# Now create a collection with an asset
 POST http://localhost:8080/v1/collections
 [BasicAuth]
 user1@email.com:password1
 {
   "name": "Collection With Assets",
   "visibility": "public",
-  "assets": ["{{asset_uuid}}"]
+  "assets": ["{{user1_public_asset_uuid}}"]
 }
 
 HTTP 201
 [Asserts]
 jsonpath "$.status" == "ok"
 jsonpath "$.collection.assets" count == 1
-jsonpath "$.collection.assets[0]" == "{{asset_uuid}}" 
+jsonpath "$.collection.assets[0]" == "{{user1_public_asset_uuid}}" 
