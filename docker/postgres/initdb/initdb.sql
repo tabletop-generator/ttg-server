@@ -36,6 +36,17 @@ CREATE TABLE "Asset" (
     "image_url_expiry" TIMESTAMP NOT NULL
 );
 
+-- Create table for tracking likes (many-to-many relationship)
+CREATE TABLE "UserAssetLike" (
+    "user_id" INT NOT NULL REFERENCES "User"("id") ON DELETE CASCADE,
+    "asset_id" INT NOT NULL REFERENCES "Asset"("id") ON DELETE CASCADE,
+    "liked_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY ("user_id", "asset_id")
+);
+
+-- Create index for faster queries
+CREATE INDEX "idx_user_asset_like" ON "UserAssetLike" ("user_id", "asset_id");
+
 -- Create Character table
 CREATE TABLE "Character" (
     "asset_id" INT PRIMARY KEY REFERENCES "Asset"("id") ON DELETE CASCADE,
