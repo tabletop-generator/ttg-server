@@ -9,6 +9,7 @@ const patchSchema = z
     name: z.string().optional(),
     description: z.string().nullable().optional(),
     visibility: z.enum(["public", "private", "unlisted"]).optional(),
+    like: z.boolean().optional(),
   })
   .strict();
 
@@ -44,6 +45,20 @@ module.exports = async (req, res, next) => {
     return next({ status: 400, message: "invalid asset id" });
   }
 
+  let currentUser;
+  try {
+    currentUser = await prisma.user.findUnique({
+      where: { hashedEmail: req.user },
+      select: { id: true },
+    });
+  } catch (error) {
+    logger.error({ error }, "Error fetching user");
+    return next({ status: 500, message: "Internal server error" });
+  }
+  if (!currentUser) {
+    return next({ status: 404, message: "User not found" });
+  }
+
   // Find the asset and its creator
   let asset;
   try {
@@ -71,12 +86,58 @@ module.exports = async (req, res, next) => {
   // Log asset details only if found
   logger.debug({ asset }, "Asset found");
 
-  // Check if user owns the asset
+  // Process like/unlike toggle action
+  if (req.body.like !== undefined) {
+    try {
+      const existingLike = await prisma.userAssetLike.findUnique({
+        where: {
+          user_id_asset_id: {
+            user_id: currentUser.id,
+            asset_id: asset.id,
+          },
+        },
+      });
+
+      if (existingLike) {
+        await prisma.userAssetLike.delete({
+          where: {
+            user_id_asset_id: {
+              user_id: currentUser.id,
+              asset_id: asset.id,
+            },
+          },
+        });
+        asset.likes--;
+      } else {
+        await prisma.userAssetLike.create({
+          data: {
+            user_id: currentUser.id,
+            asset_id: asset.id,
+          },
+        });
+        asset.likes++;
+      }
+
+      // Update likes count in Asset table
+      const updatedAsset = await prisma.asset.update({
+        where: { id: asset.id },
+        data: { likes: asset.likes, updatedAt: new Date() },
+        select: { likes: true },
+      });
+
+      return res.status(200).json({ status: "ok", likes: updatedAsset.likes });
+    } catch (error) {
+      logger.error({ error }, "Error updating likes");
+      return next({ status: 500, message: "Internal server error" });
+    }
+  }
+
+  // Check if user owns the asset before updating asset details
   if (asset.user.hashedEmail !== req.user) {
     return next({ status: 403, message: "forbidden" });
   }
 
-  // Update the asset
+  // Update asset details (name, description, visibility)
   try {
     const updatedAsset = await prisma.asset.update({
       where: { id: asset.id },
