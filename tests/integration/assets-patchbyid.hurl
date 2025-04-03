@@ -140,3 +140,57 @@ jsonpath "$.status" == "ok"
 jsonpath "$.asset.name" == "Partial Update Name"  # Name should remain unchanged
 jsonpath "$.asset.visibility" == "unlisted"  # Visibility should remain unchanged
 jsonpath "$.asset.description" == "New description"
+
+# 8. Like an asset (increments likes count)
+PATCH http://localhost:8080/v1/assets/{{asset_uuid}}
+[BasicAuth]
+user1@email.com:password1
+{
+    "like": true
+}
+HTTP 200
+[Captures]
+likes_count: jsonpath "$.likes"  # Capture the like count
+[Asserts]
+jsonpath "$.status" == "ok"
+jsonpath "$.likes" > 0  # Ensure likes increase
+
+# 9. Unlike an asset (decrements likes count)
+PATCH http://localhost:8080/v1/assets/{{asset_uuid}}
+[BasicAuth]
+user1@email.com:password1
+{
+    "like": true
+}
+HTTP 200
+[Captures]
+likes_after_unlike: jsonpath "$.likes"  # Capture after unliking
+[Asserts]
+jsonpath "$.status" == "ok"
+jsonpath "$.likes" < {{likes_count}}  # Ensure likes decreased
+
+# 10. Like an already liked asset (should not double-like)
+PATCH http://localhost:8080/v1/assets/{{asset_uuid}}
+[BasicAuth]
+user1@email.com:password1
+{
+    "like": true
+}
+HTTP 200
+[Captures]
+likes_after_second_like: jsonpath "$.likes"
+[Asserts]
+jsonpath "$.status" == "ok"
+jsonpath "$.likes" == {{likes_count}}  # Should match first like count
+
+# 11. Unlike an already unliked asset (should not go below zero)
+PATCH http://localhost:8080/v1/assets/{{asset_uuid}}
+[BasicAuth]
+user1@email.com:password1
+{
+    "like": true
+}
+HTTP 200
+[Asserts]
+jsonpath "$.status" == "ok"
+jsonpath "$.likes" >= 0  # Ensure it doesn't go negative
