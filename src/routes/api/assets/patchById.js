@@ -107,7 +107,6 @@ module.exports = async (req, res, next) => {
             },
           },
         });
-        asset.likes--;
       } else {
         await prisma.userAssetLike.create({
           data: {
@@ -115,13 +114,16 @@ module.exports = async (req, res, next) => {
             asset_id: asset.id,
           },
         });
-        asset.likes++;
       }
 
       // Update likes count in Asset table
+      const newLikeCount = await prisma.userAssetLike.count({
+        where: { asset_id: asset.id },
+      });
+
       const updatedAsset = await prisma.asset.update({
         where: { id: asset.id },
-        data: { likes: asset.likes, updatedAt: new Date() },
+        data: { likes: newLikeCount, updatedAt: new Date() },
         select: { likes: true },
       });
 
