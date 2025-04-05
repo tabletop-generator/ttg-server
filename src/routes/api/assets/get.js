@@ -100,7 +100,7 @@ module.exports = async (req, res, next) => {
           select: {
             visibility: true,
             creatorId: true,
-            assets: { select: { uuid: true } },
+            assets: { select: { uuid: true, id: true } },
           },
         });
 
@@ -167,6 +167,7 @@ module.exports = async (req, res, next) => {
       where,
       select: {
         uuid: true,
+        id: true,
       },
       orderBy: {
         updatedAt: "desc",
@@ -176,10 +177,21 @@ module.exports = async (req, res, next) => {
     // Format response based on expand parameter
     if (expand === "true") {
       // Fetch full asset details for each UUID using asset.get
+      // attach like details from the UserAssetLike table.
       const detailedAssets = await Promise.all(
         assetResults.map(async (result) => {
           try {
-            return await asset.get(result.uuid);
+            let fullAsset = await asset.get(result.uuid);
+            const likes = await prisma.userAssetLike.findMany({
+              where: { asset_id: result.id },
+              include: { User: { select: { hashedEmail: true } } },
+            });
+
+            // Attach like info: count and list of hashed emails
+            fullAsset.likes = likes.length;
+            fullAsset.likedBy = likes.map((like) => like.User.hashedEmail);
+
+            return fullAsset;
           } catch (error) {
             logger.error(
               { error, uuid: result.uuid },
@@ -204,6 +216,7 @@ module.exports = async (req, res, next) => {
         updatedAt: asset.updatedAt,
         isFeatured: asset.isFeatured,
         likes: asset.likes,
+        likedBy: asset.likedBy,
         imageUrl: asset.imageUrl,
         user: {
           hashedEmail: asset.user.hashedEmail,
