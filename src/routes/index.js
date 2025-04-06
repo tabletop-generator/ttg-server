@@ -22,8 +22,10 @@ router.use(
   function (req, res, next) {
     // For GET /assets and GET /comments, make authentication optional but still process it if provided
     if (
-      (req.method === "GET" && req.path === "/assets") ||
-      (req.method === "GET" && req.path.startsWith("/comments"))
+        req.method === "GET" && (
+        req.path.startsWith("/assets") || 
+        req.path.startsWith("/comments")
+      )
     ) {
       // If Authorization header exists, try to authenticate
       if (req.headers.authorization) {
