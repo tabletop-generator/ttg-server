@@ -32,16 +32,7 @@ HTTP 400
 jsonpath "$.status" == "error"
 jsonpath "$.error.code" == 400
 
-
-# 4. Test unauthorized access
-GET http://localhost:8080/v1/assets/{{user1_private_asset_uuid}}
-HTTP 401
-[Asserts]
-jsonpath "$.status" == "error"
-jsonpath "$.error.code" == 401
-jsonpath "$.error.message" == "Unauthorized"
-
-# 5. Test forbidden access
+# 4. Test forbidden access
 GET http://localhost:8080/v1/assets/{{user1_private_asset_uuid}}
 [BasicAuth]
 user2@email.com:password2
@@ -50,3 +41,10 @@ HTTP 403
 jsonpath "$.status" == "error"
 jsonpath "$.error.code" == 403
 jsonpath "$.error.message" == "Forbidden"
+
+# 5. Get public asset without needing authentication
+GET http://localhost:8080/v1/assets/{{user1_public_asset_uuid}}
+HTTP 200
+[Asserts]
+jsonpath "$.status" == "ok"
+jsonpath "$.asset.uuid" == "{{user1_public_asset_uuid}}"
