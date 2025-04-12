@@ -17,34 +17,34 @@ You will need to provide the following environment variables:
 - [Cloudflare Workers AI API key](https://developers.cloudflare.com/workers-ai/)
 - [Cloudflare Workers AI text-to-image model name](https://developers.cloudflare.com/workers-ai/models/) (the default is `@cf/stabilityai/stable-diffusion-xl-base-1.0`)
 - [Cloudflare AI Gateway token](https://developers.cloudflare.com/ai-gateway/)
-- Cloudflare AI Gateway name
+- [Cloudflare AI Gateway name](https://developers.cloudflare.com/ai-gateway/)
 
 1. Clone the project to your workspace.
 
-    ```bash
-    git clone <url> ttg-server
-    cd ttg-server
-    ```
+   ```bash
+   git clone <url> ttg-server
+   cd ttg-server
+   ```
 
 2. Create a .env file with development presets. Then enter your own environment variables from the links above.
 
-    ```bash    
-    cp .env.example .env
-    ```
-    
+   ```bash
+   cp .env.example .env
+   ```
+
 3. Install and use the project's supported Node.js version.
 
-    With nvm:
+   With nvm:
 
-    ```bash
-    nvm install
-    ```
- 
-    With fnm:
- 
-    ```bash
-    fnm install
-    ```
+   ```bash
+   nvm install
+   ```
+
+   With fnm:
+
+   ```bash
+   fnm install
+   ```
 
 4. Install dependencies.
 
@@ -54,23 +54,23 @@ You will need to provide the following environment variables:
 
 5. Generate Prisma Client
 
-    ```bash    
-    npx prisma generate
-    ```
+   ```bash
+   npx prisma generate
+   ```
 
 6. Start backing services with Docker.
 
-    ```bash    
-    docker compose up # -d to detach i.e. run in background
-    ```
+   ```bash
+   docker compose up # -d to detach i.e. run in background
+   ```
 
-    This starts MinIO, creates the default bucket, and starts Postgres. Wait for the services to finish starting, it takes a while before they're ready.
+   This starts MinIO, creates the default bucket, and starts Postgres. Wait for the services to finish starting, it takes a while before they're ready.
 
 7. Start the server on `localhost:8080` (or whatever `PORT` environment variable was specified)
 
-    ```
-    npm run start
-    ```
+   ```bash
+   npm run start
+   ```
 
 ### Authorization
 
