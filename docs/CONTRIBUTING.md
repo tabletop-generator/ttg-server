@@ -72,6 +72,8 @@ You will need to provide the following environment variables:
    npm run start
    ```
 
+## Development
+
 ### Authorization
 
 #### HTTP Basic Auth Default Credentials
