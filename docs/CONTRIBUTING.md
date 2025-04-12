@@ -10,44 +10,67 @@
 
 ## Setup
 
-- `git clone <url>`: Clone the project to your workspace
-
-- `nvm install`: Install and use the correct version of Node.js for the project
-
-- `npm i`: Install required packages using npm
-
-- `npx prisma generate`: Generate the Prisma ORM Client
-
-- Enable these VSCode extensions in the project workspace:
-
-  - [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker)
-  - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-  - [Hurl](https://marketplace.visualstudio.com/items?itemName=JacobPfeifer.pfeifer-hurl)
-  - [npm Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense)
-  - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-  - [Prisma](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma)
-
-## Development
-
-The recommended setup for development is running the server on the host machine and running services in Docker Compose. You will need:
+You will need to provide the following environment variables:
 
 - [Groq API key](https://console.groq.com/)
 - [Groq text generation model name](https://console.groq.com/docs/models) (the default is`gemma2-9b-it`)
 - [Cloudflare Workers AI API key](https://developers.cloudflare.com/workers-ai/)
 - [Cloudflare Workers AI text-to-image model name](https://developers.cloudflare.com/workers-ai/models/) (the default is `@cf/stabilityai/stable-diffusion-xl-base-1.0`)
 - [Cloudflare AI Gateway token](https://developers.cloudflare.com/ai-gateway/)
-- Cloudflare AI Gateway name
+- [Cloudflare AI Gateway name](https://developers.cloudflare.com/ai-gateway/)
 
-```bash
-# Create a .env file with development presets
-cp .env.example .env
+1. Clone the project to your workspace.
 
-# Start MinIO, create the default bucket, and start Postgres
-docker compose up # -d to detach i.e. run in background
+   ```bash
+   git clone <url> ttg-server
+   cd ttg-server
+   ```
 
-# Run server and restart on changes to source code
-npm run dev
-```
+2. Create a .env file with development presets. Then enter your own environment variables from the links above.
+
+   ```bash
+   cp .env.example .env
+   ```
+
+3. Install and use the project's supported Node.js version.
+
+   With nvm:
+
+   ```bash
+   nvm install
+   ```
+
+   With fnm:
+
+   ```bash
+   fnm install
+   ```
+
+4. Install dependencies.
+
+   ```bash
+   npm install
+   ```
+
+5. Generate Prisma Client
+
+   ```bash
+   npx prisma generate
+   ```
+
+6. Start backing services with Docker.
+
+   ```bash
+   docker compose up # -d to detach i.e. run in background
+   ```
+
+   This starts MinIO, creates the default bucket, and starts Postgres. Wait for the services to finish starting, it takes a while before they're ready.
+
+7. Start the server on `localhost:8080` (or whatever `PORT` environment variable you specified)
+
+   ```bash
+   npm run start
+   ```
 
 ### Authorization
 
