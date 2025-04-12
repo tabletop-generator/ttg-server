@@ -66,7 +66,7 @@ You will need to provide the following environment variables:
 
    This starts MinIO, creates the default bucket, and starts Postgres. Wait for the services to finish starting, it takes a while before they're ready.
 
-7. Start the server on `localhost:8080` (or whatever `PORT` environment variable was specified)
+7. Start the server on `localhost:8080` (or whatever `PORT` environment variable you specified)
 
    ```bash
    npm run start
