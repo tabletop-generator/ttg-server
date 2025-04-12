@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- [NVM](https://github.com/nvm-sh/nvm)
+- [nvm](https://github.com/nvm-sh/nvm) or [fnm](https://github.com/Schniz/fnm)
 - [Node.js v22.x 'Jod' (LTS)](https://nodejs.org/en)
 - [Git](https://git-scm.com/)
 - [Docker](https://www.docker.com/)
