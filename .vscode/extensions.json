@@ -5,6 +5,8 @@
     "streetsidesoftware.code-spell-checker",
     "prisma.prisma",
     "jacobpfeifer.pfeifer-hurl",
-    "christian-kohler.npm-intellisense"
+    "christian-kohler.npm-intellisense",
+    "docker.docker",
+    "ms-azuretools.vscode-docker"
   ]
 }
