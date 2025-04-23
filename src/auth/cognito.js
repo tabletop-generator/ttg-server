@@ -51,9 +51,9 @@ module.exports.strategy = () =>
       const user = await jwtVerifier.verify(token);
       logger.debug({ user }, "Verified user token");
 
-      // Create a user, but only bother with their email. We could
+      // Create a user, but only bother with their sub. We could
       // also do a lookup in a database, but we don't need it.
-      done(null, user.email);
+      done(null, user.sub);
     } catch (err) {
       logger.error({ err, token }, "Could not verify user token");
       done(null, false);

@@ -27,7 +27,7 @@ module.exports.strategy = () =>
       }
 
       logger.debug({ user }, "Verified Supabase user token");
-      done(null, user.user.email);
+      done(null, user.user.id);
     } catch (err) {
       logger.error({ err, token }, "Could not verify Supabase token");
       done(err, false);
