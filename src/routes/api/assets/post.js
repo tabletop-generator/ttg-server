@@ -1,7 +1,7 @@
 const asset = require("../../../model/asset");
-const logger = require("../../../logger");
-const generate = require("../../../generator");
-const { createSuccessResponse } = require("../../../response");
+const logger = require("../../../lib/logger");
+const generate = require("../../../lib/generator");
+const { createSuccessResponse } = require("../../../lib/response");
 
 /**
  * Generate and save an asset

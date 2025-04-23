@@ -1,5 +1,5 @@
 const express = require("express");
-const auth = require("../../../auth");
+const auth = require("../../../lib/auth");
 
 /**
  * The entry-point for /collections endpoints

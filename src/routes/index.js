@@ -5,7 +5,7 @@ const express = require("express");
 const { version } = require("../../package.json");
 
 // Success response generator
-const { createSuccessResponse } = require("../response");
+const { createSuccessResponse } = require("../lib/response");
 
 // Create a router that we can use to mount our API
 const router = express.Router();

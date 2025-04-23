@@ -1,5 +1,5 @@
-const logger = require("../../../logger");
-const { createSuccessResponse } = require("../../../response");
+const logger = require("../../../lib/logger");
+const { createSuccessResponse } = require("../../../lib/response");
 
 /**
  * Get a list of collections filtered by the query

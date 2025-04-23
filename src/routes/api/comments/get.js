@@ -1,5 +1,5 @@
-const logger = require("../../../logger");
-const { createSuccessResponse } = require("../../../response");
+const logger = require("../../../lib/logger");
+const { createSuccessResponse } = require("../../../lib/response");
 
 /**
  * Get comments for an asset using the asset id in the query

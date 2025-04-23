@@ -5,9 +5,9 @@ const helmet = require("helmet");
 const passport = require("passport");
 const { pinoHttp } = require("pino-http");
 
-const auth = require("./auth");
-const logger = require("./logger");
-const { createErrorResponse } = require("./response");
+const auth = require("./lib/auth");
+const logger = require("./lib/logger");
+const { createErrorResponse } = require("./lib/response");
 
 const pino = pinoHttp({
   // Use our default logger instance, which is already configured

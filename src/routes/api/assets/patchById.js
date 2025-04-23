@@ -1,5 +1,5 @@
-const logger = require("../../../logger");
-const { createSuccessResponse } = require("../../../response");
+const logger = require("../../../lib/logger");
+const { createSuccessResponse } = require("../../../lib/response");
 
 /**
  * Update an asset by it's id
