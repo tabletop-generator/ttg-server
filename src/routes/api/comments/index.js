@@ -1,4 +1,5 @@
 const express = require("express");
+const auth = require("../../../auth");
 
 /**
  * The entry-point for /comments endpoints
@@ -6,12 +7,12 @@ const express = require("express");
 
 const router = express.Router();
 
-router.post(`/`, require("./post"));
+router.post(`/`, auth.authenticate(), require("./post"));
 
 router.get(`/`, require("./get"));
 
-router.patch(`/:commentId`, require("./patchById"));
+router.patch(`/:commentId`, auth.authenticate(), require("./patchById"));
 
-router.delete(`/:commentId`, require("./deleteById"));
+router.delete(`/:commentId`, auth.authenticate(), require("./deleteById"));
 
 module.exports = router;

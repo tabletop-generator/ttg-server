@@ -1,4 +1,5 @@
 const express = require("express");
+const auth = require("../../../auth");
 
 /**
  * The entry-point for /collections endpoints
@@ -6,14 +7,14 @@ const express = require("express");
 
 const router = express.Router();
 
-router.post(`/`, require("./post"));
+router.post(`/`, auth.authenticate(), require("./post"));
 
 router.get(`/`, require("./get"));
 
-router.get(`/:collectionId`, require("./get"));
+router.get(`/:collectionId`, require("./getById"));
 
-router.patch(`/:collectionId`, require("./patchById"));
+router.patch(`/:collectionId`, auth.authenticate(), require("./patchById"));
 
-router.delete(`/:collectionId`, require("./deleteById"));
+router.delete(`/:collectionId`, auth.authenticate(), require("./deleteById"));
 
 module.exports = router;
