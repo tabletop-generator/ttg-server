@@ -44,22 +44,6 @@ module.exports = async (req, res, next) => {
   const assetsToRemove =
     req.body?.assetsToRemove?.filter((id) => !assetsToAdd.includes(id)) || [];
 
-  // Get the current user's serial id
-  let currentUserId;
-  try {
-    ({ id: currentUserId } = await prisma.user.findUniqueOrThrow({
-      where: {
-        hashedEmail: req.user,
-      },
-    }));
-  } catch (error) {
-    logger.warn(
-      { error },
-      "error retrieving current user when updating collection",
-    );
-    return next({ status: 500, message: "Error updating collection" });
-  }
-
   // If adding assets, filter out other users' private assets
   let assetsToConnect = [];
   if (req.body?.assetsToAdd) {
@@ -71,7 +55,7 @@ module.exports = async (req, res, next) => {
           OR: [
             {
               creatorId: {
-                equals: currentUserId, // If the current user owns it, allow it
+                equals: req.user, // If the current user owns it, allow it
               },
             },
             {
@@ -100,7 +84,7 @@ module.exports = async (req, res, next) => {
   let updatedCollection;
   try {
     updatedCollection = await prisma.collection.update({
-      where: { id: collectionId, creatorId: currentUserId },
+      where: { id: collectionId, creatorId: req.user },
       data: {
         name: req.body?.name,
         description: req.body?.description,
@@ -145,18 +129,5 @@ module.exports = async (req, res, next) => {
     "updated collection: debug info",
   );
 
-  return res.status(200).json(
-    createSuccessResponse({
-      collection: {
-        id: updatedCollection.id,
-        ownerId: updatedCollection.user.hashedEmail,
-        createdAt: updatedCollection.createdAt,
-        updatedAt: updatedCollection.updatedAt,
-        name: updatedCollection.name,
-        description: updatedCollection.description,
-        visibility: updatedCollection.visibility,
-        assets: updatedCollection.assets.map((asset) => asset.uuid),
-      },
-    }),
-  );
+  return res.status(200).json(createSuccessResponse(updatedCollection));
 };
