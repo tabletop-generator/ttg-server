@@ -255,7 +255,7 @@ async function deleteAsset(assetUuid) {
   });
 }
 
-module.exports.save = saveAsset;
-module.exports.get = getAsset;
-module.exports.delete = deleteAsset;
-module.exports.schema = fullSchema;
+module.exports.saveAsset = saveAsset;
+module.exports.getAsset = getAsset;
+module.exports.deleteAsset = deleteAsset;
+module.exports.assetSchema = fullSchema;

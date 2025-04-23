@@ -62,4 +62,4 @@ async function getUser(hashedEmail) {
   return user;
 }
 
-module.exports.get = getUser;
+module.exports.getUser = getUser;
