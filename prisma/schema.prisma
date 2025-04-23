@@ -8,13 +8,11 @@ datasource db {
 }
 
 model Asset {
-  id             Int             @id @default(autoincrement())
-  uuid           String          @unique @db.Uuid
-  creatorId      Int             @map("creator_id")
+  id             String          @id @db.Uuid
+  creatorId      String          @map("creator_id") @db.Uuid
   createdAt      DateTime        @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt      DateTime        @default(now()) @map("updated_at") @db.Timestamp(6)
   isFeatured     Boolean         @default(false) @map("is_featured")
-  likes          Int             @default(0)
   type           enum_asset_type
   visibility     enum_visibility
   name           String
@@ -31,7 +29,7 @@ model Asset {
 }
 
 model Character {
-  assetId           Int                      @id @map("asset_id")
+  assetId           String                   @id @map("asset_id") @db.Uuid
   race              enum_character_race
   class             enum_character_class
   gender            enum_character_gender
@@ -47,8 +45,8 @@ model Character {
 }
 
 model Collection {
-  id          Int             @id @default(autoincrement())
-  creatorId   Int             @map("creator_id")
+  id          String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  creatorId   String          @map("creator_id") @db.Uuid
   createdAt   DateTime        @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt   DateTime        @default(now()) @map("updated_at") @db.Timestamp(6)
   visibility  enum_visibility
@@ -60,8 +58,8 @@ model Collection {
 
 model Comment {
   id        Int      @id @default(autoincrement())
-  assetId   Int      @map("asset_id")
-  authorId  Int      @map("author_id")
+  assetId   String   @map("asset_id") @db.Uuid
+  authorId  String   @map("author_id") @db.Uuid
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
   body      String
@@ -70,8 +68,8 @@ model Comment {
 }
 
 model User {
-  id                      Int          @id @default(autoincrement())
-  hashedEmail             String       @unique @map("hashed_email")
+  id                      String       @id @db.Uuid
+  email                   String?      @unique
   joinDate                DateTime     @default(now()) @map("join_date") @db.Timestamp(6)
   displayName             String?      @map("display_name")
   profileBio              String?      @map("profile_bio")
@@ -83,7 +81,7 @@ model User {
 }
 
 model Location {
-  assetId           Int     @id @map("asset_id")
+  assetId           String  @id @map("asset_id") @db.Uuid
   type              String
   terrain           String?
   climate           String?
@@ -97,7 +95,7 @@ model Location {
 }
 
 model Map {
-  assetId           Int     @id @map("asset_id")
+  assetId           String  @id @map("asset_id") @db.Uuid
   type              String
   scale             String?
   terrain           String?
@@ -107,7 +105,7 @@ model Map {
 }
 
 model Quest {
-  assetId            Int     @id @map("asset_id")
+  assetId            String  @id @map("asset_id") @db.Uuid
   type               String
   tone               String?
   location           String?
