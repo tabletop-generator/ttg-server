@@ -162,4 +162,3 @@ INSERT INTO "Collection" (id, creator_id, visibility, name) VALUES ('3ab918e9-11
 INSERT INTO "_AssetToCollection" ("A", "B") VALUES ('6ef5db05-9a0f-4556-b7b9-bf35744d5174', '3ab918e9-113b-4e3e-b31b-e47ea6941247');
 INSERT INTO "_AssetToCollection" ("A", "B") VALUES ('6b530b4c-5b56-4a7d-8085-2ac070920175', '3ab918e9-113b-4e3e-b31b-e47ea6941247');
 COMMIT;
-END;
