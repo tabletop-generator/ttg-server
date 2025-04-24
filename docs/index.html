@@ -580,6 +580,87 @@
       data-styled.g37[id="sc-dZEakj"] {
         content: "plAcM,";
       } /*!sc*/
+      .ccnFKG {
+        position: absolute;
+        pointer-events: none;
+        z-index: 1;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        right: 8px;
+        margin: auto;
+        text-align: center;
+      } /*!sc*/
+      .ccnFKG polyline {
+        color: white;
+      } /*!sc*/
+      data-styled.g38[id="sc-fpgwy"] {
+        content: "ccnFKG,";
+      } /*!sc*/
+      .lgqimd {
+        box-sizing: border-box;
+        min-width: 100px;
+        outline: none;
+        display: inline-block;
+        border-radius: 2px;
+        border: 1px solid rgba(38, 50, 56, 0.5);
+        vertical-align: bottom;
+        padding: 2px 0px 2px 6px;
+        position: relative;
+        width: auto;
+        background: white;
+        color: #263238;
+        font-family: Montserrat, sans-serif;
+        font-size: 0.929em;
+        line-height: 1.5em;
+        cursor: pointer;
+        transition:
+          border 0.25s ease,
+          color 0.25s ease,
+          box-shadow 0.25s ease;
+      } /*!sc*/
+      .lgqimd label {
+        box-sizing: border-box;
+        min-width: 100px;
+        outline: none;
+        display: inline-block;
+        font-family: Montserrat, sans-serif;
+        color: #333333;
+        vertical-align: bottom;
+        width: auto;
+        text-transform: none;
+        padding: 0 22px 0 4px;
+        font-size: 0.929em;
+        line-height: 1.5em;
+        font-family: inherit;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      } /*!sc*/
+      .lgqimd .dropdown-select {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        border: none;
+        appearance: none;
+        cursor: pointer;
+        color: #333333;
+        line-height: inherit;
+        font-family: inherit;
+      } /*!sc*/
+      .lgqimd:hover,
+      .lgqimd:focus-within {
+        border: 1px solid #32329f;
+        color: #32329f;
+        box-shadow: 0px 0px 0px 1px #32329f;
+      } /*!sc*/
+      data-styled.g39[id="sc-cNFqVt"] {
+        content: "lgqimd,";
+      } /*!sc*/
       .iKSlPA {
         margin-left: 10px;
         text-transform: none;
@@ -1173,6 +1254,32 @@
       } /*!sc*/
       data-styled.g53[id="sc-bmCFzp"] {
         content: "hMtTVz,";
+      } /*!sc*/
+      .eHJULL {
+        margin: 0 0 10px 0;
+        display: block;
+        background-color: rgba(38, 50, 56, 0.4);
+        border: none;
+        padding: 0.9em 1.6em 0.9em 0.9em;
+        box-shadow: none;
+      } /*!sc*/
+      .eHJULL label {
+        color: #ffffff;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        font-size: 1em;
+        text-transform: none;
+        border: none;
+      } /*!sc*/
+      .eHJULL:hover,
+      .eHJULL:focus-within {
+        border: none;
+        box-shadow: none;
+        background-color: rgba(38, 50, 56, 0.7);
+      } /*!sc*/
+      data-styled.g54[id="sc-fMGxnE"] {
+        content: "eHJULL,";
       } /*!sc*/
       .jPYqSz {
         margin-top: 15px;
@@ -2901,9 +3008,40 @@
                           </div>
                           <div>
                             <div
-                              html=""
+                              html="&lt;p&gt;The &lt;code&gt;data&lt;/code&gt; field contains asset-specific data. It varies depending on the &lt;code&gt;assetType&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;quot;character&amp;quot;&lt;/code&gt; → Character schema&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;quot;location&amp;quot;&lt;/code&gt; → Location schema&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;quot;quest&amp;quot;&lt;/code&gt; → Quest schema&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;quot;map&amp;quot;&lt;/code&gt; → Map schema&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;See examples for full structures.&lt;/p&gt;
+"
                               class="sc-dTUlgT sc-fhPBcz gAHTYt iCKFAv"
-                            ></div>
+                            >
+                              <p>
+                                The <code>data</code> field contains
+                                asset-specific data. It varies depending on the
+                                <code>assetType</code>:
+                              </p>
+                              <ul>
+                                <li>
+                                  <code>&quot;character&quot;</code> → Character
+                                  schema
+                                </li>
+                                <li>
+                                  <code>&quot;location&quot;</code> → Location
+                                  schema
+                                </li>
+                                <li>
+                                  <code>&quot;quest&quot;</code> → Quest schema
+                                </li>
+                                <li>
+                                  <code>&quot;map&quot;</code> → Map schema
+                                </li>
+                              </ul>
+                              <p>See examples for full structures.</p>
+                            </div>
                           </div>
                         </div>
                       </td>
@@ -3019,219 +3157,268 @@
                           <div class="sc-bpuAaX dmqyho">application/json</div>
                         </div>
                         <div class="sc-kmqAS jPYqSz">
-                          <div class="sc-eZbeWy ihHZyU">
-                            <div class="sc-lpbaSe elUMPN">
-                              <button>
-                                <div class="sc-fsjlER jYcDQz">Copy</div></button
-                              ><button>Expand all</button
-                              ><button>Collapse all</button>
+                          <div class="sc-bmCFzp hMtTVz">
+                            <span class="sc-fPyrPm ktNiSp">Example</span>
+                            <div class="sc-cNFqVt sc-fMGxnE lgqimd eHJULL">
+                              <svg
+                                class="sc-fpgwy ccnFKG"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              >
+                                <polyline
+                                  points="6 9 12 15 18 9"
+                                ></polyline></svg
+                              ><select class="dropdown-select">
+                                <option value="Character Asset" selected="">
+                                  Character Asset
+                                </option>
+                                <option value="Location Asset">
+                                  Location Asset
+                                </option>
+                                <option value="Quest Asset">Quest Asset</option>
+                                <option value="Map Asset">
+                                  Map Asset
+                                </option></select
+                              ><label>Character Asset</label>
                             </div>
-                            <div class="sc-dTUlgT gAHTYt sc-gDVcuj JZxXP">
-                              <div class="redoc-json">
-                                <code
-                                  ><button
-                                    class="collapser"
-                                    aria-label="collapse"
-                                  ></button
-                                  ><span class="token punctuation">{</span
-                                  ><span class="ellipsis"></span>
-                                  <ul class="obj collapsible">
-                                    <li>
-                                      <div class="hoverable">
-                                        <span class="property token string"
-                                          >"name"</span
-                                        >:
-                                        <span class="token string"
-                                          >&quot;string&quot;</span
-                                        ><span class="token punctuation"
-                                          >,</span
-                                        >
-                                      </div>
-                                    </li>
-                                    <li>
-                                      <div class="hoverable">
-                                        <span class="property token string"
-                                          >"assetType"</span
-                                        >:
-                                        <span class="token string"
-                                          >&quot;character&quot;</span
-                                        ><span class="token punctuation"
-                                          >,</span
-                                        >
-                                      </div>
-                                    </li>
-                                    <li>
-                                      <div class="hoverable">
-                                        <span class="property token string"
-                                          >"visibility"</span
-                                        >:
-                                        <span class="token string"
-                                          >&quot;public&quot;</span
-                                        ><span class="token punctuation"
-                                          >,</span
-                                        >
-                                      </div>
-                                    </li>
-                                    <li>
-                                      <div class="hoverable">
-                                        <span class="property token string"
-                                          >"data"</span
-                                        >:
-                                        <button
-                                          class="collapser"
-                                          aria-label="collapse"
-                                        ></button
-                                        ><span class="token punctuation">{</span
-                                        ><span class="ellipsis"></span>
-                                        <ul class="obj collapsible">
-                                          <li>
-                                            <div class="hoverable collapsed">
-                                              <span
-                                                class="property token string"
-                                                >"race"</span
-                                              >:
-                                              <span class="token string"
-                                                >&quot;human&quot;</span
-                                              ><span class="token punctuation"
-                                                >,</span
-                                              >
-                                            </div>
-                                          </li>
-                                          <li>
-                                            <div class="hoverable collapsed">
-                                              <span
-                                                class="property token string"
-                                                >"class"</span
-                                              >:
-                                              <span class="token string"
-                                                >&quot;barbarian&quot;</span
-                                              ><span class="token punctuation"
-                                                >,</span
-                                              >
-                                            </div>
-                                          </li>
-                                          <li>
-                                            <div class="hoverable collapsed">
-                                              <span
-                                                class="property token string"
-                                                >"gender"</span
-                                              >:
-                                              <span class="token string"
-                                                >&quot;male&quot;</span
-                                              ><span class="token punctuation"
-                                                >,</span
-                                              >
-                                            </div>
-                                          </li>
-                                          <li>
-                                            <div class="hoverable collapsed">
-                                              <span
-                                                class="property token string"
-                                                >"alignment"</span
-                                              >:
-                                              <span class="token string"
-                                                >&quot;lawful_good&quot;</span
-                                              ><span class="token punctuation"
-                                                >,</span
-                                              >
-                                            </div>
-                                          </li>
-                                          <li>
-                                            <div class="hoverable collapsed">
-                                              <span
-                                                class="property token string"
-                                                >"appearance"</span
-                                              >:
-                                              <span class="token string"
-                                                >&quot;string&quot;</span
-                                              ><span class="token punctuation"
-                                                >,</span
-                                              >
-                                            </div>
-                                          </li>
-                                          <li>
-                                            <div class="hoverable collapsed">
-                                              <span
-                                                class="property token string"
-                                                >"personality"</span
-                                              >:
-                                              <span class="token string"
-                                                >&quot;string&quot;</span
-                                              ><span class="token punctuation"
-                                                >,</span
-                                              >
-                                            </div>
-                                          </li>
-                                          <li>
-                                            <div class="hoverable collapsed">
-                                              <span
-                                                class="property token string"
-                                                >"background"</span
-                                              >:
-                                              <span class="token string"
-                                                >&quot;string&quot;</span
-                                              ><span class="token punctuation"
-                                                >,</span
-                                              >
-                                            </div>
-                                          </li>
-                                          <li>
-                                            <div class="hoverable collapsed">
-                                              <span
-                                                class="property token string"
-                                                >"abilities"</span
-                                              >:
-                                              <span class="token string"
-                                                >&quot;string&quot;</span
-                                              ><span class="token punctuation"
-                                                >,</span
-                                              >
-                                            </div>
-                                          </li>
-                                          <li>
-                                            <div class="hoverable collapsed">
-                                              <span
-                                                class="property token string"
-                                                >"equipment"</span
-                                              >:
-                                              <span class="token string"
-                                                >&quot;string&quot;</span
-                                              ><span class="token punctuation"
-                                                >,</span
-                                              >
-                                            </div>
-                                          </li>
-                                          <li>
-                                            <div class="hoverable collapsed">
-                                              <span
-                                                class="property token string"
-                                                >"motivation"</span
-                                              >:
-                                              <span class="token string"
-                                                >&quot;string&quot;</span
-                                              ><span class="token punctuation"
-                                                >,</span
-                                              >
-                                            </div>
-                                          </li>
-                                          <li>
-                                            <div class="hoverable collapsed">
-                                              <span
-                                                class="property token string"
-                                                >"notes"</span
-                                              >:
-                                              <span class="token string"
-                                                >&quot;string&quot;</span
-                                              >
-                                            </div>
-                                          </li>
-                                        </ul>
-                                        <span class="token punctuation">}</span>
-                                      </div>
-                                    </li>
-                                  </ul>
-                                  <span class="token punctuation">}</span></code
-                                >
+                          </div>
+                          <div>
+                            <div class="sc-eZbeWy ihHZyU">
+                              <div class="sc-lpbaSe elUMPN">
+                                <button>
+                                  <div class="sc-fsjlER jYcDQz">
+                                    Copy
+                                  </div></button
+                                ><button>Expand all</button
+                                ><button>Collapse all</button>
+                              </div>
+                              <div class="sc-dTUlgT gAHTYt sc-gDVcuj JZxXP">
+                                <div class="redoc-json">
+                                  <code
+                                    ><button
+                                      class="collapser"
+                                      aria-label="collapse"
+                                    ></button
+                                    ><span class="token punctuation">{</span
+                                    ><span class="ellipsis"></span>
+                                    <ul class="obj collapsible">
+                                      <li>
+                                        <div class="hoverable">
+                                          <span class="property token string"
+                                            >"assetType"</span
+                                          >:
+                                          <span class="token string"
+                                            >&quot;character&quot;</span
+                                          ><span class="token punctuation"
+                                            >,</span
+                                          >
+                                        </div>
+                                      </li>
+                                      <li>
+                                        <div class="hoverable">
+                                          <span class="property token string"
+                                            >"name"</span
+                                          >:
+                                          <span class="token string"
+                                            >&quot;Arannis the Wise&quot;</span
+                                          ><span class="token punctuation"
+                                            >,</span
+                                          >
+                                        </div>
+                                      </li>
+                                      <li>
+                                        <div class="hoverable">
+                                          <span class="property token string"
+                                            >"visibility"</span
+                                          >:
+                                          <span class="token string"
+                                            >&quot;public&quot;</span
+                                          ><span class="token punctuation"
+                                            >,</span
+                                          >
+                                        </div>
+                                      </li>
+                                      <li>
+                                        <div class="hoverable">
+                                          <span class="property token string"
+                                            >"data"</span
+                                          >:
+                                          <button
+                                            class="collapser"
+                                            aria-label="collapse"
+                                          ></button
+                                          ><span class="token punctuation"
+                                            >{</span
+                                          ><span class="ellipsis"></span>
+                                          <ul class="obj collapsible">
+                                            <li>
+                                              <div class="hoverable collapsed">
+                                                <span
+                                                  class="property token string"
+                                                  >"race"</span
+                                                >:
+                                                <span class="token string"
+                                                  >&quot;elf&quot;</span
+                                                ><span class="token punctuation"
+                                                  >,</span
+                                                >
+                                              </div>
+                                            </li>
+                                            <li>
+                                              <div class="hoverable collapsed">
+                                                <span
+                                                  class="property token string"
+                                                  >"class"</span
+                                                >:
+                                                <span class="token string"
+                                                  >&quot;wizard&quot;</span
+                                                ><span class="token punctuation"
+                                                  >,</span
+                                                >
+                                              </div>
+                                            </li>
+                                            <li>
+                                              <div class="hoverable collapsed">
+                                                <span
+                                                  class="property token string"
+                                                  >"gender"</span
+                                                >:
+                                                <span class="token string"
+                                                  >&quot;male&quot;</span
+                                                ><span class="token punctuation"
+                                                  >,</span
+                                                >
+                                              </div>
+                                            </li>
+                                            <li>
+                                              <div class="hoverable collapsed">
+                                                <span
+                                                  class="property token string"
+                                                  >"alignment"</span
+                                                >:
+                                                <span class="token string"
+                                                  >&quot;neutral_good&quot;</span
+                                                ><span class="token punctuation"
+                                                  >,</span
+                                                >
+                                              </div>
+                                            </li>
+                                            <li>
+                                              <div class="hoverable collapsed">
+                                                <span
+                                                  class="property token string"
+                                                  >"appearance"</span
+                                                >:
+                                                <span class="token string"
+                                                  >&quot;Tall, silver-haired
+                                                  with piercing green
+                                                  eyes&quot;</span
+                                                ><span class="token punctuation"
+                                                  >,</span
+                                                >
+                                              </div>
+                                            </li>
+                                            <li>
+                                              <div class="hoverable collapsed">
+                                                <span
+                                                  class="property token string"
+                                                  >"personality"</span
+                                                >:
+                                                <span class="token string"
+                                                  >&quot;Calm and strategic
+                                                  thinker&quot;</span
+                                                ><span class="token punctuation"
+                                                  >,</span
+                                                >
+                                              </div>
+                                            </li>
+                                            <li>
+                                              <div class="hoverable collapsed">
+                                                <span
+                                                  class="property token string"
+                                                  >"background"</span
+                                                >:
+                                                <span class="token string"
+                                                  >&quot;Noble lineage with
+                                                  arcane education&quot;</span
+                                                ><span class="token punctuation"
+                                                  >,</span
+                                                >
+                                              </div>
+                                            </li>
+                                            <li>
+                                              <div class="hoverable collapsed">
+                                                <span
+                                                  class="property token string"
+                                                  >"abilities"</span
+                                                >:
+                                                <span class="token string"
+                                                  >&quot;Fireball, Teleport,
+                                                  Shield&quot;</span
+                                                ><span class="token punctuation"
+                                                  >,</span
+                                                >
+                                              </div>
+                                            </li>
+                                            <li>
+                                              <div class="hoverable collapsed">
+                                                <span
+                                                  class="property token string"
+                                                  >"equipment"</span
+                                                >:
+                                                <span class="token string"
+                                                  >&quot;Spellbook, Staff,
+                                                  Robes&quot;</span
+                                                ><span class="token punctuation"
+                                                  >,</span
+                                                >
+                                              </div>
+                                            </li>
+                                            <li>
+                                              <div class="hoverable collapsed">
+                                                <span
+                                                  class="property token string"
+                                                  >"motivation"</span
+                                                >:
+                                                <span class="token string"
+                                                  >&quot;Restore ancient elven
+                                                  knowledge&quot;</span
+                                                ><span class="token punctuation"
+                                                  >,</span
+                                                >
+                                              </div>
+                                            </li>
+                                            <li>
+                                              <div class="hoverable collapsed">
+                                                <span
+                                                  class="property token string"
+                                                  >"notes"</span
+                                                >:
+                                                <span class="token string"
+                                                  >&quot;Allies with the druids
+                                                  of the west&quot;</span
+                                                >
+                                              </div>
+                                            </li>
+                                          </ul>
+                                          <span class="token punctuation"
+                                            >}</span
+                                          >
+                                        </div>
+                                      </li>
+                                    </ul>
+                                    <span class="token punctuation"
+                                      >}</span
+                                    ></code
+                                  >
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -12340,6 +12527,8 @@
                             required: ["data"],
                             properties: {
                               data: {
+                                description:
+                                  'The `data` field contains asset-specific data. It varies depending on the `assetType`:\n\n- `"character"` → Character schema\n- `"location"` → Location schema\n- `"quest"` → Quest schema\n- `"map"` → Map schema\n\nSee examples for full structures.\n',
                                 discriminator: {
                                   propertyName: "assetType",
                                   mapping: {
@@ -12359,6 +12548,88 @@
                             },
                           },
                         ],
+                      },
+                      examples: {
+                        character: {
+                          summary: "Character Asset",
+                          value: {
+                            assetType: "character",
+                            name: "Arannis the Wise",
+                            visibility: "public",
+                            data: {
+                              race: "elf",
+                              class: "wizard",
+                              gender: "male",
+                              alignment: "neutral_good",
+                              appearance:
+                                "Tall, silver-haired with piercing green eyes",
+                              personality: "Calm and strategic thinker",
+                              background: "Noble lineage with arcane education",
+                              abilities: "Fireball, Teleport, Shield",
+                              equipment: "Spellbook, Staff, Robes",
+                              motivation: "Restore ancient elven knowledge",
+                              notes: "Allies with the druids of the west",
+                            },
+                          },
+                        },
+                        location: {
+                          summary: "Location Asset",
+                          value: {
+                            assetType: "location",
+                            name: "Whispering Woods",
+                            visibility: "public",
+                            data: {
+                              locationType: "forest",
+                              terrain: "Dense trees and uneven ground",
+                              climate: "temperate",
+                              atmosphere: "Eerie silence and flickering lights",
+                              inhabitants: "Fey creatures and elusive bandits",
+                              dangerLevel: "high",
+                              pointsOfInterest: "Ancient ruins, crystal spring",
+                              narrativeRole: "Hiding place for a relic",
+                              notes: "Travelers often go missing here",
+                            },
+                          },
+                        },
+                        quest: {
+                          summary: "Quest Asset",
+                          value: {
+                            assetType: "quest",
+                            name: "Rescue the Blacksmith's Son",
+                            visibility: "public",
+                            data: {
+                              questType: "rescue",
+                              tone: "urgent",
+                              location: "Caverns of Dread",
+                              complexity: "medium",
+                              objective: "Rescue the captive before nightfall",
+                              antagonist: "Goblin raiders",
+                              notableNPCs: "Blacksmith Garrek, Scout Lin",
+                              hasCombat: true,
+                              hasPuzzles: false,
+                              hasSkillChallenges: true,
+                              hasDilemmas: false,
+                              notes: "A time-sensitive challenge",
+                            },
+                          },
+                        },
+                        map: {
+                          summary: "Map Asset",
+                          value: {
+                            assetType: "map",
+                            name: "Kingdom of Aldoria",
+                            visibility: "public",
+                            data: {
+                              mapType: "world",
+                              terrain:
+                                "Mountains in the north, deserts in the south",
+                              scale: "1 inch = 100 miles",
+                              pointsOfInterest:
+                                "Capital city, cursed lake, rebel outpost",
+                              notes: "Borders subject to political conflict",
+                            },
+                          },
+                        },
                       },
                     },
                   },

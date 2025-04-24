@@ -1000,6 +1000,15 @@ components:
                 required: ["data"]
                 properties:
                   data:
+                    description: |
+                      The `data` field contains asset-specific data. It varies depending on the `assetType`:
+
+                      - `"character"` → Character schema
+                      - `"location"` → Location schema
+                      - `"quest"` → Quest schema
+                      - `"map"` → Map schema
+
+                      See examples for full structures.
                     discriminator:
                       propertyName: assetType
                       mapping:
@@ -1012,3 +1021,72 @@ components:
                       - $ref: "#/components/schemas/location"
                       - $ref: "#/components/schemas/quest"
                       - $ref: "#/components/schemas/map"
+          examples:
+            character:
+              summary: Character Asset
+              value:
+                assetType: character
+                name: "Arannis the Wise"
+                visibility: public
+                data:
+                  race: elf
+                  class: wizard
+                  gender: male
+                  alignment: neutral_good
+                  appearance: "Tall, silver-haired with piercing green eyes"
+                  personality: "Calm and strategic thinker"
+                  background: "Noble lineage with arcane education"
+                  abilities: "Fireball, Teleport, Shield"
+                  equipment: "Spellbook, Staff, Robes"
+                  motivation: "Restore ancient elven knowledge"
+                  notes: "Allies with the druids of the west"
+
+            location:
+              summary: Location Asset
+              value:
+                assetType: location
+                name: "Whispering Woods"
+                visibility: public
+                data:
+                  locationType: forest
+                  terrain: "Dense trees and uneven ground"
+                  climate: temperate
+                  atmosphere: "Eerie silence and flickering lights"
+                  inhabitants: "Fey creatures and elusive bandits"
+                  dangerLevel: high
+                  pointsOfInterest: "Ancient ruins, crystal spring"
+                  narrativeRole: "Hiding place for a relic"
+                  notes: "Travelers often go missing here"
+
+            quest:
+              summary: Quest Asset
+              value:
+                assetType: quest
+                name: "Rescue the Blacksmith's Son"
+                visibility: public
+                data:
+                  questType: rescue
+                  tone: urgent
+                  location: "Caverns of Dread"
+                  complexity: medium
+                  objective: "Rescue the captive before nightfall"
+                  antagonist: "Goblin raiders"
+                  notableNPCs: "Blacksmith Garrek, Scout Lin"
+                  hasCombat: true
+                  hasPuzzles: false
+                  hasSkillChallenges: true
+                  hasDilemmas: false
+                  notes: "A time-sensitive challenge"
+
+            map:
+              summary: Map Asset
+              value:
+                assetType: map
+                name: "Kingdom of Aldoria"
+                visibility: public
+                data:
+                  mapType: world
+                  terrain: "Mountains in the north, deserts in the south"
+                  scale: "1 inch = 100 miles"
+                  pointsOfInterest: "Capital city, cursed lake, rebel outpost"
+                  notes: "Borders subject to political conflict"
