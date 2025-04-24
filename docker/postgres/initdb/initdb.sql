@@ -26,7 +26,6 @@ CREATE TABLE "Asset" (
     "creator_id" UUID NOT NULL REFERENCES "User"("id") ON DELETE CASCADE,
     "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "is_featured" BOOLEAN NOT NULL DEFAULT FALSE,
     "type" enum_asset_type NOT NULL,
     "visibility" enum_visibility NOT NULL,
     "name" TEXT NOT NULL,
@@ -94,7 +93,7 @@ CREATE TABLE "Map" (
 
 -- Create Comment table
 CREATE TABLE "Comment" (
-    "id" SERIAL PRIMARY KEY,
+    "id" UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     "asset_id" UUID NOT NULL REFERENCES "Asset"("id") ON DELETE CASCADE,
     "author_id" UUID NOT NULL REFERENCES "User"("id") ON DELETE CASCADE,
     "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
