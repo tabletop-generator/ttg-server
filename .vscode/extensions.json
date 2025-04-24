@@ -7,6 +7,7 @@
     "jacobpfeifer.pfeifer-hurl",
     "christian-kohler.npm-intellisense",
     "docker.docker",
-    "ms-azuretools.vscode-docker"
+    "ms-azuretools.vscode-docker",
+    "42crunch.vscode-openapi"
   ]
 }

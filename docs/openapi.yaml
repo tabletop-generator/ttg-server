@@ -1,0 +1,1014 @@
+openapi: "3.1.1"
+
+info:
+  title: Tabletop Generator API
+  version: "1.0"
+  description: REST API for managing AI-generated tabletop gaming assets
+  license:
+    name: Unlicensed
+    identifier: Unlicensed
+
+servers:
+  - url: https://api.example.com
+    description: Production server (TBD)
+
+tags:
+  - name: asset
+    description: Assets operations
+  - name: collection
+    description: Collections operations
+  - name: user
+    description: Users operations
+  - name: comment
+    description: Comments operations
+
+paths:
+  /:
+    get:
+      operationId: healthcheck
+      summary: Perform a health check on the API
+      security: []
+      responses:
+        "200":
+          description: OK
+
+  /assets:
+    post:
+      tags:
+        - asset
+      operationId: createAsset
+      summary: Create a new asset
+      requestBody:
+        $ref: "#/components/requestBodies/assetCreate"
+      security:
+        - basicHttpAuthentication: []
+        - bearerHttpAuthentication: []
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/assetDetails"
+        "401":
+          description: Unauthorized
+    get:
+      tags:
+        - asset
+      operationId: getAssets
+      summary: Retrieve a list of assets
+      security: []
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            minimum: 0
+        - name: name
+          in: query
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 255
+        - name: description
+          in: query
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 255
+        - name: assetType
+          in: query
+          schema:
+            type: string
+            enum: ["character", "location", "quest", "map"]
+        - name: userId
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: collectionId
+          in: query
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/assetSummary"
+
+  /assets/{assetId}:
+    parameters:
+      - name: assetId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - asset
+      operationId: getAssetById
+      summary: Retrieve an asset by its ID
+      security: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/assetDetails"
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+    patch:
+      tags:
+        - asset
+      operationId: patchAssetById
+      summary: Update an asset by its ID
+      requestBody:
+        $ref: "#/components/requestBodies/assetUpdate"
+      security:
+        - basicHttpAuthentication: []
+        - bearerHttpAuthentication: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/assetDetails"
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+    delete:
+      tags:
+        - asset
+      operationId: deleteAssetById
+      summary: Delete an asset by its ID
+      security:
+        - basicHttpAuthentication: []
+        - bearerHttpAuthentication: []
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+
+  /assets/{assetId}/like:
+    parameters:
+      - name: assetId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    post:
+      tags:
+        - asset
+      operationId: likeAssetById
+      summary: Toggle like status for an asset
+      security:
+        - basicHttpAuthentication: []
+        - bearerHttpAuthentication: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/likeResponse"
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+
+  /assets/{assetId}/comments:
+    parameters:
+      - name: assetId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    post:
+      tags:
+        - comment
+      operationId: createCommentByAssetId
+      summary: Create a new comment on a specific asset
+      requestBody:
+        $ref: "#/components/requestBodies/commentCreateAndUpdate"
+      security:
+        - basicHttpAuthentication: []
+        - bearerHttpAuthentication: []
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/comment"
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+    get:
+      tags:
+        - comment
+      operationId: getCommentsByAssetId
+      summary: Retrieve all comments for a specific asset
+      security: []
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            minimum: 0
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/comment"
+        "404":
+          description: Not Found
+
+  /assets/{assetId}/comments/{commentId}:
+    parameters:
+      - name: assetId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: commentId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    patch:
+      tags:
+        - comment
+      operationId: patchCommentById
+      summary: Update a specific comment by its ID
+      requestBody:
+        $ref: "#/components/requestBodies/commentCreateAndUpdate"
+      security:
+        - basicHttpAuthentication: []
+        - bearerHttpAuthentication: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/comment"
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+    delete:
+      tags:
+        - comment
+      operationId: deleteCommentById
+      summary: Delete a specific comment by its ID
+      security:
+        - basicHttpAuthentication: []
+        - bearerHttpAuthentication: []
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+
+  /collections:
+    post:
+      tags:
+        - collection
+      operationId: createCollection
+      summary: Create a new collection
+      requestBody:
+        $ref: "#/components/requestBodies/collectionCreateAndUpdate"
+      security:
+        - basicHttpAuthentication: []
+        - bearerHttpAuthentication: []
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/collection"
+        "401":
+          description: Unauthorized
+    get:
+      tags:
+        - collection
+      operationId: getCollections
+      summary: Retrieve a list of collections
+      security: []
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            minimum: 0
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/collection"
+
+  /collections/{collectionId}:
+    parameters:
+      - name: collectionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - collection
+      operationId: getCollectionById
+      summary: Retrieve a collection by its ID
+      security: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/collectionDetails"
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+    patch:
+      tags:
+        - collection
+      operationId: patchCollectionById
+      summary: Update a collection by its ID
+      security:
+        - basicHttpAuthentication: []
+        - bearerHttpAuthentication: []
+      requestBody:
+        $ref: "#/components/requestBodies/collectionCreateAndUpdate"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/collectionDetails"
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+    delete:
+      tags:
+        - collection
+      operationId: deleteCollectionById
+      summary: Delete a collection by its ID
+      security:
+        - basicHttpAuthentication: []
+        - bearerHttpAuthentication: []
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+
+  /collections/{collectionId}/assets:
+    parameters:
+      - name: collectionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    post:
+      tags:
+        - collection
+      operationId: addAssetsToCollection
+      summary: Add a list of assets to a collection
+      security:
+        - basicHttpAuthentication: []
+        - bearerHttpAuthentication: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/assetIds"
+      responses:
+        "200":
+          description: Added
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+
+  /collections/{collectionId}/assets/delete:
+    parameters:
+      - name: collectionId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    post:
+      tags:
+        - collection
+      operationId: removeAssetsFromCollection
+      summary: Remove a list of assets from a collection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/assetIds"
+      security:
+        - basicHttpAuthentication: []
+        - bearerHttpAuthentication: []
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+
+  /users:
+    post:
+      tags:
+        - user
+      operationId: initializeUser
+      summary: Find or create a record for the current user
+      security:
+        - basicHttpAuthentication: []
+        - bearerHttpAuthentication: []
+      responses:
+        "201":
+          description: Created
+        "200":
+          description: Found existing user
+        "401":
+          description: Unauthorized
+
+  /users/{userId}:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags:
+        - user
+      operationId: getUserById
+      summary: Retrieve a user by their ID
+      security: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/userDetails"
+        "404":
+          description: Not Found
+
+  /users/me:
+    get:
+      tags:
+        - user
+      operationId: getCurrentUser
+      summary: Retrieve the current user
+      security:
+        - basicHttpAuthentication: []
+        - bearerHttpAuthentication: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/userDetails"
+        "401":
+          description: Unauthorized
+    patch:
+      tags:
+        - user
+      operationId: patchCurrentUser
+      summary: Update the current user
+      requestBody:
+        $ref: "#/components/requestBodies/userUpdate"
+      security:
+        - basicHttpAuthentication: []
+        - bearerHttpAuthentication: []
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
+
+components:
+  schemas:
+    assetBase:
+      type: object
+      required: ["name", "assetType", "visibility"]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        assetType:
+          type: string
+          enum: ["character", "location", "quest", "map"]
+        visibility:
+          type: string
+          enum: ["public", "private", "unlisted"]
+    assetSummary:
+      allOf:
+        - $ref: "#/components/schemas/assetBase"
+        - $ref: "#/components/schemas/userSummary"
+        - type: object
+          required: ["assetId", "imageUrl", "likes", "createdAt", "updatedAt"]
+          properties:
+            assetId:
+              type: string
+              format: uuid
+            imageUrl:
+              type: string
+              format: uri
+            likes:
+              type: integer
+              minimum: 0
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+    assetDetails:
+      allOf:
+        - $ref: "#/components/schemas/assetSummary"
+        - type: object
+          required: ["description", "data"]
+          properties:
+            description:
+              type: string
+              minLength: 1
+            data:
+              discriminator:
+                propertyName: assetType
+                mapping:
+                  character: "#/components/schemas/character"
+                  location: "#/components/schemas/location"
+                  quest: "#/components/schemas/quest"
+                  map: "#/components/schemas/map"
+              oneOf:
+                - $ref: "#/components/schemas/character"
+                - $ref: "#/components/schemas/location"
+                - $ref: "#/components/schemas/quest"
+                - $ref: "#/components/schemas/map"
+    character:
+      title: Character Data
+      type: object
+      required: ["race", "class", "gender", "alignment"]
+      properties:
+        race:
+          type: string
+          enum:
+            [
+              "human",
+              "elf",
+              "drow",
+              "half_elf",
+              "half_orc",
+              "halfling",
+              "dwarf",
+              "gnome",
+              "tiefling",
+              "githyanki",
+              "dragonborn",
+            ]
+        class:
+          type: string
+          enum:
+            [
+              "barbarian",
+              "bard",
+              "cleric",
+              "druid",
+              "fighter",
+              "monk",
+              "paladin",
+              "ranger",
+              "rogue",
+              "sorcerer",
+              "warlock",
+              "wizard",
+            ]
+        gender:
+          type: string
+          enum: ["male", "female", "non_binary", "genderfluid", "agender"]
+        alignment:
+          type: string
+          enum:
+            [
+              "lawful_good",
+              "neutral_good",
+              "chaotic_good",
+              "lawful_neutral",
+              "true_neutral",
+              "chaotic_neutral",
+              "lawful_evil",
+              "neutral_evil",
+              "chaotic_evil",
+            ]
+        appearance:
+          type: string
+          maxLength: 255
+        personality:
+          type: string
+          maxLength: 255
+        background:
+          type: string
+          maxLength: 255
+        abilities:
+          type: string
+          maxLength: 255
+        equipment:
+          type: string
+          maxLength: 255
+        motivation:
+          type: string
+          maxLength: 255
+        notes:
+          type: string
+          maxLength: 500
+    location:
+      title: Location Data
+      type: object
+      required: ["locationType"]
+      properties:
+        locationType:
+          type: string
+          maxLength: 255
+        terrain:
+          type: string
+          maxLength: 255
+        climate:
+          type: string
+          maxLength: 255
+        atmosphere:
+          type: string
+          maxLength: 255
+        inhabitants:
+          type: string
+          maxLength: 255
+        dangerLevel:
+          type: string
+          maxLength: 255
+        pointsOfInterest:
+          type: string
+          maxLength: 255
+        narrativeRole:
+          type: string
+          maxLength: 255
+        notes:
+          type: string
+          maxLength: 500
+    quest:
+      title: Quest Data
+      type: object
+      required: ["questType"]
+      properties:
+        questType:
+          type: string
+          maxLength: 255
+        tone:
+          type: string
+          maxLength: 255
+        location:
+          type: string
+          maxLength: 255
+        complexity:
+          type: string
+          maxLength: 255
+        objective:
+          type: string
+          maxLength: 255
+        antagonist:
+          type: string
+          maxLength: 255
+        notableNPCs:
+          type: string
+          maxLength: 255
+        hasCombat:
+          type: boolean
+        hasPuzzles:
+          type: boolean
+        hasSkillChallenges:
+          type: boolean
+        hasDilemmas:
+          type: boolean
+        notes:
+          type: string
+          maxLength: 500
+    map:
+      title: Map Data
+      type: object
+      required: ["mapType"]
+      properties:
+        mapType:
+          type: string
+          maxLength: 255
+        terrain:
+          type: string
+          maxLength: 255
+        scale:
+          type: string
+          maxLength: 255
+        pointsOfInterest:
+          type: string
+          maxLength: 255
+        notes:
+          type: string
+          maxLength: 500
+    likeResponse:
+      type: object
+      required: ["assetId", "likes", "likedByCurrentUser"]
+      properties:
+        assetId:
+          type: string
+          format: uuid
+        likes:
+          type: integer
+          minimum: 0
+        likedByCurrentUser:
+          type: boolean
+    comment:
+      type: object
+      required:
+        [
+          "commentId",
+          "authorId",
+          "authorName",
+          "body",
+          "createdAt",
+          "updatedAt",
+        ]
+      properties:
+        commentId:
+          type: string
+          format: uuid
+        authorId:
+          type: string
+          format: uuid
+        authorName:
+          type: string
+          maxLength: 255
+        body:
+          type: string
+          maxLength: 255
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    collection:
+      type: object
+      required:
+        [
+          "collectionId",
+          "creatorId",
+          "createdAt",
+          "updatedAt",
+          "visibility",
+          "name",
+          "description",
+          "assetCount",
+        ]
+      properties:
+        collectionId:
+          type: string
+          format: uuid
+        creatorId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        visibility:
+          type: string
+          enum: ["public", "private", "unlisted"]
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 255
+        assetCount:
+          type: integer
+          minimum: 0
+    collectionDetails:
+      allOf:
+        - $ref: "#/components/schemas/collection"
+        - type: object
+          properties:
+            assets:
+              type: array
+              items:
+                $ref: "#/components/schemas/assetSummary"
+    assetIds:
+      type: object
+      properties:
+        assetIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+    userSummary:
+      type: object
+      required: ["userId", "displayName"]
+      properties:
+        userId:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          maxLength: 30
+    userDetails:
+      type: object
+      required: ["userId", "createdAt", "displayName", "bio"]
+      properties:
+        userId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        displayName:
+          type: string
+          maxLength: 30
+        bio:
+          type: string
+          maxLength: 255
+  securitySchemes:
+    basicHttpAuthentication:
+      description: Basic HTTP Authentication
+      type: http
+      scheme: Basic
+    bearerHttpAuthentication:
+      description: Bearer token using a JWT
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
+  requestBodies:
+    commentCreateAndUpdate:
+      content:
+        application/json:
+          schema:
+            type: object
+            required: ["body"]
+            properties:
+              body:
+                type: string
+                minLength: 1
+                maxLength: 255
+    collectionCreateAndUpdate:
+      content:
+        application/json:
+          schema:
+            type: object
+            required: ["name"]
+            properties:
+              name:
+                type: string
+                minLength: 1
+                maxLength: 255
+              description:
+                type: string
+                maxLength: 255
+              visibility:
+                type: string
+                enum: ["public", "private", "unlisted"]
+    userUpdate:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              displayName:
+                type: string
+                maxLength: 30
+              bio:
+                type: string
+                maxLength: 255
+    assetUpdate:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                minLength: 1
+                maxLength: 255
+              description:
+                type: string
+                minLength: 1
+              visibility:
+                type: string
+                enum: ["public", "private", "unlisted"]
+    assetCreate:
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/assetBase"
+              - type: object
+                required: ["data"]
+                properties:
+                  data:
+                    discriminator:
+                      propertyName: assetType
+                      mapping:
+                        character: "#/components/schemas/character"
+                        location: "#/components/schemas/location"
+                        quest: "#/components/schemas/quest"
+                        map: "#/components/schemas/map"
+                    oneOf:
+                      - $ref: "#/components/schemas/character"
+                      - $ref: "#/components/schemas/location"
+                      - $ref: "#/components/schemas/quest"
+                      - $ref: "#/components/schemas/map"
