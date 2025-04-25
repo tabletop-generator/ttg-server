@@ -3016,7 +3016,7 @@
                             ><span class="sc-huvZk sc-hlDTgW hHoKqR NHcBj"
                               >object or object or object or object</span
                             ><span class="sc-huvZk sc-gxyOqs hHoKqR iNoWVv">
-                              (<!-- -->assetData<!-- -->)
+                              (<!-- -->assetDataCreate<!-- -->)
                             </span>
                           </div>
                           <div>
@@ -13337,7 +13337,9 @@
                           visibility: {
                             $ref: "#/components/schemas/visibility",
                           },
-                          data: { $ref: "#/components/schemas/assetData" },
+                          data: {
+                            $ref: "#/components/schemas/assetDataCreate",
+                          },
                         },
                       },
                       examples: {
@@ -13706,8 +13708,6 @@
                   ],
                 },
                 assetData: {
-                  description:
-                    'The `data` field contains asset-specific data. It varies depending on the `assetType`:\n\n- `"character"` → Character schema\n- `"location"` → Location schema\n- `"quest"` → Quest schema\n- `"map"` → Map schema\n\nSee examples for full structures.\n',
                   discriminator: {
                     propertyName: "assetType",
                     mapping: {
@@ -13726,7 +13726,19 @@
                 },
                 character: {
                   type: "object",
-                  required: ["race", "class", "gender", "alignment"],
+                  required: [
+                    "race",
+                    "class",
+                    "gender",
+                    "alignment",
+                    "appearance",
+                    "personality",
+                    "background",
+                    "abilities",
+                    "equipment",
+                    "motivation",
+                    "notes",
+                  ],
                   properties: {
                     race: {
                       type: "string",
@@ -13796,7 +13808,17 @@
                 },
                 location: {
                   type: "object",
-                  required: ["locationType"],
+                  required: [
+                    "locationType",
+                    "terrain",
+                    "climate",
+                    "atmosphere",
+                    "inhabitants",
+                    "dangerLevel",
+                    "pointsOfInterest",
+                    "narrativeRole",
+                    "notes",
+                  ],
                   properties: {
                     locationType: { type: "string", maxLength: 255 },
                     terrain: { type: "string", maxLength: 255 },
@@ -13811,7 +13833,20 @@
                 },
                 quest: {
                   type: "object",
-                  required: ["questType"],
+                  required: [
+                    "questType",
+                    "tone",
+                    "location",
+                    "complexity",
+                    "objective",
+                    "antagonist",
+                    "notableNPCs",
+                    "hasCombat",
+                    "hasPuzzles",
+                    "hasSkillChallenges",
+                    "hasDilemmas",
+                    "notes",
+                  ],
                   properties: {
                     questType: { type: "string", maxLength: 255 },
                     tone: { type: "string", maxLength: 255 },
@@ -13828,6 +13863,149 @@
                   },
                 },
                 map: {
+                  type: "object",
+                  required: [
+                    "mapType",
+                    "terrain",
+                    "scale",
+                    "pointsOfInterest",
+                    "notes",
+                  ],
+                  properties: {
+                    mapType: { type: "string", maxLength: 255 },
+                    terrain: { type: "string", maxLength: 255 },
+                    scale: { type: "string", maxLength: 255 },
+                    pointsOfInterest: { type: "string", maxLength: 255 },
+                    notes: { type: "string", maxLength: 500 },
+                  },
+                },
+                assetDataCreate: {
+                  discriminator: {
+                    propertyName: "assetType",
+                    mapping: {
+                      character: "#/components/schemas/characterCreate",
+                      location: "#/components/schemas/locationCreate",
+                      quest: "#/components/schemas/questCreate",
+                      map: "#/components/schemas/mapCreate",
+                    },
+                  },
+                  oneOf: [
+                    { $ref: "#/components/schemas/characterCreate" },
+                    { $ref: "#/components/schemas/locationCreate" },
+                    { $ref: "#/components/schemas/questCreate" },
+                    { $ref: "#/components/schemas/mapCreate" },
+                  ],
+                },
+                characterCreate: {
+                  type: "object",
+                  required: ["race", "class", "gender", "alignment"],
+                  properties: {
+                    race: {
+                      type: "string",
+                      enum: [
+                        "human",
+                        "elf",
+                        "drow",
+                        "half_elf",
+                        "half_orc",
+                        "halfling",
+                        "dwarf",
+                        "gnome",
+                        "tiefling",
+                        "githyanki",
+                        "dragonborn",
+                      ],
+                    },
+                    class: {
+                      type: "string",
+                      enum: [
+                        "barbarian",
+                        "bard",
+                        "cleric",
+                        "druid",
+                        "fighter",
+                        "monk",
+                        "paladin",
+                        "ranger",
+                        "rogue",
+                        "sorcerer",
+                        "warlock",
+                        "wizard",
+                      ],
+                    },
+                    gender: {
+                      type: "string",
+                      enum: [
+                        "male",
+                        "female",
+                        "non_binary",
+                        "genderfluid",
+                        "agender",
+                      ],
+                    },
+                    alignment: {
+                      type: "string",
+                      enum: [
+                        "lawful_good",
+                        "neutral_good",
+                        "chaotic_good",
+                        "lawful_neutral",
+                        "true_neutral",
+                        "chaotic_neutral",
+                        "lawful_evil",
+                        "neutral_evil",
+                        "chaotic_evil",
+                      ],
+                    },
+                    appearance: { type: "string", maxLength: 255 },
+                    personality: { type: "string", maxLength: 255 },
+                    background: { type: "string", maxLength: 255 },
+                    abilities: { type: "string", maxLength: 255 },
+                    equipment: { type: "string", maxLength: 255 },
+                    motivation: { type: "string", maxLength: 255 },
+                    notes: { type: "string", maxLength: 500 },
+                  },
+                },
+                locationCreate: {
+                  type: "object",
+                  required: ["locationType"],
+                  properties: {
+                    locationType: { type: "string", maxLength: 255 },
+                    terrain: { type: "string", maxLength: 255 },
+                    climate: { type: "string", maxLength: 255 },
+                    atmosphere: { type: "string", maxLength: 255 },
+                    inhabitants: { type: "string", maxLength: 255 },
+                    dangerLevel: { type: "string", maxLength: 255 },
+                    pointsOfInterest: { type: "string", maxLength: 255 },
+                    narrativeRole: { type: "string", maxLength: 255 },
+                    notes: { type: "string", maxLength: 500 },
+                  },
+                },
+                questCreate: {
+                  type: "object",
+                  required: [
+                    "questType",
+                    "hasCombat",
+                    "hasPuzzles",
+                    "hasSkillChallenges",
+                    "hasDilemmas",
+                  ],
+                  properties: {
+                    questType: { type: "string", maxLength: 255 },
+                    tone: { type: "string", maxLength: 255 },
+                    location: { type: "string", maxLength: 255 },
+                    complexity: { type: "string", maxLength: 255 },
+                    objective: { type: "string", maxLength: 255 },
+                    antagonist: { type: "string", maxLength: 255 },
+                    notableNPCs: { type: "string", maxLength: 255 },
+                    hasCombat: { type: "boolean" },
+                    hasPuzzles: { type: "boolean" },
+                    hasSkillChallenges: { type: "boolean" },
+                    hasDilemmas: { type: "boolean" },
+                    notes: { type: "string", maxLength: 500 },
+                  },
+                },
+                mapCreate: {
                   type: "object",
                   required: ["mapType"],
                   properties: {
