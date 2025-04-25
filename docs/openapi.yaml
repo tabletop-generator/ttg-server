@@ -45,11 +45,7 @@ paths:
         - bearerHttpAuthentication: []
       responses:
         "201":
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/assetDetails"
+          $ref: "#/components/responses/AssetDetails"
         "401":
           description: Unauthorized
     get:
@@ -59,62 +55,20 @@ paths:
       summary: Retrieve a list of assets
       security: []
       parameters:
-        - name: limit
-          in: query
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 100
-        - name: offset
-          in: query
-          schema:
-            type: integer
-            minimum: 0
-        - name: name
-          in: query
-          schema:
-            type: string
-            minLength: 1
-            maxLength: 255
-        - name: description
-          in: query
-          schema:
-            type: string
-            minLength: 1
-            maxLength: 255
-        - name: assetType
-          in: query
-          schema:
-            type: string
-            enum: ["character", "location", "quest", "map"]
-        - name: userId
-          in: query
-          schema:
-            type: string
-            format: uuid
-        - name: collectionId
-          in: query
-          schema:
-            type: string
-            format: uuid
+        - $ref: "#/components/parameters/limitParam"
+        - $ref: "#/components/parameters/offsetParam"
+        - $ref: "#/components/parameters/assetTypeParam"
+        - $ref: "#/components/parameters/collectionIdParam"
+        - $ref: "#/components/parameters/userIdParam"
+        - $ref: "#/components/parameters/nameParam"
+        - $ref: "#/components/parameters/descriptionParam"
       responses:
         "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/assetSummary"
+          $ref: "#/components/responses/AssetList"
 
   /assets/{assetId}:
     parameters:
-      - name: assetId
-        in: path
-        required: true
-        schema:
-          type: string
-          format: uuid
+      - $ref: "#/components/parameters/assetIdParam"
     get:
       tags:
         - asset
@@ -123,11 +77,7 @@ paths:
       security: []
       responses:
         "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/assetDetails"
+          $ref: "#/components/responses/AssetDetails"
         "401":
           description: Unauthorized
         "403":
@@ -146,11 +96,7 @@ paths:
         - bearerHttpAuthentication: []
       responses:
         "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/assetDetails"
+          $ref: "#/components/responses/AssetDetails"
         "401":
           description: Unauthorized
         "403":
@@ -177,12 +123,7 @@ paths:
 
   /assets/{assetId}/like:
     parameters:
-      - name: assetId
-        in: path
-        required: true
-        schema:
-          type: string
-          format: uuid
+      - $ref: "#/components/parameters/assetIdParam"
     post:
       tags:
         - asset
@@ -193,11 +134,7 @@ paths:
         - bearerHttpAuthentication: []
       responses:
         "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/likeResponse"
+          $ref: "#/components/responses/AssetLike"
         "401":
           description: Unauthorized
         "403":
@@ -207,12 +144,7 @@ paths:
 
   /assets/{assetId}/comments:
     parameters:
-      - name: assetId
-        in: path
-        required: true
-        schema:
-          type: string
-          format: uuid
+      - $ref: "#/components/parameters/assetIdParam"
     post:
       tags:
         - comment
@@ -225,11 +157,7 @@ paths:
         - bearerHttpAuthentication: []
       responses:
         "201":
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/comment"
+          $ref: "#/components/responses/CommentDetails"
         "401":
           description: Unauthorized
         "403":
@@ -243,43 +171,18 @@ paths:
       summary: Retrieve all comments for a specific asset
       security: []
       parameters:
-        - name: limit
-          in: query
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 100
-        - name: offset
-          in: query
-          schema:
-            type: integer
-            minimum: 0
+        - $ref: "#/components/parameters/limitParam"
+        - $ref: "#/components/parameters/offsetParam"
       responses:
         "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/comment"
+          $ref: "#/components/responses/CommentList"
         "404":
           description: Not Found
 
   /assets/{assetId}/comments/{commentId}:
     parameters:
-      - name: assetId
-        in: path
-        required: true
-        schema:
-          type: string
-          format: uuid
-      - name: commentId
-        in: path
-        required: true
-        schema:
-          type: string
-          format: uuid
+      - $ref: "#/components/parameters/assetIdParam"
+      - $ref: "#/components/parameters/commentIdParam"
     patch:
       tags:
         - comment
@@ -292,11 +195,7 @@ paths:
         - bearerHttpAuthentication: []
       responses:
         "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/comment"
+          $ref: "#/components/responses/CommentDetails"
         "401":
           description: Unauthorized
         "403":
@@ -334,11 +233,7 @@ paths:
         - bearerHttpAuthentication: []
       responses:
         "201":
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/collection"
+          $ref: "#/components/responses/CollectionDetails"
         "401":
           description: Unauthorized
     get:
@@ -348,35 +243,16 @@ paths:
       summary: Retrieve a list of collections
       security: []
       parameters:
-        - name: limit
-          in: query
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 100
-        - name: offset
-          in: query
-          schema:
-            type: integer
-            minimum: 0
+        - $ref: "#/components/parameters/limitParam"
+        - $ref: "#/components/parameters/offsetParam"
+        - $ref: "#/components/parameters/userIdParam"
       responses:
         "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/collection"
+          $ref: "#/components/responses/CollectionList"
 
   /collections/{collectionId}:
     parameters:
-      - name: collectionId
-        in: path
-        required: true
-        schema:
-          type: string
-          format: uuid
+      - $ref: "#/components/parameters/collectionIdParam"
     get:
       tags:
         - collection
@@ -385,11 +261,7 @@ paths:
       security: []
       responses:
         "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/collectionDetails"
+          $ref: "#/components/responses/CollectionDetails"
         "401":
           description: Unauthorized
         "403":
@@ -408,11 +280,7 @@ paths:
         $ref: "#/components/requestBodies/collectionCreateAndUpdate"
       responses:
         "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/collectionDetails"
+          $ref: "#/components/responses/CollectionDetails"
         "401":
           description: Unauthorized
         "403":
@@ -439,12 +307,7 @@ paths:
 
   /collections/{collectionId}/assets:
     parameters:
-      - name: collectionId
-        in: path
-        required: true
-        schema:
-          type: string
-          format: uuid
+      - $ref: "#/components/parameters/collectionIdParam"
     post:
       tags:
         - collection
@@ -454,13 +317,10 @@ paths:
         - basicHttpAuthentication: []
         - bearerHttpAuthentication: []
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/assetIds"
+        $ref: "#/components/requestBodies/assetIds"
       responses:
         "200":
-          description: Added
+          $ref: "#/components/responses/CollectionDetails"
         "401":
           description: Unauthorized
         "403":
@@ -470,28 +330,20 @@ paths:
 
   /collections/{collectionId}/assets/delete:
     parameters:
-      - name: collectionId
-        in: path
-        required: true
-        schema:
-          type: string
-          format: uuid
+      - $ref: "#/components/parameters/collectionIdParam"
     post:
       tags:
         - collection
       operationId: removeAssetsFromCollection
       summary: Remove a list of assets from a collection
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/assetIds"
+        $ref: "#/components/requestBodies/assetIds"
       security:
         - basicHttpAuthentication: []
         - bearerHttpAuthentication: []
       responses:
-        "204":
-          description: No Content
+        "200":
+          $ref: "#/components/responses/CollectionDetails"
         "401":
           description: Unauthorized
         "403":
@@ -510,20 +362,15 @@ paths:
         - bearerHttpAuthentication: []
       responses:
         "201":
-          description: Created
+          $ref: "#/components/responses/UserDetails"
         "200":
-          description: Found existing user
+          $ref: "#/components/responses/UserDetails"
         "401":
           description: Unauthorized
 
   /users/{userId}:
     parameters:
-      - name: userId
-        in: path
-        required: true
-        schema:
-          type: string
-          format: uuid
+      - $ref: "#/components/parameters/userIdParam"
     get:
       tags:
         - user
@@ -532,11 +379,7 @@ paths:
       security: []
       responses:
         "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/userDetails"
+          $ref: "#/components/responses/UserDetails"
         "404":
           description: Not Found
 
@@ -551,11 +394,7 @@ paths:
         - bearerHttpAuthentication: []
       responses:
         "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/userDetails"
+          $ref: "#/components/responses/UserDetails"
         "401":
           description: Unauthorized
     patch:
@@ -570,70 +409,78 @@ paths:
         - bearerHttpAuthentication: []
       responses:
         "200":
-          description: OK
+          $ref: "#/components/responses/UserDetails"
         "401":
           description: Unauthorized
 
 components:
   schemas:
-    assetBase:
+    assetList:
       type: object
-      required: ["name", "assetType", "visibility"]
+      required: ["assets"]
       properties:
-        name:
-          type: string
-          minLength: 1
-          maxLength: 255
-        assetType:
-          type: string
-          enum: ["character", "location", "quest", "map"]
-        visibility:
-          type: string
-          enum: ["public", "private", "unlisted"]
-    assetSummary:
-      allOf:
-        - $ref: "#/components/schemas/assetBase"
-        - $ref: "#/components/schemas/userSummary"
-        - type: object
-          required: ["assetId", "imageUrl", "likes", "createdAt", "updatedAt"]
-          properties:
-            assetId:
-              type: string
-              format: uuid
-            imageUrl:
-              type: string
-              format: uri
-            likes:
-              type: integer
-              minimum: 0
-            createdAt:
-              type: string
-              format: date-time
-            updatedAt:
-              type: string
-              format: date-time
-    assetDetails:
-      allOf:
-        - $ref: "#/components/schemas/assetSummary"
-        - type: object
-          required: ["description", "data"]
-          properties:
-            description:
-              type: string
-              minLength: 1
-            data:
-              discriminator:
-                propertyName: assetType
-                mapping:
-                  character: "#/components/schemas/character"
-                  location: "#/components/schemas/location"
-                  quest: "#/components/schemas/quest"
-                  map: "#/components/schemas/map"
-              oneOf:
-                - $ref: "#/components/schemas/character"
-                - $ref: "#/components/schemas/location"
-                - $ref: "#/components/schemas/quest"
-                - $ref: "#/components/schemas/map"
+        assets:
+          type: array
+        items:
+          allOf:
+            - $ref: "#/components/schemas/userSummary"
+            - type: object
+              required:
+                [
+                  "assetId",
+                  "imageUrl",
+                  "likes",
+                  "createdAt",
+                  "updatedAt",
+                  "description",
+                ]
+              properties:
+                assetId:
+                  type: string
+                  format: uuid
+                imageUrl:
+                  type: string
+                  format: uri
+                likes:
+                  type: integer
+                  minimum: 0
+                createdAt:
+                  type: string
+                  format: date-time
+                updatedAt:
+                  type: string
+                  format: date-time
+                description:
+                  type: string
+                  minLength: 1
+    assetData:
+      description: |
+        The `data` field contains asset-specific data. It varies depending on the `assetType`:
+
+        - `"character"` → Character schema
+        - `"location"` → Location schema
+        - `"quest"` → Quest schema
+        - `"map"` → Map schema
+
+        See examples for full structures.
+      discriminator:
+        propertyName: assetType
+        mapping:
+          character: "#/components/schemas/character"
+          location: "#/components/schemas/location"
+          quest: "#/components/schemas/quest"
+          map: "#/components/schemas/map"
+      oneOf:
+        - $ref: "#/components/schemas/character"
+        - $ref: "#/components/schemas/location"
+        - $ref: "#/components/schemas/quest"
+        - $ref: "#/components/schemas/map"
+    visibility:
+      type: string
+      enum: ["public", "private", "unlisted"]
+    assetType:
+      type: string
+      enum: ["character", "location", "quest", "map"]
     character:
       title: Character Data
       type: object
@@ -799,48 +646,24 @@ components:
         notes:
           type: string
           maxLength: 500
-    likeResponse:
-      type: object
-      required: ["assetId", "likes", "likedByCurrentUser"]
-      properties:
-        assetId:
-          type: string
-          format: uuid
-        likes:
-          type: integer
-          minimum: 0
-        likedByCurrentUser:
-          type: boolean
     comment:
-      type: object
-      required:
-        [
-          "commentId",
-          "authorId",
-          "authorName",
-          "body",
-          "createdAt",
-          "updatedAt",
-        ]
-      properties:
-        commentId:
-          type: string
-          format: uuid
-        authorId:
-          type: string
-          format: uuid
-        authorName:
-          type: string
-          maxLength: 255
-        body:
-          type: string
-          maxLength: 255
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
+      allOf:
+        - $ref: "#/components/schemas/userSummary"
+        - type: object
+          required: ["commentId", "body", "createdAt", "updatedAt"]
+          properties:
+            commentId:
+              type: string
+              format: uuid
+            body:
+              type: string
+              maxLength: 255
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
     collection:
       type: object
       required:
@@ -868,8 +691,7 @@ components:
           type: string
           format: date-time
         visibility:
-          type: string
-          enum: ["public", "private", "unlisted"]
+          $ref: "#/components/schemas/visibility"
         name:
           type: string
           minLength: 1
@@ -880,23 +702,6 @@ components:
         assetCount:
           type: integer
           minimum: 0
-    collectionDetails:
-      allOf:
-        - $ref: "#/components/schemas/collection"
-        - type: object
-          properties:
-            assets:
-              type: array
-              items:
-                $ref: "#/components/schemas/assetSummary"
-    assetIds:
-      type: object
-      properties:
-        assetIds:
-          type: array
-          items:
-            type: string
-            format: uuid
     userSummary:
       type: object
       required: ["userId", "displayName"]
@@ -907,22 +712,6 @@ components:
         displayName:
           type: string
           maxLength: 30
-    userDetails:
-      type: object
-      required: ["userId", "createdAt", "displayName", "bio"]
-      properties:
-        userId:
-          type: string
-          format: uuid
-        createdAt:
-          type: string
-          format: date-time
-        displayName:
-          type: string
-          maxLength: 30
-        bio:
-          type: string
-          maxLength: 255
   securitySchemes:
     basicHttpAuthentication:
       description: Basic HTTP Authentication
@@ -934,6 +723,32 @@ components:
       scheme: Bearer
       bearerFormat: JWT
   requestBodies:
+    assetCreate:
+      content:
+        application/json:
+          schema:
+            type: object
+            required: ["name", "assetType", "visibility", "data"]
+            properties:
+              name:
+                type: string
+                minLength: 1
+                maxLength: 255
+              assetType:
+                $ref: "#/components/schemas/assetType"
+              visibility:
+                $ref: "#/components/schemas/visibility"
+              data:
+                $ref: "#/components/schemas/assetData"
+          examples:
+            character:
+              $ref: "#/components/examples/characterAsset"
+            location:
+              $ref: "#/components/examples/locationAsset"
+            quest:
+              $ref: "#/components/examples/questAsset"
+            map:
+              $ref: "#/components/examples/mapAsset"
     commentCreateAndUpdate:
       content:
         application/json:
@@ -960,8 +775,7 @@ components:
                 type: string
                 maxLength: 255
               visibility:
-                type: string
-                enum: ["public", "private", "unlisted"]
+                $ref: "#/components/schemas/visibility"
     userUpdate:
       content:
         application/json:
@@ -988,105 +802,255 @@ components:
                 type: string
                 minLength: 1
               visibility:
-                type: string
-                enum: ["public", "private", "unlisted"]
-    assetCreate:
+                $ref: "#/components/schemas/visibility"
+    assetIds:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              assetIds:
+                type: array
+                items:
+                  type: string
+                  format: uuid
+  examples:
+    characterAsset:
+      summary: Character Asset
+      value:
+        assetType: character
+        name: "Arannis the Wise"
+        visibility: public
+        data:
+          race: elf
+          class: wizard
+          gender: male
+          alignment: neutral_good
+          appearance: "Tall, silver-haired with piercing green eyes"
+          personality: "Calm and strategic thinker"
+          background: "Noble lineage with arcane education"
+          abilities: "Fireball, Teleport, Shield"
+          equipment: "Spellbook, Staff, Robes"
+          motivation: "Restore ancient elven knowledge"
+          notes: "Allies with the druids of the west"
+    locationAsset:
+      summary: Location Asset
+      value:
+        assetType: location
+        name: "Whispering Woods"
+        visibility: public
+        data:
+          locationType: forest
+          terrain: "Dense trees and uneven ground"
+          climate: temperate
+          atmosphere: "Eerie silence and flickering lights"
+          inhabitants: "Fey creatures and elusive bandits"
+          dangerLevel: high
+          pointsOfInterest: "Ancient ruins, crystal spring"
+          narrativeRole: "Hiding place for a relic"
+          notes: "Travelers often go missing here"
+    questAsset:
+      summary: Quest Asset
+      value:
+        assetType: quest
+        name: "Rescue the Blacksmith's Son"
+        visibility: public
+        data:
+          questType: rescue
+          tone: urgent
+          location: "Caverns of Dread"
+          complexity: medium
+          objective: "Rescue the captive before nightfall"
+          antagonist: "Goblin raiders"
+          notableNPCs: "Blacksmith Garrek, Scout Lin"
+          hasCombat: true
+          hasPuzzles: false
+          hasSkillChallenges: true
+          hasDilemmas: false
+          notes: "A time-sensitive challenge"
+    mapAsset:
+      summary: Map Asset
+      value:
+        assetType: map
+        name: "Kingdom of Aldoria"
+        visibility: public
+        data:
+          mapType: world
+          terrain: "Mountains in the north, deserts in the south"
+          scale: "1 inch = 100 miles"
+          pointsOfInterest: "Capital city, cursed lake, rebel outpost"
+          notes: "Borders subject to political conflict"
+  responses:
+    AssetDetails:
+      description: OK
       content:
         application/json:
           schema:
             allOf:
-              - $ref: "#/components/schemas/assetBase"
+              - $ref: "#/components/schemas/userSummary"
               - type: object
-                required: ["data"]
+                required:
+                  [
+                    "assetId",
+                    "assetType",
+                    "description",
+                    "data",
+                    "visibility",
+                    "imageUrl",
+                    "likes",
+                    "likedByCurrentUser",
+                    "createdAt",
+                    "updatedAt",
+                  ]
                 properties:
+                  assetId:
+                    type: string
+                    format: uuid
+                  imageUrl:
+                    type: string
+                    format: uri
+                  likes:
+                    type: integer
+                    minimum: 0
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+                  description:
+                    type: string
+                    minLength: 1
                   data:
-                    description: |
-                      The `data` field contains asset-specific data. It varies depending on the `assetType`:
-
-                      - `"character"` → Character schema
-                      - `"location"` → Location schema
-                      - `"quest"` → Quest schema
-                      - `"map"` → Map schema
-
-                      See examples for full structures.
-                    discriminator:
-                      propertyName: assetType
-                      mapping:
-                        character: "#/components/schemas/character"
-                        location: "#/components/schemas/location"
-                        quest: "#/components/schemas/quest"
-                        map: "#/components/schemas/map"
-                    oneOf:
-                      - $ref: "#/components/schemas/character"
-                      - $ref: "#/components/schemas/location"
-                      - $ref: "#/components/schemas/quest"
-                      - $ref: "#/components/schemas/map"
-          examples:
-            character:
-              summary: Character Asset
-              value:
-                assetType: character
-                name: "Arannis the Wise"
-                visibility: public
-                data:
-                  race: elf
-                  class: wizard
-                  gender: male
-                  alignment: neutral_good
-                  appearance: "Tall, silver-haired with piercing green eyes"
-                  personality: "Calm and strategic thinker"
-                  background: "Noble lineage with arcane education"
-                  abilities: "Fireball, Teleport, Shield"
-                  equipment: "Spellbook, Staff, Robes"
-                  motivation: "Restore ancient elven knowledge"
-                  notes: "Allies with the druids of the west"
-
-            location:
-              summary: Location Asset
-              value:
-                assetType: location
-                name: "Whispering Woods"
-                visibility: public
-                data:
-                  locationType: forest
-                  terrain: "Dense trees and uneven ground"
-                  climate: temperate
-                  atmosphere: "Eerie silence and flickering lights"
-                  inhabitants: "Fey creatures and elusive bandits"
-                  dangerLevel: high
-                  pointsOfInterest: "Ancient ruins, crystal spring"
-                  narrativeRole: "Hiding place for a relic"
-                  notes: "Travelers often go missing here"
-
-            quest:
-              summary: Quest Asset
-              value:
-                assetType: quest
-                name: "Rescue the Blacksmith's Son"
-                visibility: public
-                data:
-                  questType: rescue
-                  tone: urgent
-                  location: "Caverns of Dread"
-                  complexity: medium
-                  objective: "Rescue the captive before nightfall"
-                  antagonist: "Goblin raiders"
-                  notableNPCs: "Blacksmith Garrek, Scout Lin"
-                  hasCombat: true
-                  hasPuzzles: false
-                  hasSkillChallenges: true
-                  hasDilemmas: false
-                  notes: "A time-sensitive challenge"
-
-            map:
-              summary: Map Asset
-              value:
-                assetType: map
-                name: "Kingdom of Aldoria"
-                visibility: public
-                data:
-                  mapType: world
-                  terrain: "Mountains in the north, deserts in the south"
-                  scale: "1 inch = 100 miles"
-                  pointsOfInterest: "Capital city, cursed lake, rebel outpost"
-                  notes: "Borders subject to political conflict"
+                    $ref: "#/components/schemas/assetData"
+    AssetLike:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required: ["assetId", "likes", "likedByCurrentUser"]
+            properties:
+              assetId:
+                type: string
+                format: uuid
+              likes:
+                type: integer
+                minimum: 0
+              likedByCurrentUser:
+                type: boolean
+    AssetList:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/assetList"
+    CommentDetails:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/comment"
+    CommentList:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/comment"
+    CollectionDetails:
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/collection"
+              - $ref: "#/components/schemas/assetList"
+    CollectionList:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/collection"
+    UserDetails:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required: ["userId", "createdAt", "displayName", "bio"]
+            properties:
+              userId:
+                type: string
+                format: uuid
+              createdAt:
+                type: string
+                format: date-time
+              displayName:
+                type: string
+                maxLength: 30
+              bio:
+                type: string
+                maxLength: 255
+  parameters:
+    limitParam:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+    offsetParam:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        minimum: 0
+    nameParam:
+      name: name
+      in: query
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 255
+    descriptionParam:
+      name: description
+      in: query
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 255
+    assetTypeParam:
+      name: assetType
+      in: query
+      schema:
+        $ref: "#/components/schemas/assetType"
+    userIdParam:
+      name: userId
+      in: query
+      schema:
+        type: string
+        format: uuid
+    collectionIdParam:
+      name: collectionId
+      in: query
+      schema:
+        type: string
+        format: uuid
+    assetIdParam:
+      name: assetId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    commentIdParam:
+      name: commentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
