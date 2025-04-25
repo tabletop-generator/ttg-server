@@ -415,6 +415,48 @@ paths:
 
 components:
   schemas:
+    asset:
+      allOf:
+        - $ref: "#/components/schemas/userSummary"
+        - type: object
+          required:
+            [
+              "assetId",
+              "assetType",
+              "name",
+              "description",
+              "visibility",
+              "imageUrl",
+              "likes",
+              "likedByCurrentUser",
+              "createdAt",
+              "updatedAt",
+            ]
+          properties:
+            assetId:
+              type: string
+              format: uuid
+            assetType:
+              $ref: "#/components/schemas/assetType"
+            name:
+              type: string
+              minLength: 1
+              maxLength: 255
+            imageUrl:
+              type: string
+              format: uri
+            likes:
+              type: integer
+              minimum: 0
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+            description:
+              type: string
+              minLength: 1
     assetList:
       type: object
       required: ["assets"]
@@ -422,45 +464,7 @@ components:
         assets:
           type: array
           items:
-            allOf:
-              - $ref: "#/components/schemas/userSummary"
-              - type: object
-                required:
-                  [
-                    "assetId",
-                    "assetType",
-                    "name",
-                    "imageUrl",
-                    "likes",
-                    "createdAt",
-                    "updatedAt",
-                    "description",
-                  ]
-                properties:
-                  assetId:
-                    type: string
-                    format: uuid
-                  assetType:
-                    $ref: "#/components/schemas/assetType"
-                  name:
-                    type: string
-                    minLength: 1
-                    maxLength: 255
-                  imageUrl:
-                    type: string
-                    format: uri
-                  likes:
-                    type: integer
-                    minimum: 0
-                  createdAt:
-                    type: string
-                    format: date-time
-                  updatedAt:
-                    type: string
-                    format: date-time
-                  description:
-                    type: string
-                    minLength: 1
+            $ref: "#/components/schemas/asset"
     assetData:
       description: |
         The `data` field contains asset-specific data. It varies depending on the `assetType`:
@@ -896,47 +900,9 @@ components:
         application/json:
           schema:
             allOf:
-              - $ref: "#/components/schemas/userSummary"
+              - $ref: "#/components/schemas/asset"
               - type: object
-                required:
-                  [
-                    "assetId",
-                    "assetType",
-                    "name",
-                    "description",
-                    "data",
-                    "visibility",
-                    "imageUrl",
-                    "likes",
-                    "likedByCurrentUser",
-                    "createdAt",
-                    "updatedAt",
-                  ]
                 properties:
-                  assetId:
-                    type: string
-                    format: uuid
-                  assetType:
-                    $ref: "#/components/schemas/assetType"
-                  name:
-                    type: string
-                    minLength: 1
-                    maxLength: 255
-                  imageUrl:
-                    type: string
-                    format: uri
-                  likes:
-                    type: integer
-                    minimum: 0
-                  createdAt:
-                    type: string
-                    format: date-time
-                  updatedAt:
-                    type: string
-                    format: date-time
-                  description:
-                    type: string
-                    minLength: 1
                   data:
                     $ref: "#/components/schemas/assetData"
     AssetLike:
