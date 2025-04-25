@@ -13283,16 +13283,6 @@
                     },
                   ],
                 },
-                assetList: {
-                  type: "object",
-                  required: ["assets"],
-                  properties: {
-                    assets: {
-                      type: "array",
-                      items: { $ref: "#/components/schemas/asset" },
-                    },
-                  },
-                },
                 assetData: {
                   description:
                     'The `data` field contains asset-specific data. It varies depending on the `assetType`:\n\n- `"character"` → Character schema\n- `"location"` → Location schema\n- `"quest"` → Quest schema\n- `"map"` → Map schema\n\nSee examples for full structures.\n',
@@ -13743,7 +13733,16 @@
                   description: "OK",
                   content: {
                     "application/json": {
-                      schema: { $ref: "#/components/schemas/assetList" },
+                      schema: {
+                        type: "object",
+                        required: ["assets"],
+                        properties: {
+                          assets: {
+                            type: "array",
+                            items: { $ref: "#/components/schemas/asset" },
+                          },
+                        },
+                      },
                     },
                   },
                 },
@@ -13773,7 +13772,16 @@
                       schema: {
                         allOf: [
                           { $ref: "#/components/schemas/collection" },
-                          { $ref: "#/components/schemas/assetList" },
+                          {
+                            type: "object",
+                            required: ["assets"],
+                            properties: {
+                              assets: {
+                                type: "array",
+                                items: { $ref: "#/components/schemas/asset" },
+                              },
+                            },
+                          },
                         ],
                       },
                     },

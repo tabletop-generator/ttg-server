@@ -459,14 +459,6 @@ components:
             description:
               type: string
               minLength: 1
-    assetList:
-      type: object
-      required: ["assets"]
-      properties:
-        assets:
-          type: array
-          items:
-            $ref: "#/components/schemas/asset"
     assetData:
       description: |
         The `data` field contains asset-specific data. It varies depending on the `assetType`:
@@ -926,7 +918,13 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/assetList"
+            type: object
+            required: ["assets"]
+            properties:
+              assets:
+                type: array
+                items:
+                  $ref: "#/components/schemas/asset"
     CommentDetails:
       description: OK
       content:
@@ -948,7 +946,13 @@ components:
           schema:
             allOf:
               - $ref: "#/components/schemas/collection"
-              - $ref: "#/components/schemas/assetList"
+              - type: object
+                required: ["assets"]
+                properties:
+                  assets:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/asset"
     CollectionList:
       description: OK
       content:
