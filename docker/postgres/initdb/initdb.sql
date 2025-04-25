@@ -14,7 +14,7 @@ CREATE TABLE "User" (
     "id" UUID NOT NULL PRIMARY KEY,
     "join_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "display_name" TEXT NOT NULL CHECK (char_length(display_name) BETWEEN 1 AND 30),
-    "bio" TEXT NOT NULL CHECK (char_length(bio) <= 255)
+    "bio" TEXT NOT NULL CHECK (char_length(bio) <= 255) DEFAULT ''
 );
 
 -- Create Asset table
@@ -106,7 +106,7 @@ CREATE TABLE "Collection" (
     "updated_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "visibility" enum_visibility NOT NULL,
     "name" TEXT NOT NULL CHECK (char_length(name) BETWEEN 1 AND 30),
-    "description" TEXT NOT NULL CHECK (char_length(description) <= 255)
+    "description" TEXT NOT NULL CHECK (char_length(description) <= 255) DEFAULT ''
 );
 
 -- Create Asset To Collection many-to-many table
