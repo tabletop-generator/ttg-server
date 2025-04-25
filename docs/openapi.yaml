@@ -441,7 +441,7 @@ components:
             name:
               type: string
               minLength: 1
-              maxLength: 255
+              maxLength: 30
             imageUrl:
               type: string
               format: uri
