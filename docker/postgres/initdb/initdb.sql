@@ -45,7 +45,7 @@ CREATE TABLE "Character" (
     "equipment" TEXT,
     "motivation" TEXT,
     "personality" TEXT,
-    "custom_description" TEXT
+    "notes" TEXT
 );
 
 -- Create Location table
@@ -59,7 +59,7 @@ CREATE TABLE "Location" (
     "danger_level" TEXT,
     "points_of_interest" TEXT,
     "narrative_role" TEXT,
-    "custom_description" TEXT
+    "notes" TEXT
 );
 
 -- Create Quest table
@@ -76,7 +76,7 @@ CREATE TABLE "Quest" (
     "has_puzzles" BOOLEAN NOT NULL,
     "has_skill_challenges" BOOLEAN NOT NULL,
     "has_dilemmas" BOOLEAN NOT NULL,
-    "custom_description" TEXT
+    "notes" TEXT
 );
 
 -- Create Map table
@@ -86,7 +86,7 @@ CREATE TABLE "Map" (
     "scale" TEXT,
     "terrain" TEXT,
     "points_of_interest" TEXT,
-    "custom_description" TEXT
+    "notes" TEXT
 );
 
 -- Create Comment table
