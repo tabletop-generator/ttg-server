@@ -4168,6 +4168,22 @@
                                                   >
                                                     <span
                                                       class="property token string"
+                                                      >"assetType"</span
+                                                    >:
+                                                    <span class="token string"
+                                                      >&quot;character&quot;</span
+                                                    ><span
+                                                      class="token punctuation"
+                                                      >,</span
+                                                    >
+                                                  </div>
+                                                </li>
+                                                <li>
+                                                  <div
+                                                    class="hoverable collapsed"
+                                                  >
+                                                    <span
+                                                      class="property token string"
                                                       >"name"</span
                                                     >:
                                                     <span class="token string"
@@ -6516,6 +6532,22 @@
                                                   >
                                                     <span
                                                       class="property token string"
+                                                      >"assetType"</span
+                                                    >:
+                                                    <span class="token string"
+                                                      >&quot;character&quot;</span
+                                                    ><span
+                                                      class="token punctuation"
+                                                      >,</span
+                                                    >
+                                                  </div>
+                                                </li>
+                                                <li>
+                                                  <div
+                                                    class="hoverable collapsed"
+                                                  >
+                                                    <span
+                                                      class="property token string"
                                                       >"name"</span
                                                     >:
                                                     <span class="token string"
@@ -7379,6 +7411,22 @@
                                                   >
                                                     <span
                                                       class="property token string"
+                                                      >"assetType"</span
+                                                    >:
+                                                    <span class="token string"
+                                                      >&quot;character&quot;</span
+                                                    ><span
+                                                      class="token punctuation"
+                                                      >,</span
+                                                    >
+                                                  </div>
+                                                </li>
+                                                <li>
+                                                  <div
+                                                    class="hoverable collapsed"
+                                                  >
+                                                    <span
+                                                      class="property token string"
                                                       >"name"</span
                                                     >:
                                                     <span class="token string"
@@ -8107,6 +8155,22 @@
                                                     >:
                                                     <span class="token string"
                                                       >&quot;9179b887-04ef-4ce5-ab3a-b5bbd39ea3c8&quot;</span
+                                                    ><span
+                                                      class="token punctuation"
+                                                      >,</span
+                                                    >
+                                                  </div>
+                                                </li>
+                                                <li>
+                                                  <div
+                                                    class="hoverable collapsed"
+                                                  >
+                                                    <span
+                                                      class="property token string"
+                                                      >"assetType"</span
+                                                    >:
+                                                    <span class="token string"
+                                                      >&quot;character&quot;</span
                                                     ><span
                                                       class="token punctuation"
                                                       >,</span
@@ -8963,6 +9027,22 @@
                                                   >
                                                     <span
                                                       class="property token string"
+                                                      >"assetType"</span
+                                                    >:
+                                                    <span class="token string"
+                                                      >&quot;character&quot;</span
+                                                    ><span
+                                                      class="token punctuation"
+                                                      >,</span
+                                                    >
+                                                  </div>
+                                                </li>
+                                                <li>
+                                                  <div
+                                                    class="hoverable collapsed"
+                                                  >
+                                                    <span
+                                                      class="property token string"
                                                       >"name"</span
                                                     >:
                                                     <span class="token string"
@@ -9608,6 +9688,22 @@
                                                     >:
                                                     <span class="token string"
                                                       >&quot;9179b887-04ef-4ce5-ab3a-b5bbd39ea3c8&quot;</span
+                                                    ><span
+                                                      class="token punctuation"
+                                                      >,</span
+                                                    >
+                                                  </div>
+                                                </li>
+                                                <li>
+                                                  <div
+                                                    class="hoverable collapsed"
+                                                  >
+                                                    <span
+                                                      class="property token string"
+                                                      >"assetType"</span
+                                                    >:
+                                                    <span class="token string"
+                                                      >&quot;character&quot;</span
                                                     ><span
                                                       class="token punctuation"
                                                       >,</span
@@ -12926,6 +13022,7 @@
                             type: "object",
                             required: [
                               "assetId",
+                              "assetType",
                               "name",
                               "imageUrl",
                               "likes",
@@ -12935,6 +13032,9 @@
                             ],
                             properties: {
                               assetId: { type: "string", format: "uuid" },
+                              assetType: {
+                                $ref: "#/components/schemas/assetType",
+                              },
                               name: {
                                 type: "string",
                                 minLength: 1,
@@ -13396,6 +13496,9 @@
                             ],
                             properties: {
                               assetId: { type: "string", format: "uuid" },
+                              assetType: {
+                                $ref: "#/components/schemas/assetType",
+                              },
                               imageUrl: { type: "string", format: "uri" },
                               likes: { type: "integer", minimum: 0 },
                               createdAt: {
