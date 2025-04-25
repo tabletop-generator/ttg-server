@@ -934,15 +934,6 @@ components:
                     minLength: 1
                   data:
                     $ref: "#/components/schemas/assetData"
-          examples:
-            character:
-              $ref: "#/components/examples/characterAsset"
-            location:
-              $ref: "#/components/examples/locationAsset"
-            quest:
-              $ref: "#/components/examples/questAsset"
-            map:
-              $ref: "#/components/examples/mapAsset"
     AssetLike:
       description: OK
       content:
