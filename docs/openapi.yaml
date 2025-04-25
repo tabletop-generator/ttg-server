@@ -457,7 +457,7 @@ components:
               type: string
               format: date-time
             description:
-              type: [string, "null"]
+              type: string
               maxLength: 2000
     assetData:
       description: |
@@ -697,9 +697,9 @@ components:
         name:
           type: string
           minLength: 1
-          maxLength: 255
+          maxLength: 30
         description:
-          type: [string, "null"]
+          type: string
           maxLength: 255
         assetCount:
           type: integer
@@ -736,7 +736,7 @@ components:
               name:
                 type: string
                 minLength: 1
-                maxLength: 255
+                maxLength: 30
               assetType:
                 $ref: "#/components/schemas/assetType"
               visibility:
@@ -773,9 +773,9 @@ components:
               name:
                 type: string
                 minLength: 1
-                maxLength: 255
+                maxLength: 30
               description:
-                type: [string, "null"]
+                type: string
                 maxLength: 255
               visibility:
                 $ref: "#/components/schemas/visibility"
@@ -790,7 +790,7 @@ components:
                 minLength: 1
                 maxLength: 30
               bio:
-                type: [string, "null"]
+                type: string
                 maxLength: 255
     assetUpdate:
       content:
@@ -801,9 +801,9 @@ components:
               name:
                 type: string
                 minLength: 1
-                maxLength: 255
+                maxLength: 30
               description:
-                type: [string, "null"]
+                type: string
                 maxLength: 2000
               visibility:
                 $ref: "#/components/schemas/visibility"
@@ -980,7 +980,7 @@ components:
                 minLength: 1
                 maxLength: 30
               bio:
-                type: [string, "null"]
+                type: string
                 maxLength: 255
   parameters:
     limitParam:
@@ -1002,7 +1002,7 @@ components:
       schema:
         type: string
         minLength: 1
-        maxLength: 255
+        maxLength: 30
     descriptionParam:
       name: description
       in: query
