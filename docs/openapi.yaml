@@ -428,6 +428,7 @@ components:
               required:
                 [
                   "assetId",
+                  "name",
                   "imageUrl",
                   "likes",
                   "createdAt",
@@ -438,6 +439,10 @@ components:
                 assetId:
                   type: string
                   format: uuid
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
                 imageUrl:
                   type: string
                   format: uri
@@ -711,6 +716,7 @@ components:
           format: uuid
         displayName:
           type: string
+          minLength: 1
           maxLength: 30
   securitySchemes:
     basicHttpAuthentication:
@@ -784,6 +790,7 @@ components:
             properties:
               displayName:
                 type: string
+                minLength: 1
                 maxLength: 30
               bio:
                 type: string
@@ -800,7 +807,6 @@ components:
                 maxLength: 255
               description:
                 type: string
-                minLength: 1
               visibility:
                 $ref: "#/components/schemas/visibility"
     assetIds:
@@ -991,6 +997,7 @@ components:
                 format: date-time
               displayName:
                 type: string
+                minLength: 1
                 maxLength: 30
               bio:
                 type: string
