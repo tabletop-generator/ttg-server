@@ -38,54 +38,54 @@ CREATE TABLE "Character" (
     "class" enum_character_class NOT NULL,
     "gender" enum_character_gender NOT NULL,
     "alignment" enum_character_alignment NOT NULL,
-    "abilities" TEXT CHECK (char_length(abilities) <= 255),
-    "appearance" TEXT CHECK (char_length(appearance) <= 255),
-    "background" TEXT CHECK (char_length(background) <= 255),
-    "equipment" TEXT CHECK (char_length(equipment) <= 255),
-    "motivation" TEXT CHECK (char_length(motivation) <= 255),
-    "personality" TEXT CHECK (char_length(personality) <= 255),
-    "notes" TEXT CHECK (char_length(notes) <= 500)
+    "abilities" TEXT NOT NULL CHECK (char_length(abilities) <= 255) DEFAULT '',
+    "appearance" TEXT NOT NULL CHECK (char_length(appearance) <= 255) DEFAULT '',
+    "background" TEXT NOT NULL CHECK (char_length(background) <= 255) DEFAULT '',
+    "equipment" TEXT NOT NULL CHECK (char_length(equipment) <= 255) DEFAULT '',
+    "motivation" TEXT NOT NULL CHECK (char_length(motivation) <= 255) DEFAULT '',
+    "personality" TEXT NOT NULL CHECK (char_length(personality) <= 255) DEFAULT '',
+    "notes" TEXT NOT NULL CHECK (char_length(notes) <= 500) DEFAULT ''
 );
 
 -- Create Location table
 CREATE TABLE "Location" (
     "asset_id" UUID NOT NULL PRIMARY KEY REFERENCES "Asset"("id") ON DELETE CASCADE,
     "location_type" TEXT NOT NULL CHECK (char_length(location_type) <= 255),
-    "terrain" TEXT CHECK (char_length(terrain) <= 255),
-    "climate" TEXT CHECK (char_length(climate) <= 255),
-    "atmosphere" TEXT CHECK (char_length(atmosphere) <= 255),
-    "inhabitants" TEXT CHECK (char_length(inhabitants) <= 255),
-    "danger_level" TEXT CHECK (char_length(danger_level) <= 255),
-    "points_of_interest" TEXT CHECK (char_length(points_of_interest) <= 255),
-    "narrative_role" TEXT CHECK (char_length(narrative_role) <= 255),
-    "notes" TEXT CHECK (char_length(notes) <= 500)
+    "terrain" TEXT NOT NULL CHECK (char_length(terrain) <= 255) DEFAULT '',
+    "climate" TEXT NOT NULL CHECK (char_length(climate) <= 255) DEFAULT '',
+    "atmosphere" TEXT NOT NULL CHECK (char_length(atmosphere) <= 255) DEFAULT '',
+    "inhabitants" TEXT NOT NULL CHECK (char_length(inhabitants) <= 255) DEFAULT '',
+    "danger_level" TEXT NOT NULL CHECK (char_length(danger_level) <= 255) DEFAULT '',
+    "points_of_interest" TEXT NOT NULL CHECK (char_length(points_of_interest) <= 255) DEFAULT '',
+    "narrative_role" TEXT NOT NULL CHECK (char_length(narrative_role) <= 255) DEFAULT '',
+    "notes" TEXT NOT NULL CHECK (char_length(notes) <= 500) DEFAULT ''
 );
 
 -- Create Quest table
 CREATE TABLE "Quest" (
     "asset_id" UUID NOT NULL PRIMARY KEY REFERENCES "Asset"("id") ON DELETE CASCADE,
     "quest_type" TEXT NOT NULL CHECK (char_length(quest_type) <= 255),
-    "tone" TEXT CHECK (char_length(tone) <= 255),
-    "location" TEXT CHECK (char_length(location) <= 255),
-    "complexity" TEXT CHECK (char_length(complexity) <= 255),
-    "objective" TEXT CHECK (char_length(objective) <= 255),
-    "antagonist" TEXT CHECK (char_length(antagonist) <= 255),
-    "notable_npcs" TEXT CHECK (char_length(notable_npcs) <= 255),
+    "tone" TEXT NOT NULL CHECK (char_length(tone) <= 255) DEFAULT '',
+    "location" TEXT NOT NULL CHECK (char_length(location) <= 255) DEFAULT '',
+    "complexity" TEXT NOT NULL CHECK (char_length(complexity) <= 255) DEFAULT '',
+    "objective" TEXT NOT NULL CHECK (char_length(objective) <= 255) DEFAULT '',
+    "antagonist" TEXT NOT NULL CHECK (char_length(antagonist) <= 255) DEFAULT '',
+    "notable_npcs" TEXT NOT NULL CHECK (char_length(notable_npcs) <= 255) DEFAULT '',
     "has_combat" BOOLEAN NOT NULL,
     "has_puzzles" BOOLEAN NOT NULL,
     "has_skill_challenges" BOOLEAN NOT NULL,
     "has_dilemmas" BOOLEAN NOT NULL,
-    "notes" TEXT CHECK (char_length(notes) <= 500)
+    "notes" TEXT NOT NULL CHECK (char_length(notes) <= 500) DEFAULT ''
 );
 
 -- Create Map table
 CREATE TABLE "Map" (
     "asset_id" UUID PRIMARY KEY REFERENCES "Asset"("id") ON DELETE CASCADE,
     "map_type" TEXT NOT NULL CHECK (char_length(map_type) <= 255),
-    "scale" TEXT CHECK (char_length(scale) <= 255),
-    "terrain" TEXT CHECK (char_length(terrain) <= 255),
-    "points_of_interest" TEXT CHECK (char_length(points_of_interest) <= 255),
-    "notes" TEXT CHECK (char_length(notes) <= 500)
+    "scale" TEXT NOT NULL CHECK (char_length(scale) <= 255) DEFAULT '',
+    "terrain" TEXT NOT NULL CHECK (char_length(terrain) <= 255) DEFAULT '',
+    "points_of_interest" TEXT NOT NULL CHECK (char_length(points_of_interest) <= 255) DEFAULT '',
+    "notes" TEXT NOT NULL CHECK (char_length(notes) <= 500) DEFAULT ''
 );
 
 -- Create Comment table
