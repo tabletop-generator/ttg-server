@@ -421,43 +421,43 @@ components:
       properties:
         assets:
           type: array
-        items:
-          allOf:
-            - $ref: "#/components/schemas/userSummary"
-            - type: object
-              required:
-                [
-                  "assetId",
-                  "name",
-                  "imageUrl",
-                  "likes",
-                  "createdAt",
-                  "updatedAt",
-                  "description",
-                ]
-              properties:
-                assetId:
-                  type: string
-                  format: uuid
-                name:
-                  type: string
-                  minLength: 1
-                  maxLength: 255
-                imageUrl:
-                  type: string
-                  format: uri
-                likes:
-                  type: integer
-                  minimum: 0
-                createdAt:
-                  type: string
-                  format: date-time
-                updatedAt:
-                  type: string
-                  format: date-time
-                description:
-                  type: string
-                  minLength: 1
+          items:
+            allOf:
+              - $ref: "#/components/schemas/userSummary"
+              - type: object
+                required:
+                  [
+                    "assetId",
+                    "name",
+                    "imageUrl",
+                    "likes",
+                    "createdAt",
+                    "updatedAt",
+                    "description",
+                  ]
+                properties:
+                  assetId:
+                    type: string
+                    format: uuid
+                  name:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                  imageUrl:
+                    type: string
+                    format: uri
+                  likes:
+                    type: integer
+                    minimum: 0
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+                  description:
+                    type: string
+                    minLength: 1
     assetData:
       description: |
         The `data` field contains asset-specific data. It varies depending on the `assetType`:
