@@ -902,6 +902,7 @@ components:
                   [
                     "assetId",
                     "assetType",
+                    "name",
                     "description",
                     "data",
                     "visibility",
@@ -917,6 +918,10 @@ components:
                     format: uuid
                   assetType:
                     $ref: "#/components/schemas/assetType"
+                  name:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
                   imageUrl:
                     type: string
                     format: uri
