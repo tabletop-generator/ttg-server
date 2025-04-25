@@ -414,7 +414,329 @@ paths:
           description: Unauthorized
 
 components:
+  requestBodies:
+    assetCreate:
+      content:
+        application/json:
+          schema:
+            type: object
+            required: ["name", "assetType", "visibility", "data"]
+            properties:
+              name:
+                type: string
+                minLength: 1
+                maxLength: 30
+              assetType:
+                $ref: "#/components/schemas/assetType"
+              visibility:
+                $ref: "#/components/schemas/visibility"
+              data:
+                $ref: "#/components/schemas/assetData"
+          examples:
+            character:
+              $ref: "#/components/examples/characterAsset"
+            location:
+              $ref: "#/components/examples/locationAsset"
+            quest:
+              $ref: "#/components/examples/questAsset"
+            map:
+              $ref: "#/components/examples/mapAsset"
+    commentCreateAndUpdate:
+      content:
+        application/json:
+          schema:
+            type: object
+            required: ["body"]
+            properties:
+              body:
+                type: string
+                minLength: 1
+                maxLength: 255
+    collectionCreateAndUpdate:
+      content:
+        application/json:
+          schema:
+            type: object
+            required: ["name"]
+            properties:
+              name:
+                type: string
+                minLength: 1
+                maxLength: 30
+              description:
+                type: string
+                maxLength: 255
+              visibility:
+                $ref: "#/components/schemas/visibility"
+    userUpdate:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              displayName:
+                type: string
+                minLength: 1
+                maxLength: 30
+              bio:
+                type: string
+                maxLength: 255
+    assetUpdate:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                minLength: 1
+                maxLength: 30
+              description:
+                type: string
+                maxLength: 2000
+              visibility:
+                $ref: "#/components/schemas/visibility"
+    assetIds:
+      content:
+        application/json:
+          schema:
+            type: object
+            required: ["assetIds"]
+            properties:
+              assetIds:
+                type: array
+                items:
+                  type: string
+                  format: uuid
+  responses:
+    AssetDetails:
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/asset"
+              - type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/assetData"
+    AssetLike:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required: ["assetId", "likes", "likedByCurrentUser"]
+            properties:
+              assetId:
+                type: string
+                format: uuid
+              likes:
+                type: integer
+                minimum: 0
+              likedByCurrentUser:
+                type: boolean
+    AssetList:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required: ["assets"]
+            properties:
+              assets:
+                type: array
+                items:
+                  $ref: "#/components/schemas/asset"
+    CommentDetails:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/comment"
+    CommentList:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/comment"
+    CollectionDetails:
+      description: OK
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/collection"
+              - type: object
+                required: ["assets"]
+                properties:
+                  assets:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/asset"
+    CollectionList:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/collection"
+    UserDetails:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            required: ["userId", "createdAt", "displayName", "bio"]
+            properties:
+              userId:
+                type: string
+                format: uuid
+              createdAt:
+                type: string
+                format: date-time
+              displayName:
+                type: string
+                minLength: 1
+                maxLength: 30
+              bio:
+                type: string
+                maxLength: 255
+  parameters:
+    limitParam:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+    offsetParam:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        minimum: 0
+    nameParam:
+      name: name
+      in: query
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 30
+    descriptionParam:
+      name: description
+      in: query
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 255
+    assetTypeParam:
+      name: assetType
+      in: query
+      schema:
+        $ref: "#/components/schemas/assetType"
+    userIdParam:
+      name: userId
+      in: query
+      schema:
+        type: string
+        format: uuid
+    collectionIdParam:
+      name: collectionId
+      in: query
+      schema:
+        type: string
+        format: uuid
+    assetIdParam:
+      name: assetId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    commentIdParam:
+      name: commentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
   schemas:
+    visibility:
+      type: string
+      enum: ["public", "private", "unlisted"]
+    assetType:
+      type: string
+      enum: ["character", "location", "quest", "map"]
+    comment:
+      allOf:
+        - $ref: "#/components/schemas/userSummary"
+        - type: object
+          required: ["commentId", "body", "createdAt", "updatedAt"]
+          properties:
+            commentId:
+              type: string
+              format: uuid
+            body:
+              type: string
+              minLength: 1
+              maxLength: 255
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+    collection:
+      allOf:
+        - $ref: "#/components/schemas/userSummary"
+        - type: object
+          required:
+            [
+              "collectionId",
+              "createdAt",
+              "updatedAt",
+              "visibility",
+              "name",
+              "description",
+              "assetCount",
+            ]
+          properties:
+            collectionId:
+              type: string
+              format: uuid
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+            visibility:
+              $ref: "#/components/schemas/visibility"
+            name:
+              type: string
+              minLength: 1
+              maxLength: 30
+            description:
+              type: string
+              maxLength: 255
+            assetCount:
+              type: integer
+              minimum: 0
+    userSummary:
+      type: object
+      required: ["userId", "displayName"]
+      properties:
+        userId:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+          minLength: 1
+          maxLength: 30
     asset:
       allOf:
         - $ref: "#/components/schemas/userSummary"
@@ -481,12 +803,6 @@ components:
         - $ref: "#/components/schemas/location"
         - $ref: "#/components/schemas/quest"
         - $ref: "#/components/schemas/map"
-    visibility:
-      type: string
-      enum: ["public", "private", "unlisted"]
-    assetType:
-      type: string
-      enum: ["character", "location", "quest", "map"]
     character:
       type: object
       required: ["race", "class", "gender", "alignment"]
@@ -648,73 +964,6 @@ components:
         notes:
           type: string
           maxLength: 500
-    comment:
-      allOf:
-        - $ref: "#/components/schemas/userSummary"
-        - type: object
-          required: ["commentId", "body", "createdAt", "updatedAt"]
-          properties:
-            commentId:
-              type: string
-              format: uuid
-            body:
-              type: string
-              maxLength: 255
-            createdAt:
-              type: string
-              format: date-time
-            updatedAt:
-              type: string
-              format: date-time
-    collection:
-      type: object
-      required:
-        [
-          "collectionId",
-          "creatorId",
-          "createdAt",
-          "updatedAt",
-          "visibility",
-          "name",
-          "description",
-          "assetCount",
-        ]
-      properties:
-        collectionId:
-          type: string
-          format: uuid
-        creatorId:
-          type: string
-          format: uuid
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        visibility:
-          $ref: "#/components/schemas/visibility"
-        name:
-          type: string
-          minLength: 1
-          maxLength: 30
-        description:
-          type: string
-          maxLength: 255
-        assetCount:
-          type: integer
-          minimum: 0
-    userSummary:
-      type: object
-      required: ["userId", "displayName"]
-      properties:
-        userId:
-          type: string
-          format: uuid
-        displayName:
-          type: string
-          minLength: 1
-          maxLength: 30
   securitySchemes:
     basicHttpAuthentication:
       description: Basic HTTP Authentication
@@ -725,100 +974,6 @@ components:
       type: http
       scheme: Bearer
       bearerFormat: JWT
-  requestBodies:
-    assetCreate:
-      content:
-        application/json:
-          schema:
-            type: object
-            required: ["name", "assetType", "visibility", "data"]
-            properties:
-              name:
-                type: string
-                minLength: 1
-                maxLength: 30
-              assetType:
-                $ref: "#/components/schemas/assetType"
-              visibility:
-                $ref: "#/components/schemas/visibility"
-              data:
-                $ref: "#/components/schemas/assetData"
-          examples:
-            character:
-              $ref: "#/components/examples/characterAsset"
-            location:
-              $ref: "#/components/examples/locationAsset"
-            quest:
-              $ref: "#/components/examples/questAsset"
-            map:
-              $ref: "#/components/examples/mapAsset"
-    commentCreateAndUpdate:
-      content:
-        application/json:
-          schema:
-            type: object
-            required: ["body"]
-            properties:
-              body:
-                type: string
-                minLength: 1
-                maxLength: 255
-    collectionCreateAndUpdate:
-      content:
-        application/json:
-          schema:
-            type: object
-            required: ["name"]
-            properties:
-              name:
-                type: string
-                minLength: 1
-                maxLength: 30
-              description:
-                type: string
-                maxLength: 255
-              visibility:
-                $ref: "#/components/schemas/visibility"
-    userUpdate:
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              displayName:
-                type: string
-                minLength: 1
-                maxLength: 30
-              bio:
-                type: string
-                maxLength: 255
-    assetUpdate:
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              name:
-                type: string
-                minLength: 1
-                maxLength: 30
-              description:
-                type: string
-                maxLength: 2000
-              visibility:
-                $ref: "#/components/schemas/visibility"
-    assetIds:
-      content:
-        application/json:
-          schema:
-            type: object
-            required: ["assetIds"]
-            properties:
-              assetIds:
-                type: array
-                items:
-                  type: string
-                  format: uuid
   examples:
     characterAsset:
       summary: Character Asset
@@ -885,159 +1040,3 @@ components:
           scale: "1 inch = 100 miles"
           pointsOfInterest: "Capital city, cursed lake, rebel outpost"
           notes: "Borders subject to political conflict"
-  responses:
-    AssetDetails:
-      description: OK
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: "#/components/schemas/asset"
-              - type: object
-                properties:
-                  data:
-                    $ref: "#/components/schemas/assetData"
-    AssetLike:
-      description: OK
-      content:
-        application/json:
-          schema:
-            type: object
-            required: ["assetId", "likes", "likedByCurrentUser"]
-            properties:
-              assetId:
-                type: string
-                format: uuid
-              likes:
-                type: integer
-                minimum: 0
-              likedByCurrentUser:
-                type: boolean
-    AssetList:
-      description: OK
-      content:
-        application/json:
-          schema:
-            type: object
-            required: ["assets"]
-            properties:
-              assets:
-                type: array
-                items:
-                  $ref: "#/components/schemas/asset"
-    CommentDetails:
-      description: OK
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/comment"
-    CommentList:
-      description: OK
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: "#/components/schemas/comment"
-    CollectionDetails:
-      description: OK
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: "#/components/schemas/collection"
-              - type: object
-                required: ["assets"]
-                properties:
-                  assets:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/asset"
-    CollectionList:
-      description: OK
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: "#/components/schemas/collection"
-    UserDetails:
-      description: OK
-      content:
-        application/json:
-          schema:
-            type: object
-            required: ["userId", "createdAt", "displayName", "bio"]
-            properties:
-              userId:
-                type: string
-                format: uuid
-              createdAt:
-                type: string
-                format: date-time
-              displayName:
-                type: string
-                minLength: 1
-                maxLength: 30
-              bio:
-                type: string
-                maxLength: 255
-  parameters:
-    limitParam:
-      name: limit
-      in: query
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-    offsetParam:
-      name: offset
-      in: query
-      schema:
-        type: integer
-        minimum: 0
-    nameParam:
-      name: name
-      in: query
-      schema:
-        type: string
-        minLength: 1
-        maxLength: 30
-    descriptionParam:
-      name: description
-      in: query
-      schema:
-        type: string
-        minLength: 1
-        maxLength: 255
-    assetTypeParam:
-      name: assetType
-      in: query
-      schema:
-        $ref: "#/components/schemas/assetType"
-    userIdParam:
-      name: userId
-      in: query
-      schema:
-        type: string
-        format: uuid
-    collectionIdParam:
-      name: collectionId
-      in: query
-      schema:
-        type: string
-        format: uuid
-    assetIdParam:
-      name: assetId
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-    commentIdParam:
-      name: commentId
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
