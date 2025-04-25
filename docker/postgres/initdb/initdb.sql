@@ -15,9 +15,7 @@ CREATE TABLE "User" (
     "email" TEXT UNIQUE,
     "join_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "display_name" TEXT,
-    "profile_bio" TEXT,
-    "profile_picture_url" TEXT,
-    "profile_picture_url_expiry" TIMESTAMP
+    "profile_bio" TEXT
 );
 
 -- Create Asset table
