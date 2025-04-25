@@ -5023,7 +5023,7 @@
                               class="sc-huvZk sc-cLAbsH hHoKqR jolyEu"
                             ></span
                             ><span class="sc-huvZk sc-hlDTgW hHoKqR NHcBj"
-                              >string</span
+                              >string or null</span
                             ><span>
                               <span class="sc-huvZk sc-fmMLgT hHoKqR cSmxOb">
                                 <!-- -->&lt;= 2000 characters<!-- -->
@@ -6239,7 +6239,7 @@
                               class="sc-huvZk sc-cLAbsH hHoKqR jolyEu"
                             ></span
                             ><span class="sc-huvZk sc-hlDTgW hHoKqR NHcBj"
-                              >string</span
+                              >string or null</span
                             ><span>
                               <span class="sc-huvZk sc-fmMLgT hHoKqR cSmxOb">
                                 <!-- -->&lt;= 255 characters<!-- -->
@@ -7880,7 +7880,7 @@
                               class="sc-huvZk sc-cLAbsH hHoKqR jolyEu"
                             ></span
                             ><span class="sc-huvZk sc-hlDTgW hHoKqR NHcBj"
-                              >string</span
+                              >string or null</span
                             ><span>
                               <span class="sc-huvZk sc-fmMLgT hHoKqR cSmxOb">
                                 <!-- -->&lt;= 255 characters<!-- -->
@@ -10962,7 +10962,7 @@
                               class="sc-huvZk sc-cLAbsH hHoKqR jolyEu"
                             ></span
                             ><span class="sc-huvZk sc-hlDTgW hHoKqR NHcBj"
-                              >string</span
+                              >string or null</span
                             ><span>
                               <span class="sc-huvZk sc-fmMLgT hHoKqR cSmxOb">
                                 <!-- -->&lt;= 255 characters<!-- -->
@@ -13278,7 +13278,10 @@
                         likedByCurrentUser: { type: "boolean" },
                         createdAt: { type: "string", format: "date-time" },
                         updatedAt: { type: "string", format: "date-time" },
-                        description: { type: "string", maxLength: 2000 },
+                        description: {
+                          type: ["string", "null"],
+                          maxLength: 2000,
+                        },
                       },
                     },
                   ],
@@ -13458,7 +13461,7 @@
                     updatedAt: { type: "string", format: "date-time" },
                     visibility: { $ref: "#/components/schemas/visibility" },
                     name: { type: "string", minLength: 1, maxLength: 255 },
-                    description: { type: "string", maxLength: 255 },
+                    description: { type: ["string", "null"], maxLength: 255 },
                     assetCount: { type: "integer", minimum: 0 },
                   },
                 },
@@ -13550,7 +13553,10 @@
                             minLength: 1,
                             maxLength: 255,
                           },
-                          description: { type: "string", maxLength: 255 },
+                          description: {
+                            type: ["string", "null"],
+                            maxLength: 255,
+                          },
                           visibility: {
                             $ref: "#/components/schemas/visibility",
                           },
@@ -13570,7 +13576,7 @@
                             minLength: 1,
                             maxLength: 30,
                           },
-                          bio: { type: "string", maxLength: 255 },
+                          bio: { type: ["string", "null"], maxLength: 255 },
                         },
                       },
                     },
@@ -13587,7 +13593,10 @@
                             minLength: 1,
                             maxLength: 255,
                           },
-                          description: { type: "string", maxLength: 2000 },
+                          description: {
+                            type: ["string", "null"],
+                            maxLength: 2000,
+                          },
                           visibility: {
                             $ref: "#/components/schemas/visibility",
                           },
@@ -13813,7 +13822,7 @@
                             minLength: 1,
                             maxLength: 30,
                           },
-                          bio: { type: "string", maxLength: 255 },
+                          bio: { type: ["string", "null"], maxLength: 255 },
                         },
                       },
                     },

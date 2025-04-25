@@ -457,7 +457,7 @@ components:
               type: string
               format: date-time
             description:
-              type: string
+              type: [string, "null"]
               maxLength: 2000
     assetData:
       description: |
@@ -699,7 +699,7 @@ components:
           minLength: 1
           maxLength: 255
         description:
-          type: string
+          type: [string, "null"]
           maxLength: 255
         assetCount:
           type: integer
@@ -775,7 +775,7 @@ components:
                 minLength: 1
                 maxLength: 255
               description:
-                type: string
+                type: [string, "null"]
                 maxLength: 255
               visibility:
                 $ref: "#/components/schemas/visibility"
@@ -790,7 +790,7 @@ components:
                 minLength: 1
                 maxLength: 30
               bio:
-                type: string
+                type: [string, "null"]
                 maxLength: 255
     assetUpdate:
       content:
@@ -803,7 +803,7 @@ components:
                 minLength: 1
                 maxLength: 255
               description:
-                type: string
+                type: [string, "null"]
                 maxLength: 2000
               visibility:
                 $ref: "#/components/schemas/visibility"
@@ -980,7 +980,7 @@ components:
                 minLength: 1
                 maxLength: 30
               bio:
-                type: string
+                type: [string, "null"]
                 maxLength: 255
   parameters:
     limitParam:
