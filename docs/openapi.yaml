@@ -428,6 +428,7 @@ components:
                 required:
                   [
                     "assetId",
+                    "assetType",
                     "name",
                     "imageUrl",
                     "likes",
@@ -439,6 +440,8 @@ components:
                   assetId:
                     type: string
                     format: uuid
+                  assetType:
+                    $ref: "#/components/schemas/assetType"
                   name:
                     type: string
                     minLength: 1
@@ -912,6 +915,8 @@ components:
                   assetId:
                     type: string
                     format: uuid
+                  assetType:
+                    $ref: "#/components/schemas/assetType"
                   imageUrl:
                     type: string
                     format: uri
