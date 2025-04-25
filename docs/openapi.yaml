@@ -448,6 +448,8 @@ components:
             likes:
               type: integer
               minimum: 0
+            likedByCurrentUser:
+              type: boolean
             createdAt:
               type: string
               format: date-time
@@ -494,7 +496,6 @@ components:
       type: string
       enum: ["character", "location", "quest", "map"]
     character:
-      title: Character Data
       type: object
       required: ["race", "class", "gender", "alignment"]
       properties:
@@ -570,7 +571,6 @@ components:
           type: string
           maxLength: 500
     location:
-      title: Location Data
       type: object
       required: ["locationType"]
       properties:
@@ -602,7 +602,6 @@ components:
           type: string
           maxLength: 500
     quest:
-      title: Quest Data
       type: object
       required: ["questType"]
       properties:
@@ -639,7 +638,6 @@ components:
           type: string
           maxLength: 500
     map:
-      title: Map Data
       type: object
       required: ["mapType"]
       properties:
@@ -814,6 +812,7 @@ components:
                 maxLength: 255
               description:
                 type: string
+                maxLength: 255
               visibility:
                 $ref: "#/components/schemas/visibility"
     assetIds:
@@ -821,6 +820,7 @@ components:
         application/json:
           schema:
             type: object
+            required: ["assetIds"]
             properties:
               assetIds:
                 type: array
