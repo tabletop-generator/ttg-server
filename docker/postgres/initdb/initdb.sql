@@ -14,8 +14,8 @@ CREATE TABLE "User" (
     "id" UUID PRIMARY KEY,
     "email" TEXT UNIQUE,
     "join_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "display_name" TEXT,
-    "profile_bio" TEXT
+    "display_name" TEXT NOT NULL,
+    "bio" TEXT
 );
 
 -- Create Asset table
