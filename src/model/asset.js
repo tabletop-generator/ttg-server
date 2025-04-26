@@ -17,7 +17,7 @@ const prisma = require("./data/prismaClient");
  * @throws
  */
 async function saveAsset(userId, description, image, metadata, mimeType) {
-  const { name, type, visibility, data } = metadata;
+  const { name, assetType, visibility, data } = metadata;
 
   const assetId = randomUUID();
   const key = `${userId}/${assetId}`;
@@ -27,25 +27,65 @@ async function saveAsset(userId, description, image, metadata, mimeType) {
   const { url, urlExpiry } = await createPresignedUrl(key);
 
   // Save asset to database
-  return await prisma.asset.create({
+  const asset = await prisma.asset.create({
     data: {
-      id: assetId,
+      assetId: assetId,
+      assetType: assetType,
       name: name,
-      type: type,
       visibility: visibility,
       description: description,
       imageUrl: url,
       imageUrlExpiry: urlExpiry,
-      [type]: {
+      [assetType]: {
         create: { ...data },
       },
       user: {
         connect: {
-          id: userId,
+          userId: userId,
+        },
+      },
+    },
+    include: {
+      user: { select: { userId: true, displayName: true } },
+      _count: { select: { AssetLike: true, comments: true } },
+      [assetType]: {
+        omit: {
+          assetId: true,
         },
       },
     },
   });
+
+  const like = await prisma.assetLike.findUnique({
+    where: {
+      assetId_userId: {
+        assetId: assetId,
+        userId: userId,
+      },
+    },
+    select: {
+      assetId: true, // just to fetch minimal data
+    },
+  });
+
+  const isLikedByCurrentUser = !!like;
+
+  return {
+    userId: asset.user.userId,
+    displayName: asset.user.displayName,
+    assetId: asset.assetId,
+    assetType: asset.assetType,
+    name: asset.name,
+    description: asset.description,
+    visibility: asset.visibility,
+    imageUrl: asset.imageUrl,
+    createdAt: asset.createdAt.toISOString(),
+    updatedAt: asset.updatedAt.toISOString(),
+    likeCount: asset._count.AssetLike,
+    commentCount: asset._count.comments,
+    isLikedByCurrentUser: isLikedByCurrentUser,
+    data: asset[assetType],
+  };
 }
 
 /**
