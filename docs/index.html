@@ -7314,7 +7314,7 @@
                 </h2>
                 <div>
                   <h5 class="sc-cUiCeM crXcll">
-                    query<!-- -->
+                    path<!-- -->
                     Parameters
                   </h5>
                   <table class="sc-dKKIkQ gkzLzl">
@@ -7327,6 +7327,9 @@
                         >
                           <span class="sc-guGTOK dqwxee"></span
                           ><span class="property-name">collectionId</span>
+                          <div class="sc-huvZk sc-icsLOd hHoKqR ecKepT">
+                            required
+                          </div>
                         </td>
                         <td class="sc-fjUQFl eVmPSM">
                           <div>
@@ -7902,7 +7905,7 @@
                 </div>
                 <div>
                   <h5 class="sc-cUiCeM crXcll">
-                    query<!-- -->
+                    path<!-- -->
                     Parameters
                   </h5>
                   <table class="sc-dKKIkQ gkzLzl">
@@ -7915,6 +7918,9 @@
                         >
                           <span class="sc-guGTOK dqwxee"></span
                           ><span class="property-name">collectionId</span>
+                          <div class="sc-huvZk sc-icsLOd hHoKqR ecKepT">
+                            required
+                          </div>
                         </td>
                         <td class="sc-fjUQFl eVmPSM">
                           <div>
@@ -8702,7 +8708,7 @@
                 </div>
                 <div>
                   <h5 class="sc-cUiCeM crXcll">
-                    query<!-- -->
+                    path<!-- -->
                     Parameters
                   </h5>
                   <table class="sc-dKKIkQ gkzLzl">
@@ -8715,6 +8721,9 @@
                         >
                           <span class="sc-guGTOK dqwxee"></span
                           ><span class="property-name">collectionId</span>
+                          <div class="sc-huvZk sc-icsLOd hHoKqR ecKepT">
+                            required
+                          </div>
                         </td>
                         <td class="sc-fjUQFl eVmPSM">
                           <div>
@@ -8889,7 +8898,7 @@
                 </div>
                 <div>
                   <h5 class="sc-cUiCeM crXcll">
-                    query<!-- -->
+                    path<!-- -->
                     Parameters
                   </h5>
                   <table class="sc-dKKIkQ gkzLzl">
@@ -8902,6 +8911,9 @@
                         >
                           <span class="sc-guGTOK dqwxee"></span
                           ><span class="property-name">collectionId</span>
+                          <div class="sc-huvZk sc-icsLOd hHoKqR ecKepT">
+                            required
+                          </div>
                         </td>
                         <td class="sc-fjUQFl eVmPSM">
                           <div>
@@ -9609,7 +9621,7 @@
                 </div>
                 <div>
                   <h5 class="sc-cUiCeM crXcll">
-                    query<!-- -->
+                    path<!-- -->
                     Parameters
                   </h5>
                   <table class="sc-dKKIkQ gkzLzl">
@@ -9622,6 +9634,9 @@
                         >
                           <span class="sc-guGTOK dqwxee"></span
                           ><span class="property-name">collectionId</span>
+                          <div class="sc-huvZk sc-icsLOd hHoKqR ecKepT">
+                            required
+                          </div>
                         </td>
                         <td class="sc-fjUQFl eVmPSM">
                           <div>
@@ -10613,7 +10628,7 @@
                 </h2>
                 <div>
                   <h5 class="sc-cUiCeM crXcll">
-                    query<!-- -->
+                    path<!-- -->
                     Parameters
                   </h5>
                   <table class="sc-dKKIkQ gkzLzl">
@@ -10626,6 +10641,9 @@
                         >
                           <span class="sc-guGTOK dqwxee"></span
                           ><span class="property-name">userId</span>
+                          <div class="sc-huvZk sc-icsLOd hHoKqR ecKepT">
+                            required
+                          </div>
                         </td>
                         <td class="sc-fjUQFl eVmPSM">
                           <div>
@@ -13162,13 +13180,13 @@
                   summary: "Retrieve a list of assets",
                   security: [],
                   parameters: [
-                    { $ref: "#/components/parameters/limitParam" },
-                    { $ref: "#/components/parameters/offsetParam" },
-                    { $ref: "#/components/parameters/assetTypeParam" },
-                    { $ref: "#/components/parameters/collectionIdParam" },
-                    { $ref: "#/components/parameters/userIdParam" },
-                    { $ref: "#/components/parameters/nameParam" },
-                    { $ref: "#/components/parameters/descriptionParam" },
+                    { $ref: "#/components/parameters/limitQueryParam" },
+                    { $ref: "#/components/parameters/offsetQueryParam" },
+                    { $ref: "#/components/parameters/assetTypeQueryParam" },
+                    { $ref: "#/components/parameters/collectionIdQueryParam" },
+                    { $ref: "#/components/parameters/userIdQueryParam" },
+                    { $ref: "#/components/parameters/nameQueryParam" },
+                    { $ref: "#/components/parameters/descriptionQueryParam" },
                   ],
                   responses: {
                     200: { $ref: "#/components/responses/AssetList" },
@@ -13176,7 +13194,9 @@
                 },
               },
               "/assets/{assetId}": {
-                parameters: [{ $ref: "#/components/parameters/assetIdParam" }],
+                parameters: [
+                  { $ref: "#/components/parameters/assetIdPathParam" },
+                ],
                 get: {
                   tags: ["asset"],
                   operationId: "getAssetById",
@@ -13224,7 +13244,9 @@
                 },
               },
               "/assets/{assetId}/like": {
-                parameters: [{ $ref: "#/components/parameters/assetIdParam" }],
+                parameters: [
+                  { $ref: "#/components/parameters/assetIdPathParam" },
+                ],
                 post: {
                   tags: ["asset"],
                   operationId: "likeAssetById",
@@ -13242,7 +13264,9 @@
                 },
               },
               "/assets/{assetId}/comments": {
-                parameters: [{ $ref: "#/components/parameters/assetIdParam" }],
+                parameters: [
+                  { $ref: "#/components/parameters/assetIdPathParam" },
+                ],
                 post: {
                   tags: ["comment"],
                   operationId: "createCommentByAssetId",
@@ -13267,8 +13291,8 @@
                   summary: "Retrieve all comments for a specific asset",
                   security: [],
                   parameters: [
-                    { $ref: "#/components/parameters/limitParam" },
-                    { $ref: "#/components/parameters/offsetParam" },
+                    { $ref: "#/components/parameters/limitQueryParam" },
+                    { $ref: "#/components/parameters/offsetQueryParam" },
                   ],
                   responses: {
                     200: { $ref: "#/components/responses/CommentList" },
@@ -13278,8 +13302,8 @@
               },
               "/assets/{assetId}/comments/{commentId}": {
                 parameters: [
-                  { $ref: "#/components/parameters/assetIdParam" },
-                  { $ref: "#/components/parameters/commentIdParam" },
+                  { $ref: "#/components/parameters/assetIdPathParam" },
+                  { $ref: "#/components/parameters/commentIdPathParam" },
                 ],
                 patch: {
                   tags: ["comment"],
@@ -13338,9 +13362,9 @@
                   summary: "Retrieve a list of collections",
                   security: [],
                   parameters: [
-                    { $ref: "#/components/parameters/limitParam" },
-                    { $ref: "#/components/parameters/offsetParam" },
-                    { $ref: "#/components/parameters/userIdParam" },
+                    { $ref: "#/components/parameters/limitQueryParam" },
+                    { $ref: "#/components/parameters/offsetQueryParam" },
+                    { $ref: "#/components/parameters/userIdQueryParam" },
                   ],
                   responses: {
                     200: { $ref: "#/components/responses/CollectionList" },
@@ -13349,7 +13373,7 @@
               },
               "/collections/{collectionId}": {
                 parameters: [
-                  { $ref: "#/components/parameters/collectionIdParam" },
+                  { $ref: "#/components/parameters/collectionIdPathParam" },
                 ],
                 get: {
                   tags: ["collection"],
@@ -13399,7 +13423,7 @@
               },
               "/collections/{collectionId}/assets": {
                 parameters: [
-                  { $ref: "#/components/parameters/collectionIdParam" },
+                  { $ref: "#/components/parameters/collectionIdPathParam" },
                 ],
                 post: {
                   tags: ["collection"],
@@ -13420,7 +13444,7 @@
               },
               "/collections/{collectionId}/assets/delete": {
                 parameters: [
-                  { $ref: "#/components/parameters/collectionIdParam" },
+                  { $ref: "#/components/parameters/collectionIdPathParam" },
                 ],
                 post: {
                   tags: ["collection"],
@@ -13456,7 +13480,9 @@
                 },
               },
               "/users/{userId}": {
-                parameters: [{ $ref: "#/components/parameters/userIdParam" }],
+                parameters: [
+                  { $ref: "#/components/parameters/userIdPathParam" },
+                ],
                 get: {
                   tags: ["user"],
                   operationId: "getUserById",
@@ -13754,48 +13780,60 @@
                 },
               },
               parameters: {
-                limitParam: {
+                limitQueryParam: {
                   name: "limit",
                   in: "query",
                   schema: { type: "integer", minimum: 1, maximum: 100 },
                 },
-                offsetParam: {
+                offsetQueryParam: {
                   name: "offset",
                   in: "query",
                   schema: { type: "integer", minimum: 0 },
                 },
-                nameParam: {
+                nameQueryParam: {
                   name: "name",
                   in: "query",
                   schema: { type: "string", minLength: 1, maxLength: 30 },
                 },
-                descriptionParam: {
+                descriptionQueryParam: {
                   name: "description",
                   in: "query",
                   schema: { type: "string", minLength: 1, maxLength: 255 },
                 },
-                assetTypeParam: {
+                assetTypeQueryParam: {
                   name: "assetType",
                   in: "query",
                   schema: { $ref: "#/components/schemas/assetType" },
                 },
-                userIdParam: {
+                userIdQueryParam: {
                   name: "userId",
                   in: "query",
                   schema: { type: "string", format: "uuid" },
                 },
-                collectionIdParam: {
+                collectionIdQueryParam: {
                   name: "collectionId",
                   in: "query",
                   schema: { type: "string", format: "uuid" },
                 },
-                assetIdParam: {
+                userIdPathParam: {
+                  name: "userId",
+                  in: "path",
+                  required: true,
+                  schema: { type: "string", format: "uuid" },
+                },
+                collectionIdPathParam: {
+                  name: "collectionId",
+                  in: "path",
+                  required: true,
+                  schema: { type: "string", format: "uuid" },
+                },
+                assetIdPathParam: {
                   name: "assetId",
                   in: "path",
                   required: true,
                   schema: { type: "string", format: "uuid" },
                 },
-                commentIdParam: {
+                commentIdPathParam: {
                   name: "commentId",
                   in: "path",
                   required: true,

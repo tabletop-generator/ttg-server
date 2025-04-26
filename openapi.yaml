@@ -55,20 +55,20 @@ paths:
       summary: Retrieve a list of assets
       security: []
       parameters:
-        - $ref: "#/components/parameters/limitParam"
-        - $ref: "#/components/parameters/offsetParam"
-        - $ref: "#/components/parameters/assetTypeParam"
-        - $ref: "#/components/parameters/collectionIdParam"
-        - $ref: "#/components/parameters/userIdParam"
-        - $ref: "#/components/parameters/nameParam"
-        - $ref: "#/components/parameters/descriptionParam"
+        - $ref: "#/components/parameters/limitQueryParam"
+        - $ref: "#/components/parameters/offsetQueryParam"
+        - $ref: "#/components/parameters/assetTypeQueryParam"
+        - $ref: "#/components/parameters/collectionIdQueryParam"
+        - $ref: "#/components/parameters/userIdQueryParam"
+        - $ref: "#/components/parameters/nameQueryParam"
+        - $ref: "#/components/parameters/descriptionQueryParam"
       responses:
         "200":
           $ref: "#/components/responses/AssetList"
 
   /assets/{assetId}:
     parameters:
-      - $ref: "#/components/parameters/assetIdParam"
+      - $ref: "#/components/parameters/assetIdPathParam"
     get:
       tags:
         - asset
@@ -123,7 +123,7 @@ paths:
 
   /assets/{assetId}/like:
     parameters:
-      - $ref: "#/components/parameters/assetIdParam"
+      - $ref: "#/components/parameters/assetIdPathParam"
     post:
       tags:
         - asset
@@ -144,7 +144,7 @@ paths:
 
   /assets/{assetId}/comments:
     parameters:
-      - $ref: "#/components/parameters/assetIdParam"
+      - $ref: "#/components/parameters/assetIdPathParam"
     post:
       tags:
         - comment
@@ -171,8 +171,8 @@ paths:
       summary: Retrieve all comments for a specific asset
       security: []
       parameters:
-        - $ref: "#/components/parameters/limitParam"
-        - $ref: "#/components/parameters/offsetParam"
+        - $ref: "#/components/parameters/limitQueryParam"
+        - $ref: "#/components/parameters/offsetQueryParam"
       responses:
         "200":
           $ref: "#/components/responses/CommentList"
@@ -181,8 +181,8 @@ paths:
 
   /assets/{assetId}/comments/{commentId}:
     parameters:
-      - $ref: "#/components/parameters/assetIdParam"
-      - $ref: "#/components/parameters/commentIdParam"
+      - $ref: "#/components/parameters/assetIdPathParam"
+      - $ref: "#/components/parameters/commentIdPathParam"
     patch:
       tags:
         - comment
@@ -243,16 +243,16 @@ paths:
       summary: Retrieve a list of collections
       security: []
       parameters:
-        - $ref: "#/components/parameters/limitParam"
-        - $ref: "#/components/parameters/offsetParam"
-        - $ref: "#/components/parameters/userIdParam"
+        - $ref: "#/components/parameters/limitQueryParam"
+        - $ref: "#/components/parameters/offsetQueryParam"
+        - $ref: "#/components/parameters/userIdQueryParam"
       responses:
         "200":
           $ref: "#/components/responses/CollectionList"
 
   /collections/{collectionId}:
     parameters:
-      - $ref: "#/components/parameters/collectionIdParam"
+      - $ref: "#/components/parameters/collectionIdPathParam"
     get:
       tags:
         - collection
@@ -307,7 +307,7 @@ paths:
 
   /collections/{collectionId}/assets:
     parameters:
-      - $ref: "#/components/parameters/collectionIdParam"
+      - $ref: "#/components/parameters/collectionIdPathParam"
     post:
       tags:
         - collection
@@ -330,7 +330,7 @@ paths:
 
   /collections/{collectionId}/assets/delete:
     parameters:
-      - $ref: "#/components/parameters/collectionIdParam"
+      - $ref: "#/components/parameters/collectionIdPathParam"
     post:
       tags:
         - collection
@@ -370,7 +370,7 @@ paths:
 
   /users/{userId}:
     parameters:
-      - $ref: "#/components/parameters/userIdParam"
+      - $ref: "#/components/parameters/userIdPathParam"
     get:
       tags:
         - user
@@ -609,58 +609,72 @@ components:
                 type: string
                 maxLength: 255
   parameters:
-    limitParam:
+    limitQueryParam:
       name: limit
       in: query
       schema:
         type: integer
         minimum: 1
         maximum: 100
-    offsetParam:
+    offsetQueryParam:
       name: offset
       in: query
       schema:
         type: integer
         minimum: 0
-    nameParam:
+    nameQueryParam:
       name: name
       in: query
       schema:
         type: string
         minLength: 1
         maxLength: 30
-    descriptionParam:
+    descriptionQueryParam:
       name: description
       in: query
       schema:
         type: string
         minLength: 1
         maxLength: 255
-    assetTypeParam:
+    assetTypeQueryParam:
       name: assetType
       in: query
       schema:
         $ref: "#/components/schemas/assetType"
-    userIdParam:
+    userIdQueryParam:
       name: userId
       in: query
       schema:
         type: string
         format: uuid
-    collectionIdParam:
+    collectionIdQueryParam:
       name: collectionId
       in: query
       schema:
         type: string
         format: uuid
-    assetIdParam:
+    userIdPathParam:
+      name: userId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    collectionIdPathParam:
+      name: collectionId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    assetIdPathParam:
       name: assetId
       in: path
       required: true
       schema:
         type: string
         format: uuid
-    commentIdParam:
+    commentIdPathParam:
       name: commentId
       in: path
       required: true
