@@ -9,8 +9,8 @@ info:
     identifier: Unlicensed
 
 servers:
-  - url: https://api.example.com
-    description: Production server (TBD)
+  - url: https://localhost:8080/v1
+    description: Development server
 
 tags:
   - name: asset
