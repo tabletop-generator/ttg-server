@@ -214,6 +214,18 @@
       .bKFTgj polygon {
         fill: #1d8127;
       } /*!sc*/
+      .ecvXEv {
+        height: 1.5em;
+        width: 1.5em;
+        min-width: 1.5em;
+        vertical-align: middle;
+        float: left;
+        transition: transform 0.2s ease-out;
+        transform: rotateZ(-90deg);
+      } /*!sc*/
+      .ecvXEv polygon {
+        fill: #d41f1c;
+      } /*!sc*/
       .hopFSn {
         height: 20px;
         width: 20px;
@@ -227,7 +239,7 @@
         fill: white;
       } /*!sc*/
       data-styled.g15[id="sc-dcKlJK"] {
-        content: "enjdhx,jvLsrI,jpPnqJ,bKFTgj,hopFSn,";
+        content: "enjdhx,jvLsrI,jpPnqJ,bKFTgj,ecvXEv,hopFSn,";
       } /*!sc*/
       .hBAQrT {
         border-left: 1px solid #7c7cbb;
@@ -1827,7 +1839,7 @@
       .jeFRwJ:focus {
         outline: auto #1d8127;
       } /*!sc*/
-      .fdDoDd {
+      .fJrWIH {
         display: block;
         border: 0;
         width: 100%;
@@ -1839,21 +1851,9 @@
         cursor: pointer;
         color: #d41f1c;
         background-color: rgba(212, 31, 28, 0.07);
-        cursor: default;
       } /*!sc*/
-      .fdDoDd:focus {
+      .fJrWIH:focus {
         outline: auto #d41f1c;
-      } /*!sc*/
-      .fdDoDd::before {
-        content: "—";
-        font-weight: bold;
-        width: 1.5em;
-        text-align: center;
-        display: inline-block;
-        vertical-align: top;
-      } /*!sc*/
-      .fdDoDd:focus {
-        outline: 0;
       } /*!sc*/
       .dwQYyf {
         display: block;
@@ -1884,7 +1884,7 @@
         outline: 0;
       } /*!sc*/
       data-styled.g120[id="sc-koGwOT"] {
-        content: "jeFRwJ,fdDoDd,dwQYyf,";
+        content: "jeFRwJ,fJrWIH,dwQYyf,";
       } /*!sc*/
       .ljgvjV {
         vertical-align: top;
@@ -3057,14 +3057,26 @@
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Unauthorized</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
@@ -3427,6 +3439,17 @@
                       >
                         201
                       </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R174oq»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R174oq»1"
+                        data-rttab="true"
+                      >
+                        500
+                      </li>
                     </ul>
                     <div
                       class="react-tabs__tab-panel react-tabs__tab-panel--selected"
@@ -3764,6 +3787,12 @@
                         </div>
                       </div>
                     </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R174oq»1"
+                      aria-labelledby="tab«R174oq»1"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -4059,6 +4088,30 @@
                       </div>
                     </button>
                   </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
+                      </div>
+                    </button>
+                  </div>
                 </div>
               </div>
               <div class="sc-iQQCXo sc-gDpztx rcGrS ijAuiF">
@@ -4116,6 +4169,17 @@
                         data-rttab="true"
                       >
                         200
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1758q»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1758q»1"
+                        data-rttab="true"
+                      >
+                        500
                       </li>
                     </ul>
                     <div
@@ -4382,6 +4446,12 @@
                         </div>
                       </div>
                     </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1758q»1"
+                      aria-labelledby="tab«R1758q»1"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -4476,38 +4546,98 @@
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Unauthorized</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Forbidden&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Forbidden</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Not Found&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Not Found</p>
+                        <p>Standard error response</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
@@ -4569,6 +4699,50 @@
                         data-rttab="true"
                       >
                         200
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R175oq»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R175oq»1"
+                        data-rttab="true"
+                      >
+                        401
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R175oq»2"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R175oq»2"
+                        data-rttab="true"
+                      >
+                        403
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R175oq»3"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R175oq»3"
+                        data-rttab="true"
+                      >
+                        404
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R175oq»4"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R175oq»4"
+                        data-rttab="true"
+                      >
+                        500
                       </li>
                     </ul>
                     <div
@@ -4907,6 +5081,30 @@
                         </div>
                       </div>
                     </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R175oq»1"
+                      aria-labelledby="tab«R175oq»1"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R175oq»2"
+                      aria-labelledby="tab«R175oq»2"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R175oq»3"
+                      aria-labelledby="tab«R175oq»3"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R175oq»4"
+                      aria-labelledby="tab«R175oq»4"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -5149,38 +5347,98 @@
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Unauthorized</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Forbidden&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Forbidden</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Not Found&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Not Found</p>
+                        <p>Standard error response</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
@@ -5334,6 +5592,50 @@
                         data-rttab="true"
                       >
                         200
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1768q»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1768q»1"
+                        data-rttab="true"
+                      >
+                        401
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1768q»2"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1768q»2"
+                        data-rttab="true"
+                      >
+                        403
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1768q»3"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1768q»3"
+                        data-rttab="true"
+                      >
+                        404
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1768q»4"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1768q»4"
+                        data-rttab="true"
+                      >
+                        500
                       </li>
                     </ul>
                     <div
@@ -5672,6 +5974,30 @@
                         </div>
                       </div>
                     </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1768q»1"
+                      aria-labelledby="tab«R1768q»1"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1768q»2"
+                      aria-labelledby="tab«R1768q»2"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1768q»3"
+                      aria-labelledby="tab«R1768q»3"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1768q»4"
+                      aria-labelledby="tab«R1768q»4"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -5785,38 +6111,98 @@
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Unauthorized</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Forbidden&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Forbidden</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Not Found&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Not Found</p>
+                        <p>Standard error response</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
@@ -5861,6 +6247,168 @@
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+                <div>
+                  <h3 class="sc-jJAtPt esvUOo">
+                    <!-- -->Response samples<!-- -->
+                  </h3>
+                  <div class="sc-brzPDJ ihptAH" data-rttabs="true">
+                    <ul class="react-tabs__tab-list" role="tablist">
+                      <li
+                        class="tab-error react-tabs__tab--selected"
+                        role="tab"
+                        id="tab«R176oq»0"
+                        aria-selected="true"
+                        aria-disabled="false"
+                        aria-controls="panel«R176oq»0"
+                        tabindex="0"
+                        data-rttab="true"
+                      >
+                        401
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R176oq»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R176oq»1"
+                        data-rttab="true"
+                      >
+                        403
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R176oq»2"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R176oq»2"
+                        data-rttab="true"
+                      >
+                        404
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R176oq»3"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R176oq»3"
+                        data-rttab="true"
+                      >
+                        500
+                      </li>
+                    </ul>
+                    <div
+                      class="react-tabs__tab-panel react-tabs__tab-panel--selected"
+                      role="tabpanel"
+                      id="panel«R176oq»0"
+                      aria-labelledby="tab«R176oq»0"
+                    >
+                      <div>
+                        <div class="sc-bmCFzp hMtTVz">
+                          <span class="sc-fPyrPm ktNiSp">Content type</span>
+                          <div class="sc-bpuAaX dmqyho">application/json</div>
+                        </div>
+                        <div class="sc-kmqAS jPYqSz">
+                          <div class="sc-eZbeWy ihHZyU">
+                            <div class="sc-lpbaSe elUMPN">
+                              <button>
+                                <div class="sc-fsjlER jYcDQz">Copy</div></button
+                              ><button>Expand all</button
+                              ><button>Collapse all</button>
+                            </div>
+                            <div class="sc-dTUlgT gAHTYt sc-gDVcuj JZxXP">
+                              <div class="redoc-json">
+                                <code
+                                  ><button
+                                    class="collapser"
+                                    aria-label="collapse"
+                                  ></button
+                                  ><span class="token punctuation">{</span
+                                  ><span class="ellipsis"></span>
+                                  <ul class="obj collapsible">
+                                    <li>
+                                      <div class="hoverable">
+                                        <span class="property token string"
+                                          >"status"</span
+                                        >:
+                                        <span class="token string"
+                                          >&quot;error&quot;</span
+                                        ><span class="token punctuation"
+                                          >,</span
+                                        >
+                                      </div>
+                                    </li>
+                                    <li>
+                                      <div class="hoverable">
+                                        <span class="property token string"
+                                          >"error"</span
+                                        >:
+                                        <button
+                                          class="collapser"
+                                          aria-label="collapse"
+                                        ></button
+                                        ><span class="token punctuation">{</span
+                                        ><span class="ellipsis"></span>
+                                        <ul class="obj collapsible">
+                                          <li>
+                                            <div class="hoverable collapsed">
+                                              <span
+                                                class="property token string"
+                                                >"message"</span
+                                              >:
+                                              <span class="token string"
+                                                >&quot;string&quot;</span
+                                              ><span class="token punctuation"
+                                                >,</span
+                                              >
+                                            </div>
+                                          </li>
+                                          <li>
+                                            <div class="hoverable collapsed">
+                                              <span
+                                                class="property token string"
+                                                >"code"</span
+                                              >:
+                                              <span class="token number"
+                                                >0</span
+                                              >
+                                            </div>
+                                          </li>
+                                        </ul>
+                                        <span class="token punctuation">}</span>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                  <span class="token punctuation">}</span></code
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R176oq»1"
+                      aria-labelledby="tab«R176oq»1"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R176oq»2"
+                      aria-labelledby="tab«R176oq»2"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R176oq»3"
+                      aria-labelledby="tab«R176oq»3"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -5986,38 +6534,98 @@
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Unauthorized</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Forbidden&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Forbidden</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Not Found&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Not Found</p>
+                        <p>Standard error response</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
@@ -6079,6 +6687,50 @@
                         data-rttab="true"
                       >
                         200
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1778q»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1778q»1"
+                        data-rttab="true"
+                      >
+                        401
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1778q»2"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1778q»2"
+                        data-rttab="true"
+                      >
+                        403
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1778q»3"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1778q»3"
+                        data-rttab="true"
+                      >
+                        404
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1778q»4"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1778q»4"
+                        data-rttab="true"
+                      >
+                        500
                       </li>
                     </ul>
                     <div
@@ -6148,6 +6800,30 @@
                         </div>
                       </div>
                     </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1778q»1"
+                      aria-labelledby="tab«R1778q»1"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1778q»2"
+                      aria-labelledby="tab«R1778q»2"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1778q»3"
+                      aria-labelledby="tab«R1778q»3"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1778q»4"
+                      aria-labelledby="tab«R1778q»4"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -6377,14 +7053,50 @@
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Unauthorized</p>
+                        <p>Standard error response</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
@@ -6537,6 +7249,28 @@
                         data-rttab="true"
                       >
                         201
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R174pa»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R174pa»1"
+                        data-rttab="true"
+                      >
+                        401
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R174pa»2"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R174pa»2"
+                        data-rttab="true"
+                      >
+                        500
                       </li>
                     </ul>
                     <div
@@ -6909,6 +7643,18 @@
                         </div>
                       </div>
                     </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R174pa»1"
+                      aria-labelledby="tab«R174pa»1"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R174pa»2"
+                      aria-labelledby="tab«R174pa»2"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -7063,6 +7809,30 @@
                       </div>
                     </button>
                   </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
+                      </div>
+                    </button>
+                  </div>
                 </div>
               </div>
               <div class="sc-iQQCXo sc-gDpztx rcGrS ijAuiF">
@@ -7120,6 +7890,17 @@
                         data-rttab="true"
                       >
                         200
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1759a»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1759a»1"
+                        data-rttab="true"
+                      >
+                        500
                       </li>
                     </ul>
                     <div
@@ -7288,6 +8069,12 @@
                         </div>
                       </div>
                     </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1759a»1"
+                      aria-labelledby="tab«R1759a»1"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -7382,38 +8169,98 @@
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Unauthorized</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Forbidden&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Forbidden</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Not Found&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Not Found</p>
+                        <p>Standard error response</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
@@ -7476,6 +8323,50 @@
                         data-rttab="true"
                       >
                         200
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R175pa»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R175pa»1"
+                        data-rttab="true"
+                      >
+                        401
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R175pa»2"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R175pa»2"
+                        data-rttab="true"
+                      >
+                        403
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R175pa»3"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R175pa»3"
+                        data-rttab="true"
+                      >
+                        404
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R175pa»4"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R175pa»4"
+                        data-rttab="true"
+                      >
+                        500
                       </li>
                     </ul>
                     <div
@@ -7848,6 +8739,30 @@
                         </div>
                       </div>
                     </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R175pa»1"
+                      aria-labelledby="tab«R175pa»1"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R175pa»2"
+                      aria-labelledby="tab«R175pa»2"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R175pa»3"
+                      aria-labelledby="tab«R175pa»3"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R175pa»4"
+                      aria-labelledby="tab«R175pa»4"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -8093,38 +9008,98 @@
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Unauthorized</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Forbidden&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Forbidden</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Not Found&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Not Found</p>
+                        <p>Standard error response</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
@@ -8279,6 +9254,50 @@
                         data-rttab="true"
                       >
                         200
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1769a»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1769a»1"
+                        data-rttab="true"
+                      >
+                        401
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1769a»2"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1769a»2"
+                        data-rttab="true"
+                      >
+                        403
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1769a»3"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1769a»3"
+                        data-rttab="true"
+                      >
+                        404
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1769a»4"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1769a»4"
+                        data-rttab="true"
+                      >
+                        500
                       </li>
                     </ul>
                     <div
@@ -8651,6 +9670,30 @@
                         </div>
                       </div>
                     </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1769a»1"
+                      aria-labelledby="tab«R1769a»1"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1769a»2"
+                      aria-labelledby="tab«R1769a»2"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1769a»3"
+                      aria-labelledby="tab«R1769a»3"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1769a»4"
+                      aria-labelledby="tab«R1769a»4"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -8764,38 +9807,98 @@
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Unauthorized</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Forbidden&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Forbidden</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Not Found&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Not Found</p>
+                        <p>Standard error response</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
@@ -8841,6 +9944,168 @@
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+                <div>
+                  <h3 class="sc-jJAtPt esvUOo">
+                    <!-- -->Response samples<!-- -->
+                  </h3>
+                  <div class="sc-brzPDJ ihptAH" data-rttabs="true">
+                    <ul class="react-tabs__tab-list" role="tablist">
+                      <li
+                        class="tab-error react-tabs__tab--selected"
+                        role="tab"
+                        id="tab«R176pa»0"
+                        aria-selected="true"
+                        aria-disabled="false"
+                        aria-controls="panel«R176pa»0"
+                        tabindex="0"
+                        data-rttab="true"
+                      >
+                        401
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R176pa»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R176pa»1"
+                        data-rttab="true"
+                      >
+                        403
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R176pa»2"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R176pa»2"
+                        data-rttab="true"
+                      >
+                        404
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R176pa»3"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R176pa»3"
+                        data-rttab="true"
+                      >
+                        500
+                      </li>
+                    </ul>
+                    <div
+                      class="react-tabs__tab-panel react-tabs__tab-panel--selected"
+                      role="tabpanel"
+                      id="panel«R176pa»0"
+                      aria-labelledby="tab«R176pa»0"
+                    >
+                      <div>
+                        <div class="sc-bmCFzp hMtTVz">
+                          <span class="sc-fPyrPm ktNiSp">Content type</span>
+                          <div class="sc-bpuAaX dmqyho">application/json</div>
+                        </div>
+                        <div class="sc-kmqAS jPYqSz">
+                          <div class="sc-eZbeWy ihHZyU">
+                            <div class="sc-lpbaSe elUMPN">
+                              <button>
+                                <div class="sc-fsjlER jYcDQz">Copy</div></button
+                              ><button>Expand all</button
+                              ><button>Collapse all</button>
+                            </div>
+                            <div class="sc-dTUlgT gAHTYt sc-gDVcuj JZxXP">
+                              <div class="redoc-json">
+                                <code
+                                  ><button
+                                    class="collapser"
+                                    aria-label="collapse"
+                                  ></button
+                                  ><span class="token punctuation">{</span
+                                  ><span class="ellipsis"></span>
+                                  <ul class="obj collapsible">
+                                    <li>
+                                      <div class="hoverable">
+                                        <span class="property token string"
+                                          >"status"</span
+                                        >:
+                                        <span class="token string"
+                                          >&quot;error&quot;</span
+                                        ><span class="token punctuation"
+                                          >,</span
+                                        >
+                                      </div>
+                                    </li>
+                                    <li>
+                                      <div class="hoverable">
+                                        <span class="property token string"
+                                          >"error"</span
+                                        >:
+                                        <button
+                                          class="collapser"
+                                          aria-label="collapse"
+                                        ></button
+                                        ><span class="token punctuation">{</span
+                                        ><span class="ellipsis"></span>
+                                        <ul class="obj collapsible">
+                                          <li>
+                                            <div class="hoverable collapsed">
+                                              <span
+                                                class="property token string"
+                                                >"message"</span
+                                              >:
+                                              <span class="token string"
+                                                >&quot;string&quot;</span
+                                              ><span class="token punctuation"
+                                                >,</span
+                                              >
+                                            </div>
+                                          </li>
+                                          <li>
+                                            <div class="hoverable collapsed">
+                                              <span
+                                                class="property token string"
+                                                >"code"</span
+                                              >:
+                                              <span class="token number"
+                                                >0</span
+                                              >
+                                            </div>
+                                          </li>
+                                        </ul>
+                                        <span class="token punctuation">}</span>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                  <span class="token punctuation">}</span></code
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R176pa»1"
+                      aria-labelledby="tab«R176pa»1"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R176pa»2"
+                      aria-labelledby="tab«R176pa»2"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R176pa»3"
+                      aria-labelledby="tab«R176pa»3"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -9016,38 +10281,98 @@
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Unauthorized</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Forbidden&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Forbidden</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Not Found&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Not Found</p>
+                        <p>Standard error response</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
@@ -9192,6 +10517,50 @@
                         data-rttab="true"
                       >
                         200
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1779a»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1779a»1"
+                        data-rttab="true"
+                      >
+                        401
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1779a»2"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1779a»2"
+                        data-rttab="true"
+                      >
+                        403
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1779a»3"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1779a»3"
+                        data-rttab="true"
+                      >
+                        404
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1779a»4"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1779a»4"
+                        data-rttab="true"
+                      >
+                        500
                       </li>
                     </ul>
                     <div
@@ -9564,6 +10933,30 @@
                         </div>
                       </div>
                     </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1779a»1"
+                      aria-labelledby="tab«R1779a»1"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1779a»2"
+                      aria-labelledby="tab«R1779a»2"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1779a»3"
+                      aria-labelledby="tab«R1779a»3"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1779a»4"
+                      aria-labelledby="tab«R1779a»4"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -9739,38 +11132,98 @@
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Unauthorized</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Forbidden&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Forbidden</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Not Found&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Not Found</p>
+                        <p>Standard error response</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
@@ -9915,6 +11368,50 @@
                         data-rttab="true"
                       >
                         200
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R177pa»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R177pa»1"
+                        data-rttab="true"
+                      >
+                        401
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R177pa»2"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R177pa»2"
+                        data-rttab="true"
+                      >
+                        403
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R177pa»3"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R177pa»3"
+                        data-rttab="true"
+                      >
+                        404
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R177pa»4"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R177pa»4"
+                        data-rttab="true"
+                      >
+                        500
                       </li>
                     </ul>
                     <div
@@ -10287,6 +11784,30 @@
                         </div>
                       </div>
                     </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R177pa»1"
+                      aria-labelledby="tab«R177pa»1"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R177pa»2"
+                      aria-labelledby="tab«R177pa»2"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R177pa»3"
+                      aria-labelledby="tab«R177pa»3"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R177pa»4"
+                      aria-labelledby="tab«R177pa»4"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -10420,14 +11941,50 @@
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Unauthorized</p>
+                        <p>Standard error response</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
@@ -10499,6 +12056,28 @@
                         data-rttab="true"
                       >
                         201
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R174pq»2"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R174pq»2"
+                        data-rttab="true"
+                      >
+                        401
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R174pq»3"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R174pq»3"
+                        data-rttab="true"
+                      >
+                        500
                       </li>
                     </ul>
                     <div
@@ -10602,6 +12181,18 @@
                       id="panel«R174pq»1"
                       aria-labelledby="tab«R174pq»1"
                     ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R174pq»2"
+                      aria-labelledby="tab«R174pq»2"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R174pq»3"
+                      aria-labelledby="tab«R174pq»3"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -10696,14 +12287,50 @@
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Not Found&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Not Found</p>
+                        <p>Standard error response</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
@@ -10764,6 +12391,28 @@
                         data-rttab="true"
                       >
                         200
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1759q»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1759q»1"
+                        data-rttab="true"
+                      >
+                        404
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1759q»2"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1759q»2"
+                        data-rttab="true"
+                      >
+                        500
                       </li>
                     </ul>
                     <div
@@ -10861,6 +12510,18 @@
                         </div>
                       </div>
                     </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1759q»1"
+                      aria-labelledby="tab«R1759q»1"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1759q»2"
+                      aria-labelledby="tab«R1759q»2"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -10943,14 +12604,50 @@
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Unauthorized</p>
+                        <p>Standard error response</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
@@ -11011,6 +12708,28 @@
                         data-rttab="true"
                       >
                         200
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R175pq»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R175pq»1"
+                        data-rttab="true"
+                      >
+                        401
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R175pq»2"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R175pq»2"
+                        data-rttab="true"
+                      >
+                        500
                       </li>
                     </ul>
                     <div
@@ -11108,6 +12827,18 @@
                         </div>
                       </div>
                     </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R175pq»1"
+                      aria-labelledby="tab«R175pq»1"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R175pq»2"
+                      aria-labelledby="tab«R175pq»2"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -11263,14 +12994,50 @@
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Unauthorized</p>
+                        <p>Standard error response</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
@@ -11412,6 +13179,28 @@
                       >
                         200
                       </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1769q»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1769q»1"
+                        data-rttab="true"
+                      >
+                        401
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R1769q»2"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R1769q»2"
+                        data-rttab="true"
+                      >
+                        500
+                      </li>
                     </ul>
                     <div
                       class="react-tabs__tab-panel react-tabs__tab-panel--selected"
@@ -11508,6 +13297,18 @@
                         </div>
                       </div>
                     </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1769q»1"
+                      aria-labelledby="tab«R1769q»1"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R1769q»2"
+                      aria-labelledby="tab«R1769q»2"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -11704,38 +13505,98 @@
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Unauthorized</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Forbidden&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Forbidden</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Not Found&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Not Found</p>
+                        <p>Standard error response</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
@@ -11867,6 +13728,50 @@
                       >
                         201
                       </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R174qa»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R174qa»1"
+                        data-rttab="true"
+                      >
+                        401
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R174qa»2"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R174qa»2"
+                        data-rttab="true"
+                      >
+                        403
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R174qa»3"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R174qa»3"
+                        data-rttab="true"
+                      >
+                        404
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R174qa»4"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R174qa»4"
+                        data-rttab="true"
+                      >
+                        500
+                      </li>
                     </ul>
                     <div
                       class="react-tabs__tab-panel react-tabs__tab-panel--selected"
@@ -11975,6 +13880,30 @@
                         </div>
                       </div>
                     </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R174qa»1"
+                      aria-labelledby="tab«R174qa»1"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R174qa»2"
+                      aria-labelledby="tab«R174qa»2"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R174qa»3"
+                      aria-labelledby="tab«R174qa»3"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R174qa»4"
+                      aria-labelledby="tab«R174qa»4"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -12143,14 +14072,50 @@
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Not Found&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Not Found</p>
+                        <p>Standard error response</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
@@ -12213,6 +14178,28 @@
                         data-rttab="true"
                       >
                         200
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R175aa»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R175aa»1"
+                        data-rttab="true"
+                      >
+                        404
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R175aa»2"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R175aa»2"
+                        data-rttab="true"
+                      >
+                        500
                       </li>
                     </ul>
                     <div
@@ -12342,6 +14329,18 @@
                         </div>
                       </div>
                     </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R175aa»1"
+                      aria-labelledby="tab«R175aa»1"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R175aa»2"
+                      aria-labelledby="tab«R175aa»2"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -12544,38 +14543,98 @@
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Unauthorized</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Forbidden&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Forbidden</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Not Found&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Not Found</p>
+                        <p>Standard error response</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
@@ -12707,6 +14766,50 @@
                       >
                         200
                       </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R175qa»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R175qa»1"
+                        data-rttab="true"
+                      >
+                        401
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R175qa»2"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R175qa»2"
+                        data-rttab="true"
+                      >
+                        403
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R175qa»3"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R175qa»3"
+                        data-rttab="true"
+                      >
+                        404
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R175qa»4"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R175qa»4"
+                        data-rttab="true"
+                      >
+                        500
+                      </li>
                     </ul>
                     <div
                       class="react-tabs__tab-panel react-tabs__tab-panel--selected"
@@ -12815,6 +14918,30 @@
                         </div>
                       </div>
                     </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R175qa»1"
+                      aria-labelledby="tab«R175qa»1"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R175qa»2"
+                      aria-labelledby="tab«R175qa»2"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R175qa»3"
+                      aria-labelledby="tab«R175qa»3"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R175qa»4"
+                      aria-labelledby="tab«R175qa»4"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -12961,38 +15088,98 @@
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">401<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Unauthorized&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Unauthorized</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">403<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Forbidden&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Forbidden</p>
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
                   <div>
-                    <button class="sc-koGwOT fdDoDd" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">404<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;Not Found&lt;/p&gt;
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>Not Found</p>
+                        <p>Standard error response</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
@@ -13040,6 +15227,168 @@
                     </div>
                   </div>
                 </div>
+                <div>
+                  <h3 class="sc-jJAtPt esvUOo">
+                    <!-- -->Response samples<!-- -->
+                  </h3>
+                  <div class="sc-brzPDJ ihptAH" data-rttabs="true">
+                    <ul class="react-tabs__tab-list" role="tablist">
+                      <li
+                        class="tab-error react-tabs__tab--selected"
+                        role="tab"
+                        id="tab«R176aa»0"
+                        aria-selected="true"
+                        aria-disabled="false"
+                        aria-controls="panel«R176aa»0"
+                        tabindex="0"
+                        data-rttab="true"
+                      >
+                        401
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R176aa»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R176aa»1"
+                        data-rttab="true"
+                      >
+                        403
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R176aa»2"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R176aa»2"
+                        data-rttab="true"
+                      >
+                        404
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R176aa»3"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R176aa»3"
+                        data-rttab="true"
+                      >
+                        500
+                      </li>
+                    </ul>
+                    <div
+                      class="react-tabs__tab-panel react-tabs__tab-panel--selected"
+                      role="tabpanel"
+                      id="panel«R176aa»0"
+                      aria-labelledby="tab«R176aa»0"
+                    >
+                      <div>
+                        <div class="sc-bmCFzp hMtTVz">
+                          <span class="sc-fPyrPm ktNiSp">Content type</span>
+                          <div class="sc-bpuAaX dmqyho">application/json</div>
+                        </div>
+                        <div class="sc-kmqAS jPYqSz">
+                          <div class="sc-eZbeWy ihHZyU">
+                            <div class="sc-lpbaSe elUMPN">
+                              <button>
+                                <div class="sc-fsjlER jYcDQz">Copy</div></button
+                              ><button>Expand all</button
+                              ><button>Collapse all</button>
+                            </div>
+                            <div class="sc-dTUlgT gAHTYt sc-gDVcuj JZxXP">
+                              <div class="redoc-json">
+                                <code
+                                  ><button
+                                    class="collapser"
+                                    aria-label="collapse"
+                                  ></button
+                                  ><span class="token punctuation">{</span
+                                  ><span class="ellipsis"></span>
+                                  <ul class="obj collapsible">
+                                    <li>
+                                      <div class="hoverable">
+                                        <span class="property token string"
+                                          >"status"</span
+                                        >:
+                                        <span class="token string"
+                                          >&quot;error&quot;</span
+                                        ><span class="token punctuation"
+                                          >,</span
+                                        >
+                                      </div>
+                                    </li>
+                                    <li>
+                                      <div class="hoverable">
+                                        <span class="property token string"
+                                          >"error"</span
+                                        >:
+                                        <button
+                                          class="collapser"
+                                          aria-label="collapse"
+                                        ></button
+                                        ><span class="token punctuation">{</span
+                                        ><span class="ellipsis"></span>
+                                        <ul class="obj collapsible">
+                                          <li>
+                                            <div class="hoverable collapsed">
+                                              <span
+                                                class="property token string"
+                                                >"message"</span
+                                              >:
+                                              <span class="token string"
+                                                >&quot;string&quot;</span
+                                              ><span class="token punctuation"
+                                                >,</span
+                                              >
+                                            </div>
+                                          </li>
+                                          <li>
+                                            <div class="hoverable collapsed">
+                                              <span
+                                                class="property token string"
+                                                >"code"</span
+                                              >:
+                                              <span class="token number"
+                                                >0</span
+                                              >
+                                            </div>
+                                          </li>
+                                        </ul>
+                                        <span class="token punctuation">}</span>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                  <span class="token punctuation">}</span></code
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R176aa»1"
+                      aria-labelledby="tab«R176aa»1"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R176aa»2"
+                      aria-labelledby="tab«R176aa»2"
+                    ></div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R176aa»3"
+                      aria-labelledby="tab«R176aa»3"
+                    ></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -13065,14 +15414,50 @@
                 <div>
                   <h3 class="sc-fCdovG dsRSAK">Responses</h3>
                   <div>
-                    <button class="sc-koGwOT dwQYyf" disabled="">
-                      <strong class="sc-dHZbTr ljgvjV">200<!-- --> </strong>
+                    <button class="sc-koGwOT jeFRwJ">
+                      <svg
+                        class="sc-dcKlJK bKFTgj"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">200<!-- --> </strong>
                       <div
-                        html="&lt;p&gt;OK&lt;/p&gt;
+                        html="&lt;p&gt;Health check response&lt;/p&gt;
 "
                         class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
                       >
-                        <p>OK</p>
+                        <p>Health check response</p>
+                      </div>
+                    </button>
+                  </div>
+                  <div>
+                    <button class="sc-koGwOT fJrWIH">
+                      <svg
+                        class="sc-dcKlJK ecvXEv"
+                        version="1.1"
+                        viewBox="0 0 24 24"
+                        x="0"
+                        xmlns="http://www.w3.org/2000/svg"
+                        y="0"
+                        aria-hidden="true"
+                      >
+                        <polygon
+                          points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "
+                        ></polygon></svg
+                      ><strong class="sc-dHZbTr ljgvjV">500<!-- --> </strong>
+                      <div
+                        html="&lt;p&gt;Standard error response&lt;/p&gt;
+"
+                        class="sc-dTUlgT sc-fhPBcz sc-dNpohg gAHTYt hNgelr kfJzSr"
+                      >
+                        <p>Standard error response</p>
                       </div>
                     </button>
                   </div>
@@ -13116,6 +15501,129 @@
                     </div>
                   </div>
                 </div>
+                <div>
+                  <h3 class="sc-jJAtPt esvUOo">
+                    <!-- -->Response samples<!-- -->
+                  </h3>
+                  <div class="sc-brzPDJ ihptAH" data-rttabs="true">
+                    <ul class="react-tabs__tab-list" role="tablist">
+                      <li
+                        class="tab-success react-tabs__tab--selected"
+                        role="tab"
+                        id="tab«R176q»0"
+                        aria-selected="true"
+                        aria-disabled="false"
+                        aria-controls="panel«R176q»0"
+                        tabindex="0"
+                        data-rttab="true"
+                      >
+                        200
+                      </li>
+                      <li
+                        class="tab-error"
+                        role="tab"
+                        id="tab«R176q»1"
+                        aria-selected="false"
+                        aria-disabled="false"
+                        aria-controls="panel«R176q»1"
+                        data-rttab="true"
+                      >
+                        500
+                      </li>
+                    </ul>
+                    <div
+                      class="react-tabs__tab-panel react-tabs__tab-panel--selected"
+                      role="tabpanel"
+                      id="panel«R176q»0"
+                      aria-labelledby="tab«R176q»0"
+                    >
+                      <div>
+                        <div class="sc-bmCFzp hMtTVz">
+                          <span class="sc-fPyrPm ktNiSp">Content type</span>
+                          <div class="sc-bpuAaX dmqyho">application/json</div>
+                        </div>
+                        <div class="sc-kmqAS jPYqSz">
+                          <div class="sc-eZbeWy ihHZyU">
+                            <div class="sc-lpbaSe elUMPN">
+                              <button>
+                                <div class="sc-fsjlER jYcDQz">Copy</div>
+                              </button>
+                            </div>
+                            <div class="sc-dTUlgT gAHTYt sc-gDVcuj JZxXP">
+                              <div class="redoc-json">
+                                <code
+                                  ><button
+                                    class="collapser"
+                                    aria-label="collapse"
+                                  ></button
+                                  ><span class="token punctuation">{</span
+                                  ><span class="ellipsis"></span>
+                                  <ul class="obj collapsible">
+                                    <li>
+                                      <div class="hoverable">
+                                        <span class="property token string"
+                                          >"status"</span
+                                        >:
+                                        <span class="token string"
+                                          >&quot;ok&quot;</span
+                                        ><span class="token punctuation"
+                                          >,</span
+                                        >
+                                      </div>
+                                    </li>
+                                    <li>
+                                      <div class="hoverable">
+                                        <span class="property token string"
+                                          >"githubUrl"</span
+                                        >:
+                                        <span class="token string">&quot;</span
+                                        ><a href="http://example.com"
+                                          >http://example.com</a
+                                        ><span class="token string">&quot;</span
+                                        ><span class="token punctuation"
+                                          >,</span
+                                        >
+                                      </div>
+                                    </li>
+                                    <li>
+                                      <div class="hoverable">
+                                        <span class="property token string"
+                                          >"version"</span
+                                        >:
+                                        <span class="token string"
+                                          >&quot;string&quot;</span
+                                        ><span class="token punctuation"
+                                          >,</span
+                                        >
+                                      </div>
+                                    </li>
+                                    <li>
+                                      <div class="hoverable">
+                                        <span class="property token string"
+                                          >"hostname"</span
+                                        >:
+                                        <span class="token string"
+                                          >&quot;string&quot;</span
+                                        >
+                                      </div>
+                                    </li>
+                                  </ul>
+                                  <span class="token punctuation">}</span></code
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="react-tabs__tab-panel"
+                      role="tabpanel"
+                      id="panel«R176q»1"
+                      aria-labelledby="tab«R176q»1"
+                    ></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -13154,7 +15662,10 @@
                   operationId: "healthcheck",
                   summary: "Perform a health check on the API",
                   security: [],
-                  responses: { 200: { description: "OK" } },
+                  responses: {
+                    200: { $ref: "#/components/responses/HealthCheck" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
+                  },
                 },
               },
               "/assets": {
@@ -13171,7 +15682,7 @@
                   ],
                   responses: {
                     201: { $ref: "#/components/responses/AssetDetails" },
-                    401: { description: "Unauthorized" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
                 get: {
@@ -13190,6 +15701,7 @@
                   ],
                   responses: {
                     200: { $ref: "#/components/responses/AssetList" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
               },
@@ -13204,9 +15716,10 @@
                   security: [],
                   responses: {
                     200: { $ref: "#/components/responses/AssetDetails" },
-                    401: { description: "Unauthorized" },
-                    403: { description: "Forbidden" },
-                    404: { description: "Not Found" },
+                    401: { $ref: "#/components/responses/ErrorResponse" },
+                    403: { $ref: "#/components/responses/ErrorResponse" },
+                    404: { $ref: "#/components/responses/ErrorResponse" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
                 patch: {
@@ -13222,9 +15735,10 @@
                   ],
                   responses: {
                     200: { $ref: "#/components/responses/AssetDetails" },
-                    401: { description: "Unauthorized" },
-                    403: { description: "Forbidden" },
-                    404: { description: "Not Found" },
+                    401: { $ref: "#/components/responses/ErrorResponse" },
+                    403: { $ref: "#/components/responses/ErrorResponse" },
+                    404: { $ref: "#/components/responses/ErrorResponse" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
                 delete: {
@@ -13237,9 +15751,10 @@
                   ],
                   responses: {
                     204: { description: "No Content" },
-                    401: { description: "Unauthorized" },
-                    403: { description: "Forbidden" },
-                    404: { description: "Not Found" },
+                    401: { $ref: "#/components/responses/ErrorResponse" },
+                    403: { $ref: "#/components/responses/ErrorResponse" },
+                    404: { $ref: "#/components/responses/ErrorResponse" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
               },
@@ -13257,9 +15772,10 @@
                   ],
                   responses: {
                     200: { $ref: "#/components/responses/AssetLike" },
-                    401: { description: "Unauthorized" },
-                    403: { description: "Forbidden" },
-                    404: { description: "Not Found" },
+                    401: { $ref: "#/components/responses/ErrorResponse" },
+                    403: { $ref: "#/components/responses/ErrorResponse" },
+                    404: { $ref: "#/components/responses/ErrorResponse" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
               },
@@ -13280,9 +15796,10 @@
                   ],
                   responses: {
                     201: { $ref: "#/components/responses/CommentDetails" },
-                    401: { description: "Unauthorized" },
-                    403: { description: "Forbidden" },
-                    404: { description: "Not Found" },
+                    401: { $ref: "#/components/responses/ErrorResponse" },
+                    403: { $ref: "#/components/responses/ErrorResponse" },
+                    404: { $ref: "#/components/responses/ErrorResponse" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
                 get: {
@@ -13296,7 +15813,8 @@
                   ],
                   responses: {
                     200: { $ref: "#/components/responses/CommentList" },
-                    404: { description: "Not Found" },
+                    404: { $ref: "#/components/responses/ErrorResponse" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
               },
@@ -13318,9 +15836,10 @@
                   ],
                   responses: {
                     200: { $ref: "#/components/responses/CommentDetails" },
-                    401: { description: "Unauthorized" },
-                    403: { description: "Forbidden" },
-                    404: { description: "Not Found" },
+                    401: { $ref: "#/components/responses/ErrorResponse" },
+                    403: { $ref: "#/components/responses/ErrorResponse" },
+                    404: { $ref: "#/components/responses/ErrorResponse" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
                 delete: {
@@ -13333,9 +15852,10 @@
                   ],
                   responses: {
                     204: { description: "No Content" },
-                    401: { description: "Unauthorized" },
-                    403: { description: "Forbidden" },
-                    404: { description: "Not Found" },
+                    401: { $ref: "#/components/responses/ErrorResponse" },
+                    403: { $ref: "#/components/responses/ErrorResponse" },
+                    404: { $ref: "#/components/responses/ErrorResponse" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
               },
@@ -13353,7 +15873,8 @@
                   ],
                   responses: {
                     201: { $ref: "#/components/responses/CollectionDetails" },
-                    401: { description: "Unauthorized" },
+                    401: { $ref: "#/components/responses/ErrorResponse" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
                 get: {
@@ -13368,6 +15889,7 @@
                   ],
                   responses: {
                     200: { $ref: "#/components/responses/CollectionList" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
               },
@@ -13382,9 +15904,10 @@
                   security: [],
                   responses: {
                     200: { $ref: "#/components/responses/CollectionDetails" },
-                    401: { description: "Unauthorized" },
-                    403: { description: "Forbidden" },
-                    404: { description: "Not Found" },
+                    401: { $ref: "#/components/responses/ErrorResponse" },
+                    403: { $ref: "#/components/responses/ErrorResponse" },
+                    404: { $ref: "#/components/responses/ErrorResponse" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
                 patch: {
@@ -13400,9 +15923,10 @@
                   },
                   responses: {
                     200: { $ref: "#/components/responses/CollectionDetails" },
-                    401: { description: "Unauthorized" },
-                    403: { description: "Forbidden" },
-                    404: { description: "Not Found" },
+                    401: { $ref: "#/components/responses/ErrorResponse" },
+                    403: { $ref: "#/components/responses/ErrorResponse" },
+                    404: { $ref: "#/components/responses/ErrorResponse" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
                 delete: {
@@ -13415,9 +15939,10 @@
                   ],
                   responses: {
                     204: { description: "No Content" },
-                    401: { description: "Unauthorized" },
-                    403: { description: "Forbidden" },
-                    404: { description: "Not Found" },
+                    401: { $ref: "#/components/responses/ErrorResponse" },
+                    403: { $ref: "#/components/responses/ErrorResponse" },
+                    404: { $ref: "#/components/responses/ErrorResponse" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
               },
@@ -13436,9 +15961,10 @@
                   requestBody: { $ref: "#/components/requestBodies/assetIds" },
                   responses: {
                     200: { $ref: "#/components/responses/CollectionDetails" },
-                    401: { description: "Unauthorized" },
-                    403: { description: "Forbidden" },
-                    404: { description: "Not Found" },
+                    401: { $ref: "#/components/responses/ErrorResponse" },
+                    403: { $ref: "#/components/responses/ErrorResponse" },
+                    404: { $ref: "#/components/responses/ErrorResponse" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
               },
@@ -13457,9 +15983,10 @@
                   ],
                   responses: {
                     200: { $ref: "#/components/responses/CollectionDetails" },
-                    401: { description: "Unauthorized" },
-                    403: { description: "Forbidden" },
-                    404: { description: "Not Found" },
+                    401: { $ref: "#/components/responses/ErrorResponse" },
+                    403: { $ref: "#/components/responses/ErrorResponse" },
+                    404: { $ref: "#/components/responses/ErrorResponse" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
               },
@@ -13475,7 +16002,8 @@
                   responses: {
                     200: { $ref: "#/components/responses/UserDetails" },
                     201: { $ref: "#/components/responses/UserDetails" },
-                    401: { description: "Unauthorized" },
+                    401: { $ref: "#/components/responses/ErrorResponse" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
               },
@@ -13490,7 +16018,8 @@
                   security: [],
                   responses: {
                     200: { $ref: "#/components/responses/UserDetails" },
-                    404: { description: "Not Found" },
+                    404: { $ref: "#/components/responses/ErrorResponse" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
               },
@@ -13505,7 +16034,8 @@
                   ],
                   responses: {
                     200: { $ref: "#/components/responses/UserDetails" },
-                    401: { description: "Unauthorized" },
+                    401: { $ref: "#/components/responses/ErrorResponse" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
                 patch: {
@@ -13521,7 +16051,8 @@
                   ],
                   responses: {
                     200: { $ref: "#/components/responses/UserDetails" },
-                    401: { description: "Unauthorized" },
+                    401: { $ref: "#/components/responses/ErrorResponse" },
+                    500: { $ref: "#/components/responses/ErrorResponse" },
                   },
                 },
               },
@@ -13643,6 +16174,50 @@
                 },
               },
               responses: {
+                HealthCheck: {
+                  description: "Health check response",
+                  content: {
+                    "application/json": {
+                      schema: {
+                        type: "object",
+                        required: [
+                          "status",
+                          "githubUrl",
+                          "version",
+                          "hostname",
+                        ],
+                        properties: {
+                          status: { type: "string", enum: ["ok"] },
+                          githubUrl: { type: "string", format: "uri" },
+                          version: { type: "string" },
+                          hostname: { type: "string" },
+                        },
+                      },
+                    },
+                  },
+                },
+                ErrorResponse: {
+                  description: "Standard error response",
+                  content: {
+                    "application/json": {
+                      schema: {
+                        type: "object",
+                        required: ["status", "error"],
+                        properties: {
+                          status: { type: "string", enum: ["error"] },
+                          error: {
+                            type: "object",
+                            required: ["message", "code"],
+                            properties: {
+                              message: { type: "string" },
+                              code: { type: "integer" },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
                 AssetDetails: {
                   description: "OK",
                   content: {

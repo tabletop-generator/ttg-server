@@ -30,7 +30,9 @@ paths:
       security: []
       responses:
         "200":
-          description: OK
+          $ref: "#/components/responses/HealthCheck"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
 
   /assets:
     post:
@@ -46,8 +48,8 @@ paths:
       responses:
         "201":
           $ref: "#/components/responses/AssetDetails"
-        "401":
-          description: Unauthorized
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
     get:
       tags:
         - asset
@@ -65,6 +67,8 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/AssetList"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
 
   /assets/{assetId}:
     parameters:
@@ -79,11 +83,13 @@ paths:
         "200":
           $ref: "#/components/responses/AssetDetails"
         "401":
-          description: Unauthorized
+          $ref: "#/components/responses/ErrorResponse"
         "403":
-          description: Forbidden
+          $ref: "#/components/responses/ErrorResponse"
         "404":
-          description: Not Found
+          $ref: "#/components/responses/ErrorResponse"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
     patch:
       tags:
         - asset
@@ -98,11 +104,13 @@ paths:
         "200":
           $ref: "#/components/responses/AssetDetails"
         "401":
-          description: Unauthorized
+          $ref: "#/components/responses/ErrorResponse"
         "403":
-          description: Forbidden
+          $ref: "#/components/responses/ErrorResponse"
         "404":
-          description: Not Found
+          $ref: "#/components/responses/ErrorResponse"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
     delete:
       tags:
         - asset
@@ -115,11 +123,13 @@ paths:
         "204":
           description: No Content
         "401":
-          description: Unauthorized
+          $ref: "#/components/responses/ErrorResponse"
         "403":
-          description: Forbidden
+          $ref: "#/components/responses/ErrorResponse"
         "404":
-          description: Not Found
+          $ref: "#/components/responses/ErrorResponse"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
 
   /assets/{assetId}/like:
     parameters:
@@ -136,11 +146,13 @@ paths:
         "200":
           $ref: "#/components/responses/AssetLike"
         "401":
-          description: Unauthorized
+          $ref: "#/components/responses/ErrorResponse"
         "403":
-          description: Forbidden
+          $ref: "#/components/responses/ErrorResponse"
         "404":
-          description: Not Found
+          $ref: "#/components/responses/ErrorResponse"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
 
   /assets/{assetId}/comments:
     parameters:
@@ -159,11 +171,13 @@ paths:
         "201":
           $ref: "#/components/responses/CommentDetails"
         "401":
-          description: Unauthorized
+          $ref: "#/components/responses/ErrorResponse"
         "403":
-          description: Forbidden
+          $ref: "#/components/responses/ErrorResponse"
         "404":
-          description: Not Found
+          $ref: "#/components/responses/ErrorResponse"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
     get:
       tags:
         - comment
@@ -177,7 +191,9 @@ paths:
         "200":
           $ref: "#/components/responses/CommentList"
         "404":
-          description: Not Found
+          $ref: "#/components/responses/ErrorResponse"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
 
   /assets/{assetId}/comments/{commentId}:
     parameters:
@@ -197,11 +213,13 @@ paths:
         "200":
           $ref: "#/components/responses/CommentDetails"
         "401":
-          description: Unauthorized
+          $ref: "#/components/responses/ErrorResponse"
         "403":
-          description: Forbidden
+          $ref: "#/components/responses/ErrorResponse"
         "404":
-          description: Not Found
+          $ref: "#/components/responses/ErrorResponse"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
     delete:
       tags:
         - comment
@@ -214,11 +232,13 @@ paths:
         "204":
           description: No Content
         "401":
-          description: Unauthorized
+          $ref: "#/components/responses/ErrorResponse"
         "403":
-          description: Forbidden
+          $ref: "#/components/responses/ErrorResponse"
         "404":
-          description: Not Found
+          $ref: "#/components/responses/ErrorResponse"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
 
   /collections:
     post:
@@ -235,7 +255,9 @@ paths:
         "201":
           $ref: "#/components/responses/CollectionDetails"
         "401":
-          description: Unauthorized
+          $ref: "#/components/responses/ErrorResponse"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
     get:
       tags:
         - collection
@@ -249,6 +271,8 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/CollectionList"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
 
   /collections/{collectionId}:
     parameters:
@@ -263,11 +287,13 @@ paths:
         "200":
           $ref: "#/components/responses/CollectionDetails"
         "401":
-          description: Unauthorized
+          $ref: "#/components/responses/ErrorResponse"
         "403":
-          description: Forbidden
+          $ref: "#/components/responses/ErrorResponse"
         "404":
-          description: Not Found
+          $ref: "#/components/responses/ErrorResponse"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
     patch:
       tags:
         - collection
@@ -282,11 +308,13 @@ paths:
         "200":
           $ref: "#/components/responses/CollectionDetails"
         "401":
-          description: Unauthorized
+          $ref: "#/components/responses/ErrorResponse"
         "403":
-          description: Forbidden
+          $ref: "#/components/responses/ErrorResponse"
         "404":
-          description: Not Found
+          $ref: "#/components/responses/ErrorResponse"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
     delete:
       tags:
         - collection
@@ -299,11 +327,13 @@ paths:
         "204":
           description: No Content
         "401":
-          description: Unauthorized
+          $ref: "#/components/responses/ErrorResponse"
         "403":
-          description: Forbidden
+          $ref: "#/components/responses/ErrorResponse"
         "404":
-          description: Not Found
+          $ref: "#/components/responses/ErrorResponse"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
 
   /collections/{collectionId}/assets:
     parameters:
@@ -322,11 +352,13 @@ paths:
         "200":
           $ref: "#/components/responses/CollectionDetails"
         "401":
-          description: Unauthorized
+          $ref: "#/components/responses/ErrorResponse"
         "403":
-          description: Forbidden
+          $ref: "#/components/responses/ErrorResponse"
         "404":
-          description: Not Found
+          $ref: "#/components/responses/ErrorResponse"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
 
   /collections/{collectionId}/assets/delete:
     parameters:
@@ -345,11 +377,13 @@ paths:
         "200":
           $ref: "#/components/responses/CollectionDetails"
         "401":
-          description: Unauthorized
+          $ref: "#/components/responses/ErrorResponse"
         "403":
-          description: Forbidden
+          $ref: "#/components/responses/ErrorResponse"
         "404":
-          description: Not Found
+          $ref: "#/components/responses/ErrorResponse"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
 
   /users:
     post:
@@ -366,7 +400,9 @@ paths:
         "200":
           $ref: "#/components/responses/UserDetails"
         "401":
-          description: Unauthorized
+          $ref: "#/components/responses/ErrorResponse"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
 
   /users/{userId}:
     parameters:
@@ -381,7 +417,9 @@ paths:
         "200":
           $ref: "#/components/responses/UserDetails"
         "404":
-          description: Not Found
+          $ref: "#/components/responses/ErrorResponse"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
 
   /users/me:
     get:
@@ -396,7 +434,9 @@ paths:
         "200":
           $ref: "#/components/responses/UserDetails"
         "401":
-          description: Unauthorized
+          $ref: "#/components/responses/ErrorResponse"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
     patch:
       tags:
         - user
@@ -411,7 +451,9 @@ paths:
         "200":
           $ref: "#/components/responses/UserDetails"
         "401":
-          description: Unauthorized
+          $ref: "#/components/responses/ErrorResponse"
+        "500":
+          $ref: "#/components/responses/ErrorResponse"
 
 components:
   requestBodies:
@@ -509,6 +551,43 @@ components:
                   type: string
                   format: uuid
   responses:
+    HealthCheck:
+      description: Health check response
+      content:
+        application/json:
+          schema:
+            type: object
+            required: ["status", "githubUrl", "version", "hostname"]
+            properties:
+              status:
+                type: string
+                enum: [ok]
+              githubUrl:
+                type: string
+                format: uri
+              version:
+                type: string
+              hostname:
+                type: string
+    ErrorResponse:
+      description: Standard error response
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [status, error]
+            properties:
+              status:
+                type: string
+                enum: [error]
+              error:
+                type: object
+                required: [message, code]
+                properties:
+                  message:
+                    type: string
+                  code:
+                    type: integer
     AssetDetails:
       description: OK
       content:
