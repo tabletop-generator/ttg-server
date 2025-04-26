@@ -53,6 +53,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.2",
+    "express-openapi-validator": "^5.4.9",
     "helmet": "^8.0.0",
     "http-auth": "^4.2.0",
     "http-auth-passport": "^1.0.7",

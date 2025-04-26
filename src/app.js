@@ -4,6 +4,7 @@ const express = require("express");
 const helmet = require("helmet");
 const passport = require("passport");
 const { pinoHttp } = require("pino-http");
+const OpenApiValidator = require("express-openapi-validator");
 
 const auth = require("./lib/auth");
 const logger = require("./lib/logger");
@@ -35,6 +36,15 @@ app.use(passport.initialize());
 
 // Use JSON body parser
 app.use(express.json());
+
+// Use OpenAPI validator
+app.use(
+  OpenApiValidator.middleware({
+    apiSpec: "./openapi.yaml",
+    validateRequests: true,
+    validateResponses: true,
+  }),
+);
 
 // Define our routes
 app.use("/", require("./routes"));
