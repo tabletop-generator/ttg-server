@@ -8,7 +8,9 @@ const SUPABASE_PROJECT_URL = process.env.SUPABASE_PROJECT_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!(SUPABASE_PROJECT_URL && SUPABASE_SERVICE_ROLE_KEY)) {
-  throw new Error("Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY");
+  throw new Error(
+    "missing expected env vars: SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY",
+  );
 }
 
 // Create a Supabase admin client for server-side auth verification
