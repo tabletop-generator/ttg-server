@@ -70,7 +70,7 @@ function buildImgPromptPrompt(description) {
         "- **Key features** such as terrain (e.g., rivers, mountains), landmarks (e.g., castles, towns), and any points of interest (e.g., caves, forests).\n" +
         "- **Geography** like coastlines, islands, valleys, etc.\n" +
         "- **Scale** of the map (e.g., regional, local).\n" +
-        +"Condense the description into a **short** prompt (less than 30 words) that focuses on visual and geographical elements, ensuring clarity for the map generation model. " +
+        "Condense the description into a **short** prompt (less than 30 words) that focuses on visual and geographical elements, ensuring clarity for the map generation model. " +
         "Remove excessive narrative details and focus on elements that can be clearly represented visually on a map.\n",
     },
     {

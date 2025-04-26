@@ -88,7 +88,7 @@ function buildImgPromptPrompt(description) {
         "such as appearance, setting, mood, and important features. Strictly " +
         "focus on visual description and avoid abstract concepts or non-visual " +
         "adjectives. Write in prose but keep it brief. Include all of the " +
-        "attributes specified by the user but avoid names.",
+        "attributes specified by the user but avoid proper nouns.",
     },
     {
       role: "user",

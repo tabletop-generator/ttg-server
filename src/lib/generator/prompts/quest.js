@@ -32,7 +32,7 @@ function buildDescPrompt(
         "clearly with appropriate section headings. " +
         "Use descriptive language, avoid excessive length, and ensure the quest " +
         "fits the specified tone, location, and narrative elements. Expand on the user's input " +
-        "to create a fleshed out, detailed quest.",
+        "to create a fleshed out, detailed quest. Respond in plain text - do not format your response with markdown.",
     },
     {
       role: "user",
@@ -54,7 +54,7 @@ function buildDescPrompt(
     {
       role: "assistant",
       content:
-        "## The Curse of Black Hollow\n" +
+        "The Curse of Black Hollow\n\n" +
         "A dense fog rolls over the streets of Black Hollow as villagers gather around Elder Raleth’s fire. " +
         "Whispers of the vanished girl send shivers down spines, and all eyes turn to the adventurers. " +
         "In the heart of the ancient ruins, something stirs… \n\n" +
@@ -142,7 +142,7 @@ function buildImgPromptPrompt(description) {
     {
       role: "user",
       content:
-        "## The Curse of Black Hollow\n" +
+        "The Curse of Black Hollow\n\n" +
         "A dense fog rolls over the streets of Black Hollow as villagers gather around Elder Raleth’s fire. " +
         "Whispers of the vanished girl send shivers down spines, and all eyes turn to the adventurers. " +
         "In the heart of the ancient ruins, something stirs… \n\n" +
