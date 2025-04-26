@@ -8,7 +8,7 @@ const OpenApiValidator = require("express-openapi-validator");
 
 const auth = require("./lib/auth");
 const logger = require("./lib/logger");
-const { createErrorResponse } = require("./lib/response");
+const { createHttpError } = require("./lib/error");
 
 const pino = pinoHttp({
   // Use our default logger instance, which is already configured
@@ -50,8 +50,8 @@ app.use(
 app.use("/", require("./routes"));
 
 // Add 404 middleware to handle any requests for resources that can't be found
-app.use((req, res) => {
-  res.status(404).json(createErrorResponse(404, "not found"));
+app.use((req, res, next) => {
+  return next(createHttpError(404, "not found"));
 });
 
 // Add error-handling middleware to deal with anything else
@@ -70,8 +70,8 @@ app.use((err, req, res, next) => {
   res.status(status).json({
     status: "error",
     error: {
-      message,
       code: status,
+      message: message,
     },
   });
 });

@@ -4,9 +4,6 @@ const express = require("express");
 // Version from package.json
 const { version } = require("../../package.json");
 
-// Success response generator
-const { createSuccessResponse } = require("../lib/response");
-
 // Create a router that we can use to mount our API
 const router = express.Router();
 
@@ -24,14 +21,13 @@ router.get("/", (req, res) => {
   // See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching#controlling_caching
   res.setHeader("Cache-Control", "no-cache");
   // Send a 200 'OK' response with info about our repo
-  return res.status(200).json(
-    createSuccessResponse({
-      githubUrl: "https://github.com/tabletop-generator/ttg-server",
-      version,
-      hostname: hostname(),
-      timestamp: new Date().toISOString(),
-    }),
-  );
+  return res.status(200).json({
+    status: "ok",
+    githubUrl: "https://github.com/tabletop-generator/ttg-server",
+    version,
+    hostname: hostname(),
+    timestamp: new Date().toISOString(),
+  });
 });
 
 module.exports = router;

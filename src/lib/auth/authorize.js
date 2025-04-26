@@ -1,6 +1,6 @@
 const passport = require("passport");
 
-const { createErrorResponse } = require("../response");
+const { createHttpError } = require("../error");
 const logger = require("../logger");
 
 /**
@@ -19,12 +19,12 @@ module.exports.authorize = (strategyName) => {
       // Something failed, let the the error handling middleware deal with it
       if (err) {
         logger.warn({ err }, "Error authenticating user");
-        return next(createErrorResponse(500, "Unable to authenticate user"));
+        return next(createHttpError(500, "Unable to authenticate user"));
       }
 
       // Not authorized, return a 401
       if (!id) {
-        return res.status(401).json(createErrorResponse(401, "Unauthorized"));
+        return res.status(401).json(createHttpError(401, "Unauthorized"));
       }
 
       // Authorized. Attach the user's id to the request and continue

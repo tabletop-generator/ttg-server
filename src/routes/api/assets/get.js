@@ -1,5 +1,4 @@
 const logger = require("../../../lib/logger");
-const { createSuccessResponse } = require("../../../lib/response");
 
 /**
  * Get a list of assets filtered by the query
@@ -12,5 +11,5 @@ module.exports = async (req, res, next) => {
     `received request: GET /v1/assets`,
   );
 
-  return res.status(418).json(createSuccessResponse());
+  return res.status(418);
 };

@@ -1,5 +1,4 @@
 const logger = require("../../../lib/logger");
-const { createSuccessResponse } = require("../../../lib/response");
 
 /**
  * Create a collection
@@ -12,5 +11,5 @@ module.exports = async (req, res, next) => {
     `received request: POST /v1/collections`,
   );
 
-  return res.status(418).json(createSuccessResponse());
+  return res.status(418);
 };

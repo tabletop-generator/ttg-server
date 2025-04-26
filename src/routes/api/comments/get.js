@@ -1,5 +1,4 @@
 const logger = require("../../../lib/logger");
-const { createSuccessResponse } = require("../../../lib/response");
 
 /**
  * Get comments for an asset using the asset id in the query
@@ -12,5 +11,5 @@ module.exports = async (req, res, next) => {
     `received request: GET /v1/comments`,
   );
 
-  return res.status(418).json(createSuccessResponse());
+  return res.status(418);
 };

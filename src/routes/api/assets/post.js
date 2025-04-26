@@ -1,7 +1,6 @@
 const { saveAsset } = require("../../../model/asset");
 const logger = require("../../../lib/logger");
 const generate = require("../../../lib/generator");
-const { createSuccessResponse } = require("../../../lib/response");
 
 /**
  * Generate and save an asset
@@ -51,8 +50,5 @@ module.exports = async (req, res, next) => {
   );
 
   // Return asset metadata
-  return res
-    .status(201)
-    .set("Location", locationURL)
-    .json(createSuccessResponse({ asset: newAsset }));
+  return res.status(201).set("Location", locationURL).json({ asset: newAsset });
 };

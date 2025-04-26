@@ -1,5 +1,4 @@
 const logger = require("../../../lib/logger");
-const { createSuccessResponse } = require("../../../lib/response");
 
 /**
  * Delete an asset by it's id
@@ -12,5 +11,5 @@ module.exports = async (req, res, next) => {
     `received request: DELETE /v1/assets/:assetId`,
   );
 
-  return res.status(418).json(createSuccessResponse());
+  return res.status(418);
 };

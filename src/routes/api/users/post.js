@@ -1,6 +1,6 @@
 const logger = require("../../../lib/logger");
 const prisma = require("../../../model/data/prismaClient");
-const { createErrorResponse } = require("../../../lib/response");
+const { createHttpError } = require("../../../lib/error");
 
 /**
  * Create the current user if they don't already exist
@@ -20,7 +20,7 @@ module.exports = async (req, res, next) => {
     });
   } catch (error) {
     logger.error({ error }, "error finding user");
-    return next(createErrorResponse(500, "Error finding user"));
+    return next(createHttpError(500, "Error finding user"));
   }
 
   // If found, return their record
@@ -38,7 +38,7 @@ module.exports = async (req, res, next) => {
     });
   } catch (error) {
     logger.error({ error }, "error creating new user");
-    return next(createErrorResponse(500, "Error creating new user"));
+    return next(createHttpError(500, "Error creating new user"));
   }
 
   return res.status(201).json(user);

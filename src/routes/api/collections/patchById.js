@@ -1,6 +1,5 @@
 const { PrismaClientKnownRequestError } = require("@prisma/client").Prisma;
 const logger = require("../../../lib/logger");
-const { createSuccessResponse } = require("../../../lib/response");
 const prisma = require("../../../model/data/prismaClient");
 
 /**
@@ -110,5 +109,5 @@ module.exports = async (req, res, next) => {
     "updated collection: debug info",
   );
 
-  return res.status(200).json(createSuccessResponse(updatedCollection));
+  return res.status(200).json(updatedCollection);
 };

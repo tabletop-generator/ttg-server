@@ -1,5 +1,5 @@
 const logger = require("../../../lib/logger");
-const { createErrorResponse } = require("../../../lib/response");
+const { createHttpError } = require("../../../lib/error");
 const prisma = require("../../../model/data/prismaClient");
 
 /**
@@ -20,11 +20,11 @@ module.exports = async (req, res, next) => {
     });
   } catch (error) {
     logger.error({ error }, "error finding user");
-    return next(createErrorResponse(500, "Error finding user"));
+    return next(createHttpError(500, "Error finding user"));
   }
 
   if (!user) {
-    return next(createErrorResponse(404, "User not found"));
+    return next(createHttpError(404, "User not found"));
   }
 
   return res.status(200).json(user);
