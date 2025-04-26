@@ -13,7 +13,6 @@ module.exports = async (req, res, next) => {
   );
 
   let user;
-
   try {
     user = await prisma.user.findUnique({
       where: { userId: req.params.userId },

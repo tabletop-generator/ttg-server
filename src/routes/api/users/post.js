@@ -9,9 +9,8 @@ const { createHttpError } = require("../../../lib/error");
 module.exports = async (req, res, next) => {
   logger.debug({ user: req.user }, `received request: POST /v1/users`);
 
-  let user;
-
   // Try to find existing user
+  let user;
   try {
     user = await prisma.user.findUnique({
       where: {
