@@ -18,15 +18,12 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 You will need to provide the following environment variables:
 
-- `GROQ_API_KEY`: Your [Groq API key](https://console.groq.com/)
 - `CF_ACCOUNT_ID`: Your Cloudflare account ID
-- `CF_TOKEN`: Your [Cloudflare Workers AI API key](https://developers.cloudflare.com/workers-ai/)
-- `CF_AIG_TOKEN`: Your [Cloudflare AI Gateway token](https://developers.cloudflare.com/ai-gateway/)
-- `CF_AIG_NAME`: Your [Cloudflare AI Gateway name](https://developers.cloudflare.com/ai-gateway/)
+- `CF_WORKERS_AI_API_TOKEN`: Your [Cloudflare Workers AI API key](https://developers.cloudflare.com/workers-ai/)
 
 You can use these environment variables to customize the AI models used:
 
-- `GROQ_MODEL`: [Groq text generation model name](https://console.groq.com/docs/models) (the default is`gemma2-9b-it`)
+- `CF_TEXT_GENERATION_MODEL`: [Cloudflare Workers AI text generation model name](https://developers.cloudflare.com/workers-ai/models) (the default is `@cf/meta/llama-3.2-1b-instruct`)
 - `CF_TEXT_TO_IMAGE_MODEL`: [Cloudflare Workers AI text-to-image model name](https://developers.cloudflare.com/workers-ai/models/) (the default is `@cf/stabilityai/stable-diffusion-xl-base-1.0`)
 
 1. Clone the project to your workspace.
