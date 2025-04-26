@@ -98,6 +98,9 @@ CREATE TABLE "Comment" (
     "body" TEXT NOT NULL CHECK (char_length(body) BETWEEN 1 AND 255)
 );
 
+-- Create index for querying all comments on an asset
+CREATE INDEX "Comment_asset_id_index" ON "Comment" ("asset_id");
+
 -- Create Collection table
 CREATE TABLE "Collection" (
     "id" UUID NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
