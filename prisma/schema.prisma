@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Asset {
-  id             String          @id @db.Uuid
+  assetId        String          @id @map("id") @db.Uuid
   creatorId      String          @map("creator_id") @db.Uuid
   createdAt      DateTime        @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt      DateTime        @default(now()) @map("updated_at") @db.Timestamp(6)
@@ -18,7 +18,7 @@ model Asset {
   description    String
   imageUrl       String          @map("image_url")
   imageUrlExpiry DateTime        @map("image_url_expiry") @db.Timestamp(6)
-  user           User            @relation(fields: [creatorId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  user           User            @relation(fields: [creatorId], references: [userId], onDelete: Cascade, onUpdate: NoAction)
   AssetLike      AssetLike[]
   character      Character?
   comments       Comment[]
@@ -41,36 +41,36 @@ model Character {
   motivation  String                   @default("")
   personality String                   @default("")
   notes       String                   @default("")
-  asset       Asset                    @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  asset       Asset                    @relation(fields: [assetId], references: [assetId], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model Collection {
-  id          String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  creatorId   String          @map("creator_id") @db.Uuid
-  createdAt   DateTime        @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt   DateTime        @default(now()) @map("updated_at") @db.Timestamp(6)
-  visibility  enum_visibility
-  name        String
-  description String          @default("")
-  user        User            @relation(fields: [creatorId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  assets      Asset[]         @relation("AssetToCollection")
+  collectionId String          @id @default(dbgenerated("gen_random_uuid()")) @map("id") @db.Uuid
+  creatorId    String          @map("creator_id") @db.Uuid
+  createdAt    DateTime        @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt    DateTime        @default(now()) @map("updated_at") @db.Timestamp(6)
+  visibility   enum_visibility
+  name         String
+  description  String          @default("")
+  user         User            @relation(fields: [creatorId], references: [userId], onDelete: Cascade, onUpdate: NoAction)
+  assets       Asset[]         @relation("AssetToCollection")
 }
 
 model Comment {
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  commentId String   @id @default(dbgenerated("gen_random_uuid()")) @map("id") @db.Uuid
   assetId   String   @map("asset_id") @db.Uuid
   authorId  String   @map("author_id") @db.Uuid
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
   body      String
-  asset     Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  user      User     @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  asset     Asset    @relation(fields: [assetId], references: [assetId], onDelete: Cascade, onUpdate: NoAction)
+  user      User     @relation(fields: [authorId], references: [userId], onDelete: Cascade, onUpdate: NoAction)
 
   @@index([assetId], map: "Comment_asset_id_index")
 }
 
 model User {
-  id          String       @id @db.Uuid
+  userId      String       @id @map("id") @db.Uuid
   createdAt   DateTime     @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt   DateTime     @default(now()) @map("updated_at") @db.Timestamp(6)
   displayName String       @map("display_name")
@@ -92,7 +92,7 @@ model Location {
   pointsOfInterest String @default("") @map("points_of_interest")
   narrativeRole    String @default("") @map("narrative_role")
   notes            String @default("")
-  asset            Asset  @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  asset            Asset  @relation(fields: [assetId], references: [assetId], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model Map {
@@ -102,7 +102,7 @@ model Map {
   terrain          String @default("")
   pointsOfInterest String @default("") @map("points_of_interest")
   notes            String @default("")
-  asset            Asset  @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  asset            Asset  @relation(fields: [assetId], references: [assetId], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model Quest {
@@ -119,15 +119,15 @@ model Quest {
   hasSkillChallenges Boolean @map("has_skill_challenges")
   hasDilemmas        Boolean @map("has_dilemmas")
   notes              String  @default("")
-  asset              Asset   @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  asset              Asset   @relation(fields: [assetId], references: [assetId], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model AssetLike {
-  assetId    String   @map("asset_id") @db.Uuid
-  userId     String   @map("user_id") @db.Uuid
-  created_at DateTime @default(now()) @db.Timestamp(6)
-  Asset      Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  User       User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  assetId   String   @map("asset_id") @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  Asset     Asset    @relation(fields: [assetId], references: [assetId], onDelete: Cascade, onUpdate: NoAction)
+  User      User     @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: NoAction)
 
   @@id([assetId, userId])
   @@index([assetId], map: "AssetLike_asset_id_index")
