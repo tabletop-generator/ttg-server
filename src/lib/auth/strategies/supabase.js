@@ -1,9 +1,9 @@
-const BearerStrategy = require("passport-http-bearer").Strategy;
+const { Strategy: BearerStrategy } = require("passport-http-bearer");
 const { createClient } = require("@supabase/supabase-js");
-const logger = require("../logger");
-const { authorize } = require("./authorize");
 
-// These must be set securely (not exposed to client)
+const { authorize } = require("../authorize");
+const logger = require("../../logger");
+
 const SUPABASE_PROJECT_URL = process.env.SUPABASE_PROJECT_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
@@ -29,10 +29,10 @@ module.exports.strategy = () =>
       }
 
       logger.debug({ user }, "Verified Supabase user token");
-      done(null, user.user.id);
+      return done(null, user.user.id);
     } catch (err) {
       logger.error({ err, token }, "Could not verify Supabase token");
-      done(err, false);
+      return done(err, false);
     }
   });
 

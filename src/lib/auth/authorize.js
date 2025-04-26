@@ -29,7 +29,7 @@ module.exports.authorize = (strategyName) => {
 
       // Authorized. Attach the user's id to the request and continue
       req.user = id;
-      logger.debug({ id }, "Authenticated user");
+      logger.debug({ id }, `Authenticated user with ${strategyName} strategy`);
 
       // Call the next function in the middleware chain (e.g. your route handler)
       next();
