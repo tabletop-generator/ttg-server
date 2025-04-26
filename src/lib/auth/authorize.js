@@ -27,6 +27,8 @@ module.exports.authorize = (strategyName) => {
         return res.status(401).json(createErrorResponse(401, "Unauthorized"));
       }
 
+      // Authorized. Attach the user's id to the request and continue
+      req.user = id;
       logger.debug({ id }, "Authenticated user");
 
       // Call the next function in the middleware chain (e.g. your route handler)
