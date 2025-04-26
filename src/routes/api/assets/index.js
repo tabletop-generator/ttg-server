@@ -9,6 +9,8 @@ const router = express.Router();
 
 router.post(`/`, auth.authenticate(), require("./post"));
 
+router.post(`/:assetId/like`, require("./postLikeById"));
+
 router.get(`/`, require("./get"));
 
 router.get(`/:assetId`, require("./getById"));
