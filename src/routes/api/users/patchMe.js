@@ -7,7 +7,10 @@ const prisma = require("../../../model/data/prismaClient");
  */
 
 module.exports = async (req, res, next) => {
-  logger.debug({ user: req.user }, `received request: PATCH /v1/users/me`);
+  logger.debug(
+    { user: req.user, body: req.body },
+    `received request: PATCH /v1/users/me`,
+  );
 
   let user;
   try {
