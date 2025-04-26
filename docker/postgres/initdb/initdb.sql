@@ -12,7 +12,8 @@ CREATE TYPE enum_character_alignment AS ENUM ('lawful_good', 'neutral_good', 'ch
 -- Create User table
 CREATE TABLE "User" (
     "id" UUID NOT NULL PRIMARY KEY,
-    "join_date" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "display_name" TEXT NOT NULL CHECK (char_length(display_name) BETWEEN 1 AND 30),
     "bio" TEXT NOT NULL CHECK (char_length(bio) <= 255) DEFAULT ''
 );
@@ -144,6 +145,11 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Create triggers to update updated_at
+CREATE TRIGGER set_user_updated_at
+BEFORE UPDATE ON "User"
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at_column();
+
 CREATE TRIGGER set_asset_updated_at
 BEFORE UPDATE ON "Asset"
 FOR EACH ROW
