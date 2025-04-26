@@ -31,6 +31,8 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/HealthCheck"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
         "500":
           $ref: "#/components/responses/ErrorResponse"
 
@@ -48,6 +50,8 @@ paths:
       responses:
         "201":
           $ref: "#/components/responses/AssetDetails"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
         "500":
           $ref: "#/components/responses/ErrorResponse"
     get:
@@ -67,6 +71,8 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/AssetList"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
         "500":
           $ref: "#/components/responses/ErrorResponse"
 
@@ -271,6 +277,8 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/CollectionList"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
         "500":
           $ref: "#/components/responses/ErrorResponse"
 
@@ -609,6 +617,7 @@ components:
             allOf:
               - $ref: "#/components/schemas/asset"
               - type: object
+                required: ["data"]
                 additionalProperties: false
                 properties:
                   data:
@@ -1122,13 +1131,6 @@ components:
           type: string
           maxLength: 500
     assetDataCreate:
-      discriminator:
-        propertyName: assetType
-        mapping:
-          character: "#/components/schemas/characterCreate"
-          location: "#/components/schemas/locationCreate"
-          quest: "#/components/schemas/questCreate"
-          map: "#/components/schemas/mapCreate"
       oneOf:
         - $ref: "#/components/schemas/characterCreate"
         - $ref: "#/components/schemas/locationCreate"
