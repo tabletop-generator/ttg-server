@@ -1,16 +1,31 @@
 const logger = require("../../../lib/logger");
-const { createSuccessResponse } = require("../../../lib/response");
+const { createErrorResponse } = require("../../../lib/response");
+const prisma = require("../../../model/data/prismaClient");
 
 /**
  * Get a user by their id
  */
 
-// eslint-disable-next-line no-unused-vars
 module.exports = async (req, res, next) => {
   logger.debug(
-    { user: req.user, id: req.params.id },
+    { user: req.user, userIdParam: req.params.userId },
     `received request: GET /v1/users/:userId`,
   );
 
-  return res.status(418).json(createSuccessResponse());
+  let user;
+
+  try {
+    user = await prisma.user.findUnique({
+      where: { userId: req.params.userId },
+    });
+  } catch (error) {
+    logger.error({ error }, "error finding user");
+    return next(createErrorResponse(500, "Error finding user"));
+  }
+
+  if (!user) {
+    return next(createErrorResponse(404, "User not found"));
+  }
+
+  return res.status(200).json(user);
 };
