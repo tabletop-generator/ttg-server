@@ -12,13 +12,14 @@ model Asset {
   creatorId      String          @map("creator_id") @db.Uuid
   createdAt      DateTime        @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt      DateTime        @default(now()) @map("updated_at") @db.Timestamp(6)
-  type           enum_asset_type
+  assetType      enum_asset_type @map("asset_type")
   visibility     enum_visibility
   name           String
-  description    String?
+  description    String
   imageUrl       String          @map("image_url")
   imageUrlExpiry DateTime        @map("image_url_expiry") @db.Timestamp(6)
   user           User            @relation(fields: [creatorId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  AssetLike      AssetLike[]
   character      Character?
   comments       Comment[]
   location       Location?
@@ -28,19 +29,19 @@ model Asset {
 }
 
 model Character {
-  assetId           String                   @id @map("asset_id") @db.Uuid
-  race              enum_character_race
-  class             enum_character_class
-  gender            enum_character_gender
-  alignment         enum_character_alignment
-  abilities         String?
-  appearance        String?
-  background        String?
-  equipment         String?
-  motivation        String?
-  personality       String?
-  customDescription String?                  @map("custom_description")
-  asset             Asset                    @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  assetId     String                   @id @map("asset_id") @db.Uuid
+  race        enum_character_race
+  class       enum_character_class
+  gender      enum_character_gender
+  alignment   enum_character_alignment
+  abilities   String                   @default("")
+  appearance  String                   @default("")
+  background  String                   @default("")
+  equipment   String                   @default("")
+  motivation  String                   @default("")
+  personality String                   @default("")
+  notes       String                   @default("")
+  asset       Asset                    @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model Collection {
@@ -50,7 +51,7 @@ model Collection {
   updatedAt   DateTime        @default(now()) @map("updated_at") @db.Timestamp(6)
   visibility  enum_visibility
   name        String
-  description String?
+  description String          @default("")
   user        User            @relation(fields: [creatorId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   assets      Asset[]         @relation("AssetToCollection")
 }
@@ -67,57 +68,67 @@ model Comment {
 }
 
 model User {
-  id                      String       @id @db.Uuid
-  email                   String?      @unique
-  joinDate                DateTime     @default(now()) @map("join_date") @db.Timestamp(6)
-  displayName             String?      @map("display_name")
-  profileBio              String?      @map("profile_bio")
-  profilePictureUrl       String?      @map("profile_picture_url")
-  profilePictureUrlExpiry DateTime?    @map("profile_picture_url_expiry") @db.Timestamp(6)
-  assets                  Asset[]
-  collections             Collection[]
-  comments                Comment[]
+  id          String       @id @db.Uuid
+  joinDate    DateTime     @default(now()) @map("join_date") @db.Timestamp(6)
+  displayName String       @map("display_name")
+  bio         String       @default("")
+  assets      Asset[]
+  AssetLike   AssetLike[]
+  collections Collection[]
+  comments    Comment[]
 }
 
 model Location {
-  assetId           String  @id @map("asset_id") @db.Uuid
-  type              String
-  terrain           String?
-  climate           String?
-  atmosphere        String?
-  inhabitants       String?
-  dangerLevel       String? @map("danger_level")
-  pointsOfInterest  String? @map("points_of_interest")
-  narrativeRole     String? @map("narrative_role")
-  customDescription String? @map("custom_description")
-  asset             Asset   @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  assetId          String @id @map("asset_id") @db.Uuid
+  locationType     String @map("location_type")
+  terrain          String @default("")
+  climate          String @default("")
+  atmosphere       String @default("")
+  inhabitants      String @default("")
+  dangerLevel      String @default("") @map("danger_level")
+  pointsOfInterest String @default("") @map("points_of_interest")
+  narrativeRole    String @default("") @map("narrative_role")
+  notes            String @default("")
+  asset            Asset  @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model Map {
-  assetId           String  @id @map("asset_id") @db.Uuid
-  type              String
-  scale             String?
-  terrain           String?
-  pointsOfInterest  String? @map("points_of_interest")
-  customDescription String? @map("custom_description")
-  asset             Asset   @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  assetId          String @id @map("asset_id") @db.Uuid
+  mapType          String @map("map_type")
+  scale            String @default("")
+  terrain          String @default("")
+  pointsOfInterest String @default("") @map("points_of_interest")
+  notes            String @default("")
+  asset            Asset  @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model Quest {
   assetId            String  @id @map("asset_id") @db.Uuid
-  type               String
-  tone               String?
-  location           String?
-  complexity         String?
-  objective          String?
-  antagonist         String?
-  notableNpcs        String? @map("notable_npcs")
+  questType          String  @map("quest_type")
+  tone               String  @default("")
+  location           String  @default("")
+  complexity         String  @default("")
+  objective          String  @default("")
+  antagonist         String  @default("")
+  notableNpcs        String  @default("") @map("notable_npcs")
   hasCombat          Boolean @map("has_combat")
   hasPuzzles         Boolean @map("has_puzzles")
   hasSkillChallenges Boolean @map("has_skill_challenges")
   hasDilemmas        Boolean @map("has_dilemmas")
-  customDescription  String? @map("custom_description")
+  notes              String  @default("")
   asset              Asset   @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model AssetLike {
+  assetId    String   @map("asset_id") @db.Uuid
+  userId     String   @map("user_id") @db.Uuid
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  Asset      Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  User       User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([assetId, userId])
+  @@index([assetId], map: "AssetLike_asset_id_index")
+  @@index([userId], map: "AssetLike_user_id_index")
 }
 
 enum enum_asset_type {
