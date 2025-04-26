@@ -109,6 +109,18 @@ CREATE TABLE "Collection" (
     "description" TEXT NOT NULL CHECK (char_length(description) <= 255) DEFAULT ''
 );
 
+-- Create table and indices for tracking Assets liked by Users
+-- This can't be an implicit many-to-many relationship in Prisma so we do it this way
+CREATE TABLE "AssetLike" (
+    "asset_id" UUID NOT NULL REFERENCES "Asset"("id") ON DELETE CASCADE,
+    "user_id" UUID NOT NULL REFERENCES "User"("id") ON DELETE CASCADE,
+    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY ("asset_id", "user_id")
+);
+
+CREATE INDEX "AssetLike_user_id_index" ON "AssetLike" ("user_id");
+CREATE INDEX "AssetLike_asset_id_index" ON "AssetLike" ("asset_id");
+
 -- Create Asset To Collection many-to-many table
 CREATE TABLE "_AssetToCollection" (
     "A" UUID NOT NULL REFERENCES "Asset"("id") ON DELETE CASCADE,
