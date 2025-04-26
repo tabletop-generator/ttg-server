@@ -16077,6 +16077,7 @@
                       schema: {
                         type: "object",
                         required: ["name", "assetType", "visibility", "data"],
+                        additionalProperties: false,
                         properties: {
                           name: { type: "string", minLength: 1, maxLength: 30 },
                           assetType: { $ref: "#/components/schemas/assetType" },
@@ -16107,6 +16108,7 @@
                       schema: {
                         type: "object",
                         required: ["body"],
+                        additionalProperties: false,
                         properties: {
                           body: {
                             type: "string",
@@ -16124,6 +16126,7 @@
                       schema: {
                         type: "object",
                         required: ["name"],
+                        additionalProperties: false,
                         properties: {
                           name: { type: "string", minLength: 1, maxLength: 30 },
                           description: { type: "string", maxLength: 255 },
@@ -16140,6 +16143,7 @@
                     "application/json": {
                       schema: {
                         type: "object",
+                        additionalProperties: false,
                         properties: {
                           displayName: {
                             type: "string",
@@ -16157,6 +16161,7 @@
                     "application/json": {
                       schema: {
                         type: "object",
+                        additionalProperties: false,
                         properties: {
                           name: { type: "string", minLength: 1, maxLength: 30 },
                           description: { type: "string", maxLength: 2000 },
@@ -16174,6 +16179,7 @@
                       schema: {
                         type: "object",
                         required: ["assetIds"],
+                        additionalProperties: false,
                         properties: {
                           assetIds: {
                             type: "array",
@@ -16199,6 +16205,7 @@
                           "hostname",
                           "timestamp",
                         ],
+                        additionalProperties: false,
                         properties: {
                           status: { type: "string", enum: ["ok"] },
                           githubUrl: { type: "string", format: "uri" },
@@ -16217,11 +16224,13 @@
                       schema: {
                         type: "object",
                         required: ["status", "error"],
+                        additionalProperties: false,
                         properties: {
                           status: { type: "string", enum: ["error"] },
                           error: {
                             type: "object",
                             required: ["message", "code"],
+                            additionalProperties: false,
                             properties: {
                               message: { type: "string" },
                               code: { type: "integer" },
@@ -16241,6 +16250,7 @@
                           { $ref: "#/components/schemas/asset" },
                           {
                             type: "object",
+                            additionalProperties: false,
                             properties: {
                               data: { $ref: "#/components/schemas/assetData" },
                             },
@@ -16261,6 +16271,7 @@
                           "likeCount",
                           "likedByCurrentUser",
                         ],
+                        additionalProperties: false,
                         properties: {
                           assetId: { type: "string", format: "uuid" },
                           likeCount: { type: "integer", minimum: 0 },
@@ -16277,6 +16288,7 @@
                       schema: {
                         type: "object",
                         required: ["assets"],
+                        additionalProperties: false,
                         properties: {
                           assets: {
                             type: "array",
@@ -16316,6 +16328,7 @@
                           {
                             type: "object",
                             required: ["assets"],
+                            additionalProperties: false,
                             properties: {
                               assets: {
                                 type: "array",
@@ -16352,6 +16365,7 @@
                           "displayName",
                           "bio",
                         ],
+                        additionalProperties: false,
                         properties: {
                           userId: { type: "string", format: "uuid" },
                           createdAt: { type: "string", format: "date-time" },
@@ -16444,6 +16458,7 @@
                     {
                       type: "object",
                       required: ["commentId", "body", "createdAt", "updatedAt"],
+                      additionalProperties: false,
                       properties: {
                         commentId: { type: "string", format: "uuid" },
                         body: { type: "string", minLength: 1, maxLength: 255 },
@@ -16467,6 +16482,7 @@
                         "description",
                         "assetCount",
                       ],
+                      additionalProperties: false,
                       properties: {
                         collectionId: { type: "string", format: "uuid" },
                         createdAt: { type: "string", format: "date-time" },
@@ -16482,6 +16498,7 @@
                 userSummary: {
                   type: "object",
                   required: ["userId", "displayName"],
+                  additionalProperties: false,
                   properties: {
                     userId: { type: "string", format: "uuid" },
                     displayName: {
@@ -16509,6 +16526,7 @@
                         "updatedAt",
                         "commentCount",
                       ],
+                      additionalProperties: false,
                       properties: {
                         assetId: { type: "string", format: "uuid" },
                         assetType: { $ref: "#/components/schemas/assetType" },
@@ -16556,6 +16574,7 @@
                     "motivation",
                     "notes",
                   ],
+                  additionalProperties: false,
                   properties: {
                     race: {
                       type: "string",
@@ -16636,6 +16655,7 @@
                     "narrativeRole",
                     "notes",
                   ],
+                  additionalProperties: false,
                   properties: {
                     locationType: { type: "string", maxLength: 255 },
                     terrain: { type: "string", maxLength: 255 },
@@ -16664,6 +16684,7 @@
                     "hasDilemmas",
                     "notes",
                   ],
+                  additionalProperties: false,
                   properties: {
                     questType: { type: "string", maxLength: 255 },
                     tone: { type: "string", maxLength: 255 },
@@ -16688,6 +16709,7 @@
                     "pointsOfInterest",
                     "notes",
                   ],
+                  additionalProperties: false,
                   properties: {
                     mapType: { type: "string", maxLength: 255 },
                     terrain: { type: "string", maxLength: 255 },
@@ -16716,6 +16738,7 @@
                 characterCreate: {
                   type: "object",
                   required: ["race", "class", "gender", "alignment"],
+                  additionalProperties: false,
                   properties: {
                     race: {
                       type: "string",
@@ -16786,6 +16809,7 @@
                 locationCreate: {
                   type: "object",
                   required: ["locationType"],
+                  additionalProperties: false,
                   properties: {
                     locationType: { type: "string", maxLength: 255 },
                     terrain: { type: "string", maxLength: 255 },
@@ -16807,6 +16831,7 @@
                     "hasSkillChallenges",
                     "hasDilemmas",
                   ],
+                  additionalProperties: false,
                   properties: {
                     questType: { type: "string", maxLength: 255 },
                     tone: { type: "string", maxLength: 255 },
@@ -16825,6 +16850,7 @@
                 mapCreate: {
                   type: "object",
                   required: ["mapType"],
+                  additionalProperties: false,
                   properties: {
                     mapType: { type: "string", maxLength: 255 },
                     terrain: { type: "string", maxLength: 255 },
