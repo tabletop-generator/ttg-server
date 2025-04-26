@@ -8,7 +8,7 @@ const prisma = require("./data/prismaClient");
 
 /**
  *
- * @param {String} userHashedEmail
+ * @param {String} userId
  * @param {String} description
  * @param {Buffer} image
  * @param {Object} metadata
@@ -16,33 +16,20 @@ const prisma = require("./data/prismaClient");
  * @returns {import("@prisma/client").Asset}
  * @throws
  */
-async function saveAsset(
-  userHashedEmail,
-  description,
-  image,
-  metadata,
-  mimeType,
-) {
+async function saveAsset(userId, description, image, metadata, mimeType) {
   const { name, type, visibility, data } = metadata;
 
   const assetId = randomUUID();
-  const key = `${userHashedEmail}/${assetId}`;
+  const key = `${userId}/${assetId}`;
 
   // Upload data to S3 and create a presigned URL
   await uploadDataToS3(key, image, mimeType);
   const { url, urlExpiry } = await createPresignedUrl(key);
 
-  // Get the user's database id to create the foreign key with the asset
-  const { id: userId } = await prisma.user.findUniqueOrThrow({
-    where: {
-      hashedEmail: userHashedEmail,
-    },
-  });
-
   // Save asset to database
   return await prisma.asset.create({
     data: {
-      uuid: assetId,
+      id: assetId,
       name: name,
       type: type,
       visibility: visibility,
@@ -63,15 +50,14 @@ async function saveAsset(
 
 /**
  *
- * @param {import("node:crypto").UUID} assetUuid
- * @param {Boolean} includeUser Whether to include the related user record
+ * @param {import("node:crypto").UUID} assetId
  * @returns {import("@prisma/client").Asset}
  * @throws
  */
-async function getAsset(assetUuid) {
+async function getAsset(assetId) {
   // Get asset from database
   let asset = await prisma.asset.findUniqueOrThrow({
-    where: { uuid: assetUuid },
+    where: { id: assetId },
     include: {
       character: true,
       location: true,
@@ -86,7 +72,7 @@ async function getAsset(assetUuid) {
   const currentTime = new Date().getTime();
 
   if (asset.imageUrlExpiry.getTime() <= currentTime + BUFFER_WINDOW) {
-    const key = `${asset.user.hashedEmail}/${asset.uuid}`;
+    const key = `${asset.user.id}/${asset.id}`;
     const { url, urlExpiry } = await createPresignedUrl(key);
 
     asset = await prisma.asset.update({
@@ -112,29 +98,18 @@ async function getAsset(assetUuid) {
 
 /**
  *
- * @param {import("node:crypto").UUID} assetUuid
+ * @param {import("node:crypto").UUID} assetId
  * @returns {import("@prisma/client").Asset}
  * @throws
  */
-async function deleteAsset(assetUuid) {
+async function deleteAsset(assetId) {
   // Delete image from object store
-  await deleteDataFromS3(assetUuid);
-
-  // Delete records for related comments
-  await prisma.comment.deleteMany({
-    where: {
-      asset: {
-        is: {
-          uuid: assetUuid,
-        },
-      },
-    },
-  });
+  await deleteDataFromS3(assetId);
 
   // Delete asset record
   return await prisma.asset.delete({
     where: {
-      uuid: assetUuid,
+      id: assetId,
     },
   });
 }

@@ -41,7 +41,7 @@ module.exports = async (req, res, next) => {
   }
 
   const locationURL = new URL(
-    `/v1/assets/${newAsset.uuid}`,
+    `/v1/assets/${newAsset.id}`,
     process.env?.API_URL || `https://${req.headers?.host}`,
   );
 

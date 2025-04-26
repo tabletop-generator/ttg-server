@@ -30,9 +30,9 @@ module.exports = async (req, res, next) => {
   if (req.body?.assetsToAdd) {
     try {
       assetsToConnect = await prisma.asset.findMany({
-        select: { id: true, uuid: true },
+        select: { id: true },
         where: {
-          uuid: { in: req.body?.assetsToAdd },
+          id: { in: req.body?.assetsToAdd },
           OR: [
             {
               creatorId: {
@@ -58,7 +58,7 @@ module.exports = async (req, res, next) => {
 
   assetsToConnect = assetsToConnect.map((asset) => ({ id: asset.id }));
   const assetsToDisconnect = assetsToRemove.map((assetId) => ({
-    uuid: assetId,
+    id: assetId,
   }));
 
   // Update the collection
@@ -78,12 +78,12 @@ module.exports = async (req, res, next) => {
       include: {
         user: {
           select: {
-            hashedEmail: true,
+            id: true,
           },
         },
         assets: {
           select: {
-            uuid: true,
+            id: true,
           },
         },
       },
