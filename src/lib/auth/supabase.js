@@ -1,7 +1,7 @@
 const BearerStrategy = require("passport-http-bearer").Strategy;
 const { createClient } = require("@supabase/supabase-js");
 const logger = require("../logger");
-const authorize = require("./auth-middleware");
+const { authorize } = require("./authorize");
 
 // These must be set securely (not exposed to client)
 const SUPABASE_PROJECT_URL = process.env.SUPABASE_PROJECT_URL;
