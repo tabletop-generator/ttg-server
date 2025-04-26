@@ -7,10 +7,7 @@ const { createErrorResponse } = require("../../../lib/response");
  */
 
 module.exports = async (req, res, next) => {
-  logger.debug(
-    { user: req.user, body: req.body },
-    `received request: POST /v1/users`,
-  );
+  logger.debug({ user: req.user }, `received request: POST /v1/users`);
 
   let user;
 
