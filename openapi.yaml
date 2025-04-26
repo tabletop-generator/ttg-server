@@ -557,7 +557,8 @@ components:
         application/json:
           schema:
             type: object
-            required: ["status", "githubUrl", "version", "hostname"]
+            required:
+              ["status", "githubUrl", "version", "hostname", "timestamp"]
             properties:
               status:
                 type: string
@@ -569,6 +570,9 @@ components:
                 type: string
               hostname:
                 type: string
+              timestamp:
+                type: string
+                format: date-time
     ErrorResponse:
       description: Standard error response
       content:

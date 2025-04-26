@@ -29,6 +29,7 @@ router.get("/", (req, res) => {
       githubUrl: "https://github.com/tabletop-generator/ttg-server",
       version,
       hostname: hostname(),
+      timestamp: new Date().toISOString(),
     }),
   );
 });
