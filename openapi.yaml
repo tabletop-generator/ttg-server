@@ -590,12 +590,15 @@ components:
         application/json:
           schema:
             type: object
-            required: ["userId", "createdAt", "displayName", "bio"]
+            required: ["userId", "createdAt", "updatedAt", "displayName", "bio"]
             properties:
               userId:
                 type: string
                 format: uuid
               createdAt:
+                type: string
+                format: date-time
+              updatedAt:
                 type: string
                 format: date-time
               displayName:
