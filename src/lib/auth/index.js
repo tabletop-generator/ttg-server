@@ -11,7 +11,7 @@ else if (
 }
 // Allow for an .htpasswd file to be used, but not in production
 else if (process.env.HTPASSWD_FILE && process.NODE_ENV !== "production") {
-  module.exports = require("./basic-auth");
+  module.exports = require("./basic");
 }
 // In all other cases, we need to stop now and fix our config
 else {
