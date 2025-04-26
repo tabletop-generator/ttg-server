@@ -11,6 +11,6 @@ router.post(`/`, auth.authenticate(), require("./post"));
 
 router.get(`/:userId`, require("./getById"));
 
-router.patch(`/:userId`, auth.authenticate(), require("./patchById"));
+router.patch(`/me`, auth.authenticate(), require("./patchMe"));
 
 module.exports = router;
