@@ -1,5 +1,4 @@
 const { PrismaClientKnownRequestError } = require("@prisma/client").Prisma;
-const { z } = require("zod");
 const logger = require("../../../lib/logger");
 const { createSuccessResponse } = require("../../../lib/response");
 const prisma = require("../../../model/data/prismaClient");
@@ -13,24 +12,6 @@ module.exports = async (req, res, next) => {
     { user: req.user, id: req.params.collectionId },
     `received request: PATCH /v1/collections/:collectionId`,
   );
-
-  // Validate request body
-  try {
-    const updateSchema = z
-      .object({
-        name: z.string().optional(),
-        description: z.string().nullable().optional(),
-        visibility: z.enum(["public", "private", "unlisted"]).optional(),
-        assetsToAdd: z.string().uuid().array().optional(),
-        assetsToRemove: z.string().uuid().array().optional(),
-      })
-      .strict();
-
-    updateSchema.parse(req.body);
-  } catch (error) {
-    logger.info({ error }, "invalid request body");
-    return next({ status: 400, message: "Invalid request format" });
-  }
 
   // Validate id parameter and convert to int
   const collectionId = parseInt(req.params.collectionId);

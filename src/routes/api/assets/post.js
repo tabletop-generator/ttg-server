@@ -1,4 +1,4 @@
-const asset = require("../../../model/asset");
+const { saveAsset } = require("../../../model/asset");
 const logger = require("../../../lib/logger");
 const generate = require("../../../lib/generator");
 const { createSuccessResponse } = require("../../../lib/response");
@@ -12,16 +12,6 @@ module.exports = async (req, res, next) => {
     { user: req.user, body: req.body },
     `received request: POST /v1/assets`,
   );
-
-  // Validate request format
-  try {
-    asset.schema.parse(req.body);
-  } catch (error) {
-    logger.debug({ error }, "invalid request format");
-    error.status = 400;
-    error.message = "invalid request format";
-    return next(error);
-  }
 
   // Generate asset description and image
   let description, image, mimeType;
@@ -39,7 +29,7 @@ module.exports = async (req, res, next) => {
   // Save asset image and metadata
   let newAsset;
   try {
-    newAsset = await asset.save(
+    newAsset = await saveAsset(
       req.user,
       description,
       image,

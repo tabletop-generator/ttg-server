@@ -1,126 +1,10 @@
 const { randomUUID } = require("node:crypto");
-const { z } = require("zod");
 const {
   uploadDataToS3,
   createPresignedUrl,
   deleteDataFromS3,
 } = require("./data/aws");
 const prisma = require("./data/prismaClient");
-
-const baseSchema = z.object({
-  name: z.string(),
-  type: z.enum(["character", "location", "quest", "map"]),
-  visibility: z.enum(["public", "private", "unlisted"]),
-});
-
-const characterSchema = z
-  .object({
-    race: z.enum([
-      "human",
-      "elf",
-      "drow",
-      "half_elf",
-      "half_orc",
-      "halfling",
-      "dwarf",
-      "gnome",
-      "tiefling",
-      "githyanki",
-      "dragonborn",
-    ]),
-    class: z.enum([
-      "barbarian",
-      "bard",
-      "cleric",
-      "druid",
-      "fighter",
-      "monk",
-      "paladin",
-      "ranger",
-      "rogue",
-      "sorcerer",
-      "warlock",
-      "wizard",
-    ]),
-    gender: z.enum(["male", "female", "non_binary", "genderfluid", "agender"]),
-    alignment: z.enum([
-      "lawful_good",
-      "neutral_good",
-      "chaotic_good",
-      "lawful_neutral",
-      "true_neutral",
-      "chaotic_neutral",
-      "lawful_evil",
-      "neutral_evil",
-      "chaotic_evil",
-    ]),
-    abilities: z.string().optional(),
-    appearance: z.string().optional(),
-    background: z.string().optional(),
-    equipment: z.string().optional(),
-    motivation: z.string().optional(),
-    personality: z.string().optional(),
-  })
-  .strict();
-
-const locationSchema = z
-  .object({
-    type: z.string(),
-    terrain: z.string().optional(),
-    climate: z.string().optional(),
-    atmosphere: z.string().optional(),
-    inhabitants: z.string().optional(),
-    dangerLevel: z.string().optional(),
-    pointsOfInterest: z.string().optional(),
-    narrativeRole: z.string().optional(),
-    customDescription: z.string().optional(),
-  })
-  .strict();
-
-const mapSchema = z
-  .object({
-    type: z.string(),
-    terrain: z.string().optional(),
-    scale: z.string().optional(),
-    pointsOfInterest: z.string().optional(),
-    customDescription: z.string().optional(),
-  })
-  .strict();
-
-const questSchema = z
-  .object({
-    type: z.string(),
-    tone: z.string().optional(),
-    location: z.string().optional(),
-    complexity: z.string().optional(),
-    objective: z.string().optional(),
-    antagonist: z.string().optional(),
-    notableNpcs: z.string().optional(),
-    hasCombat: z.boolean().optional(),
-    hasPuzzles: z.boolean().optional(),
-    hasSkillChallenges: z.boolean().optional(),
-    hasDilemmas: z.boolean().optional(),
-    customDescription: z.string().optional(),
-  })
-  .strict();
-
-const schemas = {
-  character: characterSchema,
-  location: locationSchema,
-  map: mapSchema,
-  quest: questSchema,
-};
-
-const fullSchema = baseSchema
-  .extend({
-    data: z.union([characterSchema, locationSchema, mapSchema, questSchema]),
-  })
-  .refine((fullSchema) => {
-    const assetTypeSchema = schemas[fullSchema.type];
-    return assetTypeSchema
-      ? assetTypeSchema.safeParse(fullSchema.data).success
-      : false;
-  });
 
 /**
  *
@@ -258,4 +142,3 @@ async function deleteAsset(assetUuid) {
 module.exports.saveAsset = saveAsset;
 module.exports.getAsset = getAsset;
 module.exports.deleteAsset = deleteAsset;
-module.exports.assetSchema = fullSchema;
