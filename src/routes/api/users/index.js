@@ -9,6 +9,8 @@ const router = express.Router();
 
 router.post(`/`, auth.authenticate(), require("./post"));
 
+router.get(`/me`, auth.authenticate(), require("./getMe"));
+
 router.get(`/:userId`, require("./getById"));
 
 router.patch(`/me`, auth.authenticate(), require("./patchMe"));
