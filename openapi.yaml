@@ -526,12 +526,12 @@ components:
         application/json:
           schema:
             type: object
-            required: ["assetId", "likes", "likedByCurrentUser"]
+            required: ["assetId", "likeCount", "likedByCurrentUser"]
             properties:
               assetId:
                 type: string
                 format: uuid
-              likes:
+              likeCount:
                 type: integer
                 minimum: 0
               likedByCurrentUser:
@@ -749,10 +749,11 @@ components:
               "description",
               "visibility",
               "imageUrl",
-              "likes",
+              "likeCount",
               "likedByCurrentUser",
               "createdAt",
               "updatedAt",
+              "commentCount",
             ]
           properties:
             assetId:
@@ -767,7 +768,7 @@ components:
             imageUrl:
               type: string
               format: uri
-            likes:
+            likeCount:
               type: integer
               minimum: 0
             likedByCurrentUser:
@@ -781,6 +782,9 @@ components:
             description:
               type: string
               maxLength: 2000
+            commentCount:
+              type: integer
+              minimum: 0
     assetData:
       discriminator:
         propertyName: assetType
