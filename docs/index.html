@@ -3579,7 +3579,7 @@
                                     <li>
                                       <div class="hoverable">
                                         <span class="property token string"
-                                          >"likedByCurrentUser"</span
+                                          >"isLikedByCurrentUser"</span
                                         >:
                                         <span class="token boolean">true</span
                                         ><span class="token punctuation"
@@ -4384,7 +4384,7 @@
                                                   >
                                                     <span
                                                       class="property token string"
-                                                      >"likedByCurrentUser"</span
+                                                      >"isLikedByCurrentUser"</span
                                                     >:
                                                     <span class="token boolean"
                                                       >true</span
@@ -4901,7 +4901,7 @@
                                     <li>
                                       <div class="hoverable">
                                         <span class="property token string"
-                                          >"likedByCurrentUser"</span
+                                          >"isLikedByCurrentUser"</span
                                         >:
                                         <span class="token boolean">true</span
                                         ><span class="token punctuation"
@@ -5806,7 +5806,7 @@
                                     <li>
                                       <div class="hoverable">
                                         <span class="property token string"
-                                          >"likedByCurrentUser"</span
+                                          >"isLikedByCurrentUser"</span
                                         >:
                                         <span class="token boolean">true</span
                                         ><span class="token punctuation"
@@ -6838,7 +6838,7 @@
                                     <li>
                                       <div class="hoverable">
                                         <span class="property token string"
-                                          >"likedByCurrentUser"</span
+                                          >"isLikedByCurrentUser"</span
                                         >:
                                         <span class="token boolean">true</span>
                                       </div>
@@ -7621,7 +7621,7 @@
                                                   >
                                                     <span
                                                       class="property token string"
-                                                      >"likedByCurrentUser"</span
+                                                      >"isLikedByCurrentUser"</span
                                                     >:
                                                     <span class="token boolean"
                                                       >true</span
@@ -8733,7 +8733,7 @@
                                                   >
                                                     <span
                                                       class="property token string"
-                                                      >"likedByCurrentUser"</span
+                                                      >"isLikedByCurrentUser"</span
                                                     >:
                                                     <span class="token boolean"
                                                       >true</span
@@ -9680,7 +9680,7 @@
                                                   >
                                                     <span
                                                       class="property token string"
-                                                      >"likedByCurrentUser"</span
+                                                      >"isLikedByCurrentUser"</span
                                                     >:
                                                     <span class="token boolean"
                                                       >true</span
@@ -10959,7 +10959,7 @@
                                                   >
                                                     <span
                                                       class="property token string"
-                                                      >"likedByCurrentUser"</span
+                                                      >"isLikedByCurrentUser"</span
                                                     >:
                                                     <span class="token boolean"
                                                       >true</span
@@ -11826,7 +11826,7 @@
                                                   >
                                                     <span
                                                       class="property token string"
-                                                      >"likedByCurrentUser"</span
+                                                      >"isLikedByCurrentUser"</span
                                                     >:
                                                     <span class="token boolean"
                                                       >true</span
@@ -16401,13 +16401,13 @@
                         required: [
                           "assetId",
                           "likeCount",
-                          "likedByCurrentUser",
+                          "isLikedByCurrentUser",
                         ],
                         additionalProperties: false,
                         properties: {
                           assetId: { type: "string", format: "uuid" },
                           likeCount: { type: "integer", minimum: 0 },
-                          likedByCurrentUser: { type: "boolean" },
+                          isLikedByCurrentUser: { type: "boolean" },
                         },
                       },
                     },
@@ -16653,7 +16653,7 @@
                         "visibility",
                         "imageUrl",
                         "likeCount",
-                        "likedByCurrentUser",
+                        "isLikedByCurrentUser",
                         "createdAt",
                         "updatedAt",
                         "commentCount",
@@ -16666,7 +16666,7 @@
                         visibility: { $ref: "#/components/schemas/visibility" },
                         imageUrl: { type: "string", format: "uri" },
                         likeCount: { type: "integer", minimum: 0 },
-                        likedByCurrentUser: { type: "boolean" },
+                        isLikedByCurrentUser: { type: "boolean" },
                         createdAt: { type: "string", format: "date-time" },
                         updatedAt: { type: "string", format: "date-time" },
                         description: { type: "string", maxLength: 2000 },

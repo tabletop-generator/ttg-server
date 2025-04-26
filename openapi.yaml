@@ -619,7 +619,7 @@ components:
         application/json:
           schema:
             type: object
-            required: ["assetId", "likeCount", "likedByCurrentUser"]
+            required: ["assetId", "likeCount", "isLikedByCurrentUser"]
             additionalProperties: false
             properties:
               assetId:
@@ -628,7 +628,7 @@ components:
               likeCount:
                 type: integer
                 minimum: 0
-              likedByCurrentUser:
+              isLikedByCurrentUser:
                 type: boolean
     AssetList:
       description: OK
@@ -867,7 +867,7 @@ components:
               "visibility",
               "imageUrl",
               "likeCount",
-              "likedByCurrentUser",
+              "isLikedByCurrentUser",
               "createdAt",
               "updatedAt",
               "commentCount",
@@ -891,7 +891,7 @@ components:
             likeCount:
               type: integer
               minimum: 0
-            likedByCurrentUser:
+            isLikedByCurrentUser:
               type: boolean
             createdAt:
               type: string
