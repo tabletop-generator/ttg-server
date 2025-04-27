@@ -4,7 +4,7 @@ const {
   DeleteObjectCommand,
 } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
-const s3Client = require("./s3Client");
+const { s3Client } = require("./s3Client");
 const { logger } = require("../../../lib/logger");
 
 // Writes a buffer to an S3 Object in a Bucket

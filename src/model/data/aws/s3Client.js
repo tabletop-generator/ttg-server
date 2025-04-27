@@ -49,7 +49,7 @@ const getS3Endpoint = () => {
  * not have various configuration settings, and will pass
  * `undefined` when we don't (i.e. we'll ignore them).
  */
-module.exports = new S3Client({
+const s3Client = new S3Client({
   // The region is always required
   region: process.env.AWS_REGION,
   // Credentials are optional (only MinIO needs them, or if you connect to AWS remotely from your laptop)
@@ -63,3 +63,5 @@ module.exports = new S3Client({
   requestChecksumCalculation: "WHEN_REQUIRED",
   responseChecksumValidation: "WHEN_REQUIRED",
 });
+
+module.exports = { s3Client };
