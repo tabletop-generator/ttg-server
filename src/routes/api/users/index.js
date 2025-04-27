@@ -1,5 +1,5 @@
 const express = require("express");
-const auth = require("../../../lib/auth");
+const { authenticate } = require("../../../lib/auth");
 
 /**
  * The entry-point for /users endpoints
@@ -7,12 +7,12 @@ const auth = require("../../../lib/auth");
 
 const router = express.Router();
 
-router.post(`/`, auth.authenticate(), require("./post"));
+router.post(`/`, authenticate(), require("./post"));
 
-router.get(`/me`, auth.authenticate(), require("./getMe"));
+router.get(`/me`, authenticate(), require("./getMe"));
 
 router.get(`/:userId`, require("./getById"));
 
-router.patch(`/me`, auth.authenticate(), require("./patchMe"));
+router.patch(`/me`, authenticate(), require("./patchMe"));
 
 module.exports = router;

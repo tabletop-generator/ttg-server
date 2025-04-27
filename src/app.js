@@ -6,7 +6,7 @@ const passport = require("passport");
 const { pinoHttp } = require("pino-http");
 const OpenApiValidator = require("express-openapi-validator");
 
-const auth = require("./lib/auth");
+const { strategy } = require("./lib/auth");
 const { logger } = require("./lib/logger");
 const { createHttpError } = require("./lib/error");
 
@@ -31,7 +31,7 @@ app.use(cors());
 app.use(compression());
 
 // Set up our passport authentication middleware
-passport.use(auth.strategy());
+passport.use(strategy);
 app.use(passport.initialize());
 
 // Use JSON body parser

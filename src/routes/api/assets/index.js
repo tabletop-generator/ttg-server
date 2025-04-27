@@ -1,5 +1,5 @@
 const express = require("express");
-const auth = require("../../../lib/auth");
+const { authenticate, optionalAuthenticate } = require("../../../lib/auth");
 
 /**
  * The entry-point for /assets endpoints
@@ -7,16 +7,16 @@ const auth = require("../../../lib/auth");
 
 const router = express.Router();
 
-router.post(`/`, auth.authenticate(), require("./post"));
+router.post(`/`, authenticate(), require("./post"));
 
-router.post(`/:assetId/like`, auth.authenticate(), require("./postLikeById"));
+router.post(`/:assetId/like`, authenticate(), require("./postLikeById"));
 
-router.get(`/`, auth.optionalAuthenticate(), require("./get"));
+router.get(`/`, optionalAuthenticate(), require("./get"));
 
-router.get(`/:assetId`, auth.optionalAuthenticate(), require("./getById"));
+router.get(`/:assetId`, optionalAuthenticate(), require("./getById"));
 
-router.patch(`/:assetId`, auth.authenticate(), require("./patchById"));
+router.patch(`/:assetId`, authenticate(), require("./patchById"));
 
-router.delete(`/:assetId`, auth.authenticate(), require("./deleteById"));
+router.delete(`/:assetId`, authenticate(), require("./deleteById"));
 
 module.exports = router;

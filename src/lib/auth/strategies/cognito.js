@@ -60,7 +60,7 @@ const strategy = new BearerStrategy(async (token, done) => {
 });
 
 module.exports = {
-  strategy: () => strategy,
+  strategy,
   authenticate: () => authorize("bearer"),
   optionalAuthenticate: () => optionalAuthorize("bearer"),
 };
