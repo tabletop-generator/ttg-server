@@ -1,6 +1,6 @@
 const { PrismaClientKnownRequestError } = require("@prisma/client").Prisma;
 const { logger } = require("../../../lib/logger");
-const prisma = require("../../../model/data/prismaClient");
+const { prisma } = require("../../../model/data/prismaClient");
 
 /**
  * Update a collection by it's id

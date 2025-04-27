@@ -1,6 +1,6 @@
+const { prisma } = require("../../../model/data/prismaClient");
 const { logger } = require("../../../lib/logger");
 const { createHttpError } = require("../../../lib/error");
-const prisma = require("../../../model/data/prismaClient");
 
 /**
  * Update the current user

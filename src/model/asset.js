@@ -4,7 +4,7 @@ const {
   createPresignedUrl,
   deleteDataFromS3,
 } = require("./data/aws");
-const prisma = require("./data/prismaClient");
+const { prisma } = require("./data/prismaClient");
 
 /**
  *

@@ -1,5 +1,5 @@
+const { prisma } = require("../../../model/data/prismaClient");
 const { logger } = require("../../../lib/logger");
-const prisma = require("../../../model/data/prismaClient");
 const { createHttpError } = require("../../../lib/error");
 
 /**
