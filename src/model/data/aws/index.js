@@ -77,6 +77,8 @@ async function deleteDataFromS3(key) {
   }
 }
 
-module.exports.uploadDataToS3 = uploadDataToS3;
-module.exports.deleteDataFromS3 = deleteDataFromS3;
-module.exports.createPresignedUrl = createPresignedUrl;
+module.exports = {
+  uploadDataToS3,
+  deleteDataFromS3,
+  createPresignedUrl,
+};

@@ -214,6 +214,4 @@ async function deleteAsset(assetId, userId) {
   });
 }
 
-module.exports.saveAsset = saveAsset;
-module.exports.getAsset = getAsset;
-module.exports.deleteAsset = deleteAsset;
+module.exports = { saveAsset, getAsset, deleteAsset };
