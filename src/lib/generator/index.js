@@ -1,5 +1,5 @@
-const generateImage = require("./generateImage");
-const generateDescription = require("./generateDescription");
+const { generateImage } = require("./generateImage");
+const { generateDescription } = require("./generateDescription");
 
 async function generateAsset(name, type, data) {
   const description = await generateDescription(name, type, data);

@@ -28,4 +28,4 @@ async function generateDescription(name, type, data) {
   return text;
 }
 
-module.exports = generateDescription;
+module.exports = { generateDescription };

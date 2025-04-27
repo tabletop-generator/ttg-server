@@ -55,4 +55,4 @@ async function generateImage(type, description) {
   };
 }
 
-module.exports = generateImage;
+module.exports = { generateImage };
