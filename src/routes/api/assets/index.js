@@ -9,11 +9,11 @@ const router = express.Router();
 
 router.post(`/`, auth.authenticate(), require("./post"));
 
-router.post(`/:assetId/like`, require("./postLikeById"));
+router.post(`/:assetId/like`, auth.authenticate(), require("./postLikeById"));
 
-router.get(`/`, require("./get"));
+router.get(`/`, auth.optionalAuthenticate(), require("./get"));
 
-router.get(`/:assetId`, require("./getById"));
+router.get(`/:assetId`, auth.optionalAuthenticate(), require("./getById"));
 
 router.patch(`/:assetId`, auth.authenticate(), require("./patchById"));
 
