@@ -115,7 +115,7 @@ async function getAsset(assetId, userId) {
     throw new Error("Not Found");
   }
 
-  if (asset.creatorId !== userId && asset.visibility !== "public") {
+  if (asset.creatorId !== userId && asset.visibility === "private") {
     throw new Error("Forbidden");
   }
 
