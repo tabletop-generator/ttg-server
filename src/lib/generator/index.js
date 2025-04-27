@@ -1,9 +1,9 @@
 const { generateImage } = require("./generateImage");
 const { generateDescription } = require("./generateDescription");
 
-async function generateAsset(name, type, data) {
-  const description = await generateDescription(name, type, data);
-  const { image, mimeType } = await generateImage(type, description);
+async function generateAsset({ name, assetType, data }) {
+  const description = await generateDescription(name, assetType, data);
+  const { image, mimeType } = await generateImage(assetType, description);
 
   return { description, image, mimeType };
 }

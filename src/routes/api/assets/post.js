@@ -16,11 +16,7 @@ module.exports = async (req, res, next) => {
   // Generate asset description and image
   let description, image, mimeType;
   try {
-    ({ description, image, mimeType } = await generateAsset(
-      req.body.name,
-      req.body.assetType,
-      req.body.data,
-    ));
+    ({ description, image, mimeType } = await generateAsset(req.body));
     logger.info({ assetName: req.body.name }, "generated asset");
     logger.debug({ description, mimeType }, "generated asset: debug info");
   } catch (error) {
