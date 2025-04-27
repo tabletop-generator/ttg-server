@@ -1,15 +1,32 @@
+const { toggleAssetLike } = require("../../../model/asset");
 const { logger } = require("../../../lib/logger");
+const { createHttpError } = require("../../../lib/error");
 
 /**
  * Get a list of assets filtered by the query
  */
 
-// eslint-disable-next-line no-unused-vars
 module.exports = async (req, res, next) => {
   logger.debug(
     { user: req.user, assetIdParam: req.params.assetId },
     `received request: POST /v1/assets/:assetId/like`,
   );
 
-  return res.status(418);
+  let like;
+  try {
+    like = await toggleAssetLike(req.params.assetId, req.user);
+  } catch (error) {
+    if (error.message === "Not Found") {
+      return next(createHttpError(404, "Not Found"));
+    }
+
+    if (error.message === "Forbidden") {
+      return next(createHttpError(403, "Forbidden"));
+    }
+
+    logger.error({ error }, "error toggling asset like status");
+    return next(createHttpError(500, "Error toggling asset like status"));
+  }
+
+  return res.status(200).json(like);
 };

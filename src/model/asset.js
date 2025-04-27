@@ -220,4 +220,57 @@ async function deleteAsset(assetId, userId) {
   return;
 }
 
-module.exports = { saveAsset, getAsset, updateAsset, deleteAsset };
+/**
+ *
+ * @param {import("node:crypto").UUID} assetId
+ * @param {import("node:crypto").UUID} userId
+ */
+async function toggleAssetLike(assetId, userId) {
+  // Find asset to check permissions
+  const asset = await prisma.asset.findUnique({
+    where: { assetId: assetId },
+  });
+
+  if (!asset) {
+    throw new Error("Not Found");
+  }
+
+  if (asset.creatorId !== userId && asset.visibility === "private") {
+    throw new Error("Forbidden");
+  }
+
+  // Check the current like status
+  const existingLike = await prisma.assetLike.findUnique({
+    where: { assetId_userId: { assetId: assetId, userId: userId } },
+  });
+
+  if (existingLike) {
+    // Unlike (delete existing like)
+    await prisma.assetLike.delete({
+      where: { assetId_userId: { assetId: assetId, userId: userId } },
+    });
+  } else {
+    await prisma.assetLike.create({
+      data: { assetId: assetId, userId: userId },
+    });
+  }
+
+  // Count total likes after toggle
+  const likeCount = await prisma.assetLike.count({
+    where: { assetId: assetId },
+  });
+
+  return {
+    assetId: assetId,
+    likeCount: likeCount,
+    isLikedByCurrentUser: !existingLike, // It's been toggled so it's the opposite
+  };
+}
+
+module.exports = {
+  saveAsset,
+  getAsset,
+  updateAsset,
+  deleteAsset,
+  toggleAssetLike,
+};
