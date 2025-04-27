@@ -7,7 +7,7 @@ const { logger } = require("../../../lib/logger");
 // eslint-disable-next-line no-unused-vars
 module.exports = async (req, res, next) => {
   logger.debug(
-    { user: req.user, query: req.query },
+    { user: req.user, assetIdParam: req.params.assetId },
     `received request: POST /v1/assets/:assetId/like`,
   );
 
