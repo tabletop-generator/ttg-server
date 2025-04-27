@@ -18,7 +18,7 @@ const supabase = createClient(SUPABASE_PROJECT_URL, SUPABASE_SERVICE_ROLE_KEY);
 
 logger.info("Configured to use Supabase Auth for Authorization");
 
-module.exports.strategy = () =>
+const strategy = () =>
   new BearerStrategy(async (token, done) => {
     try {
       const { data: user, error } = await supabase.auth.getUser(token);
@@ -36,5 +36,8 @@ module.exports.strategy = () =>
     }
   });
 
-module.exports.authenticate = () => authorize("bearer");
-module.exports.optionalAuthenticate = () => optionalAuthorize("bearer");
+module.exports = {
+  strategy: strategy,
+  authenticate: () => authorize("bearer"),
+  optionalAuthenticate: () => optionalAuthorize("bearer"),
+};
