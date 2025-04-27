@@ -18,26 +18,25 @@ const supabase = createClient(SUPABASE_PROJECT_URL, SUPABASE_SERVICE_ROLE_KEY);
 
 logger.info("Configured to use Supabase Auth for Authorization");
 
-const strategy = () =>
-  new BearerStrategy(async (token, done) => {
-    try {
-      const { data: user, error } = await supabase.auth.getUser(token);
+const strategy = new BearerStrategy(async (token, done) => {
+  try {
+    const { data: user, error } = await supabase.auth.getUser(token);
 
-      if (error || !user) {
-        logger.warn({ error }, "Invalid Supabase user token");
-        return done(null, false);
-      }
-
-      logger.debug({ user }, "Verified Supabase user token");
-      return done(null, user.user.id);
-    } catch (err) {
-      logger.error({ err, token }, "Could not verify Supabase token");
-      return done(err, false);
+    if (error || !user) {
+      logger.warn({ error }, "Invalid Supabase user token");
+      return done(null, false);
     }
-  });
+
+    logger.debug({ user }, "Verified Supabase user token");
+    return done(null, user.user.id);
+  } catch (err) {
+    logger.error({ err, token }, "Could not verify Supabase token");
+    return done(err, false);
+  }
+});
 
 module.exports = {
-  strategy,
+  strategy: () => strategy,
   authenticate: () => authorize("bearer"),
   optionalAuthenticate: () => optionalAuthorize("bearer"),
 };

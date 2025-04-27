@@ -42,7 +42,7 @@ jwtVerifier
     logger.error({ err }, "Unable to cache Cognito JWKS");
   });
 
-const strategy = () =>
+const strategy =
   // For our Passport authentication strategy, we'll look for the Bearer Token
   // in the Authorization header, then verify that with our Cognito JWT Verifier.
   new BearerStrategy(async (token, done) => {
@@ -61,7 +61,7 @@ const strategy = () =>
   });
 
 module.exports = {
-  strategy,
+  strategy: () => strategy,
   authenticate: () => authorize("bearer"),
   optionalAuthenticate: () => optionalAuthorize("bearer"),
 };

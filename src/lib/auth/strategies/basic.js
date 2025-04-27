@@ -42,7 +42,7 @@ function generateUUIDFromUsername(username) {
   ].join("-");
 }
 
-const strategy = () =>
+const strategy =
   // For our Passport authentication strategy, we'll look for a
   // username/password pair in the Authorization header.
   new BasicStrategy((username, password, done) => {
@@ -56,7 +56,7 @@ const strategy = () =>
   });
 
 module.exports = {
-  strategy,
+  strategy: () => strategy,
   authenticate: () => authorize("basic"),
   optionalAuthenticate: () => optionalAuthorize("basic"),
 };

@@ -11,7 +11,7 @@ const { logger } = require("../../../lib/logger");
  * these, or if you're connecting to LocalStack or MinIO
  * @returns Object | undefined
  */
-const getCredentials = () => {
+function getCredentials() {
   if (process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY) {
     // See https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/modules/credentials.html
     const credentials = {
@@ -26,13 +26,13 @@ const getCredentials = () => {
     );
     return credentials;
   }
-};
+}
 
 /**
  * If an AWS S3 Endpoint is configured in the environment, use it.
  * @returns string | undefined
  */
-const getS3Endpoint = () => {
+function getS3Endpoint() {
   if (process.env.AWS_S3_ENDPOINT_URL) {
     logger.debug(
       { endpoint: process.env.AWS_S3_ENDPOINT_URL },
@@ -40,7 +40,7 @@ const getS3Endpoint = () => {
     );
     return process.env.AWS_S3_ENDPOINT_URL;
   }
-};
+}
 
 /**
  * Configure and export a new s3Client to use for all API calls.
