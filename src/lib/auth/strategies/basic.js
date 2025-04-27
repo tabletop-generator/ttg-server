@@ -2,7 +2,7 @@ const { BasicStrategy } = require("passport-http");
 const crypto = require("node:crypto");
 const fs = require("node:fs");
 
-const { authorize } = require("../authorize");
+const { authorize, optionalAuthorize } = require("../authorize");
 
 // We expect HTPASSWD_FILE to be defined.
 if (!process.env.HTPASSWD_FILE) {
@@ -56,3 +56,4 @@ module.exports.strategy = () =>
   });
 
 module.exports.authenticate = () => authorize("basic");
+module.exports.optionalAuthenticate = () => optionalAuthorize("basic");

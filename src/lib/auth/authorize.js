@@ -7,15 +7,15 @@ const logger = require("../logger");
  * @param {'bearer' | 'http'} strategyName - the passport strategy to use
  * @returns {Function} - the middleware function to use for authentication
  */
-module.exports.authorize = (strategyName) => {
+function authorize(strategyName) {
   return function (req, res, next) {
     /**
      * Define a custom callback to run after the user has been authenticated
      * where we can modify the way that errors are handled.
      * @param {Error} err - an error object
-     * @param {string} id - an authenticated user's id
+     * @param {string} user - an authenticated user's id
      */
-    function callback(err, id) {
+    function callback(err, user) {
       // Something failed, let the the error handling middleware deal with it
       if (err) {
         logger.warn({ err }, "Error authenticating user");
@@ -23,13 +23,16 @@ module.exports.authorize = (strategyName) => {
       }
 
       // Not authorized, return a 401
-      if (!id) {
+      if (!user) {
         return res.status(401).json(createHttpError(401, "Unauthorized"));
       }
 
       // Authorized. Attach the user's id to the request and continue
-      req.user = id;
-      logger.debug({ id }, `Authenticated user with ${strategyName} strategy`);
+      req.user = user;
+      logger.debug(
+        { user },
+        `Authenticated user with ${strategyName} strategy`,
+      );
 
       // Call the next function in the middleware chain (e.g. your route handler)
       next();
@@ -43,4 +46,28 @@ module.exports.authorize = (strategyName) => {
       next,
     );
   };
-};
+}
+
+/**
+ * @param {'bearer' | 'http'} strategyName - the passport strategy to use
+ * @returns {Function} - the middleware function to use for authentication
+ */
+function optionalAuthorize(strategyName = "bearer") {
+  return (req, res, next) => {
+    passport.authenticate(strategyName, { session: false }, (err, user) => {
+      if (err) {
+        return next(err);
+      }
+
+      // If authentication succeeded, attach user
+      if (user) {
+        req.user = user;
+      }
+
+      // Always continue
+      return next();
+    })(req, res, next);
+  };
+}
+
+module.exports = { authorize, optionalAuthorize };

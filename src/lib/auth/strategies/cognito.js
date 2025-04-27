@@ -5,7 +5,7 @@
 const { Strategy: BearerStrategy } = require("passport-http-bearer");
 const { CognitoJwtVerifier } = require("aws-jwt-verify");
 
-const { authorize } = require("../authorize");
+const { authorize, optionalAuthorize } = require("../authorize");
 const logger = require("../../logger");
 
 // We expect AWS_COGNITO_POOL_ID and AWS_COGNITO_CLIENT_ID to be defined.
@@ -61,3 +61,4 @@ module.exports.strategy = () =>
   });
 
 module.exports.authenticate = () => authorize("bearer");
+module.exports.authenticate = () => optionalAuthorize("bearer");

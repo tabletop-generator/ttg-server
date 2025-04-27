@@ -1,7 +1,7 @@
 const { Strategy: BearerStrategy } = require("passport-http-bearer");
 const { createClient } = require("@supabase/supabase-js");
 
-const { authorize } = require("../authorize");
+const { authorize, optionalAuthorize } = require("../authorize");
 const logger = require("../../logger");
 
 const SUPABASE_PROJECT_URL = process.env.SUPABASE_PROJECT_URL;
@@ -37,3 +37,4 @@ module.exports.strategy = () =>
   });
 
 module.exports.authenticate = () => authorize("bearer");
+module.exports.authenticate = () => optionalAuthorize("bearer");
