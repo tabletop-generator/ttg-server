@@ -1,6 +1,6 @@
 const { updateAsset } = require("../../../model/asset");
-const { createHttpError } = require("../../../lib/error");
 const { logger } = require("../../../lib/logger");
+const { createHttpError } = require("../../../lib/error");
 
 /**
  * Update an asset by it's id
