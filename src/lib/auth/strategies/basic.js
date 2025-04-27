@@ -56,7 +56,7 @@ const strategy = () =>
   });
 
 module.exports = {
-  strategy: strategy,
+  strategy,
   authenticate: () => authorize("basic"),
   optionalAuthenticate: () => optionalAuthorize("basic"),
 };
