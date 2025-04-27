@@ -24,7 +24,7 @@ function authorize(strategyName) {
 
       // Not authorized, return a 401
       if (!user) {
-        return res.status(401).json(createHttpError(401, "Unauthorized"));
+        return next(createHttpError(401, "Unauthorized"));
       }
 
       // Authorized. Attach the user's id to the request and continue
