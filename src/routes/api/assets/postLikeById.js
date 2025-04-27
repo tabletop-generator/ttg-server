@@ -3,7 +3,7 @@ const { logger } = require("../../../lib/logger");
 const { createHttpError } = require("../../../lib/error");
 
 /**
- * Get a list of assets filtered by the query
+ * Toggle like status for an asset for the current user
  */
 
 module.exports = async (req, res, next) => {
