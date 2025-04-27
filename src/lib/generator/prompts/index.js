@@ -1,4 +1,6 @@
-module.exports.character = require("./character");
-module.exports.location = require("./location");
-module.exports.map = require("./map");
-module.exports.quest = require("./quest");
+module.exports = {
+  character: require("./character"),
+  location: require("./location"),
+  map: require("./map"),
+  quest: require("./quest"),
+};

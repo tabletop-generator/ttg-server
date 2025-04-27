@@ -115,5 +115,4 @@ function buildImgPromptPrompt(description) {
   ];
 }
 
-module.exports.buildDescPrompt = buildDescPrompt;
-module.exports.buildImgPromptPrompt = buildImgPromptPrompt;
+module.exports = { buildDescPrompt, buildImgPromptPrompt };
