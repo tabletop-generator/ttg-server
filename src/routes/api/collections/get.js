@@ -1,4 +1,4 @@
-const logger = require("../../../lib/logger");
+const { logger } = require("../../../lib/logger");
 
 /**
  * Get a list of collections filtered by the query

@@ -1,5 +1,5 @@
 const { saveAsset } = require("../../../model/asset");
-const logger = require("../../../lib/logger");
+const { logger } = require("../../../lib/logger");
 const { generateAsset } = require("../../../lib/generator");
 const { createHttpError } = require("../../../lib/error");
 

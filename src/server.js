@@ -2,7 +2,7 @@
 const stoppable = require("stoppable");
 
 // Get our logger instance
-const logger = require("./lib/logger");
+const { logger } = require("./lib/logger");
 
 // Get our express app instance
 const app = require("./app");

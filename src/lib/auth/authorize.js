@@ -1,7 +1,7 @@
 const passport = require("passport");
 
 const { createHttpError } = require("../error");
-const logger = require("../logger");
+const { logger } = require("../logger");
 
 /**
  * @param {'bearer' | 'http'} strategyName - the passport strategy to use

@@ -5,7 +5,7 @@ const {
 } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const s3Client = require("./s3Client");
-const logger = require("../../../lib/logger");
+const { logger } = require("../../../lib/logger");
 
 // Writes a buffer to an S3 Object in a Bucket
 // https://github.com/awsdocs/aws-sdk-for-javascript-v3/blob/main/doc_source/s3-example-creating-buckets.md#upload-an-existing-object-to-an-amazon-s3-bucket

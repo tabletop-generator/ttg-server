@@ -1,5 +1,5 @@
 const { PrismaClientKnownRequestError } = require("@prisma/client").Prisma;
-const logger = require("../../../lib/logger");
+const { logger } = require("../../../lib/logger");
 const prisma = require("../../../model/data/prismaClient");
 
 /**

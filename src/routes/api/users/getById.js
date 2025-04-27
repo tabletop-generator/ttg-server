@@ -1,4 +1,4 @@
-const logger = require("../../../lib/logger");
+const { logger } = require("../../../lib/logger");
 const { createHttpError } = require("../../../lib/error");
 const prisma = require("../../../model/data/prismaClient");
 

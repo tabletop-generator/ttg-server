@@ -2,7 +2,7 @@ const { Strategy: BearerStrategy } = require("passport-http-bearer");
 const { createClient } = require("@supabase/supabase-js");
 
 const { authorize, optionalAuthorize } = require("../authorize");
-const logger = require("../../logger");
+const { logger } = require("../../logger");
 
 const SUPABASE_PROJECT_URL = process.env.SUPABASE_PROJECT_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;

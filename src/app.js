@@ -7,7 +7,7 @@ const { pinoHttp } = require("pino-http");
 const OpenApiValidator = require("express-openapi-validator");
 
 const auth = require("./lib/auth");
-const logger = require("./lib/logger");
+const { logger } = require("./lib/logger");
 const { createHttpError } = require("./lib/error");
 
 const pino = pinoHttp({

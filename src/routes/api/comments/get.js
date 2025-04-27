@@ -1,4 +1,4 @@
-const logger = require("../../../lib/logger");
+const { logger } = require("../../../lib/logger");
 
 /**
  * Get comments for an asset using the asset id in the query
