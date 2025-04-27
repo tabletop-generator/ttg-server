@@ -88,9 +88,13 @@ async function renewAssetImageUrlIfExpired(asset) {
  * @param {String} mimeType
  * @throws
  */
-async function saveAsset(userId, description, image, metadata, mimeType) {
-  const { name, assetType, visibility, data } = metadata;
-
+async function saveAsset(
+  userId,
+  description,
+  image,
+  { name, assetType, visibility, data },
+  mimeType,
+) {
   const assetId = randomUUID();
   const key = `${userId}/${assetId}`;
 
@@ -158,7 +162,7 @@ async function getAsset(assetId, userId) {
  * @param {String} visibility
  * @throws
  */
-async function updateAsset(assetId, userId, name, description, visibility) {
+async function updateAsset(assetId, userId, { name, description, visibility }) {
   // Find asset to check ownership
   let asset = await prisma.asset.findUnique({
     where: { assetId: assetId },
