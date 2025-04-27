@@ -33,9 +33,9 @@ module.exports = async (req, res, next) => {
   try {
     newAsset = await saveAsset(
       req.user,
+      req.body,
       description,
       image,
-      req.body,
       mimeType,
     );
     logger.info({ assetName: newAsset.name }, "saved asset");

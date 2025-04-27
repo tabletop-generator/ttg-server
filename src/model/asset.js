@@ -90,9 +90,9 @@ async function renewAssetImageUrlIfExpired(asset) {
  */
 async function saveAsset(
   userId,
+  { name, assetType, visibility, data },
   description,
   image,
-  { name, assetType, visibility, data },
   mimeType,
 ) {
   const assetId = randomUUID();
