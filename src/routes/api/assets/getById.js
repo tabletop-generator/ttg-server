@@ -16,14 +16,14 @@ module.exports = async (req, res, next) => {
   try {
     asset = await getAsset(req.params.assetId, req.user);
   } catch (error) {
-    logger.error({ error }, "error getting asset");
-
     if (error.message === "Not Found") {
       return next(createHttpError(404, "Not Found"));
     }
     if (error.message === "Forbidden") {
       return next(createHttpError(403, "Forbidden"));
     }
+
+    logger.error({ error }, "error getting asset");
     return next(createHttpError(500, "Error getting asset"));
   }
 
