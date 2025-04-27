@@ -1,6 +1,6 @@
-const { createHttpError } = require("../../../lib/error");
-const { logger } = require("../../../lib/logger");
 const { getAsset } = require("../../../model/asset");
+const { logger } = require("../../../lib/logger");
+const { createHttpError } = require("../../../lib/error");
 
 /**
  * Get an asset by it's id
