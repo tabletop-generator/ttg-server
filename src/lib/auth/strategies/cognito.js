@@ -61,4 +61,4 @@ module.exports.strategy = () =>
   });
 
 module.exports.authenticate = () => authorize("bearer");
-module.exports.authenticate = () => optionalAuthorize("bearer");
+module.exports.optionalAuthenticate = () => optionalAuthorize("bearer");
