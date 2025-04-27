@@ -9,6 +9,79 @@ const { prisma } = require("./data/prismaClient");
 /**
  *
  * @param {import("node:crypto").UUID} userId
+ * @returns {Object} An object that defines fields to include in Prisma queries
+ */
+function assetInclude(userId) {
+  return {
+    user: { select: { userId: true, displayName: true } },
+    _count: { select: { AssetLike: true, comments: true } },
+    AssetLike: { select: { userId: true }, where: { userId } },
+    character: { omit: { assetId: true } },
+    location: { omit: { assetId: true } },
+    quest: { omit: { assetId: true } },
+    map: { omit: { assetId: true } },
+  };
+}
+
+/**
+ *
+ * @param {Object} asset
+ * @returns {Object} An object in the shape of the expected response from our HTTP REST API
+ */
+function toAssetDetails(asset) {
+  return {
+    userId: asset.user.userId,
+    displayName: asset.user.displayName,
+    assetId: asset.assetId,
+    assetType: asset.assetType,
+    name: asset.name,
+    description: asset.description,
+    visibility: asset.visibility,
+    imageUrl: asset.imageUrl,
+    createdAt: asset.createdAt.toISOString(),
+    updatedAt: asset.updatedAt.toISOString(),
+    likeCount: asset._count.AssetLike,
+    commentCount: asset._count.comments,
+    isLikedByCurrentUser: asset.AssetLike.length > 0,
+    data: asset[asset.assetType],
+  };
+}
+
+/**
+ * If asset image URL is expired or about to expire, create and save a new URL
+ * @param {Object} asset
+ * @returns {Object}
+ */
+async function renewAssetImageUrlIfExpired(asset) {
+  const BUFFER_WINDOW = 2 * 60 * 1000; // 2 minutes
+  const currentTime = new Date().getTime();
+
+  if (asset.imageUrlExpiry.getTime() > currentTime + BUFFER_WINDOW) {
+    return asset;
+  }
+
+  const key = `${asset.userId}/${asset.assetId}`;
+  const { url, urlExpiry } = await createPresignedUrl(key);
+
+  await prisma.asset.update({
+    where: {
+      assetId: asset.assetId,
+    },
+    data: {
+      imageUrl: url,
+      imageUrlExpiry: urlExpiry,
+    },
+  });
+
+  asset.imageUrl = url;
+  asset.imageUrlExpiry = urlExpiry;
+
+  return asset;
+}
+
+/**
+ *
+ * @param {import("node:crypto").UUID} userId
  * @param {String} description
  * @param {Buffer} image
  * @param {Object} metadata
@@ -44,34 +117,10 @@ async function saveAsset(userId, description, image, metadata, mimeType) {
         },
       },
     },
-    include: {
-      user: { select: { userId: true, displayName: true } },
-      _count: { select: { AssetLike: true, comments: true } },
-      AssetLike: { select: { userId: true }, where: { userId: userId } },
-      [assetType]: {
-        omit: {
-          assetId: true,
-        },
-      },
-    },
+    include: assetInclude(userId),
   });
 
-  return {
-    userId: asset.user.userId,
-    displayName: asset.user.displayName,
-    assetId: asset.assetId,
-    assetType: asset.assetType,
-    name: asset.name,
-    description: asset.description,
-    visibility: asset.visibility,
-    imageUrl: asset.imageUrl,
-    createdAt: asset.createdAt.toISOString(),
-    updatedAt: asset.updatedAt.toISOString(),
-    likeCount: asset._count.AssetLike,
-    commentCount: asset._count.comments,
-    isLikedByCurrentUser: !!asset.AssetLike.length > 0,
-    data: asset[assetType],
-  };
+  return toAssetDetails(asset);
 }
 
 /**
@@ -84,31 +133,7 @@ async function getAsset(assetId, userId) {
   // Get asset from database
   let asset = await prisma.asset.findUnique({
     where: { assetId: assetId },
-    include: {
-      user: { select: { userId: true, displayName: true } },
-      _count: { select: { AssetLike: true, comments: true } },
-      AssetLike: { select: { userId: true }, where: { userId: userId } },
-      character: {
-        omit: {
-          assetId: true,
-        },
-      },
-      location: {
-        omit: {
-          assetId: true,
-        },
-      },
-      quest: {
-        omit: {
-          assetId: true,
-        },
-      },
-      map: {
-        omit: {
-          assetId: true,
-        },
-      },
-    },
+    include: assetInclude(userId),
   });
 
   if (!asset) {
@@ -119,67 +144,43 @@ async function getAsset(assetId, userId) {
     throw new Error("Forbidden");
   }
 
-  // If image url is expired or about to expire soon, create and save new url before returning
-  // Define a buffer time in milliseconds
-  const BUFFER_WINDOW = 2 * 60 * 1000;
-  const currentTime = new Date().getTime();
+  asset = await renewAssetImageUrlIfExpired(asset);
 
-  if (asset.imageUrlExpiry.getTime() <= currentTime + BUFFER_WINDOW) {
-    const key = `${asset.user.id}/${asset.id}`;
-    const { url, urlExpiry } = await createPresignedUrl(key);
+  return toAssetDetails(asset);
+}
 
-    asset = await prisma.asset.update({
-      where: {
-        assetId: assetId,
-      },
-      data: {
-        imageUrl: url,
-        imageUrlExpiry: urlExpiry,
-      },
-      include: {
-        user: { select: { userId: true, displayName: true } },
-        _count: { select: { AssetLike: true, comments: true } },
-        AssetLike: { select: { userId: true }, where: { userId: userId } },
-        character: {
-          omit: {
-            assetId: true,
-          },
-        },
-        location: {
-          omit: {
-            assetId: true,
-          },
-        },
-        quest: {
-          omit: {
-            assetId: true,
-          },
-        },
-        map: {
-          omit: {
-            assetId: true,
-          },
-        },
-      },
-    });
+/**
+ *
+ * @param {import("node:crypto").UUID} assetId
+ * @param {import("node:crypto").UUID} userId
+ * @param {String} name
+ * @param {String} description
+ * @param {String} visibility
+ * @throws
+ */
+async function updateAsset(assetId, userId, name, description, visibility) {
+  // Find asset to check ownership
+  let asset = await prisma.asset.findUnique({
+    where: { assetId: assetId },
+  });
+
+  if (!asset) {
+    throw new Error("Not Found");
   }
 
-  return {
-    userId: asset.user.userId,
-    displayName: asset.user.displayName,
-    assetId: asset.assetId,
-    assetType: asset.assetType,
-    name: asset.name,
-    description: asset.description,
-    visibility: asset.visibility,
-    imageUrl: asset.imageUrl,
-    createdAt: asset.createdAt.toISOString(),
-    updatedAt: asset.updatedAt.toISOString(),
-    likeCount: asset._count.AssetLike,
-    commentCount: asset._count.comments,
-    isLikedByCurrentUser: !!asset.AssetLike.length > 0,
-    data: asset[asset.assetType],
-  };
+  if (asset.creatorId !== userId) {
+    throw new Error("Forbidden");
+  }
+
+  asset = await prisma.asset.update({
+    where: { assetId: assetId },
+    data: { name: name, description: description, visibility: visibility },
+    include: assetInclude(userId),
+  });
+
+  asset = await renewAssetImageUrlIfExpired(asset);
+
+  return toAssetDetails(asset);
 }
 
 /**
@@ -203,15 +204,16 @@ async function deleteAsset(assetId, userId) {
   }
 
   // Delete image from object store
-  const key = `${userId}/${assetId}`;
-  await deleteDataFromS3(key);
+  await deleteDataFromS3(`${userId}/${assetId}`);
 
   // Delete asset record
-  return await prisma.asset.delete({
+  await prisma.asset.delete({
     where: {
       assetId: assetId,
     },
   });
+
+  return;
 }
 
-module.exports = { saveAsset, getAsset, deleteAsset };
+module.exports = { saveAsset, getAsset, updateAsset, deleteAsset };
