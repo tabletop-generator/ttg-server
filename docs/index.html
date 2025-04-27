@@ -5383,7 +5383,7 @@
                               >string</span
                             ><span>
                               <span class="sc-huvZk sc-fmMLgT hHoKqR cSmxOb">
-                                <!-- -->&lt;= 2000 characters<!-- -->
+                                <!-- -->&lt;= 5000 characters<!-- -->
                               </span></span
                             >
                           </div>
@@ -16464,7 +16464,7 @@
                         additionalProperties: false,
                         properties: {
                           name: { type: "string", minLength: 1, maxLength: 30 },
-                          description: { type: "string", maxLength: 2000 },
+                          description: { type: "string", maxLength: 5000 },
                           visibility: {
                             $ref: "#/components/schemas/visibility",
                           },
@@ -16838,7 +16838,7 @@
                         isLikedByCurrentUser: { type: "boolean" },
                         createdAt: { type: "string", format: "date-time" },
                         updatedAt: { type: "string", format: "date-time" },
-                        description: { type: "string", maxLength: 2000 },
+                        description: { type: "string", maxLength: 5000 },
                         commentCount: { type: "integer", minimum: 0 },
                       },
                     },

@@ -548,7 +548,7 @@ components:
                 maxLength: 30
               description:
                 type: string
-                maxLength: 2000
+                maxLength: 5000
               visibility:
                 $ref: "#/components/schemas/visibility"
     assetIds:
@@ -910,7 +910,7 @@ components:
               format: date-time
             description:
               type: string
-              maxLength: 2000
+              maxLength: 5000
             commentCount:
               type: integer
               minimum: 0

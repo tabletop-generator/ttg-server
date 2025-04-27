@@ -27,7 +27,7 @@ CREATE TABLE "Asset" (
     "asset_type" enum_asset_type NOT NULL,
     "visibility" enum_visibility NOT NULL,
     "name" TEXT NOT NULL CHECK (char_length(name) BETWEEN 1 AND 30),
-    "description" TEXT NOT NULL CHECK (char_length(description) <= 2000),
+    "description" TEXT NOT NULL CHECK (char_length(description) <= 5000),
     "image_url" TEXT NOT NULL,
     "image_url_expiry" TIMESTAMP NOT NULL
 );
