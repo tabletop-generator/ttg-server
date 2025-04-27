@@ -42,23 +42,22 @@ jwtVerifier
     logger.error({ err }, "Unable to cache Cognito JWKS");
   });
 
-const strategy =
-  // For our Passport authentication strategy, we'll look for the Bearer Token
-  // in the Authorization header, then verify that with our Cognito JWT Verifier.
-  new BearerStrategy(async (token, done) => {
-    try {
-      // Verify this JWT
-      const user = await jwtVerifier.verify(token);
-      logger.debug({ user }, "Verified user token");
+// For our Passport authentication strategy, we'll look for the Bearer Token
+// in the Authorization header, then verify that with our Cognito JWT Verifier.
+const strategy = new BearerStrategy(async (token, done) => {
+  try {
+    // Verify this JWT
+    const user = await jwtVerifier.verify(token);
+    logger.debug({ user }, "Verified user token");
 
-      // Create a user, but only bother with their sub. We could
-      // also do a lookup in a database, but we don't need it.
-      return done(null, user.sub);
-    } catch (err) {
-      logger.error({ err, token }, "Could not verify user token");
-      return done(null, false);
-    }
-  });
+    // Create a user, but only bother with their sub. We could
+    // also do a lookup in a database, but we don't need it.
+    return done(null, user.sub);
+  } catch (err) {
+    logger.error({ err, token }, "Could not verify user token");
+    return done(null, false);
+  }
+});
 
 module.exports = {
   strategy: () => strategy,

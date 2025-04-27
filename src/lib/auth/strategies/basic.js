@@ -42,18 +42,17 @@ function generateUUIDFromUsername(username) {
   ].join("-");
 }
 
-const strategy =
-  // For our Passport authentication strategy, we'll look for a
-  // username/password pair in the Authorization header.
-  new BasicStrategy((username, password, done) => {
-    const user = findUser(username);
-    if (!user) {
-      return done(null, false);
-    }
+// For our Passport authentication strategy, we'll look for a
+// username/password pair in the Authorization header.
+const strategy = new BasicStrategy((username, password, done) => {
+  const user = findUser(username);
+  if (!user) {
+    return done(null, false);
+  }
 
-    const userId = generateUUIDFromUsername(username);
-    return done(null, userId);
-  });
+  const userId = generateUUIDFromUsername(username);
+  return done(null, userId);
+});
 
 module.exports = {
   strategy: () => strategy,
