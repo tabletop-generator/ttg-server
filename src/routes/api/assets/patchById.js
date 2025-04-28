@@ -1,6 +1,10 @@
 const { updateAsset } = require("../../../model/asset");
 const { logger } = require("../../../lib/logger");
-const { createHttpError } = require("../../../lib/error");
+const {
+  createHttpError,
+  NotFoundError,
+  ForbiddenError,
+} = require("../../../lib/error");
 
 /**
  * Update an asset by it's id
@@ -16,10 +20,10 @@ module.exports = async (req, res, next) => {
   try {
     asset = await updateAsset(req.params.assetId, req.user, req.body);
   } catch (error) {
-    if (error.message === "Not Found") {
+    if (error instanceof NotFoundError) {
       return next(createHttpError(404, "Not Found"));
     }
-    if (error.message === "Forbidden") {
+    if (error instanceof ForbiddenError) {
       return next(createHttpError(403, "Forbidden"));
     }
 

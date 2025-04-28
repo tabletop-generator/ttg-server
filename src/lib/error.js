@@ -4,4 +4,7 @@ function createHttpError(status, message) {
   return error;
 }
 
-module.exports = { createHttpError };
+class NotFoundError extends Error {}
+class ForbiddenError extends Error {}
+
+module.exports = { createHttpError, NotFoundError, ForbiddenError };
