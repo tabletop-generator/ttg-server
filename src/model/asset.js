@@ -151,6 +151,7 @@ async function listAssets(
     include: assetInclude(currentUserId),
     skip: parseInt(offset ?? 0, 10),
     take: Math.min(parseInt(limit ?? 20, 10), 100),
+    orderBy: { createdAt: "desc" },
   });
 
   return assets.map((e) => toAssetResponse(e, true));
