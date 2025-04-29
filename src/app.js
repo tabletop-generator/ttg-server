@@ -76,4 +76,4 @@ app.use((err, req, res, next) => {
 });
 
 // Export our `app` so we can access it in server.js
-module.exports = app;
+module.exports = { app };
