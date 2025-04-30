@@ -1,4 +1,7 @@
 POST {{host}}/v1/users
+HTTP 401
+
+POST {{host}}/v1/users
 [BasicAuth]
 user1@email.com:password1
 HTTP 200
