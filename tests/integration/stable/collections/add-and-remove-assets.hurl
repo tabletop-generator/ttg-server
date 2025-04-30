@@ -58,6 +58,7 @@ GET {{host}}/v1/collections/{{collection_id}}
 HTTP 200
 [Asserts]
 jsonpath "$.assetCount" == 0
+jsonpath "$.assets" isEmpty
 
 DELETE {{host}}/v1/collections/{{collection_id}}
 [BasicAuth]
