@@ -1,3 +1,6 @@
+GET {{host}}/v1/collections/not_a_valid_id
+HTTP 400
+
 GET {{host}}/v1/collections/{{user1_collection_id}}
 HTTP 200
 [Asserts]
