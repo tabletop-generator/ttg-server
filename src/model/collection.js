@@ -1,40 +1,6 @@
 const { prisma } = require("./data/prismaClient");
-const {
-  assetInclude,
-  formatAsset,
-  refreshAssetImageUrlIfExpired,
-  canViewAsset,
-} = require("./asset");
+const { collectionInclude, formatCollection } = require("./utils");
 const { NotFoundError, ForbiddenError } = require("../lib/error");
-
-function collectionInclude(userId) {
-  return {
-    _count: { select: { assets: true } },
-    assets: {
-      include: assetInclude(userId),
-      where: { ...canViewAsset(userId) },
-    },
-  };
-}
-
-async function formatCollection(collection) {
-  return {
-    collectionId: collection.collectionId,
-    userId: collection.userId,
-    name: collection.name,
-    description: collection.description,
-    visibility: collection.visibility,
-    createdAt: collection.createdAt.toISOString(),
-    updatedAt: collection.updatedAt.toISOString(),
-    assetCount: collection._count.assets,
-    assets: await Promise.all(
-      collection.assets.map(async (asset) => {
-        asset = await refreshAssetImageUrlIfExpired(asset);
-        return formatAsset(asset);
-      }),
-    ),
-  };
-}
 
 async function createCollection(userId, data) {
   const collection = await prisma.collection.create({

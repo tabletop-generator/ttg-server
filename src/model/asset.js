@@ -5,78 +5,13 @@ const {
   deleteDataFromS3,
 } = require("./data/aws");
 const { prisma } = require("./data/prismaClient");
+const {
+  canViewResource,
+  assetInclude,
+  formatAsset,
+  refreshAssetImageUrlIfExpired,
+} = require("./utils");
 const { NotFoundError, ForbiddenError } = require("../lib/error");
-
-/**
- *
- * @param {import("node:crypto").UUID} userId
- * @param {boolean} [includeTypeData=false] Whether to include type-specific data (character, location, quest, map)
- * @returns {Object} An object that defines fields to include in Prisma queries
- */
-function assetInclude(userId, includeTypeData = false) {
-  return {
-    user: { select: { userId: true, displayName: true } },
-    _count: { select: { AssetLike: true, comments: true } },
-    AssetLike: { select: { userId: true }, where: { userId } },
-    character: includeTypeData && { omit: { assetId: true } },
-    location: includeTypeData && { omit: { assetId: true } },
-    quest: includeTypeData && { omit: { assetId: true } },
-    map: includeTypeData && { omit: { assetId: true } },
-  };
-}
-
-/**
- *
- * @param {Object} asset
- * @param {boolean} [includeTypeData=false] Whether to include type-specific data (character, location, quest, map)
- * @returns {Object} An object in the shape of the expected response from our HTTP REST API
- */
-function formatAsset(asset, includeTypeData = false) {
-  return {
-    userId: asset.user.userId,
-    displayName: asset.user.displayName,
-    assetId: asset.assetId,
-    assetType: asset.assetType,
-    name: asset.name,
-    description: asset.description,
-    visibility: asset.visibility,
-    imageUrl: asset.imageUrl,
-    createdAt: asset.createdAt.toISOString(),
-    updatedAt: asset.updatedAt.toISOString(),
-    likeCount: asset._count.AssetLike,
-    commentCount: asset._count.comments,
-    isLikedByCurrentUser: asset.AssetLike.length > 0,
-    data: includeTypeData && asset[asset.assetType],
-  };
-}
-
-function canViewAsset(userId) {
-  return { OR: [{ userId }, { visibility: "public" }] };
-}
-
-/**
- * If asset image URL is expired or about to expire, create and save a new URL
- * @param {Object} asset
- * @returns {Object}
- */
-async function refreshAssetImageUrlIfExpired(asset) {
-  const BUFFER_WINDOW = 2 * 60 * 1000; // 2 minutes
-  const currentTime = new Date().getTime();
-
-  if (asset.imageUrlExpiry.getTime() > currentTime + BUFFER_WINDOW) {
-    return asset;
-  }
-
-  const key = `${asset.userId}/${asset.assetId}`;
-  const { url: imageUrl, urlExpiry: imageUrlExpiry } =
-    await createPresignedUrl(key);
-
-  return await prisma.asset.update({
-    where: { assetId: asset.assetId },
-    data: { imageUrl, imageUrlExpiry },
-    include: assetInclude(asset.userId, true),
-  });
-}
 
 /**
  *
@@ -164,7 +99,7 @@ async function listAssets(
         mode: "insensitive",
       },
       collections: collectionId && { some: { collectionId } },
-      ...canViewAsset(currentUserId),
+      ...canViewResource(currentUserId),
     },
     include: assetInclude(currentUserId),
     skip: parseInt(offset ?? 0, 10),
@@ -280,10 +215,6 @@ async function toggleAssetLike(assetId, userId) {
 }
 
 module.exports = {
-  assetInclude,
-  formatAsset,
-  refreshAssetImageUrlIfExpired,
-  canViewAsset,
   saveAsset,
   listAssets,
   getAsset,
