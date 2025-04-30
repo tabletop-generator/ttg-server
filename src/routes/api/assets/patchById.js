@@ -12,7 +12,7 @@ const {
 
 module.exports = async (req, res, next) => {
   logger.debug(
-    { user: req.user, assetIdParam: req.params.assetId, body: req.body },
+    { user: req.user, assetId: req.params.assetId, body: req.body },
     `received request: PATCH /v1/assets/:assetId`,
   );
 

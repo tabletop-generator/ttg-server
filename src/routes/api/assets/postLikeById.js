@@ -12,7 +12,7 @@ const {
 
 module.exports = async (req, res, next) => {
   logger.debug(
-    { user: req.user, assetIdParam: req.params.assetId },
+    { user: req.user, assetId: req.params.assetId },
     `received request: POST /v1/assets/:assetId/like`,
   );
 
