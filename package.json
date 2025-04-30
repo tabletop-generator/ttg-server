@@ -9,7 +9,7 @@
     "test": "jest --runInBand --",
     "test:watch": "jest --watch --runInBand --",
     "test:coverage": "jest --runInBand --coverage",
-    "test:integration": "hurl --test --variables-file \"tests/integration/vars.env\" --glob \"tests/integration/**/*.hurl\"",
+    "test:integration": "hurl --test --file-root \"tests/integration/inputs\" --variables-file \"tests/integration/vars.env\" --glob \"tests/integration/**/*.hurl\"",
     "test:integration:ci": "hurl --test --variables-file \"tests/integration/vars.env\" --glob \"tests/integration/*.hurl\"",
     "test:integration:flaky": "hurl --test --variables-file \"tests/integration/vars.env\" --glob \"tests/integration/flaky/*.hurl\"",
     "prettier": "prettier --write .",
