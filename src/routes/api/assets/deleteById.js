@@ -17,7 +17,7 @@ module.exports = async (req, res, next) => {
   );
 
   try {
-    await deleteAsset(req.params.assetId, req.user);
+    await deleteAsset(req.user, req.params.assetId);
   } catch (error) {
     if (error instanceof NotFoundError) {
       return next(createHttpError(404, "Not Found"));

@@ -227,11 +227,11 @@ async function updateAsset(assetId, userId, { name, description, visibility }) {
 
 /**
  *
- * @param {import("node:crypto").UUID} assetId
  * @param {import("node:crypto").UUID} userId
+ * @param {import("node:crypto").UUID} assetId
  * @throws
  */
-async function deleteAsset(assetId, userId) {
+async function deleteAsset(userId, assetId) {
   // Find asset to check ownership
   const asset = await prisma.asset.findUnique({
     where: { assetId: assetId },
