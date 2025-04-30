@@ -75,18 +75,20 @@ async function listCollections(currentUserId, { limit, offset, userId }) {
  * @returns {Object}
  */
 async function deleteCollection(userId, collectionId) {
-  // Find asset to check ownership
-  const asset = await prisma.collection.findUnique({ where: { collectionId } });
+  // Find collection to check ownership
+  const collection = await prisma.collection.findUnique({
+    where: { collectionId },
+  });
 
-  if (!asset) {
+  if (!collection) {
     throw new NotFoundError();
   }
 
-  if (asset.userId !== userId) {
+  if (collection.userId !== userId) {
     throw new ForbiddenError();
   }
 
-  // Delete asset record
+  // Delete collection record
   await prisma.collection.delete({ where: { collectionId } });
 
   return;
