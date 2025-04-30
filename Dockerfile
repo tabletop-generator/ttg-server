@@ -2,7 +2,7 @@
 # Dependency Installation Stage
 #######################################
 
-FROM node:22.13.0-alpine3.21@sha256:f2dc6eea95f787e25f173ba9904c9d0647ab2506178c7b5b7c5a3d02bc4af145 \
+FROM node:22.15.0-alpine3.21@sha256:ad1aedbcc1b0575074a91ac146d6956476c1f9985994810e4ee02efd932a68fd \
   AS dependencies
 
 LABEL org.opencontainers.image.source=https://github.com/tabletop-generator/ttg-server
@@ -31,7 +31,7 @@ RUN npm ci --ignore-scripts && \
 # Final Stage
 #######################################
 
-FROM node:22.13.0-alpine3.21@sha256:f2dc6eea95f787e25f173ba9904c9d0647ab2506178c7b5b7c5a3d02bc4af145 \
+FROM node:22.15.0-alpine3.21@sha256:ad1aedbcc1b0575074a91ac146d6956476c1f9985994810e4ee02efd932a68fd \
   AS final
   
 # Default to use port 8080 in our service
