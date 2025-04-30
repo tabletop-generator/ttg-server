@@ -68,16 +68,12 @@ async function renewAssetImageUrlIfExpired(asset) {
   }
 
   const key = `${asset.userId}/${asset.assetId}`;
-  const { url, urlExpiry } = await createPresignedUrl(key);
+  const { url: imageUrl, urlExpiry: imageUrlExpiry } =
+    await createPresignedUrl(key);
 
   return await prisma.asset.update({
-    where: {
-      assetId: asset.assetId,
-    },
-    data: {
-      imageUrl: url,
-      imageUrlExpiry: urlExpiry,
-    },
+    where: { assetId: asset.assetId },
+    data: { imageUrl, imageUrlExpiry },
     include: assetInclude(asset.userId, true),
   });
 }
@@ -103,26 +99,21 @@ async function saveAsset(
 
   // Upload data to S3 and create a presigned URL
   await uploadDataToS3(key, image, mimeType);
-  const { url, urlExpiry } = await createPresignedUrl(key);
+  const { url: imageUrl, urlExpiry: imageUrlExpiry } =
+    await createPresignedUrl(key);
 
   // Save asset to database
   const asset = await prisma.asset.create({
     data: {
-      assetId: assetId,
-      assetType: assetType,
+      assetId,
+      assetType,
       name: name,
-      visibility: visibility,
-      description: description,
-      imageUrl: url,
-      imageUrlExpiry: urlExpiry,
-      [assetType]: {
-        create: { ...data },
-      },
-      user: {
-        connect: {
-          userId: userId,
-        },
-      },
+      visibility,
+      description,
+      imageUrl,
+      imageUrlExpiry,
+      [assetType]: { create: { ...data } },
+      user: { connect: { userId } },
     },
     include: assetInclude(userId, true),
   });
@@ -149,7 +140,7 @@ async function listAssets(
         contains: description,
         mode: "insensitive",
       },
-      collections: collectionId && { some: { collectionId: collectionId } },
+      collections: collectionId && { some: { collectionId } },
       ...canViewAsset(userId),
     },
     include: assetInclude(currentUserId),
@@ -174,7 +165,7 @@ async function listAssets(
  */
 async function getAsset(userId, assetId) {
   let asset = await prisma.asset.findUnique({
-    where: { assetId: assetId },
+    where: { assetId },
     include: assetInclude(userId, true),
   });
 
@@ -202,9 +193,7 @@ async function getAsset(userId, assetId) {
  */
 async function updateAsset(userId, assetId, { name, description, visibility }) {
   // Find asset to check ownership
-  let asset = await prisma.asset.findUnique({
-    where: { assetId: assetId },
-  });
+  let asset = await prisma.asset.findUnique({ where: { assetId } });
 
   if (!asset) {
     throw new NotFoundError();
@@ -215,8 +204,8 @@ async function updateAsset(userId, assetId, { name, description, visibility }) {
   }
 
   asset = await prisma.asset.update({
-    where: { assetId: assetId },
-    data: { name: name, description: description, visibility: visibility },
+    where: { assetId },
+    data: { name, description, visibility },
     include: assetInclude(userId, true),
   });
 
@@ -233,9 +222,7 @@ async function updateAsset(userId, assetId, { name, description, visibility }) {
  */
 async function deleteAsset(userId, assetId) {
   // Find asset to check ownership
-  const asset = await prisma.asset.findUnique({
-    where: { assetId: assetId },
-  });
+  const asset = await prisma.asset.findUnique({ where: { assetId } });
 
   if (!asset) {
     throw new NotFoundError();
@@ -249,11 +236,7 @@ async function deleteAsset(userId, assetId) {
   await deleteDataFromS3(`${userId}/${assetId}`);
 
   // Delete asset record
-  await prisma.asset.delete({
-    where: {
-      assetId: assetId,
-    },
-  });
+  await prisma.asset.delete({ where: { assetId } });
 
   return;
 }
@@ -265,9 +248,7 @@ async function deleteAsset(userId, assetId) {
  */
 async function toggleAssetLike(assetId, userId) {
   // Find asset to check permissions
-  const asset = await prisma.asset.findUnique({
-    where: { assetId: assetId },
-  });
+  const asset = await prisma.asset.findUnique({ where: { assetId } });
 
   if (!asset) {
     throw new NotFoundError();
@@ -279,27 +260,25 @@ async function toggleAssetLike(assetId, userId) {
 
   // Check the current like status
   const existingLike = await prisma.assetLike.findUnique({
-    where: { assetId_userId: { assetId: assetId, userId: userId } },
+    where: { assetId_userId: { assetId, userId } },
   });
 
   if (existingLike) {
     // Unlike (delete existing like)
     await prisma.assetLike.delete({
-      where: { assetId_userId: { assetId: assetId, userId: userId } },
+      where: { assetId_userId: { assetId, userId } },
     });
   } else {
     await prisma.assetLike.create({
-      data: { assetId: assetId, userId: userId },
+      data: { assetId, userId },
     });
   }
 
   // Count total likes after toggle
-  const likeCount = await prisma.assetLike.count({
-    where: { assetId: assetId },
-  });
+  const likeCount = await prisma.assetLike.count({ where: { assetId } });
 
   return {
-    assetId: assetId,
+    assetId,
     likeCount: likeCount,
     isLikedByCurrentUser: !existingLike, // It's been toggled so it's the opposite
   };

@@ -38,12 +38,7 @@ async function formatCollection(collection) {
 
 async function createCollection(userId, data) {
   const collection = await prisma.collection.create({
-    data: {
-      ...data,
-      user: {
-        connect: { userId },
-      },
-    },
+    data: { ...data, user: { connect: { userId } } },
     include: collectionInclude(userId),
   });
 
@@ -69,9 +64,7 @@ async function getCollection(userId, collectionId) {
 
 async function deleteCollection(userId, collectionId) {
   // Find asset to check ownership
-  const asset = await prisma.collection.findUnique({
-    where: { collectionId },
-  });
+  const asset = await prisma.collection.findUnique({ where: { collectionId } });
 
   if (!asset) {
     throw new NotFoundError();
@@ -82,11 +75,7 @@ async function deleteCollection(userId, collectionId) {
   }
 
   // Delete asset record
-  await prisma.collection.delete({
-    where: {
-      collectionId,
-    },
-  });
+  await prisma.collection.delete({ where: { collectionId } });
 
   return;
 }
