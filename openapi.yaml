@@ -201,9 +201,8 @@ paths:
         "500":
           $ref: "#/components/responses/ErrorResponse"
 
-  /assets/{assetId}/comments/{commentId}:
+  /comments/{commentId}:
     parameters:
-      - $ref: "#/components/parameters/assetIdPathParam"
       - $ref: "#/components/parameters/commentIdPathParam"
     patch:
       tags:

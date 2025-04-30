@@ -14658,39 +14658,6 @@
                   </h5>
                   <table class="sc-dKKIkQ gkzLzl">
                     <tbody>
-                      <tr class="">
-                        <td
-                          kind="field"
-                          title="assetId"
-                          class="sc-lixPIL sc-dFaThA hBAQrT txOzo"
-                        >
-                          <span class="sc-guGTOK dqwxee"></span
-                          ><span class="property-name">assetId</span>
-                          <div class="sc-huvZk sc-icsLOd hHoKqR ecKepT">
-                            required
-                          </div>
-                        </td>
-                        <td class="sc-fjUQFl eVmPSM">
-                          <div>
-                            <div>
-                              <span
-                                class="sc-huvZk sc-cLAbsH hHoKqR jolyEu"
-                              ></span
-                              ><span class="sc-huvZk sc-hlDTgW hHoKqR NHcBj"
-                                >string</span
-                              ><span class="sc-huvZk sc-hlDTgW hHoKqR NHcBj">
-                                <!-- -->&lt;<!-- -->uuid<!-- -->&gt;<!-- -->
-                              </span>
-                            </div>
-                            <div>
-                              <div
-                                html=""
-                                class="sc-dTUlgT sc-fhPBcz gAHTYt iCKFAv"
-                              ></div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
                       <tr class="last">
                         <td
                           kind="field"
@@ -14900,8 +14867,7 @@
                   <button class="sc-lnzCgU brWdLq">
                     <span type="patch" class="sc-etVRix kWeXCj http-verb patch"
                       >patch</span
-                    ><span class="sc-iuoeev hwDgZR"
-                      >/assets/{assetId}/comments/{commentId}</span
+                    ><span class="sc-iuoeev hwDgZR">/comments/{commentId}</span
                     ><svg
                       class="sc-dcKlJK hopFSn"
                       style="margin-right: -25px"
@@ -14929,7 +14895,7 @@
                       <div tabindex="0" role="button">
                         <div class="sc-lhcVAQ becpLA">
                           <span>https://localhost:8080/v1</span
-                          >/assets/{assetId}/comments/{commentId}
+                          >/comments/{commentId}
                         </div>
                       </div>
                     </div>
@@ -15259,39 +15225,6 @@
                   </h5>
                   <table class="sc-dKKIkQ gkzLzl">
                     <tbody>
-                      <tr class="">
-                        <td
-                          kind="field"
-                          title="assetId"
-                          class="sc-lixPIL sc-dFaThA hBAQrT txOzo"
-                        >
-                          <span class="sc-guGTOK dqwxee"></span
-                          ><span class="property-name">assetId</span>
-                          <div class="sc-huvZk sc-icsLOd hHoKqR ecKepT">
-                            required
-                          </div>
-                        </td>
-                        <td class="sc-fjUQFl eVmPSM">
-                          <div>
-                            <div>
-                              <span
-                                class="sc-huvZk sc-cLAbsH hHoKqR jolyEu"
-                              ></span
-                              ><span class="sc-huvZk sc-hlDTgW hHoKqR NHcBj"
-                                >string</span
-                              ><span class="sc-huvZk sc-hlDTgW hHoKqR NHcBj">
-                                <!-- -->&lt;<!-- -->uuid<!-- -->&gt;<!-- -->
-                              </span>
-                            </div>
-                            <div>
-                              <div
-                                html=""
-                                class="sc-dTUlgT sc-fhPBcz gAHTYt iCKFAv"
-                              ></div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
                       <tr class="last">
                         <td
                           kind="field"
@@ -15447,8 +15380,7 @@
                       type="delete"
                       class="sc-etVRix hoggNP http-verb delete"
                       >delete</span
-                    ><span class="sc-iuoeev hwDgZR"
-                      >/assets/{assetId}/comments/{commentId}</span
+                    ><span class="sc-iuoeev hwDgZR">/comments/{commentId}</span
                     ><svg
                       class="sc-dcKlJK hopFSn"
                       style="margin-right: -25px"
@@ -15476,7 +15408,7 @@
                       <div tabindex="0" role="button">
                         <div class="sc-lhcVAQ becpLA">
                           <span>https://localhost:8080/v1</span
-                          >/assets/{assetId}/comments/{commentId}
+                          >/comments/{commentId}
                         </div>
                       </div>
                     </div>
@@ -16129,9 +16061,8 @@
                   },
                 },
               },
-              "/assets/{assetId}/comments/{commentId}": {
+              "/comments/{commentId}": {
                 parameters: [
-                  { $ref: "#/components/parameters/assetIdPathParam" },
                   { $ref: "#/components/parameters/commentIdPathParam" },
                 ],
                 patch: {
@@ -17375,10 +17306,6 @@
                 { _index: 27, title: {}, description: { 21: {}, 22: {} } },
               ],
               [
-                "assets/{assetid}/comments/{commentid",
-                { _index: 28, title: {}, description: { 23: {}, 24: {} } },
-              ],
-              [
                 "assets/{assetid}/lik",
                 { _index: 12, title: {}, description: { 6: {} } },
               ],
@@ -17423,6 +17350,10 @@
                   title: { 20: {}, 21: {}, 22: {}, 23: {}, 24: {} },
                   description: { 20: {} },
                 },
+              ],
+              [
+                "comments/{commentid",
+                { _index: 28, title: {}, description: { 23: {}, 24: {} } },
               ],
               [
                 "creat",
