@@ -59,12 +59,12 @@ model Collection {
 model Comment {
   commentId String   @id @default(dbgenerated("gen_random_uuid()")) @map("id") @db.Uuid
   assetId   String   @map("asset_id") @db.Uuid
-  authorId  String   @map("author_id") @db.Uuid
+  userId  String   @map("author_id") @db.Uuid
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
   body      String
   asset     Asset    @relation(fields: [assetId], references: [assetId], onDelete: Cascade, onUpdate: NoAction)
-  user      User     @relation(fields: [authorId], references: [userId], onDelete: Cascade, onUpdate: NoAction)
+  user      User     @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: NoAction)
 
   @@index([assetId], map: "Comment_asset_id_index")
 }

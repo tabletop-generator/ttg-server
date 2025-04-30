@@ -108,6 +108,21 @@ async function formatCollection(collection) {
   };
 }
 
+function commentInclude() {
+  return { user: { select: { displayName: true } } };
+}
+
+function formatComment(comment) {
+  return {
+    userId: comment.userId,
+    displayName: comment.user.displayName,
+    commentId: comment.commentId,
+    body: comment.body,
+    createdAt: comment.createdAt,
+    updatedAt: comment.updatedAt,
+  };
+}
+
 module.exports = {
   canViewResource,
   assetInclude,
@@ -115,4 +130,6 @@ module.exports = {
   refreshAssetImageUrlIfExpired,
   collectionInclude,
   formatCollection,
+  commentInclude,
+  formatComment,
 };

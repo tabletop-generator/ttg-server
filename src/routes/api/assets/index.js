@@ -11,6 +11,8 @@ router.post(`/`, authenticate(), require("./post"));
 
 router.post(`/:assetId/like`, authenticate(), require("./postLikeById"));
 
+router.post(`/:assetId/comments`, authenticate(), require("./postCommentById"));
+
 router.get(`/`, optionalAuthenticate(), require("./get"));
 
 router.get(`/:assetId`, optionalAuthenticate(), require("./getById"));
