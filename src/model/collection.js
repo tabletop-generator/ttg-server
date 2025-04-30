@@ -67,7 +67,32 @@ async function getCollection(userId, collectionId) {
   return await formatCollection(collection);
 }
 
+async function deleteCollection(userId, collectionId) {
+  // Find asset to check ownership
+  const asset = await prisma.collection.findUnique({
+    where: { collectionId },
+  });
+
+  if (!asset) {
+    throw new NotFoundError();
+  }
+
+  if (asset.userId !== userId) {
+    throw new ForbiddenError();
+  }
+
+  // Delete asset record
+  await prisma.collection.delete({
+    where: {
+      collectionId,
+    },
+  });
+
+  return;
+}
+
 module.exports = {
   createCollection,
   getCollection,
+  deleteCollection,
 };
