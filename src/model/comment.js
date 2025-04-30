@@ -83,4 +83,24 @@ async function updateComment(userId, commentId, { body }) {
   return formatComment(comment);
 }
 
-module.exports = { createComment, listComments, updateComment };
+async function deleteComment(userId, commentId) {
+  // Find comment to check ownership
+  const comment = await prisma.comment.findUnique({
+    where: { commentId },
+  });
+
+  if (!comment) {
+    throw new NotFoundError();
+  }
+
+  if (comment.userId !== userId) {
+    throw new ForbiddenError();
+  }
+
+  // Delete comment record
+  await prisma.comment.delete({ where: { commentId } });
+
+  return;
+}
+
+module.exports = { createComment, listComments, updateComment, deleteComment };
