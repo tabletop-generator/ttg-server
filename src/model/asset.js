@@ -107,12 +107,14 @@ async function listAssets(
     orderBy: { createdAt: "desc" },
   });
 
-  return await Promise.all(
-    assets.map(async (asset) => {
-      asset = await refreshAssetImageUrlIfExpired(asset);
-      return formatAsset(asset, true);
-    }),
-  );
+  return {
+    assets: await Promise.all(
+      assets.map(async (asset) => {
+        asset = await refreshAssetImageUrlIfExpired(asset);
+        return formatAsset(asset, true);
+      }),
+    ),
+  };
 }
 
 /**

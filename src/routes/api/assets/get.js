@@ -20,5 +20,5 @@ module.exports = async (req, res, next) => {
     return next(createHttpError(500, "Error getting asset list"));
   }
 
-  return res.status(200).json({ assets });
+  return res.status(200).json(assets);
 };
