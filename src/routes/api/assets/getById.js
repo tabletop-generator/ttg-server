@@ -27,7 +27,7 @@ module.exports = async (req, res, next) => {
       return next(createHttpError(403, "Forbidden"));
     }
 
-    logger.error({ error }, "error getting asset");
+    logger.error({ error, message: error.message }, "error getting asset");
     return next(createHttpError(500, "Error getting asset"));
   }
 

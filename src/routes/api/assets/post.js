@@ -20,7 +20,7 @@ module.exports = async (req, res, next) => {
     logger.info({ assetName: req.body.name }, "generated asset");
     logger.debug({ description, mimeType }, "generated asset: debug info");
   } catch (error) {
-    logger.error({ error }, "error generating asset");
+    logger.error({ error, message: error.message }, "error generating asset");
     return next(createHttpError(500, "Error generating asset"));
   }
 
@@ -36,7 +36,7 @@ module.exports = async (req, res, next) => {
     );
     logger.info({ assetName: newAsset.name }, "saved asset");
   } catch (error) {
-    logger.error({ error }, "error saving asset");
+    logger.error({ error, message: error.message }, "error saving asset");
     return next(createHttpError(500, "Error saving asset"));
   }
 

@@ -21,7 +21,7 @@ module.exports = async (req, res, next) => {
       where: { userId: req.user },
     });
   } catch (error) {
-    logger.error({ error }, "error updating user");
+    logger.error({ error, message: error.message }, "error updating user");
     return next(createHttpError(500, "Error updating user"));
   }
 

@@ -15,7 +15,7 @@ module.exports = async (req, res, next) => {
       where: { userId: req.user },
     });
   } catch (error) {
-    logger.error({ error }, "error finding user");
+    logger.error({ error, message: error.message }, "error finding user");
     return next(createHttpError(500, "Error finding user"));
   }
 

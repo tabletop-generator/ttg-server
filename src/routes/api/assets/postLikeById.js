@@ -27,7 +27,10 @@ module.exports = async (req, res, next) => {
       return next(createHttpError(403, "Forbidden"));
     }
 
-    logger.error({ error }, "error toggling asset like status");
+    logger.error(
+      { error, message: error.message },
+      "error toggling asset like status",
+    );
     return next(createHttpError(500, "Error toggling asset like status"));
   }
 

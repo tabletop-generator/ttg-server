@@ -16,7 +16,7 @@ module.exports = async (req, res, next) => {
   try {
     assets = await listAssets(req.user, req.query);
   } catch (error) {
-    logger.error({ error }, "error getting asset list");
+    logger.error({ error, message: error.message }, "error getting asset list");
     return next(createHttpError(500, "Error getting asset list"));
   }
 

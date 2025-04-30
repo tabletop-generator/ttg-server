@@ -39,7 +39,7 @@ jwtVerifier
     logger.info("Cognito JWKS successfully cached");
   })
   .catch((err) => {
-    logger.error({ err }, "Unable to cache Cognito JWKS");
+    logger.error({ err, message: err.message }, "Unable to cache Cognito JWKS");
   });
 
 // For our Passport authentication strategy, we'll look for the Bearer Token
@@ -54,7 +54,10 @@ const strategy = new BearerStrategy(async (token, done) => {
     // also do a lookup in a database, but we don't need it.
     return done(null, user.sub);
   } catch (err) {
-    logger.error({ err, token }, "Could not verify user token");
+    logger.error(
+      { err, message: err.message, token },
+      "Could not verify user token",
+    );
     return done(null, false);
   }
 });

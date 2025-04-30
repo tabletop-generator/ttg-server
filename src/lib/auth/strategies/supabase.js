@@ -30,7 +30,10 @@ const strategy = new BearerStrategy(async (token, done) => {
     logger.debug({ user }, "Verified Supabase user token");
     return done(null, user.user.id);
   } catch (err) {
-    logger.error({ err, token }, "Could not verify Supabase token");
+    logger.error(
+      { err, message: err.message, token },
+      "Could not verify Supabase token",
+    );
     return done(err, false);
   }
 });

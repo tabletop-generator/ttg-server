@@ -18,7 +18,7 @@ module.exports = async (req, res, next) => {
       },
     });
   } catch (error) {
-    logger.error({ error }, "error finding user");
+    logger.error({ error, message: error.message }, "error finding user");
     return next(createHttpError(500, "Error finding user"));
   }
 
@@ -36,7 +36,7 @@ module.exports = async (req, res, next) => {
       },
     });
   } catch (error) {
-    logger.error({ error }, "error creating new user");
+    logger.error({ error, message: error.message }, "error creating new user");
     return next(createHttpError(500, "Error creating new user"));
   }
 
