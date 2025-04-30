@@ -193,14 +193,14 @@ async function getAsset(assetId, userId) {
 
 /**
  *
- * @param {import("node:crypto").UUID} assetId
  * @param {import("node:crypto").UUID} userId
+ * @param {import("node:crypto").UUID} assetId
  * @param {String} name
  * @param {String} description
  * @param {String} visibility
  * @throws
  */
-async function updateAsset(assetId, userId, { name, description, visibility }) {
+async function updateAsset(userId, assetId, { name, description, visibility }) {
   // Find asset to check ownership
   let asset = await prisma.asset.findUnique({
     where: { assetId: assetId },

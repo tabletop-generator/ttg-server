@@ -18,7 +18,7 @@ module.exports = async (req, res, next) => {
 
   let asset;
   try {
-    asset = await updateAsset(req.params.assetId, req.user, req.body);
+    asset = await updateAsset(req.user, req.params.assetId, req.body);
   } catch (error) {
     if (error instanceof NotFoundError) {
       return next(createHttpError(404, "Not Found"));
