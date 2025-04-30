@@ -9,7 +9,7 @@ datasource db {
 
 model Asset {
   assetId        String          @id @map("id") @db.Uuid
-  creatorId      String          @map("creator_id") @db.Uuid
+  userId         String          @map("creator_id") @db.Uuid
   createdAt      DateTime        @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt      DateTime        @default(now()) @map("updated_at") @db.Timestamp(6)
   assetType      enum_asset_type @map("asset_type")
@@ -18,7 +18,7 @@ model Asset {
   description    String
   imageUrl       String          @map("image_url")
   imageUrlExpiry DateTime        @map("image_url_expiry") @db.Timestamp(6)
-  user           User            @relation(fields: [creatorId], references: [userId], onDelete: Cascade, onUpdate: NoAction)
+  user           User            @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: NoAction)
   AssetLike      AssetLike[]
   character      Character?
   comments       Comment[]
@@ -46,13 +46,13 @@ model Character {
 
 model Collection {
   collectionId String          @id @default(dbgenerated("gen_random_uuid()")) @map("id") @db.Uuid
-  creatorId    String          @map("creator_id") @db.Uuid
+  userId       String          @map("creator_id") @db.Uuid
   createdAt    DateTime        @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt    DateTime        @default(now()) @map("updated_at") @db.Timestamp(6)
   visibility   enum_visibility
   name         String
   description  String          @default("")
-  user         User            @relation(fields: [creatorId], references: [userId], onDelete: Cascade, onUpdate: NoAction)
+  user         User            @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: NoAction)
   assets       Asset[]         @relation("AssetToCollection")
 }
 

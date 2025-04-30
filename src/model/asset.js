@@ -63,7 +63,7 @@ async function renewAssetImageUrlIfExpired(asset) {
     return asset;
   }
 
-  const key = `${asset.creatorId}/${asset.assetId}`;
+  const key = `${asset.userId}/${asset.assetId}`;
   const { url, urlExpiry } = await createPresignedUrl(key);
 
   return await prisma.asset.update({
@@ -74,7 +74,7 @@ async function renewAssetImageUrlIfExpired(asset) {
       imageUrl: url,
       imageUrlExpiry: urlExpiry,
     },
-    include: assetInclude(asset.creatorId, true),
+    include: assetInclude(asset.userId, true),
   });
 }
 
@@ -138,15 +138,15 @@ async function listAssets(
 ) {
   const assets = await prisma.asset.findMany({
     where: {
-      assetType: assetType,
-      creatorId: userId,
+      assetType,
+      userId,
       name: name && { contains: name, mode: "insensitive" },
       description: description && {
         contains: description,
         mode: "insensitive",
       },
       collections: collectionId && { some: { collectionId: collectionId } },
-      OR: [{ creatorId: currentUserId }, { visibility: "public" }],
+      OR: [{ userId: currentUserId }, { visibility: "public" }],
     },
     include: assetInclude(currentUserId),
     skip: parseInt(offset ?? 0, 10),
@@ -174,7 +174,7 @@ async function getAsset(assetId, userId) {
     throw new NotFoundError();
   }
 
-  if (asset.creatorId !== userId && asset.visibility === "private") {
+  if (asset.userId !== userId && asset.visibility === "private") {
     throw new ForbiddenError();
   }
 
@@ -202,7 +202,7 @@ async function updateAsset(assetId, userId, { name, description, visibility }) {
     throw new NotFoundError();
   }
 
-  if (asset.creatorId !== userId) {
+  if (asset.userId !== userId) {
     throw new ForbiddenError();
   }
 
@@ -233,7 +233,7 @@ async function deleteAsset(assetId, userId) {
     throw new NotFoundError();
   }
 
-  if (asset.creatorId !== userId) {
+  if (asset.userId !== userId) {
     throw new ForbiddenError();
   }
 
@@ -265,7 +265,7 @@ async function toggleAssetLike(assetId, userId) {
     throw new NotFoundError();
   }
 
-  if (asset.creatorId !== userId && asset.visibility === "private") {
+  if (asset.userId !== userId && asset.visibility === "private") {
     throw new ForbiddenError();
   }
 
@@ -298,6 +298,8 @@ async function toggleAssetLike(assetId, userId) {
 }
 
 module.exports = {
+  assetInclude,
+  toAssetResponse,
   saveAsset,
   listAssets,
   getAsset,
