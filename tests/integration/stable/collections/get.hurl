@@ -13,3 +13,4 @@ jsonpath "$.collections[0].description" isString
 jsonpath "$.collections[0].assetCount" isInteger
 
 # TODO: test private and unlisted collections
+# TODO: test query parameters
