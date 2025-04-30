@@ -59,7 +59,7 @@ function canViewAsset(userId) {
  * @param {Object} asset
  * @returns {Object}
  */
-async function renewAssetImageUrlIfExpired(asset) {
+async function refreshAssetImageUrlIfExpired(asset) {
   const BUFFER_WINDOW = 2 * 60 * 1000; // 2 minutes
   const currentTime = new Date().getTime();
 
@@ -125,7 +125,6 @@ async function saveAsset(
  *
  * @param {import("node:crypto").UUID} currentUserId
  * @param {Object} query
- * @param {number}
  */
 async function listAssets(
   currentUserId,
@@ -151,7 +150,7 @@ async function listAssets(
 
   return await Promise.all(
     assets.map(async (asset) => {
-      asset = await renewAssetImageUrlIfExpired(asset);
+      asset = await refreshAssetImageUrlIfExpired(asset);
       return formatAsset(asset, true);
     }),
   );
@@ -177,7 +176,7 @@ async function getAsset(userId, assetId) {
     throw new ForbiddenError();
   }
 
-  asset = await renewAssetImageUrlIfExpired(asset);
+  asset = await refreshAssetImageUrlIfExpired(asset);
 
   return formatAsset(asset, true);
 }
@@ -209,7 +208,7 @@ async function updateAsset(userId, assetId, { name, description, visibility }) {
     include: assetInclude(userId, true),
   });
 
-  asset = await renewAssetImageUrlIfExpired(asset);
+  asset = await refreshAssetImageUrlIfExpired(asset);
 
   return formatAsset(asset, true);
 }
@@ -287,7 +286,7 @@ async function toggleAssetLike(assetId, userId) {
 module.exports = {
   assetInclude,
   formatAsset,
-  renewAssetImageUrlIfExpired,
+  refreshAssetImageUrlIfExpired,
   canViewAsset,
   saveAsset,
   listAssets,

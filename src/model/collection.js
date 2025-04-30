@@ -2,7 +2,7 @@ const { prisma } = require("./data/prismaClient");
 const {
   assetInclude,
   formatAsset,
-  renewAssetImageUrlIfExpired,
+  refreshAssetImageUrlIfExpired,
   canViewAsset,
 } = require("./asset");
 const { NotFoundError, ForbiddenError } = require("../lib/error");
@@ -29,7 +29,7 @@ async function formatCollection(collection) {
     assetCount: collection._count.assets,
     assets: await Promise.all(
       collection.assets.map(async (asset) => {
-        asset = await renewAssetImageUrlIfExpired(asset);
+        asset = await refreshAssetImageUrlIfExpired(asset);
         return formatAsset(asset);
       }),
     ),
