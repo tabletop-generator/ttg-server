@@ -168,11 +168,11 @@ async function listAssets(
 
 /**
  *
- * @param {import("node:crypto").UUID} assetId
  * @param {import("node:crypto").UUID} userId
+ * @param {import("node:crypto").UUID} assetId
  * @throws
  */
-async function getAsset(assetId, userId) {
+async function getAsset(userId, assetId) {
   let asset = await prisma.asset.findUnique({
     where: { assetId: assetId },
     include: assetInclude(userId, true),
