@@ -13,7 +13,7 @@ function canViewResource(userId) {
  */
 function assetInclude(userId, includeTypeData = false) {
   return {
-    user: { select: { userId: true, displayName: true } },
+    user: { select: { displayName: true } },
     _count: { select: { AssetLike: true, comments: true } },
     AssetLike: { select: { userId: true }, where: { userId } },
     character: includeTypeData && { omit: { assetId: true } },
@@ -31,7 +31,7 @@ function assetInclude(userId, includeTypeData = false) {
  */
 function formatAsset(asset, includeTypeData = false) {
   return {
-    userId: asset.user.userId,
+    userId: asset.userId,
     displayName: asset.user.displayName,
     assetId: asset.assetId,
     assetType: asset.assetType,
@@ -79,6 +79,7 @@ async function refreshAssetImageUrlIfExpired(asset) {
  */
 function collectionInclude(userId) {
   return {
+    user: { select: { displayName: true } },
     _count: { select: { assets: true } },
     assets: {
       include: assetInclude(userId),
@@ -91,6 +92,7 @@ async function formatCollection(collection) {
   return {
     collectionId: collection.collectionId,
     userId: collection.userId,
+    displayName: collection.user.displayName,
     name: collection.name,
     description: collection.description,
     visibility: collection.visibility,
