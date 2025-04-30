@@ -145,6 +145,45 @@ async function addAssetsToCollection(userId, collectionId, assetIds) {
  *
  * @param {import("node:crypto").UUID} userId
  * @param {import("node:crypto").UUID} collectionId
+ * @param {import("node:crypto").UUID[]} assetIds
+ */
+async function removeAssetsFromCollection(userId, collectionId, assetIds) {
+  // Verify the collection exists and belongs to the user
+  let collection = await prisma.collection.findUnique({
+    where: { collectionId },
+  });
+
+  if (!collection) {
+    throw new NotFoundError();
+  }
+
+  if (collection.userId !== userId) {
+    throw new ForbiddenError();
+  }
+
+  // Validate each asset belongs to user or is public
+  const assets = await prisma.asset.findMany({
+    where: { assetId: { in: assetIds }, ...canViewResource(userId) },
+    select: { assetId: true },
+  });
+
+  const validAssetIds = new Set(assets.map((a) => a.assetId));
+  const missing = assetIds.filter((id) => !validAssetIds.has(id));
+  if (missing.length > 0) throw new ForbiddenError();
+
+  collection = await prisma.collection.update({
+    data: { assets: { disconnect: assetIds.map((assetId) => ({ assetId })) } },
+    where: { collectionId },
+    include: collectionInclude(userId),
+  });
+
+  return formatCollection(collection);
+}
+
+/**
+ *
+ * @param {import("node:crypto").UUID} userId
+ * @param {import("node:crypto").UUID} collectionId
  * @returns {Object}
  */
 async function deleteCollection(userId, collectionId) {
@@ -173,5 +212,6 @@ module.exports = {
   listCollections,
   updateCollection,
   addAssetsToCollection,
+  removeAssetsFromCollection,
   deleteCollection,
 };

@@ -17,6 +17,12 @@ router.post(
   require("./addAssetsToCollection"),
 );
 
+router.post(
+  `/:collectionId/assets/remove`,
+  authenticate(),
+  require("./removeAssetsFromCollection"),
+);
+
 router.get(`/:collectionId`, optionalAuthenticate(), require("./getById"));
 
 router.patch(`/:collectionId`, authenticate(), require("./patchById"));
