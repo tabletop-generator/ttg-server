@@ -110,7 +110,7 @@ async function listAssets(
   return await Promise.all(
     assets.map(async (asset) => {
       asset = await refreshAssetImageUrlIfExpired(asset);
-      return formatAsset(asset, true);
+      return formatAsset(asset);
     }),
   );
 }
