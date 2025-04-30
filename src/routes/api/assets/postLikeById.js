@@ -34,5 +34,10 @@ module.exports = async (req, res, next) => {
     return next(createHttpError(500, "Error toggling asset like status"));
   }
 
+  logger.info(
+    { user: req.user, assetId: like.assetId },
+    "asset like status toggled",
+  );
+
   return res.status(200).json(like);
 };

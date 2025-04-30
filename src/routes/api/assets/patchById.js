@@ -12,7 +12,7 @@ const {
 
 module.exports = async (req, res, next) => {
   logger.debug(
-    { user: req.user, assetIdParam: req.params.assetId },
+    { user: req.user, assetIdParam: req.params.assetId, body: req.body },
     `received request: PATCH /v1/assets/:assetId`,
   );
 
@@ -30,6 +30,8 @@ module.exports = async (req, res, next) => {
     logger.error({ error, message: error.message }, "error deleting asset");
     return next(createHttpError(500, "Error deleting asset"));
   }
+
+  logger.info({ user: req.user, assetId: req.params.assetId }, "asset updated");
 
   return res.status(200).json(asset);
 };

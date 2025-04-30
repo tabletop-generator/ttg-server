@@ -30,5 +30,7 @@ module.exports = async (req, res, next) => {
     return next(createHttpError(500, "Error deleting asset"));
   }
 
+  logger.info({ user: req.user, assetId: req.params.assetId }, "asset deleted");
+
   return res.status(204).send();
 };

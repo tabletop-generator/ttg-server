@@ -17,7 +17,10 @@ module.exports = async (req, res, next) => {
   let description, image, mimeType;
   try {
     ({ description, image, mimeType } = await generateAsset(req.body));
-    logger.info({ assetName: req.body.name }, "generated asset");
+    logger.info(
+      { user: req.user, assetName: req.body.name },
+      "asset generated",
+    );
     logger.debug({ description, mimeType }, "generated asset: debug info");
   } catch (error) {
     logger.error({ error, message: error.message }, "error generating asset");
@@ -34,7 +37,10 @@ module.exports = async (req, res, next) => {
       image,
       mimeType,
     );
-    logger.info({ assetName: newAsset.name }, "saved asset");
+    logger.info(
+      { user: req.user, assetId: newAsset.assetId, assetName: newAsset.name },
+      "asset saved",
+    );
   } catch (error) {
     logger.error({ error, message: error.message }, "error saving asset");
     return next(createHttpError(500, "Error saving asset"));

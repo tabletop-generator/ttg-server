@@ -23,5 +23,7 @@ module.exports = async (req, res, next) => {
     return next(createHttpError(500, "Error creating collection"));
   }
 
+  logger.info({ collectionId: collection.collectionId }, "collection created");
+
   return res.status(200).json(collection);
 };

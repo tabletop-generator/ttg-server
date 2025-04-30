@@ -25,5 +25,7 @@ module.exports = async (req, res, next) => {
     return next(createHttpError(500, "Error updating user"));
   }
 
+  logger.info({ user: req.user }, "user updated");
+
   return res.status(200).json(user);
 };

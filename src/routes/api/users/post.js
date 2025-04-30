@@ -40,5 +40,7 @@ module.exports = async (req, res, next) => {
     return next(createHttpError(500, "Error creating new user"));
   }
 
+  logger.info({ user: req.user }, "user created");
+
   return res.status(201).json(user);
 };
