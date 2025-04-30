@@ -367,7 +367,7 @@ paths:
         "500":
           $ref: "#/components/responses/ErrorResponse"
 
-  /collections/{collectionId}/assets/delete:
+  /collections/{collectionId}/assets/remove:
     parameters:
       - $ref: "#/components/parameters/collectionIdPathParam"
     post:
