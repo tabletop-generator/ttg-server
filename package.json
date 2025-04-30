@@ -11,7 +11,7 @@
     "test:coverage": "jest --runInBand --coverage",
     "test:integration": "hurl --test --error-format long --file-root \"tests/integration/inputs\" --variables-file \"tests/integration/vars.env\" --glob \"tests/integration/**/*.hurl\"",
     "test:integration:ci": "hurl --test --error-format long --file-root \"tests/integration/inputs\" --variables-file \"tests/integration/vars.env\" --glob \"tests/integration/stable/**/*.hurl\"",
-    "test:integration:flaky": "hurl --test --error-format long --file-root \"tests/integration/inputs\" --variables-file \"tests/integration/vars.env\" --glob \"tests/integration/flaky/**/.hurl\"",
+    "test:integration:flaky": "hurl --test --error-format long --file-root \"tests/integration/inputs\" --variables-file \"tests/integration/vars.env\" --glob \"tests/integration/flaky/**/*.hurl\"",
     "prettier": "prettier --write .",
     "lint": "eslint .",
     "prepare": "husky"
