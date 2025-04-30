@@ -1,6 +1,5 @@
 const contentType = require("content-type");
 const ai = require("ai");
-const { createWorkersAI } = require("workers-ai-provider");
 const prompts = require("./prompts");
 const { logger } = require("../logger");
 
@@ -11,6 +10,7 @@ const { logger } = require("../logger");
  * @returns {Buffer}
  */
 async function generateImage(type, description) {
+  const { createWorkersAI } = await import("workers-ai-provider");
   // Generate a prompt to generate the image
   const promptPrompt = prompts[type].buildImgPromptPrompt(description);
 

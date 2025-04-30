@@ -1,4 +1,3 @@
-const { createWorkersAI } = require("workers-ai-provider");
 const ai = require("ai");
 const prompts = require("./prompts");
 
@@ -9,6 +8,7 @@ const prompts = require("./prompts");
  * @returns String
  */
 async function generateDescription(name, type, data) {
+  const { createWorkersAI } = await import("workers-ai-provider");
   const prompt = prompts[type].buildDescPrompt(name, data);
 
   const workersAi = createWorkersAI({
