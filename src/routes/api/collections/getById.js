@@ -1,9 +1,9 @@
 const { getCollection } = require("../../../model/collection");
 const { logger } = require("../../../lib/logger");
 const {
+  createHttpError,
   NotFoundError,
   ForbiddenError,
-  createHttpError,
 } = require("../../../lib/error");
 
 /**
