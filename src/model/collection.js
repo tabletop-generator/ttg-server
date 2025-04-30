@@ -72,6 +72,40 @@ async function listCollections(currentUserId, { limit, offset, userId }) {
  *
  * @param {import("node:crypto").UUID} userId
  * @param {import("node:crypto").UUID} collectionId
+ * @param {Object} data
+ * @returns {Object}
+ */
+async function updateCollection(
+  userId,
+  collectionId,
+  { name, description, visibility },
+) {
+  // Find collection to check ownership
+  let collection = await prisma.collection.findUnique({
+    where: { collectionId },
+  });
+
+  if (!collection) {
+    throw new NotFoundError();
+  }
+
+  if (collection.userId !== userId) {
+    throw new ForbiddenError();
+  }
+
+  collection = await prisma.collection.update({
+    where: { collectionId },
+    data: { name, description, visibility },
+    include: collectionInclude(userId, true),
+  });
+
+  return formatCollection(collection);
+}
+
+/**
+ *
+ * @param {import("node:crypto").UUID} userId
+ * @param {import("node:crypto").UUID} collectionId
  * @returns {Object}
  */
 async function deleteCollection(userId, collectionId) {
@@ -98,5 +132,6 @@ module.exports = {
   createCollection,
   getCollection,
   listCollections,
+  updateCollection,
   deleteCollection,
 };
