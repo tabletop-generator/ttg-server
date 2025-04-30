@@ -1,7 +1,7 @@
 const request = require("supertest");
 
 // Get our Express app object (we don't need the server part)
-const app = require("../../src/app");
+const { app } = require("../../src/app");
 
 // Get the version and author = require(our package.json
 const { version } = require("../../package.json");
