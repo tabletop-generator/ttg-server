@@ -13,6 +13,7 @@ services:
     ports:
       - "8080:8080"
     environment:
+      API_URL: ${API_URL}
       CF_ACCOUNT_ID: ${CF_ACCOUNT_ID}
       CF_WORKERS_AI_API_TOKEN: ${CF_WORKERS_AI_API_TOKEN}
       CF_TEXT_GENERATION_MODEL: ${CF_TEXT_GENERATION_MODEL}
