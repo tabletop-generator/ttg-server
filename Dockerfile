@@ -52,12 +52,15 @@ RUN apk add --no-cache curl
 # Copy package.json from the build context (the app imports data from it)
 COPY --chown=node:node package.json ./
 
+# Copy openapi.yaml (needed by express-openapi-validator)
+COPY --chown=node:node openapi.yaml ./
+
 # Copy node_modules from the dependency installation stage and
 # change ownership to the unprivileged user
 COPY --from=dependencies --chown=node:node /app/node_modules ./node_modules
 
 # Copy src to /app/src/ from the build context
-COPY --chown=node:node ./src/ ./src
+COPY --chown=node:node ./src ./src
 
 # Switch to the unprivileged user
 # USER node
