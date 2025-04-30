@@ -23,5 +23,5 @@ module.exports = async (req, res, next) => {
     return next(createHttpError(500, "Error getting collection list"));
   }
 
-  return res.status(200).json(collections);
+  return res.status(200).json({ collections });
 };

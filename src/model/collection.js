@@ -61,13 +61,11 @@ async function listCollections(currentUserId, { limit, offset, userId }) {
     orderBy: { createdAt: "desc" },
   });
 
-  return {
-    collections: await Promise.all(
-      collections.map(async (collection) => {
-        return formatCollection(collection);
-      }),
-    ),
-  };
+  return await Promise.all(
+    collections.map(async (collection) => {
+      return formatCollection(collection);
+    }),
+  );
 }
 
 /**
