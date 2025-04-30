@@ -25,5 +25,5 @@ module.exports = async (req, res, next) => {
 
   logger.info({ collectionId: collection.collectionId }, "collection created");
 
-  return res.status(200).json(collection);
+  return res.status(201).json(collection);
 };
