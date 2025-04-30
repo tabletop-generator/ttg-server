@@ -1,3 +1,6 @@
+GET {{host}}/v1/users/not_a_valid_id
+HTTP 400
+
 GET {{host}}/v1/users/{{user1_id}}
 HTTP 200
 [Asserts]
