@@ -13,6 +13,12 @@ router.post(`/:assetId/like`, authenticate(), require("./postLikeById"));
 
 router.post(`/:assetId/comments`, authenticate(), require("./postCommentById"));
 
+router.get(
+  `/:assetId/comments`,
+  optionalAuthenticate(),
+  require("./getCommentsById"),
+);
+
 router.get(`/`, optionalAuthenticate(), require("./get"));
 
 router.get(`/:assetId`, optionalAuthenticate(), require("./getById"));
