@@ -169,7 +169,6 @@ async function listAssets(
  * @throws
  */
 async function getAsset(assetId, userId) {
-  // Get asset from database
   let asset = await prisma.asset.findUnique({
     where: { assetId: assetId },
     include: assetInclude(userId, true),
@@ -305,6 +304,7 @@ async function toggleAssetLike(assetId, userId) {
 module.exports = {
   assetInclude,
   formatAsset,
+  renewAssetImageUrlIfExpired,
   saveAsset,
   listAssets,
   getAsset,
