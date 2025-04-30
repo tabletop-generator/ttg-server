@@ -140,7 +140,7 @@ async function listAssets(
         mode: "insensitive",
       },
       collections: collectionId && { some: { collectionId } },
-      ...canViewAsset(userId),
+      ...canViewAsset(currentUserId),
     },
     include: assetInclude(currentUserId),
     skip: parseInt(offset ?? 0, 10),
