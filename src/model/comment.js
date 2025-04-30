@@ -60,4 +60,27 @@ async function listComments(userId, assetId, { limit, offset }) {
   );
 }
 
-module.exports = { createComment, listComments };
+async function updateComment(userId, commentId, { body }) {
+  // Find comment to check ownership
+  let comment = await prisma.comment.findUnique({
+    where: { commentId },
+  });
+
+  if (!comment) {
+    throw new NotFoundError();
+  }
+
+  if (comment.userId !== userId) {
+    throw new ForbiddenError();
+  }
+
+  comment = await prisma.comment.update({
+    data: { body },
+    where: { commentId },
+    include: commentInclude(),
+  });
+
+  return formatComment(comment);
+}
+
+module.exports = { createComment, listComments, updateComment };
