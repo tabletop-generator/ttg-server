@@ -44,7 +44,7 @@ function formatAsset(asset, includeTypeData = false) {
     likeCount: asset._count.AssetLike,
     commentCount: asset._count.comments,
     isLikedByCurrentUser: asset.AssetLike.length > 0,
-    data: includeTypeData && asset[asset.assetType],
+    data: includeTypeData ? asset[asset.assetType] : undefined,
   };
 }
 
