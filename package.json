@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.12.0",
-    "@orangeopensource/hurl": "^6.0.1",
+    "@orangeopensource/hurl": "^6.1.1",
     "@redocly/cli": "^1.34.2",
     "@types/compression": "^1.7.5",
     "@types/cors": "^2.8.17",
