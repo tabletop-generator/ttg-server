@@ -14,7 +14,7 @@ module.exports = async (req, res, next) => {
 
   let collections;
   try {
-    collections = listCollections(req.user, req.query);
+    collections = await listCollections(req.user, req.query);
   } catch (error) {
     logger.error(
       { error, message: error.message },

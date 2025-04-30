@@ -59,6 +59,7 @@ async function listCollections(currentUserId, { limit, offset, userId }) {
     skip: parseInt(offset ?? 0, 10),
     take: Math.min(parseInt(limit ?? 20, 10), 100),
     orderBy: { createdAt: "desc" },
+    include: collectionInclude(currentUserId),
   });
 
   return await Promise.all(
