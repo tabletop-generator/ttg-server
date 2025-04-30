@@ -3,6 +3,7 @@ const {
   assetInclude,
   formatAsset,
   renewAssetImageUrlIfExpired,
+  canViewAsset,
 } = require("./asset");
 const { NotFoundError, ForbiddenError } = require("../lib/error");
 
@@ -11,7 +12,7 @@ function collectionInclude(userId) {
     _count: { select: { assets: true } },
     assets: {
       include: assetInclude(userId),
-      where: { OR: [{ userId: userId }, { visibility: "public" }] },
+      where: { ...canViewAsset(userId) },
     },
   };
 }

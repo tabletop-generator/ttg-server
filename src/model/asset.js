@@ -50,6 +50,10 @@ function formatAsset(asset, includeTypeData = false) {
   };
 }
 
+function canViewAsset(userId) {
+  return { OR: [{ userId }, { visibility: "public" }] };
+}
+
 /**
  * If asset image URL is expired or about to expire, create and save a new URL
  * @param {Object} asset
@@ -146,7 +150,7 @@ async function listAssets(
         mode: "insensitive",
       },
       collections: collectionId && { some: { collectionId: collectionId } },
-      OR: [{ userId: currentUserId }, { visibility: "public" }],
+      ...canViewAsset(userId),
     },
     include: assetInclude(currentUserId),
     skip: parseInt(offset ?? 0, 10),
@@ -305,6 +309,7 @@ module.exports = {
   assetInclude,
   formatAsset,
   renewAssetImageUrlIfExpired,
+  canViewAsset,
   saveAsset,
   listAssets,
   getAsset,
