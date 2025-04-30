@@ -107,7 +107,7 @@ async function saveAsset(
     data: {
       assetId,
       assetType,
-      name: name,
+      name,
       visibility,
       description,
       imageUrl,
@@ -278,7 +278,7 @@ async function toggleAssetLike(assetId, userId) {
 
   return {
     assetId,
-    likeCount: likeCount,
+    likeCount,
     isLikedByCurrentUser: !existingLike, // It's been toggled so it's the opposite
   };
 }
