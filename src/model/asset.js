@@ -81,9 +81,9 @@ async function refreshAssetImageUrlIfExpired(asset) {
 /**
  *
  * @param {import("node:crypto").UUID} userId
+ * @param {Object} metadata
  * @param {String} description
  * @param {Buffer} image
- * @param {Object} metadata
  * @param {String} mimeType
  * @throws
  */
@@ -123,8 +123,32 @@ async function saveAsset(
 
 /**
  *
+ * @param {import("node:crypto").UUID} userId
+ * @param {import("node:crypto").UUID} assetId
+ * @throws
+ */
+async function getAsset(userId, assetId) {
+  let asset = await prisma.asset.findUnique({
+    where: { assetId },
+    include: assetInclude(userId, true),
+  });
+
+  if (!asset) {
+    throw new NotFoundError();
+  }
+
+  if (asset.userId !== userId && asset.visibility === "private") {
+    throw new ForbiddenError();
+  }
+
+  asset = await refreshAssetImageUrlIfExpired(asset);
+
+  return formatAsset(asset, true);
+}
+
+/**
+ *
  * @param {import("node:crypto").UUID} currentUserId
- * @param {Object} query
  */
 async function listAssets(
   currentUserId,
@@ -160,34 +184,6 @@ async function listAssets(
  *
  * @param {import("node:crypto").UUID} userId
  * @param {import("node:crypto").UUID} assetId
- * @throws
- */
-async function getAsset(userId, assetId) {
-  let asset = await prisma.asset.findUnique({
-    where: { assetId },
-    include: assetInclude(userId, true),
-  });
-
-  if (!asset) {
-    throw new NotFoundError();
-  }
-
-  if (asset.userId !== userId && asset.visibility === "private") {
-    throw new ForbiddenError();
-  }
-
-  asset = await refreshAssetImageUrlIfExpired(asset);
-
-  return formatAsset(asset, true);
-}
-
-/**
- *
- * @param {import("node:crypto").UUID} userId
- * @param {import("node:crypto").UUID} assetId
- * @param {String} name
- * @param {String} description
- * @param {String} visibility
  * @throws
  */
 async function updateAsset(userId, assetId, { name, description, visibility }) {
