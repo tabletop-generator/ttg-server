@@ -1,5 +1,5 @@
 const express = require("express");
-const { authenticate } = require("../../../lib/auth");
+const { authenticate, optionalAuthenticate } = require("../../../lib/auth");
 
 /**
  * The entry-point for /collections endpoints
@@ -9,9 +9,9 @@ const router = express.Router();
 
 router.post(`/`, authenticate(), require("./post"));
 
-router.get(`/`, require("./get"));
+router.get(`/`, optionalAuthenticate(), require("./get"));
 
-router.get(`/:collectionId`, require("./getById"));
+router.get(`/:collectionId`, optionalAuthenticate(), require("./getById"));
 
 router.patch(`/:collectionId`, authenticate(), require("./patchById"));
 
