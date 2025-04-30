@@ -31,7 +31,7 @@ function assetInclude(userId, includeTypeData = false) {
  * @param {boolean} [includeTypeData=false] Whether to include type-specific data (character, location, quest, map)
  * @returns {Object} An object in the shape of the expected response from our HTTP REST API
  */
-function toAssetResponse(asset, includeTypeData = false) {
+function formatAsset(asset, includeTypeData = false) {
   return {
     userId: asset.user.userId,
     displayName: asset.user.displayName,
@@ -123,7 +123,7 @@ async function saveAsset(
     include: assetInclude(userId, true),
   });
 
-  return toAssetResponse(asset, true);
+  return formatAsset(asset, true);
 }
 
 /**
@@ -154,7 +154,7 @@ async function listAssets(
     orderBy: { createdAt: "desc" },
   });
 
-  return assets.map((e) => toAssetResponse(e, true));
+  return assets.map((e) => formatAsset(e, true));
 }
 
 /**
@@ -180,7 +180,7 @@ async function getAsset(assetId, userId) {
 
   asset = await renewAssetImageUrlIfExpired(asset);
 
-  return toAssetResponse(asset, true);
+  return formatAsset(asset, true);
 }
 
 /**
@@ -214,7 +214,7 @@ async function updateAsset(assetId, userId, { name, description, visibility }) {
 
   asset = await renewAssetImageUrlIfExpired(asset);
 
-  return toAssetResponse(asset, true);
+  return formatAsset(asset, true);
 }
 
 /**
@@ -299,7 +299,7 @@ async function toggleAssetLike(assetId, userId) {
 
 module.exports = {
   assetInclude,
-  toAssetResponse,
+  formatAsset,
   saveAsset,
   listAssets,
   getAsset,
