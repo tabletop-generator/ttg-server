@@ -1,16 +1,32 @@
 const { prisma } = require("./data/prismaClient");
-const { collectionInclude, formatCollection } = require("./utils");
+const {
+  collectionInclude,
+  formatCollection,
+  canViewResource,
+} = require("./utils");
 const { NotFoundError, ForbiddenError } = require("../lib/error");
 
-async function createCollection(userId, data) {
+/**
+ *
+ * @param {import("node:crypto").UUID} userId
+ * @param {Object} data
+ * @returns {Object}
+ */
+async function createCollection(userId, { name, description, visibility }) {
   const collection = await prisma.collection.create({
-    data: { ...data, user: { connect: { userId } } },
+    data: { name, description, visibility, user: { connect: { userId } } },
     include: collectionInclude(userId),
   });
 
   return formatCollection(collection);
 }
 
+/**
+ *
+ * @param {import("node:crypto").UUID} userId
+ * @param {import("node:crypto").UUID} collectionId
+ * @returns {Object}
+ */
 async function getCollection(userId, collectionId) {
   const collection = await prisma.collection.findUnique({
     where: { collectionId },
@@ -28,6 +44,38 @@ async function getCollection(userId, collectionId) {
   return await formatCollection(collection);
 }
 
+/**
+ *
+ * @param {import("node:crypto").UUID} currentUserId
+ * @param {Object} query
+ * @returns {Object}
+ */
+async function listCollections(currentUserId, { limit, offset, userId }) {
+  const collections = await prisma.collection.findMany({
+    where: {
+      ...canViewResource(currentUserId),
+      userId,
+    },
+    skip: parseInt(offset ?? 0, 10),
+    take: Math.min(parseInt(limit ?? 20, 10), 100),
+    orderBy: { createdAt: "desc" },
+  });
+
+  return {
+    collections: await Promise.all(
+      collections.map(async (collection) => {
+        return formatCollection(collection);
+      }),
+    ),
+  };
+}
+
+/**
+ *
+ * @param {import("node:crypto").UUID} userId
+ * @param {import("node:crypto").UUID} collectionId
+ * @returns {Object}
+ */
 async function deleteCollection(userId, collectionId) {
   // Find asset to check ownership
   const asset = await prisma.collection.findUnique({ where: { collectionId } });
@@ -49,5 +97,6 @@ async function deleteCollection(userId, collectionId) {
 module.exports = {
   createCollection,
   getCollection,
+  listCollections,
   deleteCollection,
 };
