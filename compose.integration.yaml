@@ -13,12 +13,9 @@ services:
     ports:
       - "8080:8080"
     environment:
-      GROQ_API_KEY: ${GROQ_API_KEY}
       CF_ACCOUNT_ID: ${CF_ACCOUNT_ID}
-      CF_TOKEN: ${CF_TOKEN}
-      CF_AIG_TOKEN: ${CF_AIG_TOKEN}
-      CF_AIG_NAME: ${CF_AIG_NAME}
-      GROQ_MODEL: ${GROQ_MODEL}
+      CF_WORKERS_AI_API_TOKEN: ${CF_WORKERS_AI_API_TOKEN}
+      CF_TEXT_GENERATION_MODEL: ${CF_TEXT_GENERATION_MODEL}
       CF_TEXT_TO_IMAGE_MODEL: ${CF_TEXT_TO_IMAGE_MODEL}
     env_file:
       - .env.compose
