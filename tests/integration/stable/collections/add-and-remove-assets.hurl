@@ -35,10 +35,10 @@ jsonpath "$.name" isString
 jsonpath "$.description" isString
 jsonpath "$.assetCount" isInteger
 jsonpath "$.assets" isCollection
-jsonpath "$.fragments[?(@.assetId == '{{user1_public_asset_id}}')].assetId" exists
-jsonpath "$.fragments[?(@.assetId == '{{user1_unlisted_asset_id}}')].assetId" exists
-jsonpath "$.fragments[?(@.assetId == '{{user1_private_asset_id}}')].assetId" exists
-jsonpath "$.fragments[?(@.assetId == '{{user2_public_asset_id}}')].assetId" exists
+jsonpath "$.assets[?(@.assetId == '{{user1_public_asset_id}}')].assetId" exists
+jsonpath "$.assets[?(@.assetId == '{{user1_unlisted_asset_id}}')].assetId" exists
+jsonpath "$.assets[?(@.assetId == '{{user1_private_asset_id}}')].assetId" exists
+jsonpath "$.assets[?(@.assetId == '{{user2_public_asset_id}}')].assetId" exists
 
 POST {{host}}/v1/collections/{{collection_id}}/assets
 Content-Type: application/json
