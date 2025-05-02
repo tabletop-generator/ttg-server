@@ -37,3 +37,5 @@ DELETE {{host}}/v1/comments/{{comment_id}}
 [BasicAuth]
 user1@email.com:password1
 HTTP 204
+
+# TODO: test query parameters
