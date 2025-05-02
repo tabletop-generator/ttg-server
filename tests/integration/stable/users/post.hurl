@@ -13,3 +13,8 @@ HTTP *
 [Asserts]
 status >= 200
 status <= 201
+jsonpath "$.userId" matches "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+jsonpath "$.createdAt" isIsoDate
+jsonpath "$.updatedAt" isIsoDate
+jsonpath "$.displayName" isString
+jsonpath "$.bio" isString
