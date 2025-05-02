@@ -42,7 +42,7 @@ Content-Type: application/json
 user1@email.com:password1
 file,comment.json;
 HTTP 200
-[Assets]
+[Asserts]
 jsonpath "$.userId" matches "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
 jsonpath "$.displayName" isString
 jsonpath "$.commentId" matches "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
