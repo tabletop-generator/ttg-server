@@ -111,6 +111,8 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/AssetDetails"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
         "401":
           $ref: "#/components/responses/ErrorResponse"
         "403":
@@ -180,6 +182,8 @@ paths:
       responses:
         "201":
           $ref: "#/components/responses/CommentDetails"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
         "401":
           $ref: "#/components/responses/ErrorResponse"
         "403":
@@ -223,6 +227,8 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/CommentDetails"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
         "401":
           $ref: "#/components/responses/ErrorResponse"
         "403":
@@ -267,6 +273,8 @@ paths:
       responses:
         "201":
           $ref: "#/components/responses/CollectionDetails"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
         "401":
           $ref: "#/components/responses/ErrorResponse"
         "415":
@@ -324,6 +332,8 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/CollectionDetails"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
         "401":
           $ref: "#/components/responses/ErrorResponse"
         "403":
@@ -370,6 +380,8 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/CollectionDetails"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
         "401":
           $ref: "#/components/responses/ErrorResponse"
         "403":
@@ -397,6 +409,8 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/CollectionDetails"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
         "401":
           $ref: "#/components/responses/ErrorResponse"
         "403":
@@ -458,8 +472,6 @@ paths:
           $ref: "#/components/responses/UserDetails"
         "401":
           $ref: "#/components/responses/ErrorResponse"
-        "415":
-          $ref: "#/components/responses/ErrorResponse"
         "500":
           $ref: "#/components/responses/ErrorResponse"
     patch:
@@ -475,7 +487,11 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/UserDetails"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
         "401":
+          $ref: "#/components/responses/ErrorResponse"
+        "415":
           $ref: "#/components/responses/ErrorResponse"
         "500":
           $ref: "#/components/responses/ErrorResponse"
