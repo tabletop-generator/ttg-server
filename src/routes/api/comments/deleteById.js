@@ -30,5 +30,10 @@ module.exports = async (req, res, next) => {
     return next(createHttpError(500, "Error deleting comment"));
   }
 
+  logger.info(
+    { user: req.user, commentId: req.params.commentId },
+    `comment deleted`,
+  );
+
   return res.status(204).send();
 };

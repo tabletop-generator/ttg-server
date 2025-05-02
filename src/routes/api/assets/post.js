@@ -17,11 +17,10 @@ module.exports = async (req, res, next) => {
   let description, image, mimeType;
   try {
     ({ description, image, mimeType } = await generateAsset(req.body));
-    logger.info(
-      { user: req.user, assetName: req.body.name },
+    logger.debug(
+      { user: req.user, assetName: req.body.name, description, mimeType },
       "asset generated",
     );
-    logger.debug({ description, mimeType }, "generated asset: debug info");
   } catch (error) {
     logger.error({ error, message: error.message }, "error generating asset");
     return next(createHttpError(500, "Error generating asset"));
@@ -37,10 +36,6 @@ module.exports = async (req, res, next) => {
       image,
       mimeType,
     );
-    logger.info(
-      { user: req.user, assetId: newAsset.assetId, assetName: newAsset.name },
-      "asset saved",
-    );
   } catch (error) {
     logger.error({ error, message: error.message }, "error saving asset");
     return next(createHttpError(500, "Error saving asset"));
@@ -55,6 +50,8 @@ module.exports = async (req, res, next) => {
     { locationURL },
     `constructed URL for Location header for new asset`,
   );
+
+  logger.info({ user: req.user, assetId: newAsset.assetId }, "asset created");
 
   // Return asset metadata
   return res.status(201).set("Location", locationURL).json(newAsset);

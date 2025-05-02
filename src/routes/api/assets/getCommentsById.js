@@ -31,10 +31,5 @@ module.exports = async (req, res, next) => {
     return next(createHttpError(500, "Error getting comments"));
   }
 
-  logger.info(
-    { user: req.user, assetId: req.params.assetId, query: req.query },
-    "comments retrieved",
-  );
-
   return res.status(200).json({ comments });
 };
