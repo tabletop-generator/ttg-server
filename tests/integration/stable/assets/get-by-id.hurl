@@ -7,6 +7,8 @@ HTTP 403
 GET {{host}}/v1/assets/{{user1_public_asset_id}}
 HTTP 200
 [Asserts]
+jsonpath "$.userId" matches "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+jsonpath "$.displayName" isString
 jsonpath "$.assetId" matches "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
 jsonpath "$.name" isString
 jsonpath "$.description" isString
