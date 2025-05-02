@@ -26,8 +26,8 @@ user1@email.com:password1
 HTTP 200
 [Asserts]
 jsonpath "$.userId" matches "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
-jsonpath "$.collectionId" matches "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
 jsonpath "$.displayName" isString
+jsonpath "$.collectionId" matches "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
 jsonpath "$.createdAt" isIsoDate
 jsonpath "$.updatedAt" isIsoDate
 jsonpath "$.visibility" matches "^public$|^private$|^unlisted$"
@@ -35,6 +35,10 @@ jsonpath "$.name" isString
 jsonpath "$.description" isString
 jsonpath "$.assetCount" isInteger
 jsonpath "$.assets" isCollection
+jsonpath "$.assets[?(@.assetId == '{{user1_public_asset_id}}')].assetId" exists
+jsonpath "$.assets[?(@.assetId == '{{user1_unlisted_asset_id}}')].assetId" exists
+jsonpath "$.assets[?(@.assetId == '{{user1_private_asset_id}}')].assetId" exists
+jsonpath "$.assets[?(@.assetId == '{{user2_public_asset_id}}')].assetId" exists
 
 POST {{host}}/v1/collections/{{collection_id}}/assets
 Content-Type: application/json
@@ -53,10 +57,17 @@ user1@email.com:password1
   "assetIds": ["{{user1_public_asset_id}}", "{{user1_unlisted_asset_id}}", "{{user1_private_asset_id}}", "{{user2_public_asset_id}}"]
 }
 HTTP 200
-
-GET {{host}}/v1/collections/{{collection_id}}
-HTTP 200
 [Asserts]
+jsonpath "$.userId" matches "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+jsonpath "$.displayName" isString
+jsonpath "$.collectionId" matches "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+jsonpath "$.createdAt" isIsoDate
+jsonpath "$.updatedAt" isIsoDate
+jsonpath "$.visibility" matches "^public$|^private$|^unlisted$"
+jsonpath "$.name" isString
+jsonpath "$.description" isString
+jsonpath "$.assetCount" isInteger
+jsonpath "$.assets" isCollection
 jsonpath "$.assetCount" == 0
 jsonpath "$.assets" isEmpty
 
