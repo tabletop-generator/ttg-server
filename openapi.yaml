@@ -52,6 +52,8 @@ paths:
           $ref: "#/components/responses/AssetDetails"
         "400":
           $ref: "#/components/responses/ErrorResponse"
+        "401":
+          $ref: "#/components/responses/ErrorResponse"
         "415":
           $ref: "#/components/responses/ErrorResponse"
         "500":
@@ -90,8 +92,6 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/AssetDetails"
-        "401":
-          $ref: "#/components/responses/ErrorResponse"
         "403":
           $ref: "#/components/responses/ErrorResponse"
         "404":
@@ -206,6 +206,8 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/CommentList"
+        "403":
+          $ref: "#/components/responses/ErrorResponse"
         "404":
           $ref: "#/components/responses/ErrorResponse"
         "500":
