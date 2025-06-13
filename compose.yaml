@@ -2,7 +2,7 @@ name: ttg
 services:
   postgres:
     container_name: ttg-postgres
-    image: postgres:17.2-alpine3.21
+    image: postgres:17.5-alpine3.22@sha256:fbe21607052bb5c298674f2fd8cf044a63aa3ddf50b81627f894f91f40f50bcb
     ports:
       - 5432:5432
     volumes:
@@ -19,7 +19,7 @@ services:
 
   minio:
     container_name: ttg-minio
-    image: minio/minio
+    image: minio/minio@sha256:a616cd8f37758b0296db62cc9e6af05a074e844cc7b5c0a0e62176d73828d440
     command: server --console-address ":9001" /data
     ports:
       # The minio API endpoint
@@ -39,7 +39,7 @@ services:
 
   mc:
     container_name: ttg-minio-client
-    image: minio/mc
+    image: minio/mc@sha256:09f93f534cde415d192bb6084dd0e0ddd1715fb602f8a922ad121fd2bf0f8b44
     depends_on:
       minio:
         condition: service_healthy
