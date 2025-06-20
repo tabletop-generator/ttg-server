@@ -16,8 +16,6 @@ async function ensureUserRecord(userId) {
         displayName: `User ${userId.slice(0, 6)}`,
       },
     });
-
-    return;
   } catch (error) {
     logger.error({ error, userId }, "Error ensuring user record");
     throw error;
