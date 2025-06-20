@@ -265,5 +265,5 @@ jobs:
           SHA_TAG: sha-${{ github.sha }}
         run: |
           docker push ${{ env.GHCR_REPO }}:latest
-          docker push ${{ env.GHCR_REPO }}:${{ env.SHA_TAG }}
           docker push ${{ env.GHCR_REPO }}:main
+          docker push ${{ env.GHCR_REPO }}:${{ env.SHA_TAG }}

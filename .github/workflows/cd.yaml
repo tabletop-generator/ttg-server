@@ -43,7 +43,7 @@ jobs:
           VERSION_TAG: ${{ github.ref_name }}
         uses: docker/build-push-action@v6
         with:
-          tags: ${{ env.GHCR_REPO }}:latest, ${{ env.GHCR_REPO }}:main, ${{ env.GHCR_REPO }}:${{ env.SHA_TAG }}, ${{ env.GHCR_REPO }}:${{ env.VERSION_TAG }}
+          tags: ${{ env.GHCR_REPO }}:latest,${{ env.GHCR_REPO }}:main,${{ env.GHCR_REPO }}:${{ env.SHA_TAG }},${{ env.GHCR_REPO }}:${{ env.VERSION_TAG }}
           outputs: type=docker,dest=/tmp/image.tar
 
       - name: Upload artifact
@@ -85,8 +85,10 @@ jobs:
         env:
           GHCR_REPO: ghcr.io/${{ github.repository_owner }}/ttg-server
           SHA_TAG: sha-${{ github.sha }}
+          VERSION_TAG: ${{ github.ref_name }}
         run: |
           docker push ${{ env.GHCR_REPO }}:latest
+          docker push ${{ env.GHCR_REPO }}:main
           docker push ${{ env.GHCR_REPO }}:${{ env.SHA_TAG }}
           docker push ${{ env.GHCR_REPO }}:${{ env.VERSION_TAG }}
 
