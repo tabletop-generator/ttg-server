@@ -8,21 +8,16 @@ async function ensureUserRecord(userId) {
   if (!userId) throw new Error("No userId provided");
 
   try {
-    let userRecord = await prisma.user.findUnique({
+    await prisma.user.upsert({
       where: { userId },
+      update: {},
+      create: {
+        userId,
+        displayName: `User ${userId.slice(0, 6)}`,
+      },
     });
 
-    if (!userRecord) {
-      userRecord = await prisma.user.create({
-        data: {
-          userId,
-          displayName: `User ${userId.slice(0, 6)}`,
-        },
-      });
-      logger.info({ userId }, "Auto-created user profile");
-    }
-
-    return userRecord;
+    return;
   } catch (error) {
     logger.error({ error, userId }, "Error ensuring user record");
     throw error;
