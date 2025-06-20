@@ -1,6 +1,6 @@
 # ttg-server
 
-[![CI](https://github.com/tabletop-generator/ttg-server/actions/workflows/ci.yml/badge.svg)](https://github.com/tabletop-generator/ttg-server/actions/workflows/ci.yml)
+[![CI](https://github.com/tabletop-generator/ttg-server/actions/workflows/ci.yaml/badge.svg)](https://github.com/tabletop-generator/ttg-server/actions/workflows/ci.yaml) [![CD](https://github.com/tabletop-generator/ttg-server/actions/workflows/cd.yaml/badge.svg)](https://github.com/tabletop-generator/ttg-server/actions/workflows/cd.yaml) [![Pages](https://github.com/tabletop-generator/ttg-server/actions/workflows/pages.yaml/badge.svg)](https://github.com/tabletop-generator/ttg-server/actions/workflows/pages.yaml)
 
 ## Contributing
 
