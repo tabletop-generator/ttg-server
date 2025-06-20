@@ -13,8 +13,11 @@
     "test:integration:ci": "hurl --test --error-format long --file-root \"tests/integration/inputs\" --variables-file \"tests/integration/vars.env\" --glob \"tests/integration/stable/**/*.hurl\"",
     "test:integration:flaky": "hurl --test --error-format long --file-root \"tests/integration/inputs\" --variables-file \"tests/integration/vars.env\" --glob \"tests/integration/flaky/**/*.hurl\"",
     "prettier": "prettier --write .",
+    "prettier:check": "prettier --check .",
     "lint": "eslint .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "docs:lint": "redocly lint openapi.yaml --format=github-actions",
+    "docs:build": "redocly build-docs openapi.yaml -o ./_site/index.html"
   },
   "devDependencies": {
     "@eslint/js": "^9.12.0",
