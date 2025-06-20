@@ -43,11 +43,11 @@ You can also use the Visual Studio Code debugger instead of `npm run dev`:
 
 1. Click Run and Debug:
 
-   ![Run and Debug](./img/vscode-debug-guide-01.png)
+   ![Run and Debug](./docs/img/vscode-debug-guide-01.png)
 
 2. Click "Launch via NPM":
 
-   ![Launch via NPM](./img/vscode-debug-guide-02.png)
+   ![Launch via NPM](./docs/img/vscode-debug-guide-02.png)
 
 ### Using MinIO and the MinIO Console in Docker Compose
 
@@ -59,7 +59,7 @@ You can use the Docker Compose Postgres service as the Postgres database for dev
 
 While the Postgres database Docker Compose service is running, you can use Prisma Studio with `npx prisma studio` to view and edit data in the database.
 
-![Prisma Studio screenshot](./img/prisma-studio.png)
+![Prisma Studio screenshot](./docs/img/prisma-studio.png)
 
 ### Re-initializing the Database
 
