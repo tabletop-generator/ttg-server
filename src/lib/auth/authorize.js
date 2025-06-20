@@ -1,7 +1,28 @@
 const passport = require("passport");
 
+const { prisma } = require("../../model/data/prismaClient");
 const { createHttpError } = require("../error");
 const { logger } = require("../logger");
+
+async function ensureUserRecord(userId) {
+  if (!userId) throw new Error("No userId provided");
+
+  try {
+    await prisma.user.upsert({
+      where: { userId },
+      update: {},
+      create: {
+        userId,
+        displayName: `User ${userId.slice(0, 6)}`,
+      },
+    });
+
+    return;
+  } catch (error) {
+    logger.error({ error, userId }, "Error ensuring user record");
+    throw error;
+  }
+}
 
 /**
  * @param {'bearer' | 'http'} strategyName - the passport strategy to use
@@ -13,9 +34,9 @@ function authorize(strategyName) {
      * Define a custom callback to run after the user has been authenticated
      * where we can modify the way that errors are handled.
      * @param {Error} err - an error object
-     * @param {string} user - an authenticated user's id
+     * @param {string} userId - an authenticated user's id
      */
-    function callback(err, user) {
+    async function callback(err, userId) {
       // Something failed, let the the error handling middleware deal with it
       if (err) {
         logger.warn({ err }, "Error authenticating user");
@@ -23,19 +44,25 @@ function authorize(strategyName) {
       }
 
       // Not authorized, return a 401
-      if (!user) {
+      if (!userId) {
         return next(createHttpError(401, "Unauthorized"));
       }
 
       // Authorized. Attach the user's id to the request and continue
-      req.user = user;
+      req.user = userId;
       logger.debug(
-        { user },
+        { user: userId },
         `Authenticated user with ${strategyName} strategy`,
       );
 
-      // Call the next function in the middleware chain (e.g. your route handler)
-      next();
+      try {
+        await ensureUserRecord(userId);
+      } catch (error) {
+        logger.error({ error }, "Error syncing user profile");
+        return next(createHttpError(500, "User profile sync failed"));
+      }
+
+      return next();
     }
 
     // Call the given passport strategy's authenticate() method, passing the
@@ -52,21 +79,41 @@ function authorize(strategyName) {
  * @param {'bearer' | 'http'} strategyName - the passport strategy to use
  * @returns {Function} - the middleware function to use for authentication
  */
-function optionalAuthorize(strategyName = "bearer") {
-  return (req, res, next) => {
-    passport.authenticate(strategyName, { session: false }, (err, user) => {
+function optionalAuthorize(strategyName) {
+  return function (req, res, next) {
+    async function callback(err, userId) {
       if (err) {
-        return next(err);
+        logger.warn({ err }, "Error authenticating user");
+        return next(createHttpError(500, "Unable to authenticate user"));
       }
 
       // If authentication succeeded, attach user
-      if (user) {
-        req.user = user;
+      if (!userId) {
+        return next();
+      }
+
+      req.user = userId;
+      logger.debug(
+        { user: userId },
+        `Authenticated user with ${strategyName} strategy`,
+      );
+
+      try {
+        await ensureUserRecord(userId);
+      } catch (error) {
+        logger.error({ error }, "Error syncing user profile");
+        return next(createHttpError(500, "User profile sync failed"));
       }
 
       // Always continue
       return next();
-    })(req, res, next);
+    }
+
+    passport.authenticate(strategyName, { session: false }, callback)(
+      req,
+      res,
+      next,
+    );
   };
 }
 
