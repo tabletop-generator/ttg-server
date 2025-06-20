@@ -7,8 +7,6 @@ const { authenticate } = require("../../../lib/auth");
 
 const router = express.Router();
 
-router.post(`/`, authenticate(), require("./post"));
-
 router.get(`/me`, authenticate(), require("./getMe"));
 
 router.get(`/:userId`, require("./getById"));

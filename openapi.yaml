@@ -424,25 +424,6 @@ paths:
         "500":
           $ref: "#/components/responses/ErrorResponse"
 
-  /users:
-    post:
-      tags:
-        - user
-      operationId: initializeUser
-      summary: Find or create a record for the current user
-      security:
-        - basicHttpAuthentication: []
-        - bearerHttpAuthentication: []
-      responses:
-        "201":
-          $ref: "#/components/responses/UserDetails"
-        "200":
-          $ref: "#/components/responses/UserDetails"
-        "401":
-          $ref: "#/components/responses/ErrorResponse"
-        "500":
-          $ref: "#/components/responses/ErrorResponse"
-
   /users/{userId}:
     parameters:
       - $ref: "#/components/parameters/userIdPathParam"
