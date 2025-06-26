@@ -879,8 +879,10 @@ components:
               type: integer
               minimum: 0
             coverImageUrl:
-              type: string
-              format: uri
+              oneOf:
+                - type: string
+                  format: uri
+                - type: "null"
     userSummary:
       type: object
       required: ["userId", "displayName"]
