@@ -853,6 +853,7 @@ components:
               "name",
               "description",
               "assetCount",
+              "coverImageUrl",
             ]
           additionalProperties: false
           properties:
@@ -877,6 +878,9 @@ components:
             assetCount:
               type: integer
               minimum: 0
+            coverImageUrl:
+              type: string
+              format: uri
     userSummary:
       type: object
       required: ["userId", "displayName"]
