@@ -84,6 +84,9 @@ function collectionInclude(userId) {
     assets: {
       include: assetInclude(userId),
       where: { ...canViewResource(userId) },
+      orderBy: {
+        createdAt: "desc",
+      },
     },
   };
 }
