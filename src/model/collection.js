@@ -18,7 +18,7 @@ async function createCollection(userId, { name, description, visibility }) {
     include: collectionInclude(userId),
   });
 
-  return await formatCollection(collection);
+  return await formatCollection(collection, true);
 }
 
 /**
@@ -41,7 +41,7 @@ async function getCollection(userId, collectionId) {
     throw new ForbiddenError();
   }
 
-  return await formatCollection(collection);
+  return await formatCollection(collection, true);
 }
 
 /**
@@ -100,7 +100,7 @@ async function updateCollection(
     include: collectionInclude(userId, true),
   });
 
-  return await formatCollection(collection);
+  return await formatCollection(collection, true);
 }
 
 /**
@@ -139,7 +139,7 @@ async function addAssetsToCollection(userId, collectionId, assetIds) {
     include: collectionInclude(userId),
   });
 
-  return await formatCollection(collection);
+  return await formatCollection(collection, true);
 }
 
 /**
@@ -178,7 +178,7 @@ async function removeAssetsFromCollection(userId, collectionId, assetIds) {
     include: collectionInclude(userId),
   });
 
-  return await formatCollection(collection);
+  return await formatCollection(collection, true);
 }
 
 /**

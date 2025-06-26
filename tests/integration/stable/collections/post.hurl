@@ -18,3 +18,4 @@ jsonpath "$.name" isString
 jsonpath "$.description" isString
 jsonpath "$.assetCount" isInteger
 jsonpath "$.assets" isCollection
+jsonpath "$.coverImageUrl" == null

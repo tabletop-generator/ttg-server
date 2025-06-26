@@ -40,6 +40,7 @@ jsonpath "$.name" isString
 jsonpath "$.description" isString
 jsonpath "$.assetCount" isInteger
 jsonpath "$.assets" isCollection
+jsonpath "$.coverImageUrl" == null
 
 DELETE {{host}}/v1/collections/{{collection_id}}
 [BasicAuth]

@@ -84,11 +84,14 @@ function collectionInclude(userId) {
     assets: {
       include: assetInclude(userId),
       where: { ...canViewResource(userId) },
+      orderBy: {
+        createdAt: "desc",
+      },
     },
   };
 }
 
-async function formatCollection(collection) {
+async function formatCollection(collection, includeAssetList = false) {
   return {
     collectionId: collection.collectionId,
     userId: collection.userId,
@@ -99,12 +102,15 @@ async function formatCollection(collection) {
     createdAt: collection.createdAt.toISOString(),
     updatedAt: collection.updatedAt.toISOString(),
     assetCount: collection._count.assets,
-    assets: await Promise.all(
-      collection.assets.map(async (asset) => {
-        asset = await refreshAssetImageUrlIfExpired(asset);
-        return formatAsset(asset);
-      }),
-    ),
+    coverImageUrl: collection.assets[0]?.imageUrl ?? null,
+    assets: includeAssetList
+      ? await Promise.all(
+          collection.assets.map(async (asset) => {
+            asset = await refreshAssetImageUrlIfExpired(asset);
+            return formatAsset(asset);
+          }),
+        )
+      : undefined,
   };
 }
 
