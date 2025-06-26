@@ -71,7 +71,7 @@ jsonpath "$.assetCount" isInteger
 jsonpath "$.assets" isCollection
 jsonpath "$.assetCount" == 0
 jsonpath "$.assets" isEmpty
-jsonpath "$.coverImageUrl" matches "^http:\/\/(localhost|minio):9000\/ttg\/"
+jsonpath "$.coverImageUrl" == null
 
 DELETE {{host}}/v1/collections/{{collection_id}}
 [BasicAuth]

@@ -18,4 +18,4 @@ jsonpath "$.name" isString
 jsonpath "$.description" isString
 jsonpath "$.assetCount" isInteger
 jsonpath "$.assets" isCollection
-jsonpath "$.coverImageUrl" matches "^http:\/\/(localhost|minio):9000\/ttg\/"
+jsonpath "$.coverImageUrl" == null
