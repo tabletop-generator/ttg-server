@@ -35,6 +35,7 @@ jsonpath "$.name" isString
 jsonpath "$.description" isString
 jsonpath "$.assetCount" isInteger
 jsonpath "$.assets" isCollection
+jsonpath "$.coverImageUrl" matches "^http:\/\/(localhost|minio):9000\/ttg\/"
 jsonpath "$.assets[?(@.assetId == '{{user1_public_asset_id}}')].assetId" exists
 jsonpath "$.assets[?(@.assetId == '{{user1_unlisted_asset_id}}')].assetId" exists
 jsonpath "$.assets[?(@.assetId == '{{user1_private_asset_id}}')].assetId" exists
@@ -70,6 +71,7 @@ jsonpath "$.assetCount" isInteger
 jsonpath "$.assets" isCollection
 jsonpath "$.assetCount" == 0
 jsonpath "$.assets" isEmpty
+jsonpath "$.coverImageUrl" matches "^http:\/\/(localhost|minio):9000\/ttg\/"
 
 DELETE {{host}}/v1/collections/{{collection_id}}
 [BasicAuth]

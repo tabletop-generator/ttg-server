@@ -102,6 +102,7 @@ async function formatCollection(collection) {
     createdAt: collection.createdAt.toISOString(),
     updatedAt: collection.updatedAt.toISOString(),
     assetCount: collection._count.assets,
+    coverImageUrl: collection.assets[0]?.imageUrl,
     assets: await Promise.all(
       collection.assets.map(async (asset) => {
         asset = await refreshAssetImageUrlIfExpired(asset);

@@ -11,6 +11,7 @@ jsonpath "$.collections[0].visibility" matches "^public$|^private$|^unlisted$"
 jsonpath "$.collections[0].name" isString
 jsonpath "$.collections[0].description" isString
 jsonpath "$.collections[0].assetCount" isInteger
+jsonpath "$.collections[0].coverImageUrl" matches "^http:\/\/(localhost|minio):9000\/ttg\/"
 
 # TODO: test private and unlisted collections
 # TODO: test query parameters
