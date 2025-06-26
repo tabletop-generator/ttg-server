@@ -91,7 +91,7 @@ function collectionInclude(userId) {
   };
 }
 
-async function formatCollection(collection) {
+async function formatCollection(collection, includeAssetList = false) {
   return {
     collectionId: collection.collectionId,
     userId: collection.userId,
@@ -103,12 +103,14 @@ async function formatCollection(collection) {
     updatedAt: collection.updatedAt.toISOString(),
     assetCount: collection._count.assets,
     coverImageUrl: collection.assets[0]?.imageUrl ?? null,
-    assets: await Promise.all(
-      collection.assets.map(async (asset) => {
-        asset = await refreshAssetImageUrlIfExpired(asset);
-        return formatAsset(asset);
-      }),
-    ),
+    assets: includeAssetList
+      ? await Promise.all(
+          collection.assets.map(async (asset) => {
+            asset = await refreshAssetImageUrlIfExpired(asset);
+            return formatAsset(asset);
+          }),
+        )
+      : undefined,
   };
 }
 
